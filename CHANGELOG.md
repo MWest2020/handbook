@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-12 (scherpstelling na diff-review)
+
+- Spec `docs-contract` aangescherpt: (1) structuureis geldt alleen voor
+  markdown-dragende mappen — assets-/afbeeldingsmappen zijn geen schending
+  (nieuw scenario); (2) front matter is "minimaal status + last_reviewed"
+  i.p.v. "exact" (extra velden zoals `title` toegestaan; `owner` blijft
+  verboden); (3) migratieregel ontdubbelzinnigd: draft krijgt
+  `last_reviewed` = migratiedatum, pas echte review zet `current` + verse
+  datum (spec-scenario en taak 2.3 gelijkgetrokken).
+
 ## 2026-07-12
 
 - Northstar-sectie toegevoegd aan `openspec/project.md` (bewezen docs/code-

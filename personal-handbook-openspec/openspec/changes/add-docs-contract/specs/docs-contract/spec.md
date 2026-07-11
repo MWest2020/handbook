@@ -4,27 +4,37 @@
 
 ### Requirement: Diátaxis-light structuur
 
-Elk deelnemend repo SHALL een `docs/`-map hebben met `index.md` in de root
-en uitsluitend de submappen `how-to/`, `reference/` en `explanation/`
-(ADR's onder `explanation/adr/NNNN-titel.md`). Lege submappen SHALL worden
-weggelaten.
+Elk deelnemend repo SHALL een `docs/`-map hebben met `index.md` in de root.
+Markdown-pagina's SHALL uitsluitend in de root of in de submappen `how-to/`,
+`reference/` en `explanation/` staan (ADR's onder
+`explanation/adr/NNNN-titel.md`). Mappen zonder markdown (assets,
+afbeeldingen, diagram-bronnen) vallen buiten deze eis. Lege submappen SHALL
+worden weggelaten.
 
 #### Scenario: Conforme structuur
 
 - WHEN een repo `docs/index.md` en `docs/reference/` met inhoud bevat en
-  geen andere submappen
+  geen andere markdown-dragende submappen
 - THEN voldoet de structuur aan het contract
 
-#### Scenario: Onbekende submap
+#### Scenario: Onbekende submap met pagina's
 
-- WHEN `docs/` een submap bevat buiten de drie Diátaxis-mappen
+- WHEN `docs/` een submap buiten de drie Diátaxis-mappen bevat mét
+  markdown-bestanden
 - THEN faalt de contract-check met vermelding van de afwijkende map
+
+#### Scenario: Assets-map
+
+- WHEN `docs/` een map `img/` met alleen afbeeldingen bevat
+- THEN is dat geen contract-schending
 
 ### Requirement: Front matter per pagina
 
-Elke pagina onder `docs/` SHALL YAML-front-matter hebben met exact de velden
-`status` (current | draft | deprecated) en `last_reviewed` (ISO-datum van
-daadwerkelijke review). Een `owner`-veld SHALL NOT voorkomen.
+Elke pagina onder `docs/` SHALL YAML-front-matter hebben met minimaal de
+velden `status` (current | draft | deprecated) en `last_reviewed`
+(ISO-datum). Extra velden (bijv. `title` voor mkdocs-navigatie) zijn
+toegestaan; een `owner`-veld SHALL NOT voorkomen (eigenaar is altijd Mark,
+het veld zou ruis zijn).
 
 #### Scenario: Ontbrekende front matter
 
@@ -34,7 +44,9 @@ daadwerkelijke review). Een `owner`-veld SHALL NOT voorkomen.
 #### Scenario: Niet-gereviewde migratie
 
 - WHEN een bestaande pagina wordt gemigreerd zonder inhoudelijke review
-- THEN krijgt die pagina `status: draft` en geen bijgewerkte `last_reviewed`
+- THEN krijgt die pagina `status: draft` met `last_reviewed` = de
+  migratiedatum; pas een echte inhoudelijke review zet `status: current`
+  en een verse `last_reviewed`
 
 ### Requirement: Taalregel
 

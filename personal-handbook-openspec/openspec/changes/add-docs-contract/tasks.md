@@ -18,7 +18,8 @@ Vereist: door Mark vastgestelde `inventory/repos.json` uit change 1.
       als er externe links naartoe kunnen bestaan.
 - [ ] 2.3 Vul front matter aan op elke pagina; `last_reviewed` = datum van
       daadwerkelijke review, niet blind vandaag. Niet gereviewde gemigreerde
-      pagina's krijgen `status: draft`.
+      pagina's krijgen `status: draft` met `last_reviewed` = migratiedatum;
+      een echte review zet later `current` + een verse datum.
 - [ ] 2.4 Indien `needs_mcp_json: yes`: voeg `.mcp.json` toe volgens template.
       Handbook-URL als placeholder `TODO-change-3` laten staan.
 - [ ] 2.5 Schrijf/actualiseer `docs/index.md`: één alinea wat het project is,
