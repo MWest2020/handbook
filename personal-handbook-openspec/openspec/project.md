@@ -1,0 +1,57 @@
+# Project: Personal Handbook (hub-and-spoke docs voor eigen projecten + homelab)
+
+## Doel
+
+Eén handbook als aggregatiepunt voor alle persoonlijke repos (open-source projecten
+én homelab), naar het model van het Conduction-techbook, maar geschaald naar één
+eigenaar. Documentatie leeft in de project-repos zelf (`/docs`); het handbook
+aggregeert at build time via één importlijst. Geen kopieën, geen drift.
+
+## Uitgangspunten (niet onderhandelbaar)
+
+- **Boring and auditable.** Standaard tooling (mkdocs), expliciete configuratie,
+  geen slimmigheden. Elke beslissing herleidbaar in een ADR of proposal.
+- **Eén bron van waarheid.** De importlijst in het handbook (`mkdocs.yml`) is de
+  enige plek die bepaalt welke repos meedoen. Agents (MCP) lezen dezelfde lijst.
+- **Docs bij de code.** Elk deelnemend repo heeft `/docs` volgens het contract
+  (zie change `add-docs-contract`). Het handbook bevat zelf géén projectkennis,
+  alleen overkoepelende pagina's (index, homelab-overzicht, conventies).
+- **Publiek/privaat gescheiden op gevoeligheid, niet op onderwerp.** Homelab-
+  topologie, VPN-/overlay-netwerkdetails, secrets-locaties en interne hostnames horen niet
+  op een publieke Pages-site. Splitsing gebeurt op repo-niveau (privaat repo =
+  private sectie), niet met per-pagina filters.
+- **EUPL-1.2** voor publieke content, tenzij een repo al anders gelicenseerd is.
+- **Python-tooling via `uv`**, nooit pip direct.
+
+## Scope (forges)
+
+- **Codeberg** (Forgejo): primaire forge voor het handbook + persoonlijke repos.
+- **GitHub** (`MWest2020`): bestaande projectrepos (o.a. zeef, openanonymiser,
+  wanderer, estafette, billbird, skill-forge, certswap, gitsweeper). Deze blijven
+  waar ze staan; het handbook importeert cross-forge. Migratie naar Codeberg is
+  expliciet BUITEN scope van deze changes.
+
+## Changes en afhankelijkheden
+
+```
+audit-repo-inventory      (change 1: inventarisatie + classificatie, read-only)
+        │
+        ▼
+add-docs-contract         (change 2: /docs + .mcp.json remediatie per repo, via PR's)
+        │
+        ▼
+add-handbook-portal       (change 3: handbook-repo + pipeline + Pages-deploy)
+```
+
+Change 1 produceert de classificatietabel waar 2 en 3 op draaien. Niet beginnen
+aan 2 voordat de tabel door Mark is vastgesteld (menselijke goedkeuring is de gate).
+
+## Definities
+
+- **mcp.json**: `.mcp.json` in de repo-root, declareert MCP-servers voor Claude
+  Code-sessies in dat repo. Alleen voor repos met actieve agent-ontwikkeling.
+- **Docs-contract**: `/docs` met Diátaxis-light indeling + front matter. Zie
+  change 2 voor de exacte specificatie.
+- **Handbook**: het aggregatie-repo (naam: `handbook`, op Codeberg). Bewust géén
+  "techbook": dit dekt ook niet-platformzaken (grant-administratie-verwijzingen,
+  project-portfolio), en er is geen tweede boek om tegen af te bakenen.

@@ -1,0 +1,25 @@
+# Private homelab-context: concrete hostnamen/netwerkdetails, nooit publiek
+personal-handbook-openspec/openspec/private/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*_rsa
+*.crt
+
+# Build-artefacten
+dist/
+build/
+node_modules/
+site/
+.venv/
+__pycache__/
+*.pyc
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+.DS_Store
