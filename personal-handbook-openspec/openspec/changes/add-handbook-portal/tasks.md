@@ -7,8 +7,9 @@ eerst de drie open vragen uit proposal.md.
 
 - [ ] 1.1 `handbook` repo op Codeberg (public), EUPL-1.2, deze openspec-map
       erin, `inventory/` erin.
-- [ ] 1.2 `pages` repo (public, leeg op README na: "deploy target, niet
-      handmatig bewerken").
+- [ ] 1.2 Orphan branch `pages` in het `handbook`-repo als deploy-target
+      (alleen een README: "deploy target, niet handmatig bewerken").
+      Branch-protectie: alleen CI pusht.
 
 ## 2. Build
 
@@ -28,12 +29,19 @@ eerst de drie open vragen uit proposal.md.
 
 - [ ] 3.1 Forgejo Actions workflow: lint (mkdocs build --strict) +
       freshness-check + import-sync-check op elke PR.
-- [ ] 3.2 Deploy-job op main: publieke build naar `pages` repo pushen
-      (deploy-token als repo-secret, minimale scope).
+- [ ] 3.2 Deploy-job op main: publieke build naar de `pages`-branch van
+      ditzelfde repo pushen (deploy-token als repo-secret, minimale scope).
 - [ ] 3.3 Nightly rebuild (cron in workflow) — spokes wijzigen buiten de hub om.
 - [ ] 3.4 Private build: documenteer het commando (`uv run mkdocs build -f
       mkdocs.private.yml`); automatisering op de interne beheer-host pas na
       open vraag 3.
+- [ ] 3.5 Contract-check-script (`scripts/check_contract.py`): valideert per
+      geïmporteerd repo het docs-contract — front matter met `status` +
+      `last_reviewed`, `docs/index.md` aanwezig, uitsluitend Diátaxis-mappen.
+      Draait op elke PR én is als pre-push hook uitrolbaar naar de spokes
+      (sha-gepind, zoals het Conduction-techbook zijn hooks exporteert).
+      Optie: het bestaande Conduction-contract-check-script hergebruiken/
+      parametriseren in plaats van nieuwbouw — afwegen bij implementatie.
 
 ## 4. Sluitstuk
 

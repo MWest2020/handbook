@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-07-12
+
+- Northstar-sectie toegevoegd aan `openspec/project.md` (bewezen docs/code-
+  sync vóór elke push, handbook als enige MCP-ingang voor agents,
+  dichtgetimmerde agent-operaties met autonomieniveaus) plus roadmap met
+  vier geplande changes (`add-drift-gates`, `add-hub-mcp`,
+  `add-agent-guardrails`, `add-docs-claims`).
+- Spec-reparaties uit review 2026-07-11:
+  - Spec-delta's toegevoegd voor `docs-contract` en `handbook-portal`
+    (SHALL-requirements met scenario's); change 1 gemotiveerd zonder delta
+    (read-only audit).
+  - Contract-check-script als taak 3.5 in change 3 (PR-gate + sha-gepinde
+    pre-push hook voor spokes; hergebruik Conduction-script als optie).
+  - Pages-mechaniek gecorrigeerd in change 3: `pages`-BRANCH in het
+    handbook-repo (subpad `/handbook`) i.p.v. een apart `pages`-repo (dat
+    zou de root claimen); proposal en taken 1.2/3.2 aangepast.
+  - PROMPT.md: token-scopes per change gespecificeerd (read-only voor de
+    audit, minimale write/PR-scopes per forge voor change 2).
+  - Inventaris-verversregel toegevoegd (change 2, taak 4.3): repos.json
+    herijken bij elk archiefmoment.
+  - "Alleen additief" in change 2 herformuleerd tot "geen verplaatsingen
+    buiten taak 2.2".
+  - README vervangen door één beschrijvende alinea (dubbele koppen weg).
+
 ## 2026-07-11
 
 - Openspec-specs voor het personal-handbook-ecosysteem toegevoegd

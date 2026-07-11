@@ -13,6 +13,8 @@ read-only fundering onder changes 2 en 3.
   (machine-leesbaar, zelfde inhoud) in het handbook-repo (of tijdelijk lokaal
   tot dat repo bestaat).
 - GEEN wijzigingen aan bestaande repos. Deze change is strikt lezend.
+- Geen spec-delta: dit is een read-only audit die geen capability-gedrag
+  toevoegt of wijzigt; het artefact zelf is de output.
 
 ## Scope
 

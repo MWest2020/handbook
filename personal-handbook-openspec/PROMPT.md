@@ -4,6 +4,17 @@ Plak onderstaande prompt in Claude Code in een lege werkdirectory waar deze
 `openspec/`-map naast staat. Zorg dat `CODEBERG_TOKEN` (read-only scope:
 repository) en `gh auth status` werken vóór je start.
 
+Tokens per change (minimale scope, apart token per doel):
+
+- **Change 1 (audit, read-only):** `CODEBERG_TOKEN` met alleen
+  `read:repository`; GitHub via `gh` met standaard leestoegang. Geen
+  write-scopes tijdens de audit.
+- **Change 2 (PR's naar eigen repos):** per forge een apart write-token —
+  Codeberg/Forgejo: `write:repository` (branch pushen + PR openen), geen
+  admin- of org-scopes; GitHub: `gh` met `repo`-scope of een fine-grained
+  token met `contents: write` + `pull requests: write`, beperkt tot de
+  betrokken repos. Pas aanmaken/gebruiken vanaf change 2.
+
 ---
 
 Je werkt aan mijn persoonlijke handbook-ecosysteem. Lees eerst volledig:

@@ -59,6 +59,7 @@ Alleen voor repos met actieve Claude Code-ontwikkeling. Minimaal en expliciet:
 
 ## Impact
 
-- Alleen additieve wijzigingen (nieuwe bestanden, geen verplaatsingen van
-  bestaande docs zonder expliciete taak).
+- Geen verplaatsingen buiten taak 2.2 (migratie van bestaande losse docs
+  naar de Diátaxis-structuur); alle overige wijzigingen zijn additief
+  (nieuwe bestanden).
 - Bestaande README's blijven; `docs/index.md` verwijst ernaar, vervangt niet.

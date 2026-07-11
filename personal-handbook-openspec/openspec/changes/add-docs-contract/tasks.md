@@ -43,3 +43,6 @@ Vereist: door Mark vastgestelde `inventory/repos.json` uit change 1.
 - [ ] 4.1 Update `inventory/repos.json`: `has_docs` en `has_mcp_json`
       bijwerken naar de nieuwe werkelijkheid na merge.
 - [ ] 4.2 Rapporteer: welke repos klaar, welke PR's open, welke geweigerd.
+- [ ] 4.3 Verversregel: bij elk archiefmoment (een change gaat naar
+      `openspec/archive/`) wordt `inventory/repos.json` herijkt tegen de
+      forges, zodat de inventaris niet stilzwijgend veroudert.

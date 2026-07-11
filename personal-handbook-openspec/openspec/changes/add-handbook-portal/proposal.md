@@ -8,11 +8,15 @@ site nooit uiteenlopen — het Conduction-model, geschaald naar één persoon.
 
 ## What changes
 
-Twee nieuwe repos op Codeberg:
+Eén nieuw repo op Codeberg:
 
 - **`handbook`**: mkdocs-bron, importlijst, pipeline, deze openspec-map.
-- **`pages`**: wegwerpbaar deploy-target voor Codeberg Pages. Geen handwerk,
-  alleen CI pusht ernaartoe.
+  Deploy-target is een orphan branch **`pages`** in ditzelfde repo
+  (Codeberg Pages serveert een `pages`-branch van repo X op
+  `<user>.codeberg.page/X/`). Geen handwerk op die branch, alleen CI pusht
+  ernaartoe. Bewust géén apart repo met de naam `pages`: dat zou op de ROOT
+  van `<user>.codeberg.page` serveren en het account-brede Pages-domein
+  claimen.
 
 ## Ontwerp
 
@@ -42,8 +46,8 @@ Twee nieuwe repos op Codeberg:
 
 - Nieuwe CI-runs bij elke push naar handbook + nightly rebuild (spokes wijzigen
   zonder dat de hub het weet; nightly vangt dat).
-- Codeberg Pages is per account gedeeld; het handbook claimt het subpad
-  `/handbook`, niet de root.
+- Codeberg Pages is per account gedeeld; het handbook serveert via zijn
+  eigen `pages`-branch op het subpad `/handbook`, niet op de root.
 
 ## Open vragen (beslissen vóór apply)
 
