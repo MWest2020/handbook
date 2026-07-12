@@ -1,5 +1,5 @@
 # Private homelab-context: concrete hostnamen/netwerkdetails, nooit publiek
-personal-handbook-openspec/openspec/private/
+openspec/private/
 
 # Secrets
 .env

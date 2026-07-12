@@ -1,0 +1,44 @@
+# Publieke handbook-pipeline: check op elke PR, build+deploy op main,
+# nightly rebuild (spokes wijzigen buiten de hub om; de cron vangt dat).
+name: handbook
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Sync omgeving (gelockte versies)
+        run: uv sync --frozen
+
+      - name: Importlijst synchroon met inventaris
+        run: uv run python scripts/gen_imports.py --check
+
+      - name: Publieke build (strict)
+        run: uv run mkdocs build --strict
+
+      - name: Docs-contract van geïmporteerde repos
+        run: uv run python scripts/check_contract.py
+
+      - name: Freshness (waarschuwing, geen gate)
+        run: uv run python scripts/check_freshness.py docs
+
+      - name: Deploy naar gh-pages
+        if: github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site

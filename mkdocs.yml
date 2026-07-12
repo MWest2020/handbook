@@ -1,0 +1,34 @@
+# Publieke handbook-build → GitHub Pages (mwest2020.github.io/handbook/).
+# Het repos-blok wordt beheerd door scripts/gen_imports.py en in CI
+# gevalideerd tegen inventory/repos.json — niet met de hand bijwerken.
+# Nav is bewust automatisch (mappenstructuur); spokes hebben geen eigen
+# mkdocs.yml nodig (multirepo repos-modus).
+site_name: Handbook
+site_url: https://mwest2020.github.io/handbook/
+repo_url: https://github.com/MWest2020/handbook
+theme:
+  name: material
+  language: nl
+
+validation:
+  links:
+    # Spoke-docs linken bewust naar bestanden buiten hun docs/ (bv. ../README.md,
+    # contract-eis). Binnen de aggregatie zijn dat geen fouten; --strict blijft
+    # wel hard op config- en nav-problemen.
+    not_found: info
+    absolute_links: info
+    unrecognized_links: info
+
+plugins:
+  - search
+  - multirepo:
+      cleanup: true
+      repos:
+        # BEGIN IMPORTS (beheerd door scripts/gen_imports.py)
+        - section: estafette
+          import_url: 'https://github.com/MWest2020/estafette?branch=main&docs_dir=docs/*'
+        - section: Wanderer
+          import_url: 'https://github.com/MWest2020/Wanderer?branch=main&docs_dir=docs/*'
+        - section: wordsworth
+          import_url: 'https://github.com/MWest2020/wordsworth?branch=main&docs_dir=docs/*'
+        # END IMPORTS
