@@ -43,11 +43,12 @@ krijgt later meer mogelijkheden, dus de gates wegen zwaarder, niet lichter.
 
 ## Scope (forges)
 
-- **Codeberg** (Forgejo): primaire forge voor het handbook + persoonlijke repos.
-- **GitHub** (`MWest2020`): bestaande projectrepos (o.a. zeef, openanonymiser,
-  wanderer, estafette, billbird, skill-forge, certswap, gitsweeper). Deze blijven
-  waar ze staan; het handbook importeert cross-forge. Migratie naar Codeberg is
-  expliciet BUITEN scope van deze changes.
+- **GitHub** (`MWest2020`): de enige forge voor dit hele ecosysteem — bestaande
+  projectrepos (o.a. zeef, wanderer, estafette, billbird, skill-forge, certswap,
+  gitsweeper) én het handbook-repo zelf.
+- **Codeberg is werkcontext** (werkgever-org) en blijft volledig buiten dit
+  persoonlijke handbook — geen repos, geen imports, geen deploys daarheen.
+  (Besluit Mark 2026-07-12; verving het oorspronkelijke Codeberg-plan.)
 
 ## Changes en afhankelijkheden
 
@@ -86,6 +87,6 @@ voorstel-eerst:
   Code-sessies in dat repo. Alleen voor repos met actieve agent-ontwikkeling.
 - **Docs-contract**: `/docs` met Diátaxis-light indeling + front matter. Zie
   change 2 voor de exacte specificatie.
-- **Handbook**: het aggregatie-repo (naam: `handbook`, op Codeberg). Bewust géén
+- **Handbook**: het aggregatie-repo (naam: `handbook`, op GitHub `MWest2020`). Bewust géén
   "techbook": dit dekt ook niet-platformzaken (grant-administratie-verwijzingen,
   project-portfolio), en er is geen tweede boek om tegen af te bakenen.

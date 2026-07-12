@@ -8,15 +8,13 @@ site nooit uiteenlopen — het Conduction-model, geschaald naar één persoon.
 
 ## What changes
 
-Eén nieuw repo op Codeberg:
+Eén nieuw repo op GitHub `MWest2020` (besluit 2026-07-12: alles personal
+blijft op GitHub; Codeberg is werkcontext en blijft buiten dit ecosysteem):
 
 - **`handbook`**: mkdocs-bron, importlijst, pipeline, deze openspec-map.
-  Deploy-target is een orphan branch **`pages`** in ditzelfde repo
-  (Codeberg Pages serveert een `pages`-branch van repo X op
-  `<user>.codeberg.page/X/`). Geen handwerk op die branch, alleen CI pusht
-  ernaartoe. Bewust géén apart repo met de naam `pages`: dat zou op de ROOT
-  van `<user>.codeberg.page` serveren en het account-brede Pages-domein
-  claimen.
+  Deploy-target is een orphan branch **`gh-pages`** in ditzelfde repo
+  (GitHub Pages serveert op `mwest2020.github.io/handbook/`). Geen handwerk
+  op die branch, alleen CI pusht ernaartoe.
 
 ## Ontwerp
 
@@ -24,12 +22,13 @@ Eén nieuw repo op Codeberg:
   waarheid over welke repos meedoen; die lijst wordt gegenereerd/gevalideerd
   tegen `inventory/repos.json` (`handbook_import: yes` én
   `sensitivity: public-ok`). CI faalt bij drift tussen lijst en inventaris.
-- **Publiek/privaat-splitsing.** Publieke build → Codeberg Pages
-  (`<user>.codeberg.page/handbook`). Private sectie (homelab, private-only
+- **Publiek/privaat-splitsing.** Publieke build → GitHub Pages
+  (`mwest2020.github.io/handbook/`). Private sectie (homelab, private-only
   repos): aparte build-target die lokaal of op de interne beheer-host draait en NIET naar
   Pages pusht. Zelfde mkdocs-bron, tweede config (`mkdocs.private.yml`) die
-  de publieke config erft en de private imports toevoegt. Cross-forge import
-  vanaf GitHub is toegestaan (read-only clone in CI).
+  de publieke config erft en de private imports toevoegt. Alle imports komen
+  van GitHub (private repos via read-only token in CI, alleen voor de
+  private build).
 - **Freshness-gate.** Hergebruik het check_freshness-principe uit het
   Conduction-handbook: pagina's met `last_reviewed` ouder dan 180 dagen →
   CI-warning (geen hard fail; één eigenaar, dus een fail zou alleen jezelf
@@ -46,13 +45,13 @@ Eén nieuw repo op Codeberg:
 
 - Nieuwe CI-runs bij elke push naar handbook + nightly rebuild (spokes wijzigen
   zonder dat de hub het weet; nightly vangt dat).
-- Codeberg Pages is per account gedeeld; het handbook serveert via zijn
-  eigen `pages`-branch op het subpad `/handbook`, niet op de root.
+- GitHub Pages serveert per repo op `mwest2020.github.io/<repo>/`; het
+  handbook claimt dus alleen het subpad `/handbook`.
 
-## Open vragen (beslissen vóór apply)
+## Open vragen (beslist 2026-07-12)
 
-1. Codeberg-accountnaam/org voor de twee repos.
-2. Nightly rebuild via Forgejo Actions of Woodpecker? (Voorstel: Forgejo
-   Actions, consistent met con-ci-ervaring; geen OCI-build nodig, dus geen
-   rootless-problematiek.)
-3. Draait de private build op de interne beheer-host als cronjob of on-demand?
+1. ~~Forge/account~~ → GitHub `MWest2020` (Codeberg = werk, blijft erbuiten).
+2. ~~Forgejo Actions of Woodpecker~~ → GitHub Actions (zelfde workflow-syntax,
+   forge waar alles al staat; wave 1 draaide er al CI).
+3. Private build: on-demand commando eerst; automatisering op de interne
+   beheer-host pas als de private sectie stabiel is (herzien na een maand).

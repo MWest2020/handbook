@@ -5,9 +5,9 @@ eerst de drie open vragen uit proposal.md.
 
 ## 1. Repos aanmaken
 
-- [ ] 1.1 `handbook` repo op Codeberg (public), EUPL-1.2, deze openspec-map
-      erin, `inventory/` erin.
-- [ ] 1.2 Orphan branch `pages` in het `handbook`-repo als deploy-target
+- [ ] 1.1 `handbook` repo op GitHub `MWest2020` (public), EUPL-1.2, deze
+      openspec-map erin, `inventory/` erin.
+- [ ] 1.2 Orphan branch `gh-pages` in het `handbook`-repo als deploy-target
       (alleen een README: "deploy target, niet handmatig bewerken").
       Branch-protectie: alleen CI pusht.
 
@@ -27,7 +27,7 @@ eerst de drie open vragen uit proposal.md.
 
 ## 3. CI/CD
 
-- [ ] 3.1 Forgejo Actions workflow: lint (mkdocs build --strict) +
+- [ ] 3.1 GitHub Actions workflow: lint (mkdocs build --strict) +
       freshness-check + import-sync-check op elke PR.
 - [ ] 3.2 Deploy-job op main: publieke build naar de `pages`-branch van
       ditzelfde repo pushen (deploy-token als repo-secret, minimale scope).
