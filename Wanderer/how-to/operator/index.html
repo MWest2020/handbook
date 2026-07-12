@@ -1,0 +1,4487 @@
+
+<!doctype html>
+<html lang="nl" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mwest2020.github.io/handbook/Wanderer/how-to/operator/">
+      
+      
+        <link rel="prev" href="../../explanation/adr/0017-ui-personas/">
+      
+      
+        <link rel="next" href="../releasing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Operator Guide - Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#operator-guide" class="md-skip">
+          Ga naar inhoud
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Handbook" class="md-header__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Operator Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Zoeken" placeholder="Zoeken" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Zoeken">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Leegmaken" aria-label="Leegmaken" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Zoeken initialiseren
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatie" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Handbook" class="md-nav__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../conventies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventies
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wanderer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved: Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer agent
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/maintainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintainability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_4" id="__nav_3_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Adr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0000-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NNNN. Short title
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0001-openspec-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0001. OpenSpec workflow for non-trivial changes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0002-api-stability-classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0002. API stability classes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0003-dependency-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0003. Dependency policy
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0004-assessor-rule-engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0004. Assessor rule engine: Go functions, not a DSL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0005-mcp-transport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0005. MCP transport: hand-rolled stdio JSON-RPC
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0006-in-process-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0006. In-process cron scheduler, not Kubernetes CronJob
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0007-agent-trust-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0007. Agent → core trust model: HMAC over TLS
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0008-egress-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0008. Egress redaction: hard contract, tested first
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0009-dual-framework-assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0009. Dual framework assessor: DICTU + EU CSF / SEAL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0010-ebpf-flow-probe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0010 — eBPF for the egress flow probe
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0011-rename-dictu-to-wand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0011 — Rename the first-party rule pack from dictu to wand
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0012-host-rule-pattern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0012 — Vendor-jurisdiction rule pattern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0013-oidc-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0013 — Nextcloud as OIDC login for wanderer serve --ui
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0014-marketplace-appapi-exapp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0014 — Nextcloud marketplace distribution via AppAPI ExApp
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0015-sovereignty-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0015 — Sovereignty overview (the synthesis view)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0016-ui-dev-scan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0016 — Dev-mode scan form in the UI (read-only stays the prod default)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0017-ui-personas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0017 — UI information architecture: Tourist / Explorer / Farmer
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator Guide
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator Guide
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-file-for-wanderer-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config file for wanderer serve
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Config file for wanderer serve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting precedence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-systemd-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample systemd unit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#organisations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Organisations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-to-day" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day-to-day
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organisation-precedence-in-wanderer-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisation precedence in wanderer scan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nextcloud-login-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nextcloud login (OIDC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish-scans-into-nextcloud-webdav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish scans into Nextcloud (WebDAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#geolite2-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GeoLite2 setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GeoLite2 setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-time-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-time setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths-wanderer-expects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths Wanderer expects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opt-out-for-offline-labs-and-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opt-out for offline labs and CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-keep-geolite2-fresh-with-geoipupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended: keep GeoLite2 fresh with geoipupdate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-stub-for-offline-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test stub for offline runs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-single-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run a single scan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run a single scan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pair-with-amass-for-richer-subdomain-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pair with Amass for richer subdomain coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpret-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpret the output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serve-the-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serve the HTTP API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transit-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transit path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hosting-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hosting identity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mail-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mail routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS hosting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-third-party-origin-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web third-party origin map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cdn-front-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CDN / front detection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-chain-geography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS-chain geography
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-vendor-jurisdiction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package vendor jurisdiction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-image-sovereignty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container image sovereignty
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nextcloud-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nextcloud inspector
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nextcloud inspector">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sovereignty-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sovereignty rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#playwright-ui-smoke-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playwright UI smoke layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Playwright UI smoke layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separate-from-testsplaywrightfixturesagent-hostyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Separate from tests/playwright/fixtures/agent-host.yaml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releasing Wanderer + keeping the ExApp in sync
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduling
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: your first Wanderer scan
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assessor
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drift
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/egress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/exporters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exporters
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/findings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings Reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estafette
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estafette
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    estafette — documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoC catalogue — entry specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer manifest specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transferability tiers
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Homelab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../homelab/herstel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wordsworth
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wordsworth
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    wordsworth docs
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-file-for-wanderer-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config file for wanderer serve
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Config file for wanderer serve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting precedence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-systemd-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample systemd unit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#organisations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Organisations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-to-day" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day-to-day
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organisation-precedence-in-wanderer-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisation precedence in wanderer scan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nextcloud-login-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nextcloud login (OIDC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish-scans-into-nextcloud-webdav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish scans into Nextcloud (WebDAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#geolite2-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GeoLite2 setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GeoLite2 setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-time-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-time setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths-wanderer-expects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths Wanderer expects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opt-out-for-offline-labs-and-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opt-out for offline labs and CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-keep-geolite2-fresh-with-geoipupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended: keep GeoLite2 fresh with geoipupdate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-stub-for-offline-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test stub for offline runs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-single-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run a single scan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run a single scan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pair-with-amass-for-richer-subdomain-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pair with Amass for richer subdomain coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpret-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpret the output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serve-the-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serve the HTTP API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transit-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transit path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hosting-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hosting identity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mail-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mail routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS hosting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-third-party-origin-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web third-party origin map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cdn-front-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CDN / front detection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-chain-geography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS-chain geography
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-vendor-jurisdiction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package vendor jurisdiction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-image-sovereignty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container image sovereignty
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nextcloud-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nextcloud inspector
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nextcloud inspector">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sovereignty-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sovereignty rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#playwright-ui-smoke-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playwright UI smoke layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Playwright UI smoke layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separate-from-testsplaywrightfixturesagent-hostyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Separate from tests/playwright/fixtures/agent-host.yaml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="operator-guide">Operator Guide</h1>
+<p>This document describes how to run Wanderer, interpret its output, and
+operate the single-tenant HTTP API. It covers the MVP only —
+scheduling, authentication, and the wand assessor ship as separate
+changes.</p>
+<h2 id="install">Install</h2>
+<p>Build from source:</p>
+<pre><code class="language-sh">make build
+./bin/wanderer version
+</code></pre>
+<p>Or run directly with <code>go run</code>:</p>
+<pre><code class="language-sh">go run ./cmd/wanderer scan example.nl
+</code></pre>
+<h2 id="config-file-for-wanderer-serve">Config file for <code>wanderer serve</code></h2>
+<p>For long-running deployments — systemd, Compose, anywhere a wall
+of CLI flags is awkward — point <code>wanderer serve</code> at a YAML config
+file:</p>
+<pre><code class="language-sh">wanderer serve --config /etc/wanderer/serve.yaml
+</code></pre>
+<p>The same can be set via the <code>WANDERER_CONFIG</code> env var. Every
+field is optional; an empty file is equivalent to no <code>--config</code>
+at all.</p>
+<pre><code class="language-yaml"># /etc/wanderer/serve.yaml
+listen: &quot;127.0.0.1:8080&quot;
+db: &quot;/var/lib/wanderer/wanderer.db&quot;
+
+geoip:
+  asn:     &quot;/var/lib/wanderer/geoip/GeoLite2-ASN.mmdb&quot;
+  country: &quot;/var/lib/wanderer/geoip/GeoLite2-Country.mmdb&quot;
+  optional: false      # equivalent to --no-geoip
+
+ui:
+  enabled:  true
+  htpasswd: &quot;/etc/wanderer/htpasswd&quot;
+
+oidc:                  # optional — Nextcloud (or any OIDC IdP) login for /ui/
+  provider_url:        &quot;https://cloud.example.nl&quot;
+  client_id:           &quot;wanderer&quot;
+  client_secret_file:  &quot;/etc/wanderer/oidc-secret&quot;
+  redirect_url:        &quot;https://wanderer.example.nl/ui/oauth/callback&quot;
+  # scopes:            [openid, profile, email]   # default; override if needed
+  # session_ttl:       12h                         # hard session lifetime
+  # revalidate_interval: 0s                        # 0 = check the IdP every request
+  # cookie_secure:     true                         # set false only for local http
+
+nextcloud:             # optional — publish each completed scan into Nextcloud
+  enabled:           true
+  url:               &quot;https://cloud.example.nl&quot;
+  username:          &quot;wanderer-bot&quot;
+  app_password_file: &quot;/etc/wanderer/nc.token&quot;
+  target_dir:        &quot;Wanderer&quot;      # relative to the bot user's Files root
+
+schedules: &quot;/etc/wanderer/schedules.yaml&quot;
+
+scan:
+  per_probe_timeout:     30s
+  budget:                2m
+  user_agent:            &quot;Wanderer/1.0&quot;
+  allow_private_targets: false
+</code></pre>
+<p>The parser is <strong>strict</strong>: a typo like <code>htpasswrd</code> for <code>htpasswd</code>
+fails the process at startup with an error naming the bad field,
+never silently dropped to a default.</p>
+<h3 id="setting-precedence">Setting precedence</h3>
+<p>When the same setting is provided in more than one place, the
+highest-precedence layer wins:</p>
+<ol>
+<li><strong>CLI flag</strong> explicitly passed (<code>--addr :9090</code>)</li>
+<li><strong>Environment variable</strong> explicitly set (<code>WANDERER_LISTEN</code>)</li>
+<li><strong>YAML config</strong> value</li>
+<li><strong>Hard-coded default</strong></li>
+</ol>
+<p>So an operator can lay down <code>serve.yaml</code> as the durable source of
+truth, then override one knob from a one-off invocation without
+editing the file:</p>
+<pre><code class="language-sh">wanderer serve --config /etc/wanderer/serve.yaml --addr :7070
+# YAML says :8080, flag wins → server listens on :7070
+</code></pre>
+<p>A flag explicitly set to its default value (e.g.
+<code>--ui=false</code>) still counts as "explicitly set" and overrides a
+YAML <code>ui.enabled: true</code>.</p>
+<h3 id="sample-systemd-unit">Sample systemd unit</h3>
+<pre><code class="language-ini"># /etc/systemd/system/wanderer.service
+[Unit]
+Description=Wanderer sovereignty monitor
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/wanderer serve --config /etc/wanderer/serve.yaml
+Restart=on-failure
+User=wanderer
+Group=wanderer
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<h2 id="organisations">Organisations</h2>
+<p>Wanderer groups Targets — perimeter domains and agent hosts — under
+<strong>organisations</strong>. Every Target belongs to exactly one organisation.
+A fresh database starts with one seeded organisation (slug
+<code>default</code>); operators with one customer rename it to their real
+handle, operators with many add organisations as needed.</p>
+<h3 id="first-run">First-run</h3>
+<p><code>wanderer scan example.nl</code> without <code>--organisation</code> attaches the
+scan to the seeded <code>default</code> organisation and emits a one-line
+stderr nudge pointing at the flag and the rename command.</p>
+<pre><code class="language-sh">wanderer org rename --slug default --new-slug acme --name &quot;ACME B.V.&quot;
+</code></pre>
+<p>That converts the seed in place — every existing Target keeps the
+same ID, just under the new slug + name.</p>
+<h3 id="day-to-day">Day-to-day</h3>
+<pre><code class="language-sh">wanderer org add --slug customer1 --name &quot;Customer One&quot;
+wanderer org list
+wanderer org show acme
+wanderer scan --organisation acme example.nl
+</code></pre>
+<p>Bulk seeding from a YAML file (idempotent — running it twice
+updates names but does not duplicate):</p>
+<pre><code class="language-yaml"># /etc/wanderer/orgs.yaml
+organisations:
+  - slug: customer1
+    name: Customer One
+  - slug: customer2
+    name: Customer Two
+    description: Pilot deployment
+</code></pre>
+<pre><code class="language-sh">wanderer org add --from-yaml /etc/wanderer/orgs.yaml
+</code></pre>
+<h3 id="organisation-precedence-in-wanderer-scan">Organisation precedence in <code>wanderer scan</code></h3>
+<p>The flag <code>--organisation &lt;slug&gt;</code> wins over <code>WANDERER_ORGANISATION</code>
+in the env, which wins over <code>scan.organisation</code> in <code>serve.yaml</code>,
+which falls back to <code>default</code>. So an operator can lay down the
+config once and only override per-invocation when they need to.</p>
+<h3 id="schedules">Schedules</h3>
+<p>Each entry in the schedules YAML can carry <code>organisation: &lt;slug&gt;</code>.
+Entries without a slug fall back to <code>scan.organisation</code> in
+<code>serve.yaml</code>, then to <code>default</code>. The scheduler resolves the slug at
+each tick — <code>wanderer org rename</code> takes effect without restarting
+the server.</p>
+<pre><code class="language-yaml"># /etc/wanderer/schedules.yaml
+schedules:
+  - name: customer1-daily
+    cron: &quot;0 3 * * *&quot;
+    target:
+      domain: customer1.example
+    organisation: customer1   # explicit override
+
+  - name: acme-internal
+    cron: &quot;0 4 * * *&quot;
+    target:
+      domain: app.acme.internal
+    # uses scan.organisation from serve.yaml
+</code></pre>
+<h3 id="agent">Agent</h3>
+<p>Hosts running <code>wanderer agent</code> declare their organisation in the
+agent YAML:</p>
+<pre><code class="language-yaml">core:
+  mode: local
+  db: /var/lib/wanderer/wanderer.db
+  organisation: acme
+</code></pre>
+<p>An empty <code>organisation</code> falls back to <code>default</code>; an unknown slug
+fails fast at agent startup, before any Findings land.</p>
+<h3 id="ui">UI</h3>
+<p><code>/ui/</code> lists every registered organisation with a target count and
+a drill-in link. Per-organisation dashboards live at
+<code>/ui/orgs/{slug}</code> — same DAR shape (Dashboard / Analysis /
+Reporting) but filtered to that organisation. The Reporting page
+takes an optional <code>?org=&lt;slug&gt;</code> query parameter to filter the
+cross-target view.</p>
+<h3 id="nextcloud-login-oidc">Nextcloud login (OIDC)</h3>
+<p>By default <code>/ui/</code> is protected by HTTP Basic against the <code>htpasswd</code>
+file. Organisations that already run a self-hosted Nextcloud can
+instead accept Nextcloud as the login provider, so operators sign
+in once at their Nextcloud and a disable there cuts off Wanderer
+access. Configure the <code>oidc:</code> block (above) and install the
+Nextcloud <strong>OpenID Connect</strong> (<code>user_oidc</code>) app's <em>provider</em> side, or
+register Wanderer as an OIDC client in any standards-compliant IdP.</p>
+<p>How it behaves:</p>
+<ul>
+<li><strong>Lazy discovery.</strong> Wanderer does <strong>not</strong> contact the provider at
+  startup — it discovers <code>.well-known/openid-configuration</code> on the
+  first login. So <code>wanderer serve</code> boots even when Nextcloud is
+  down, and OIDC starts working the moment the provider answers.</li>
+<li><strong>Server-side sessions.</strong> A successful login sets an opaque,
+  <code>HttpOnly</code> cookie backed by a row in the <code>ui_sessions</code> SQLite
+  table. There is no JWT in the cookie and nothing to revoke-list.</li>
+<li><strong>Revocation.</strong> On each request past <code>revalidate_interval</code>,
+  Wanderer re-checks the session against the provider's <code>userinfo</code>
+  endpoint (refreshing the access token first). A Nextcloud-side
+  disable makes that check fail and the session is deleted. The
+  default <code>0s</code> revalidates on <strong>every</strong> request — a disable then
+  cuts access on the very next page load, at the cost of one
+  userinfo call per request. Raise it (e.g. <code>60s</code>) to trade
+  immediacy for fewer IdP round-trips. Note that <code>0s</code> also couples
+  session <em>survival</em> to IdP uptime: while Nextcloud is unreachable,
+  revalidation fails closed and live sessions are dropped — by
+  design (fail-closed revocation), with the htpasswd break-glass as
+  the escape hatch. A small non-zero interval rides out brief IdP
+  blips without logging everyone out.</li>
+<li><strong>Break-glass with htpasswd.</strong> If both <code>oidc:</code> and <code>htpasswd:</code>
+  are set, valid HTTP Basic credentials are still accepted. This is
+  the escape hatch for an OIDC outage: when Nextcloud is
+  unreachable, an operator with an htpasswd entry can still reach
+  <code>/ui/</code>. Keep at least one htpasswd account for this reason.</li>
+<li><strong>The client secret never lives in YAML.</strong> <code>client_secret_file</code>
+  points at a file (mirroring <code>hmac_secret_file</code> for the agent),
+  readable only by the Wanderer process user.</li>
+</ul>
+<p>Scope of the first wave: authentication only (any user the IdP
+knows can browse the read-only UI; group-based authorisation is a
+later wave), and a single OIDC provider per Wanderer instance.</p>
+<h3 id="publish-scans-into-nextcloud-webdav">Publish scans into Nextcloud (WebDAV)</h3>
+<p>With the <code>nextcloud:</code> block enabled, every completed scan drops a
+JSON-LD + Markdown bundle into a Nextcloud directory over WebDAV —
+so a scheduled scan becomes a shareable artefact in the customer's
+Nextcloud without the screenshot-and-paste step.</p>
+<p>Setup on the Nextcloud side:</p>
+<ol>
+<li>Create a bot user (e.g. <code>wanderer-bot</code>).</li>
+<li>Generate an <strong>app password</strong> for it (Settings → Security →
+   "Create new app password"). Put the token in the file named by
+   <code>app_password_file</code>, readable only by the Wanderer process user.</li>
+<li>Pick a <code>target_dir</code> relative to that user's Files root (default
+   <code>Wanderer</code>). Share that folder with whoever should see the
+   verdicts.</li>
+</ol>
+<p>What lands, per scan:</p>
+<ul>
+<li><code>&lt;target_dir&gt;/&lt;org-slug&gt;/&lt;scan-id&gt;.jsonld</code> — machine-readable
+  (Findings + any Assessment), durable and diffable.</li>
+<li><code>&lt;target_dir&gt;/&lt;org-slug&gt;/&lt;scan-id&gt;.md</code> — human-readable summary
+  that opens in Nextcloud's text app.</li>
+</ul>
+<p>Behaviour and guarantees:</p>
+<ul>
+<li><strong>Push, opt-in, one-way.</strong> Wanderer pushes after each scan; the
+  Nextcloud side stays passive. Nothing is read back.</li>
+<li><strong>Never blocks a scan.</strong> Publication runs after the scan is
+  persisted, with a bounded timeout and a few retries. On failure
+  it emits a <code>wanderer.nextcloud.publish.error</code> log and the scan is
+  still recorded <code>complete</code> — the operator UI stays authoritative.</li>
+<li><strong>Redacted before it leaves the host.</strong> Every Finding attribute
+  goes through the ADR-0008 egress redaction (API keys, tokens,
+  private-key blocks, URL credentials) and raw Evidence is dropped,
+  so a published bundle carries observations, not secrets.</li>
+<li><strong>Auth is an app password over HTTP Basic</strong> — no Nextcloud app to
+  install, no OAuth token-refresh dance.</li>
+</ul>
+<h3 id="mcp">MCP</h3>
+<p>Three new methods cover the AI-agent surface:</p>
+<ul>
+<li><code>org_list</code> — every organisation with metadata</li>
+<li><code>org_show</code> — one organisation by slug</li>
+<li><code>org_targets</code> — Targets attached to an organisation</li>
+</ul>
+<h2 id="geolite2-setup">GeoLite2 setup</h2>
+<p>The IP probe resolves observed IPs to ASN + country via MaxMind's
+GeoLite2 database. This is the input that unblocks the wand
+<strong>technologie</strong> dimension and most of the <strong>juridisch</strong> dimension —
+without it, every rule that depends on <code>ip.asn</code> returns <code>onbekend</code>,
+and an operator looking at the assessment sees a half-blank picture.</p>
+<p>GeoLite2 is <strong>free</strong> but the licence forbids redistribution, so
+Wanderer cannot ship it; you fetch it once and keep it fresh.</p>
+<h3 id="one-time-setup">One-time setup</h3>
+<ol>
+<li>Sign up at <a href="https://www.maxmind.com/en/geolite2/signup">https://www.maxmind.com/en/geolite2/signup</a>
+   (free MaxMind account).</li>
+<li>From your account portal, generate a <strong>license key</strong>.</li>
+<li>Download <code>GeoLite2-ASN.mmdb</code> (and optionally
+   <code>GeoLite2-Country.mmdb</code>) — either via the portal's manual
+   download, or via <code>geoipupdate</code> (recommended for hosts that
+   should stay current).</li>
+</ol>
+<h3 id="paths-wanderer-expects">Paths Wanderer expects</h3>
+<table>
+<thead>
+<tr>
+<th>Env var</th>
+<th>CLI flag</th>
+<th>Required for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WANDERER_GEOIP_ASN</code></td>
+<td><code>--geoip</code></td>
+<td>ASN + country</td>
+</tr>
+<tr>
+<td><code>WANDERER_GEOIP_COUNTRY</code></td>
+<td><code>--geoip-country</code></td>
+<td>Country only (optional; defaults to the ASN file)</td>
+</tr>
+</tbody>
+</table>
+<p>The flags apply to <code>wanderer scan</code>, <code>wanderer serve</code>, and the
+agent (where wired into the egress probe). When neither is set
+and the opt-out below is also absent, both <code>wanderer scan</code> and
+<code>wanderer serve</code> emit one warning to stderr at startup naming
+the missing flag and pointing at this guide. The scan still
+completes; the warning is informational.</p>
+<pre><code>warning: GeoLite2 ASN database is not configured — scan will
+continue with reduced assessment coverage. Pass --geoip &lt;path&gt;
+(or set WANDERER_GEOIP_ASN), or pass --no-geoip to silence
+this warning. See docs/operator.md for setup.
+</code></pre>
+<p>If the database file is configured but missing or corrupt at
+runtime, Wanderer fails <strong>fast at startup</strong>, never mid-scan.</p>
+<h3 id="opt-out-for-offline-labs-and-ci">Opt-out for offline labs and CI</h3>
+<p>Hosts that consciously run without ASN annotation (offline audit
+labs, CI smoke tests, demos) silence the warning with either:</p>
+<ul>
+<li>the <code>--no-geoip</code> CLI flag, or</li>
+<li>the <code>WANDERER_GEOIP_OPTIONAL=1</code> environment variable.</li>
+</ul>
+<p>Neither changes the runtime behaviour — the IP probe still emits
+its single <code>ip.unavailable</code> info Finding and the rest of the scan
+continues — the opt-out only suppresses the startup warning.</p>
+<h3 id="recommended-keep-geolite2-fresh-with-geoipupdate">Recommended: keep GeoLite2 fresh with <code>geoipupdate</code></h3>
+<p>MaxMind ships a small daemon
+(<a href="https://github.com/maxmind/geoipupdate"><code>geoipupdate</code></a>) that
+re-downloads the database on a schedule. Wanderer reads whatever
+file is at the configured path, so a periodic <code>geoipupdate</code> run
+followed by a <code>wanderer serve</code> SIGHUP (or process restart) is the
+operational shape we recommend.</p>
+<p>Minimal <code>/etc/GeoIP.conf</code> (the daemon's config, not Wanderer's):</p>
+<pre><code class="language-conf">AccountID YOUR_ACCOUNT_ID
+LicenseKey YOUR_LICENSE_KEY
+EditionIDs GeoLite2-ASN GeoLite2-Country
+</code></pre>
+<p>Systemd timer (preferred over crontab on systemd hosts):</p>
+<pre><code class="language-ini"># /etc/systemd/system/geoipupdate.service
+[Unit]
+Description=Update MaxMind GeoIP databases
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/geoipupdate
+</code></pre>
+<pre><code class="language-ini"># /etc/systemd/system/geoipupdate.timer
+[Unit]
+Description=Daily geoipupdate
+[Timer]
+OnCalendar=daily
+Persistent=true
+[Install]
+WantedBy=timers.target
+</code></pre>
+<pre><code class="language-sh">sudo systemctl daemon-reload
+sudo systemctl enable --now geoipupdate.timer
+</code></pre>
+<p>Crontab alternative (for non-systemd hosts):</p>
+<pre><code class="language-cron"># 03:00 every day, append output to a log
+0 3 * * * /usr/bin/geoipupdate &gt;&gt; /var/log/geoipupdate.log 2&gt;&amp;1
+</code></pre>
+<h3 id="test-stub-for-offline-runs">Test stub for offline runs</h3>
+<p><code>scripts/geoip-stub.sh /tmp/stub.mmdb</code> produces a deterministic
+empty-but-valid GeoLite2-shaped mmdb so the test suite (and an
+operator running smoke tests) can exercise the populated-but-empty
+branch of the IP probe without a real MaxMind license. The stub
+opens cleanly via the same reader Wanderer uses; every IP lookup
+returns "not found" rather than erroring out.</p>
+<h2 id="run-a-single-scan">Run a single scan</h2>
+<pre><code class="language-sh">wanderer scan example.nl \
+  --geoip /var/lib/wanderer/GeoLite2-ASN.mmdb \
+  --db ./wanderer.db
+</code></pre>
+<p>Exit codes:</p>
+<ul>
+<li><code>0</code> — scan completed or completed partially (at least one probe
+  produced findings)</li>
+<li><code>1</code> — scan failed (domain did not resolve, every probe failed, or
+  the store was unreachable)</li>
+<li><code>2</code> — invalid arguments</li>
+</ul>
+<p>Output is grouped by probe. Example:</p>
+<pre><code>Scan s_1729...  status=complete
+
+== dns ==
+  [info] dns.a  subject=example.nl
+      address: 93.184.216.34
+  [observation] dns.mx  subject=example.nl  dim=data_ai
+      host: mail.example.nl.
+      preference: 10
+...
+</code></pre>
+<p>Persisted findings live in the SQLite database (<code>./wanderer.db</code> by
+default). You can inspect them with any SQLite client:</p>
+<pre><code class="language-sh">sqlite3 wanderer.db &quot;SELECT probe_id, severity, subject FROM findings ORDER BY created_at DESC LIMIT 20;&quot;
+</code></pre>
+<h3 id="pair-with-amass-for-richer-subdomain-coverage">Pair with Amass for richer subdomain coverage</h3>
+<p>Wanderer's built-in subdomain discovery is intentionally light: SAN
+mining from the apex certificate plus a fixed prefix sweep. For a
+broader picture without bolting an active enumerator into the scanner
+itself, run <a href="https://github.com/owasp-amass/amass"><code>amass</code></a> once and
+feed the result in:</p>
+<pre><code class="language-sh">amass enum -passive -d example.nl -json amass.json
+wanderer scan example.nl \
+  --geoip /var/lib/wanderer/GeoLite2-ASN.mmdb \
+  --amass amass.json \
+  --db ./wanderer.db
+</code></pre>
+<p><code>internal/scanner/amass.go</code> parses the JSONL produced by <code>amass enum
+-json</code> and merges the FQDNs into <code>target.Related</code> so the IP probe
+resolves them in pass 2 and the assessor sees them as third parties.
+The same mechanism is available over the API: <code>POST /scans</code> accepts an
+<code>amass_json</code> field carrying a server-local file path (the serve
+endpoint refuses inline file bodies — keep the file on the box).</p>
+<p>CLI failures during Amass parsing are fatal at startup, not silent.
+A malformed JSON file aborts before the scan begins; a missing path
+errors immediately. This is deliberate — silent fallthrough on a
+flag that names a file is the kind of thing that makes a scan look
+fine while being effectively unenriched.</p>
+<h2 id="interpret-the-output">Interpret the output</h2>
+<p>Every finding carries:</p>
+<ul>
+<li><code>ProbeID</code> — stable identifier, e.g. <code>tls.issuer</code>, <code>http.third_party</code>.</li>
+<li><code>Severity</code> — <code>info</code>, <code>observation</code>, <code>concern</code>, <code>finding</code>. This is
+  deliberately coarse; precise scoring is the assessor's job.</li>
+<li><code>DimensionHint</code> — which sovereignty dimension the finding informs, if any.</li>
+<li><code>Subject</code> — the thing being described (a domain, a host, an IP).</li>
+<li><code>Attributes</code> — probe-specific structured data.</li>
+<li><code>Evidence</code> — raw source material (certificate PEM, verbatim DNS
+  record) retained so a reviewer can audit without re-scanning.</li>
+</ul>
+<p>Interesting starting points when looking at a fresh scan:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Probe/Finding to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where does mail land?</td>
+<td><code>dns.mx</code> hosts + <code>ip.asn</code></td>
+</tr>
+<tr>
+<td>Who issued the cert?</td>
+<td><code>tls.issuer</code> (dim: juridisch)</td>
+</tr>
+<tr>
+<td>Which non-EU providers serve resources?</td>
+<td><code>http.third_party</code> + <code>ip.asn</code></td>
+</tr>
+<tr>
+<td>Who controls DNS continuity?</td>
+<td><code>dns.ns</code></td>
+</tr>
+<tr>
+<td>Is HTTPS configured correctly?</td>
+<td><code>tls.validity</code>, <code>tls.verify</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="serve-the-http-api">Serve the HTTP API</h2>
+<pre><code class="language-sh">wanderer serve \
+  --addr :8080 \
+  --db /var/lib/wanderer/wanderer.db \
+  --geoip /var/lib/wanderer/GeoLite2-ASN.mmdb
+</code></pre>
+<p>Endpoints:</p>
+<ul>
+<li><code>POST /scans</code> — body <code>{"domain":"example.nl","related":["..."]}</code>.
+  Returns the finished Scan record (synchronous in the MVP).</li>
+<li><code>GET /scans/{id}</code> — returns a stored Scan with all findings.</li>
+<li><code>GET /healthz</code> — liveness probe.</li>
+<li><code>GET /metrics</code> — Prometheus counters (see <code>docs/observability.md</code>).</li>
+</ul>
+<p>All errors use a structured shape:</p>
+<pre><code class="language-json">{&quot;error&quot;:{&quot;code&quot;:&quot;not_found&quot;,&quot;message&quot;:&quot;scan not found&quot;}}
+</code></pre>
+<p><strong>No authentication</strong>. The MVP is intended for a trusted network (for
+example, run inside a Nextcloud stack alongside OpenConnector). Adding
+auth is a separate change — do not expose this port to the internet
+without a reverse proxy enforcing access control.</p>
+<h2 id="configuration-summary">Configuration summary</h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Env var</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--addr</code></td>
+<td><code>WANDERER_LISTEN</code></td>
+<td><code>:8080</code></td>
+</tr>
+<tr>
+<td><code>--db</code></td>
+<td><code>WANDERER_DB</code></td>
+<td><code>./wanderer.db</code></td>
+</tr>
+<tr>
+<td><code>--geoip</code></td>
+<td><code>WANDERER_GEOIP_ASN</code></td>
+<td>(empty)</td>
+</tr>
+<tr>
+<td><code>--geoip-country</code></td>
+<td><code>WANDERER_GEOIP_COUNTRY</code></td>
+<td>(fall back to ASN DB)</td>
+</tr>
+<tr>
+<td><code>--per-probe-timeout</code></td>
+<td>—</td>
+<td><code>30s</code></td>
+</tr>
+<tr>
+<td><code>--budget</code></td>
+<td>—</td>
+<td><code>2m</code></td>
+</tr>
+<tr>
+<td><code>--user-agent</code></td>
+<td>—</td>
+<td><code>Wanderer/0.x</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="transit-path">Transit path</h2>
+<p>The <code>transit</code> probe traces the network path to a target and attributes
+each hop — IP, reverse DNS, ASN, organisation, country, RTT — so you
+can see <strong>where a target is actually hosted and which jurisdictions its
+traffic crosses</strong>. It emits one <code>transit.hop</code> Finding per hop plus a
+<code>transit.path</code> aggregate (target IP, hops responded, countries and
+ASNs crossed). The <code>wand.transit.eu_path</code> rule scores the destination
+hop's jurisdiction (EEA → soeverein, non-EEA → afhankelijk) and names
+any non-EEA transit hops for awareness.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>Needs <code>tracepath</code> or <code>traceroute</code></strong> on <code>PATH</code> (the unprivileged
+  <code>tracepath</code> is preferred — no root). Without either, the probe emits
+  a single <code>transit.unavailable</code> Finding rather than failing the scan.</li>
+<li><strong>GeoLite2 enriches the hops.</strong> Without a database, hops still carry
+  IP + reverse DNS (which already reveals providers, e.g.
+  <code>…core.as9143.net</code>), but ASN/country — and the EEA scoring — are
+  omitted.</li>
+<li><strong>Vantage.</strong> The trace runs from the scanner. The destination-side
+  hops (the hosting provider) are robust regardless of where the
+  scanner sits; the middle transit hops are vantage-flavoured. An
+  agent-modus, on-host trace (answering "where does <em>my</em> traffic go")
+  is the stronger follow-up.</li>
+<li><strong>Budget.</strong> Bounded by <code>--per-probe-timeout</code> and a 20-hop default;
+  on ICMP-filtered paths a partial path is still recorded.</li>
+</ul>
+<h2 id="hosting-identity">Hosting identity</h2>
+<p>The first of the four "who/where" signals (with Mail, DNS, and Transit),
+for the front door: <em>who hosts my service, and where?</em> Wanderer already
+collects the pieces — the apex <code>dns.a</code>/<code>dns.aaaa</code> addresses and the
+<code>ip.asn</code> lookups the IP probe runs on them. After the scan correlates the
+two, it emits one observed aggregate Finding, <code>ip.hosting</code>, that states it
+plainly:</p>
+<pre><code>example.com is hosted at Hetzner (DE)
+</code></pre>
+<p>Unlike Mail and DNS there is no operator hostname to map — the apex <em>is</em>
+the domain. The <code>operator</code> comes from the apex IP's <code>ip.asn</code>
+organisation, which is already a "who"; a small in-repo normalisation
+table friendly-names the common, ugly ones (<code>HETZNER-AS</code> → Hetzner,
+<code>AMAZON-02</code> → AWS, <code>CLOUDFLARENET</code> → Cloudflare, …) and falls back to the
+raw organisation so an unlisted host still gets its honest name. The raw
+ASN organisation, ASN, and address are retained in the Finding's <code>routes</code>
+so the observed fact stands even when the friendly name is uncertain.</p>
+<p>This is the <em>observed</em> layer; the <code>wand.juridisch.apex_ip_eea</code> rule
+annotates it with the EEA-jurisdiction score and now leads its verdict
+with the same operator name ("hosted at Hetzner — apex IPs in DE (EEA)"),
+which is what the <strong>Hosting</strong> row of the Sovereignty overview renders.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>No GeoLite2</strong> degrades gracefully: with no <code>ip.asn</code> the Finding
+  reports the hosting operator as undetermined rather than nothing at all.</li>
+<li><strong>Anycast</strong> apex IPs (the common case for hyperscalers / CDN-fronted
+  origins) carry no country; the Finding names the operator with the
+  country undetermined.</li>
+<li><strong>No resolvable apex</strong> yields a Finding stating so rather than nothing.</li>
+<li><strong>Apex front door only.</strong> Per-host hosting of every related name (MX,
+  NS, third parties — each with its own twin) and rDNS/whois enrichment
+  are separate, follow-up concerns.</li>
+</ul>
+<h2 id="mail-routing">Mail routing</h2>
+<p>Wanderer already collects the pieces that answer <em>where does my mail
+land?</em> — the <code>dns.mx</code> hosts and the <code>ip.asn</code> lookups the IP probe runs
+on them. After the scan correlates the two, it emits one observed
+aggregate Finding, <code>dns.mx_routing</code>, that states it plainly:</p>
+<pre><code>inbound mail for example.com lands at Google Workspace (US)
+</code></pre>
+<p>The <code>operator</code> is resolved from a small curated table of well-known
+MX-host suffixes (Google Workspace, Microsoft 365, Proton, Zoho, …)
+with the ASN organisation as the fallback, so an unlisted operator
+still gets a name. The raw MX host, ASN, and organisation are retained
+in the Finding's <code>routes</code> so the observed fact stands even when the
+friendly name is uncertain.</p>
+<p>This is the <em>observed</em> layer; the <code>wand.juridisch.mx_vendor_jurisdiction</code>
+rule annotates it with the EEA-jurisdiction score and now leads its
+verdict with the same operator name ("mail lands at Google Workspace —
+mx hosts in US (outside EEA)"), which is what the <strong>Mail</strong> row of the
+Sovereignty overview renders.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>No GeoLite2</strong> degrades gracefully: the operator is still named from
+  the MX-host suffix table, with the country reported as undetermined.</li>
+<li><strong>No MX / null MX</strong> yields a Finding stating there is no inbound mail
+  routing rather than nothing at all.</li>
+<li><strong>Inbound only.</strong> Outbound sending infrastructure (SPF/DKIM/DMARC) is
+  a separate, larger lead.</li>
+</ul>
+<h2 id="dns-hosting">DNS hosting</h2>
+<p>The structural twin of mail routing, for the control plane: <em>who runs my
+authoritative DNS, and where?</em> Wanderer already collects the pieces — the
+<code>dns.ns</code> hosts and the <code>ip.asn</code> lookups the IP probe runs on them (the
+scanner expands the NS hosts into <code>Target.Related</code>). After the scan
+correlates the two, it emits one observed aggregate Finding,
+<code>dns.ns_hosting</code>, that states it plainly:</p>
+<pre><code>DNS for example.com is run by Cloudflare (US)
+</code></pre>
+<p>The <code>operator</code> is resolved from a small curated table of well-known
+NS-host suffixes (Cloudflare, AWS Route 53, Azure DNS, Google Cloud DNS,
+NS1, TransIP, …) with the ASN organisation as the fallback, so an
+unlisted operator still gets a name. The raw NS host, ASN, and
+organisation are retained in the Finding's <code>routes</code> so the observed fact
+stands even when the friendly name is uncertain.</p>
+<p>This is the <em>observed</em> layer; the <code>wand.juridisch.ns_vendor_jurisdiction</code>
+rule annotates it with the EEA-jurisdiction score and now leads its
+verdict with the same operator name ("DNS run by Cloudflare —
+authoritative DNS in US (outside EEA)"), which is what the <strong>DNS</strong> row of
+the Sovereignty overview renders.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>No GeoLite2</strong> degrades gracefully: the operator is still named from
+  the NS-host suffix table, with the country reported as undetermined.</li>
+<li><strong>Anycast</strong> nameservers (the common case for large DNS providers) carry
+  no country; the Finding names the operator with the country
+  undetermined.</li>
+<li><strong>No resolvable authoritative DNS</strong> yields a Finding stating so rather
+  than nothing at all.</li>
+<li><strong>Authoritative NS only.</strong> Recursive-resolver choice, DNSSEC signing
+  posture, and registrar jurisdiction are separate, larger leads.</li>
+</ul>
+<h2 id="web-third-party-origin-map">Web third-party origin map</h2>
+<p>The first Wave-2 signal — what a <em>page</em> pulls in, rather than where an
+endpoint sits. Wanderer already collects the pieces: the <code>http</code> probe
+records one <code>http.third_party</code> host per external resource the apex page
+loads (with the <code>kinds</code> of resource — script, link, img, iframe), the
+scanner expands those hosts into <code>Target.Related</code>, and the <code>ip</code> probe
+attaches <code>ip.asn</code>. After the scan correlates them, it emits one observed
+aggregate Finding, <code>http.origin_map</code>, grouped by <strong>vendor</strong>:</p>
+<pre><code>example.com loads fonts from Google Fonts (US), scripts from jsDelivr (US)
+</code></pre>
+<p>Each third-party host is mapped to a recognisable vendor (Google Fonts,
+Google Analytics, jsDelivr, cdnjs, Meta, …) from a small in-repo
+host-suffix table — the same <code>operatorBySuffix</code> machinery the mail and DNS
+twins use — with the ASN organisation as the fallback so an unlisted host
+still gets a name. Several hosts from one vendor (<code>fonts.googleapis.com</code> +
+<code>fonts.gstatic.com</code>) collapse into a single entry, with the union of what
+they serve and their country; the raw hosts and ASN organisations are
+retained as evidence.</p>
+<p>This is the <em>observed</em> layer; the <code>wand.technologie.third_parties_eea</code>
+rule annotates it with the in/out-EEA host count and now leads its verdict
+with the <strong>non-EEA</strong> vendor names — the export surface — when there are
+any ("loads from Google Fonts (non-EEA) — 3 of 5 third-party hosts resolve
+in the EEA"). An all-EEA page keeps its clean "all N hosts in the EEA"
+with no scary lead. The <strong>Third parties</strong> row of the Sovereignty overview
+renders the result.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>No GeoLite2</strong> degrades gracefully: the vendors are still named from
+  the host suffix table, with the country reported as undetermined.</li>
+<li><strong>Vendor jurisdiction is the rule's call.</strong> The map records each
+  vendor's observed country; whether that is non-EEA is decided by the
+  rule (which owns the EEA membership table), not the scanner.</li>
+<li><strong>No third parties</strong> on a fetched page yields a Finding stating the page
+  loads nothing external, rather than nothing at all.</li>
+<li><strong>Served HTML only.</strong> The probe parses the served markup, so
+  script-injected third parties are missed. Per-subpage crawling,
+  CSP/<code>connect-src</code> analysis, and runtime request capture are separate,
+  larger leads.</li>
+</ul>
+<h2 id="cdn-front-detection">CDN / front detection</h2>
+<p>The hosting-identity signal reads the apex IP's ASN organisation and says
+"hosted at Cloudflare (US)". For a CDN-fronted site that is the <strong>edge</strong>,
+not the origin: the apex IP belongs to the CDN, every request (and the
+TLS handshake) terminates at the edge, and the real origin is masked
+behind it. Wanderer already collects what tells the two apart — the apex
+<code>ip.asn</code> organisation, the <code>http.response</code> <code>server</code> header, and the
+<code>tls.issuer</code> — so after the scan it emits one observed aggregate Finding,
+<code>http.cdn_front</code>:</p>
+<pre><code>discord.com's apex is fronted by Cloudflare (US)
+</code></pre>
+<p>The edge is detected from a small, conservative signature table keyed on
+the ASN organisation <em>and</em> the server header (a header match raises
+confidence over org alone): Cloudflare, Fastly, Akamai, Amazon CloudFront,
+Vercel, Netlify, Sucuri, BunnyCDN, Imperva, …. The Finding records which
+signal(s) fired (<code>asn</code>, <code>server</code>) and the raw values as evidence, so the
+fact stands even when the friendly name is uncertain. A site behind no
+known edge reads "no CDN/edge front detected — apex served directly".</p>
+<p>This is the <em>observed</em> layer; the <code>wand.technologie.no_us_hyperscaler</code>
+rule annotates it with the US-hyperscaler-reach score and now leads its
+verdict with the named front when the apex is fronted ("apex fronted by
+Cloudflare (US); US hyperscaler in path: CLOUDFLARENET"), which is what
+the <strong>CDN / hyperscaler</strong> row of the Sovereignty overview renders.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>No GeoLite2</strong> still names the edge from the server header, with the
+  country reported as undetermined.</li>
+<li><strong>Anycast</strong> edge IPs (the common case for big CDNs) carry no country;
+  the Finding names the edge with the country undetermined.</li>
+<li><strong>Conservative by design.</strong> The table only claims a front where the
+  signal is a strong tell, to avoid false "fronted by" labels; an unknown
+  edge reads as served-directly rather than guessing.</li>
+<li><strong>Apex front only.</strong> Origin de-masking (the IP behind the edge) and
+  WAF/bot-management detection are separate, follow-up leads.</li>
+</ul>
+<h2 id="tls-chain-geography">TLS-chain geography</h2>
+<p>The certificate-issuer rule scores <em>where</em> a cert was issued ("cert issued
+in US (outside EEA)") but never names <em>who</em> issued it — the Certificate
+Authority that controls the site's cryptographic identity and can revoke
+or refuse to renew it. Wanderer already collects the pieces — <code>tls.issuer</code>
+(issuer organisation, common name, country) and <code>tls.chain</code> (the presented
+intermediates) — so after the scan it emits one observed aggregate
+Finding, <code>tls.chain_geography</code>:</p>
+<pre><code>the TLS certificate for w3.org is issued by Google Trust Services (US);
+chain ← Google Trust Services (US) ← Google Trust Services (US)
+</code></pre>
+<p>The CA is named from a small in-repo table of issuer org/CN substrings
+(Let's Encrypt, DigiCert, Sectigo, GlobalSign, Google Trust Services,
+Amazon, …) with the raw issuer org/CN as the fallback. The <code>tls.chain</code>
+probe is enriched to record each intermediate's organisation and country
+(read from the certificates the handshake already presented — passive, no
+new request), so the chain geography is stated per link.</p>
+<p>This is the <em>observed</em> layer; the <code>wand.juridisch.cert_issuer_eea</code> rule
+annotates it with the EEA-issuer score and now leads its verdict with the
+named CA ("issued by Let's Encrypt — cert issued in US (outside EEA)").
+The certificate also gains its own <strong>Certificate</strong> row in the Sovereignty
+overview, alongside the other who/where flows.</p>
+<p>Notes:</p>
+<ul>
+<li><strong>Issuer country absent</strong> (many CA certs omit it) still names the CA
+  with "jurisdiction undetermined"; the CA brand itself is the practical
+  jurisdiction tell.</li>
+<li><strong>Unrecognised issuer</strong> falls back to the raw issuer organisation (or
+  common name), so the observed fact always stands.</li>
+<li><strong>Presented chain only.</strong> TLS handshakes usually omit the root, so the
+  chain is stated as served. Full root-store / trust-path analysis,
+  CAA-vs-actual-issuer cross-checks, and CT-log monitoring are separate,
+  larger leads.</li>
+</ul>
+<h2 id="package-vendor-jurisdiction">Package vendor jurisdiction</h2>
+<p>Both package inspectors now emit a vendor / maintainer
+attribute:</p>
+<ul>
+<li><code>inventory.packages.rpm</code> includes the <code>vendor</code> attribute,
+  populated from rpm's <code>%{VENDOR}</code> tag (e.g.
+  <code>"Fedora Project"</code>, <code>"Red Hat, Inc."</code>,
+  <code>"Microsoft Corporation"</code>)</li>
+<li><code>inventory.packages.dpkg</code> includes the <code>maintainer</code>
+  attribute, populated from dpkg's <code>${Maintainer}</code> field (e.g.
+  <code>"Bash Maintainers &lt;bash@packages.debian.org&gt;"</code>)</li>
+</ul>
+<p>One rule classifies the host's package origin:</p>
+<ul>
+<li><code>wand.host.eu_package_origin</code> — reads both probe families,
+  classifies each finding's vendor / maintainer against
+  <code>internal/assessor/package_vendors.yaml</code>. Scores:</li>
+<li><code>afhankelijk</code> on any US-tied vendor (Red Hat / Fedora,
+    Microsoft, Oracle, Canonical-UK, Datadog, etc.)</li>
+<li><code>soeverein</code> when every classified package resolves to an
+    EU-tied vendor (SUSE / openSUSE, …)</li>
+<li><code>voldoende</code> when no US hits AND not every classified
+    package is EU-tied (mixed or unclassified — no red flag,
+    no positive call)</li>
+<li><code>onbekend</code> without inventory.packages.* findings</li>
+</ul>
+<p>Bare maintainer values without a parseable email fall through
+as unknown jurisdiction. Locally-built RPMs with
+<code>Vendor: (none)</code> are skipped at the agent.</p>
+<h2 id="container-image-sovereignty">Container image sovereignty</h2>
+<p>When the Docker inspector is enabled the agent emits two finding
+families:</p>
+<ul>
+<li><code>inventory.docker.image</code> — every image present on disk, with
+  <code>repo_tags</code> carrying the human-readable refs</li>
+<li><code>inventory.docker.container</code> — every running container, with
+  the <code>image</code> attribute naming the ref it was started from</li>
+</ul>
+<p>Three rules score this surface against
+<code>internal/assessor/container_registries.yaml</code>:</p>
+<ul>
+<li><code>wand.docker.images_us_registry</code> — afhankelijk on any image
+  whose registry resolves to a US-headquartered registry
+  (<code>docker.io</code>, <code>gcr.io</code>, <code>ghcr.io</code>, <code>mcr.microsoft.com</code>,
+  <code>public.ecr.aws</code>, <code>quay.io</code>, <code>registry.access.redhat.com</code>,
+  <code>registry.suse.com</code>)</li>
+<li><code>wand.docker.containers_us_registry</code> — same shape, scoped to
+  actually-running containers (a stronger live signal)</li>
+<li><code>eucsf.sov6.container_supply_chain</code> — SEAL roll-up combining
+  both shapes</li>
+</ul>
+<p>A bare image name (<code>nginx:1.27</code>) or the library shorthand
+(<code>library/nginx:1.27</code>) is the Docker Engine's default for
+<code>docker.io/library/...</code> — the rule classifies these as a
+docker.io hit and flags the implicit resolution in the verdict.
+EU self-hosted registries (<code>harbor.example.de/...</code>) are
+<strong>sovereign by default</strong>: they do not appear on the YAML list,
+so they do not fire the rule.</p>
+<h2 id="nextcloud-inspector">Nextcloud inspector</h2>
+<p><code>wanderer agent</code> ships a Nextcloud inspector that scores the
+sovereignty posture <em>of</em> the Nextcloud instance running on the
+agent host. Enable it in <code>wanderer-agent.yaml</code>:</p>
+<pre><code class="language-yaml">inspectors:
+  nextcloud:
+    enabled: true
+    occ_path: /var/www/nextcloud/occ
+    run_as: www-data
+</code></pre>
+<p>The inspector shells out to <code>occ</code> four times per tick:</p>
+<table>
+<thead>
+<tr>
+<th><code>occ</code> command</th>
+<th>ProbeID family</th>
+<th>What it reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app:list --output=json</code></td>
+<td><code>inventory.nextcloud.app</code></td>
+<td>every enabled / disabled app + version</td>
+</tr>
+<tr>
+<td><code>status --output=json</code></td>
+<td><code>inventory.nextcloud.version</code></td>
+<td>Nextcloud version + <code>supported</code> flag</td>
+</tr>
+<tr>
+<td><code>config:list system --output=json</code></td>
+<td><code>inventory.nextcloud.trusted_domain</code> + <code>.objectstore</code></td>
+<td>trusted domains, S3 backends</td>
+</tr>
+<tr>
+<td><code>user_oidc:provider --output=json</code></td>
+<td><code>inventory.nextcloud.oidc_provider</code></td>
+<td>OIDC IdP list, with <code>issuer_host</code> + geoip</td>
+</tr>
+</tbody>
+</table>
+<p>If the <code>user_oidc</code> app is absent, the inspector falls back to
+detecting alternatives (<code>oidc_login</code>, <code>social_login</code>,
+<code>user_saml</code>) and emits one
+<code>inventory.nextcloud.oidc.unavailable</code> Finding naming the
+alternative — so an operator sees "we can't probe because
+you're on social_login" rather than "Wanderer doesn't work".</p>
+<h3 id="sovereignty-rules">Sovereignty rules</h3>
+<p>Three rules score the Nextcloud surface:</p>
+<ul>
+<li><code>wand.nextcloud.objectstore_eu</code> — afhankelijk when any S3
+  backend resolves to a non-EEA country (the inspector
+  enriches with geoip when configured)</li>
+<li><code>wand.nextcloud.oidc_provider_eu</code> — afhankelijk when any
+  IdP's issuer URL resolves to a non-EEA jurisdiction</li>
+<li><code>eucsf.sov6.nextcloud_supply_chain</code> — SEAL analogue rolling
+  both signals into one observation</li>
+</ul>
+<p>Supported Nextcloud majors: 28, 29, 30. Older versions parse
+but emit <code>supported: false</code> in the version Finding so an
+operator sees the contract mismatch.</p>
+<h2 id="playwright-ui-smoke-layer">Playwright UI smoke layer</h2>
+<p>The Playwright suite at <code>tests/playwright/</code> covers the read-only
+UI. It runs against three hermetic SQLite fixtures (one per
+scenario) seeded by <code>internal/fixtures</code>, not against an
+operator's hand-rolled <code>/tmp/wanderer-demo.db</code>. A fresh checkout
+runs end-to-end with:</p>
+<pre><code>make playwright-install     # once: installs node deps + chromium
+make playwright             # builds binary, seeds fixtures, runs specs
+</code></pre>
+<h3 id="scenarios">Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>DB</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>baseline</code></td>
+<td><code>tests/playwright/fixtures/baseline.db</code></td>
+<td>DAR layering + reporting catalogue</td>
+</tr>
+<tr>
+<td><code>agent-host</code></td>
+<td><code>tests/playwright/fixtures/agent-host.db</code></td>
+<td>host-rule + nextcloud-as-target deep dives</td>
+</tr>
+<tr>
+<td><code>empty-org</code></td>
+<td><code>tests/playwright/fixtures/empty-org.db</code></td>
+<td>empty-state copy on every UI surface</td>
+</tr>
+</tbody>
+</table>
+<p>Each scenario boots its own <code>wanderer serve</code> instance on a
+different port (8281/8282/8283). The Playwright config pins each
+spec file to one scenario via <code>testMatch</code>.</p>
+<h3 id="adding-a-scenario">Adding a scenario</h3>
+<ol>
+<li>Add <code>internal/fixtures/&lt;name&gt;.go</code> with an exported
+   <code>Build&lt;Name&gt;(ctx, *store.Store) error</code> function.</li>
+<li>Register it in <code>internal/fixtures/seed.go</code>'s <code>Scenarios</code> map.</li>
+<li>Add a Makefile line (under <code>playwright-fixture</code>) that emits
+   the DB.</li>
+<li>Add a project block + a <code>webServer</code> entry in
+   <code>tests/playwright/playwright.config.ts</code>.</li>
+</ol>
+<p>The seeder uses the public store API + <code>wand.DefaultRules()</code> /
+<code>eucsf.DefaultRules()</code>, so a schema change or a rule rename that
+breaks a fixture surfaces at <code>make playwright-fixture</code> build
+time — before Playwright ever opens a browser.</p>
+<h3 id="separate-from-testsplaywrightfixturesagent-hostyaml">Separate from <code>tests/playwright/fixtures/agent-host.yaml</code></h3>
+<p>The YAML config file at the same path is <strong>not</strong> part of the
+fixture seeder. It is a stop-gap for running
+<code>./bin/wanderer agent --once --config tests/playwright/fixtures/agent-host.yaml</code>
+against your real laptop's <code>/tmp/wanderer-demo.db</code> if you want
+to smoke test the host rule against actual <code>occ</code> /
+<code>/proc</code> / <code>/etc/systemd/</code> state. The hermetic
+<code>agent-host</code> scenario above is what Playwright reads against.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><strong><code>ip: asn DB: no such file or directory</code></strong> — the GeoLite2 path is
+  wrong. Fail-fast is intentional; the probe will not start without a
+  readable database file.</li>
+<li><strong><code>tls.ct</code> shows <code>unavailable</code></strong> — crt.sh rate-limited you or was
+  unreachable. The rest of the TLS probe is unaffected.</li>
+<li><strong><code>http.robots_blocked</code></strong> — the target's <code>robots.txt</code> disallows <code>/</code>
+  for your User-Agent. Wanderer honours it; use a different User-Agent
+  if you have authorisation.</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Gekopieerd naar klembord", "clipboard.copy": "Kopi\u00ebren naar klembord", "search.result.more.one": "1 extra overeenkomst op deze pagina", "search.result.more.other": "# extra overeenkomsten op deze pagina", "search.result.none": "Geen overeenkomende documenten", "search.result.one": "1 overeenkomende document", "search.result.other": "# overeenkomende documenten", "search.result.placeholder": "Typ om te beginnen met zoeken", "search.result.term.missing": "Ontbreekt", "select.version": "Selecteer versie"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3533 @@
+
+<!doctype html>
+<html lang="nl" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mwest2020.github.io/handbook/Wanderer/explanation/architecture/">
+      
+      
+        <link rel="prev" href="../agent/">
+      
+      
+        <link rel="next" href="../maintainability/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Architecture - Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#architecture" class="md-skip">
+          Ga naar inhoud
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Handbook" class="md-header__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Zoeken" placeholder="Zoeken" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Zoeken">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Leegmaken" aria-label="Leegmaken" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Zoeken initialiseren
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatie" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Handbook" class="md-nav__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../conventies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventies
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wanderer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved: Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer agent
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#organisations-group-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisations group everything
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-modi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three modi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three modi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perimeter-wanderer-scan-wanderer-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perimeter — wanderer scan / wanderer serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inventory-wanderer-agent-inspectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inventory — wanderer agent inspectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#egress-wanderer-agent-egress-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress — wanderer agent egress probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-as-the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings as the contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-cutting-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-cutting consumers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key design decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key design decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sqlite-for-the-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQLite for the MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-migrations-are-numbered-up-only-transactional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema migrations are numbered, up-only, transactional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probes-are-packages-not-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probes are packages, not plugins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-scans-are-first-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial scans are first-class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-pass-scanning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-pass scanning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSRF guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-only-operator-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read-only operator UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-a-perimeter-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add a perimeter probe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-an-inventory-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add an inventory inspector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-an-egress-scanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add an egress scanner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-a-wand-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add a wand rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to add a wand rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vendor-jurisdiction-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vendor-jurisdiction rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-systems-and-their-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External systems and their failure modes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-look-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to look next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintainability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_4" id="__nav_3_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Adr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0000-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NNNN. Short title
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0001-openspec-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0001. OpenSpec workflow for non-trivial changes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0002-api-stability-classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0002. API stability classes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0003-dependency-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0003. Dependency policy
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0004-assessor-rule-engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0004. Assessor rule engine: Go functions, not a DSL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0005-mcp-transport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0005. MCP transport: hand-rolled stdio JSON-RPC
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0006-in-process-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0006. In-process cron scheduler, not Kubernetes CronJob
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0007-agent-trust-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0007. Agent → core trust model: HMAC over TLS
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0008-egress-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0008. Egress redaction: hard contract, tested first
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0009-dual-framework-assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0009. Dual framework assessor: DICTU + EU CSF / SEAL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0010-ebpf-flow-probe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0010 — eBPF for the egress flow probe
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0011-rename-dictu-to-wand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0011 — Rename the first-party rule pack from dictu to wand
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0012-host-rule-pattern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0012 — Vendor-jurisdiction rule pattern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0013-oidc-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0013 — Nextcloud as OIDC login for wanderer serve --ui
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0014-marketplace-appapi-exapp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0014 — Nextcloud marketplace distribution via AppAPI ExApp
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0015-sovereignty-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0015 — Sovereignty overview (the synthesis view)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0016-ui-dev-scan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0016 — Dev-mode scan form in the UI (read-only stays the prod default)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0017-ui-personas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0017 — UI information architecture: Tourist / Explorer / Farmer
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator Guide
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releasing Wanderer + keeping the ExApp in sync
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduling
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: your first Wanderer scan
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assessor
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drift
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/egress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/exporters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exporters
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/findings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings Reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estafette
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estafette
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    estafette — documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoC catalogue — entry specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer manifest specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transferability tiers
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Homelab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../homelab/herstel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wordsworth
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wordsworth
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    wordsworth docs
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#organisations-group-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisations group everything
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-modi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three modi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three modi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perimeter-wanderer-scan-wanderer-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perimeter — wanderer scan / wanderer serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inventory-wanderer-agent-inspectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inventory — wanderer agent inspectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#egress-wanderer-agent-egress-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress — wanderer agent egress probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-as-the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings as the contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-cutting-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-cutting consumers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key design decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key design decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sqlite-for-the-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQLite for the MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-migrations-are-numbered-up-only-transactional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema migrations are numbered, up-only, transactional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probes-are-packages-not-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probes are packages, not plugins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-scans-are-first-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial scans are first-class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-pass-scanning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-pass scanning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSRF guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-only-operator-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read-only operator UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-a-perimeter-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add a perimeter probe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-an-inventory-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add an inventory inspector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-an-egress-scanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add an egress scanner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-a-wand-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to add a wand rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to add a wand rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vendor-jurisdiction-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vendor-jurisdiction rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-systems-and-their-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External systems and their failure modes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-look-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to look next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="architecture">Architecture</h1>
+<p>Wanderer is an observation engine. It turns the configuration of a
+public-sector estate — domains, hosts, applications — into a stream of
+structured <code>Finding</code> records, then derives sovereignty assessments
+from those findings. Probes do not score. Assessors do not probe. The
+<code>Finding</code> schema is the wire between them.</p>
+<h2 id="organisations-group-everything">Organisations group everything</h2>
+<p>Every Target — perimeter domain or agent host — belongs to exactly
+one <strong>Organisation</strong>. The operator picks the organisation at scan
+time (<code>--organisation</code>), in the agent config (<code>core.organisation</code>),
+or via the serve fallback (<code>scan.organisation</code> in <code>serve.yaml</code>).
+A seeded <code>default</code> organisation picks up any Target that doesn't
+carry an explicit slug, so single-customer deployments need no
+configuration.</p>
+<p>The pivot exists because Wanderer is intended to be run by
+operators who watch <em>their</em> portfolio — a Conduction-style
+delivery shop watching multiple customer organisations on one
+instance, or a single ministry watching its own estate. The
+dashboard, reporting, MCP surface, and CLI all carry the
+organisation through, so an operator picks one organisation and
+sees <em>its</em> sovereignty story rather than the instance-wide soup.
+Operator-side details: <code>docs/operator.md</code> "Organisations".</p>
+<h2 id="three-modi">Three modi</h2>
+<p>Wanderer ships one binary that runs in three operating modi. Each modus
+collects evidence the others cannot see; the assessor reads the merged
+stream.</p>
+<pre><code class="language-mermaid">flowchart LR
+    subgraph perimeter [perimeter — wanderer scan / serve]
+        DNS[probe/dns] --&gt; Scanner
+        TLS[probe/tls] --&gt; Scanner
+        IP[probe/ip] --&gt; Scanner
+        HTTP[probe/http] --&gt; Scanner
+        WHOIS[probe/whois] --&gt; Scanner
+    end
+    subgraph inventory [inventory — wanderer agent]
+        Systemd[inventory/systemd] --&gt; InvDispatch
+        Packages[inventory/packages] --&gt; InvDispatch
+        Docker[inventory/docker] --&gt; InvDispatch
+        Nextcloud[inventory/nextcloud] --&gt; InvDispatch
+    end
+    subgraph egress [egress — wanderer agent]
+        ConfigFiles[egress/scanners/configfiles] --&gt; EgressProbe
+        ProcEnv[egress/scanners/procenv] --&gt; EgressProbe
+        SystemdUnits[egress/scanners/systemd] --&gt; EgressProbe
+    end
+    Scanner --&gt; Store[(SQLite store)]
+    InvDispatch --&gt; Store
+    EgressProbe --&gt; Store
+    Store --&gt; Assessor[assessor: wand + eucsf]
+    Store --&gt; Drift[drift engine]
+    Store --&gt; Export[export: csv / jsonl]
+    Store --&gt; MCP[mcp server]
+    Store --&gt; UI[read-only ui]
+</code></pre>
+<h3 id="perimeter-wanderer-scan-wanderer-serve">Perimeter — <code>wanderer scan</code> / <code>wanderer serve</code></h3>
+<p>What the outside world sees. Five probes (DNS, TLS, IP, HTTP, WHOIS)
+under <code>internal/probe/{dns,tls,ip,http,whois}</code>. The scanner runs them
+in two passes (see "Two-pass scanning" below) and writes Findings
+tagged with <code>SourceModus = "perimeter"</code>. Per-capability docs:
+<a href="../../openspec/specs/scanner/spec.md">scanner spec</a>, nothing else
+modus-specific — the probe details live in
+<a href="../../reference/findings/"><code>docs/findings.md</code></a>.</p>
+<h3 id="inventory-wanderer-agent-inspectors">Inventory — <code>wanderer agent</code> inspectors</h3>
+<p>What is installed and running on a host. Inspectors live under
+<code>internal/probe/inventory/{systemd,packages,docker,nextcloud}</code> and
+implement the <code>inventory.Inspector</code> interface. The agent loops over
+the enabled inspectors each tick; failures surface as
+<code>inventory.&lt;id&gt;.unavailable</code> / <code>inventory.&lt;id&gt;.error</code> info Findings
+rather than crashing. Findings carry <code>SourceModus = "inventory"</code>.
+Operator-facing reference: <a href="../agent/"><code>docs/agent.md</code></a>.</p>
+<h3 id="egress-wanderer-agent-egress-probe">Egress — <code>wanderer agent</code> egress probe</h3>
+<p>Where the data points when it leaves. Static-config-only:
+<code>internal/probe/egress/scanners/{configfiles,procenv,systemd}</code> walk
+config files, <code>/proc/&lt;pid&gt;/environ</code>, and systemd unit files; the
+classifier (<code>internal/probe/egress/classify.go</code>) buckets each value
+into a category (<code>object_storage</code>, <code>database</code>, <code>oidc</code>, <code>smtp</code>,
+<code>log_shipper</code>, <code>webhook</code>) using a vendor table loaded from
+<a href="../../internal/probe/egress/vendors.yaml"><code>internal/probe/egress/vendors.yaml</code></a>.
+A redactor (<code>internal/probe/egress/redact.go</code>) masks anything that
+looks like a secret before it reaches the Finding stream. Findings
+carry <code>SourceModus = "egress"</code>. Reference: <a href="../../reference/egress/"><code>docs/egress.md</code></a>.</p>
+<h2 id="findings-as-the-contract">Findings as the contract</h2>
+<p>Every probe and inspector returns <code>[]models.Finding</code> and nothing
+richer. The shape lives in <a href="../../pkg/models/finding.go"><code>pkg/models/finding.go</code></a>;
+the catalogue of every ProbeID Wanderer emits, plus the
+meta-finding convention (an <code>error</code> attribute, <code>no_answer: true</code>, or
+<code>unavailable: true</code> flags non-evidence rows), lives in
+<a href="../../reference/findings/"><code>docs/findings.md</code></a>.</p>
+<p><code>models.SourceModus</code> tags each Finding with the modus that produced
+it (<code>perimeter</code>, <code>inventory</code>, <code>egress</code>, <code>drift</code>). The assessor's
+completeness calculation reads SourceModus to know which evidence it
+has, so a perimeter-only scan can correctly mark
+inventory-dependent dimensions as <code>incomplete</code> rather than scoring
+them on absence.</p>
+<h2 id="cross-cutting-consumers">Cross-cutting consumers</h2>
+<p>These layers read from the store; none of them probe.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Path</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assessor (wand + SEAL)</td>
+<td><code>internal/assessor/{,wand,eucsf}</code></td>
+<td><a href="../../reference/assessor/"><code>docs/assessor.md</code></a></td>
+</tr>
+<tr>
+<td>Drift engine</td>
+<td><code>internal/drift</code></td>
+<td><a href="../../reference/drift/"><code>docs/drift.md</code></a></td>
+</tr>
+<tr>
+<td>Exporters (CSV / JSONL)</td>
+<td><code>internal/export</code></td>
+<td><a href="../../reference/exporters/"><code>docs/exporters.md</code></a></td>
+</tr>
+<tr>
+<td>MCP server</td>
+<td><code>internal/mcp</code></td>
+<td><a href="../../reference/mcp/"><code>docs/mcp.md</code></a></td>
+</tr>
+<tr>
+<td>Scheduler (cron)</td>
+<td><code>internal/scheduler</code></td>
+<td><a href="../../how-to/scheduling/"><code>docs/scheduling.md</code></a></td>
+</tr>
+<tr>
+<td>Read-only UI</td>
+<td><code>internal/ui</code></td>
+<td><a href="../../how-to/operator/"><code>docs/operator.md</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The assessor ships two rule packs side-by-side. <strong>wand</strong>
+(Wanderer-NL — inspired by DICTU's <em>Toetsingsinstrument
+Soevereiniteit Clouddiensten</em>; see ADR-0011) maps Findings into
+five dimensions (<code>juridisch</code>, <code>operationeel</code>, <code>technologie</code>,
+<code>data_ai</code>, <code>mens</code>) and four levels (<code>onbekend</code> → <code>afhankelijk</code>
+→ <code>voldoende</code> → <code>soeverein</code>). <strong>EU CSF (SEAL)</strong> uses five SEAL
+levels (SEAL0–SEAL4) over the same Findings. <code>wanderer assess
+--framework wand|eucsf|both</code> selects which pack(s) run;
+persisted Assessments carry a <code>Framework</code> tag.</p>
+<h2 id="key-design-decisions">Key design decisions</h2>
+<h3 id="sqlite-for-the-mvp">SQLite for the MVP</h3>
+<p><code>modernc.org/sqlite</code> is pure Go — builds are trivial on any platform
+and the database is one auditable file on disk. Migrating to
+PostgreSQL later is a <code>pg_dump</code>-shaped problem. Starting on Postgres
+"because we'll scale" was rejected as premature.</p>
+<h3 id="schema-migrations-are-numbered-up-only-transactional">Schema migrations are numbered, up-only, transactional</h3>
+<p><code>internal/store/migrations.go</code> runs entries from a <code>migrations</code> slice
+in numeric order, each in its own transaction. A
+<code>schema_migrations(version, name, applied_at)</code> table is the source of
+truth — an auditor can read one row to know which schema version is
+in production. New schema changes append the next version; previous
+entries are immutable.</p>
+<h3 id="probes-are-packages-not-plugins">Probes are packages, not plugins</h3>
+<p>No plugin loader, no registry with <code>init()</code> side effects. The
+scanner imports each probe package and calls it; <code>cmd/wanderer/scan.go::buildProbes</code>
+is the single wiring point. The call graph is static and readable
+via <code>go doc</code>. Reflection-based dispatch can come later if it ever
+earns its keep.</p>
+<h3 id="partial-scans-are-first-class">Partial scans are first-class</h3>
+<p>A probe that errors, panics, or times out is not a scan failure. The
+scanner records the failure as a <code>&lt;probe&gt;.error</code> / <code>.panic</code> /
+<code>.timeout</code> finding and continues. An operator gets imperfect output
+rather than nothing. A scan is <code>failed</code> only when <strong>every</strong> probe
+produced no usable findings.</p>
+<h3 id="two-pass-scanning">Two-pass scanning</h3>
+<p>The perimeter scanner runs every scan in two passes. <strong>Pass 1</strong> runs
+DNS, TLS, HTTP, and WHOIS concurrently via <code>errgroup.WithContext</code>.
+Each probe sees the original Target. <strong>Pass 2</strong> runs only the IP
+probe; between the passes, <code>expandRelatedFromFindings</code> harvests
+subjects from <code>dns.mx</code>, <code>http.third_party</code>, and <code>dns.subdomain</code>
+findings into a copy of the Target's <code>Related</code> slice. The IP probe
+receives the enriched Target so MX hosts and third-party hostnames
+get ASN/country lookups. <code>buildProbes</code> enforces the order by
+returning the IP probe last; the whole scan still runs under one
+<code>context.WithTimeout</code> so the global budget is a single dial.</p>
+<h3 id="ssrf-guard">SSRF guard</h3>
+<p><code>internal/probe/ssrf.go</code> wraps the dialers used by the HTTP and TLS
+probes. A static <code>*net.IPNet</code> table covers IPv4 loopback,
+link-local, RFC1918, CGNAT, and the cloud-metadata IPs
+(169.254.169.254, fd00:ec2::254), plus IPv6 ULA and link-local. Any
+resolved address that lands in one of those nets is refused at dial
+time. Operators who need to scan a private host pass
+<code>--allow-private-targets</code>; default is on (private blocked). The
+<code>POST /scans</code> handler refuses requests whose domain resolves only to
+private addresses unless the flag was set at server start.</p>
+<h3 id="read-only-operator-ui">Read-only operator UI</h3>
+<p><code>internal/ui</code> ships GET-only routes mounted at <code>/ui/</code> under
+<code>wanderer serve --ui</code>. Authentication is HTTP Basic against an
+htpasswd file (bcrypt only; legacy hash algorithms are rejected at
+startup). The package contains zero mutating handlers; a static-
+analysis test greps the package source for <code>r.Post|Patch|Delete|Put</code>
+and fails the build if any appear. Anything richer than read-only
+browse belongs behind a reverse proxy.</p>
+<p>The UI is layered as <strong>DAR — Dashboard, Analysis, Reporting</strong>:</p>
+<ul>
+<li><strong>Dashboard</strong> (<code>/ui/</code>, <code>/ui/orgs/{slug}</code>) answers the single
+  question <em>"is dit goed of niet"</em>: a pontificaal headline
+  (last scan, total scans, external + internal coverage counts,
+  frameworks scored), one verdict pill per framework (the worst
+  score reached across all targets in scope), and the
+  Organisations list (instance-wide view only). The Dashboard
+  is deliberately thin — the steering content lives on Analysis.</li>
+<li><strong>Analysis</strong> (<code>/ui/analysis</code>, <code>/ui/targets</code>, <code>/ui/scans/{id}</code>,
+  <code>/ui/scans/{id}/assessment</code>, <code>/ui/targets/{id}/drift</code>) is
+  where the operator steers. The centerpiece is <code>/ui/analysis</code>:
+  a rule × score-counts matrix (soeverein / voldoende /
+  afhankelijk / onbekend distinct-target counts per rule), with
+  the org filter and a "per-target view →" link to
+  <code>/ui/targets</code>. The per-scan and per-assessment pages are
+  deeper drill-downs.</li>
+<li><strong>Reporting</strong> (<code>/ui/reporting</code>, <code>/ui/reporting/{framework}/{ruleID}</code>)
+  is the rule reference. <code>/ui/reporting</code> is a catalogue: every
+  registered rule with framework, dimension, description, and
+  rationale — no scoring data. The per-rule detail page shows
+  how each target scores on that rule.</li>
+</ul>
+<p>A small <code>nav.tmpl</code> partial renders the same Dashboard / Analysis /
+Reporting tabs across every page, so the operator's mental model
+of "where am I" is reinforced everywhere. The Reporting tab is
+omitted from the rendered HTML when the route is not registered.</p>
+<p><strong>Scope persists across the nav.</strong> When the operator selects an
+organisation (visits <code>/ui/orgs/{slug}</code>, or any Analysis or
+Reporting page with <code>?org=&lt;slug&gt;</code>), every nav link carries the
+same scope forward — Dashboard → <code>/ui/orgs/&lt;slug&gt;</code>, Analysis →
+<code>/ui/targets?org=&lt;slug&gt;</code>, Reporting → <code>/ui/reporting?org=&lt;slug&gt;</code>.
+The Reporting and Targets pages render a "Scope: {orgName}"
+pill in the header so the filtered view is visibly distinct
+from the global one.</p>
+<h2 id="how-to-add-a-perimeter-probe">How to add a perimeter probe</h2>
+<ol>
+<li>Create <code>internal/probe/&lt;name&gt;/</code> with a type implementing
+   <code>probe.Probe</code> — <code>ID() string</code> and <code>Run(ctx, target, cfg) ([]Finding, error)</code>.</li>
+<li>Emit findings with stable <code>ProbeID</code> strings (<code>&lt;name&gt;.&lt;what&gt;</code>).
+   Probe-specific structured data goes in <code>Attributes</code>; raw source
+   material (certificate PEMs, DNS record text) goes in <code>Evidence</code>.</li>
+<li>Honour the meta-finding convention for non-evidence rows (an
+   <code>error</code>, <code>no_answer</code>, or <code>unavailable</code> attribute).</li>
+<li>Wire the probe into <code>cmd/wanderer/scan.go::buildProbes</code>. Probes
+   that need pass-1 outputs (like the IP probe) go last in the
+   slice.</li>
+<li>Document the new ProbeIDs in <code>docs/findings.md</code>.</li>
+</ol>
+<p>That is the whole integration surface. No framework, no registry.</p>
+<h2 id="how-to-add-an-inventory-inspector">How to add an inventory inspector</h2>
+<ol>
+<li>Create <code>internal/probe/inventory/&lt;id&gt;/</code> with a type implementing
+   <code>inventory.Inspector</code> — <code>ID() string</code>, <code>Available() (bool, string)</code>,
+   <code>Inspect(ctx) ([]Finding, error)</code>.</li>
+<li>Emit findings with <code>ProbeID: inventory.&lt;id&gt;.&lt;what&gt;</code>. Subject is
+   the host's name unless the inspector tracks a sub-entity (e.g. a
+   container name). The inventory orchestrator
+   (<code>internal/probe/inventory/inventory.go::Inspect</code>) tags the
+   <code>SourceModus</code> for you.</li>
+<li>If the inspector cannot run (missing socket, missing CLI, wrong
+   OS), return <code>Available() = false, "&lt;reason&gt;"</code> — the orchestrator
+   converts that to an <code>inventory.&lt;id&gt;.unavailable</code> info Finding so
+   the absence is auditable.</li>
+<li>Add a config block under <code>inspectors:</code> in
+   <a href="../../internal/agent/config.go"><code>internal/agent/config.go::InspectorCfg</code></a>,
+   wire it into <code>cmd/wanderer/agent.go::buildInspectors</code>.</li>
+<li>Document the new ProbeIDs in <code>docs/findings.md</code>.</li>
+</ol>
+<p>The Docker inspector at <code>internal/probe/inventory/docker</code> is a
+reference: a stdlib-only <code>http.Client</code> over a unix-socket dialer,
+read-only GET calls, fixture-driven tests. Copy that shape.</p>
+<h2 id="how-to-add-an-egress-scanner">How to add an egress scanner</h2>
+<ol>
+<li>Create <code>internal/probe/egress/scanners/&lt;id&gt;.go</code> with a type
+   implementing <code>scanners.Scanner</code> — <code>ID() string</code>,
+   <code>Available() (bool, string)</code>, <code>Scan(ctx) ([]Candidate, error)</code>.
+   A Candidate is a <code>(source, key, value)</code> triple — config file
+   path, env var name, value to classify.</li>
+<li>The egress orchestrator
+   (<code>internal/probe/egress/egress.go::Inspect</code>) hands every
+   Candidate to the classifier, redactor, and (when configured)
+   IP-resolver before emitting a Finding. Scanners do not classify
+   or redact — that is the orchestrator's job, so the contract stays
+   uniform.</li>
+<li>Configure the new scanner in
+   <a href="../../internal/agent/config.go"><code>internal/agent/config.go::EgressConfig</code></a>;
+   wire it into <code>cmd/wanderer/agent.go::buildEgressProbe</code>.</li>
+<li>The classifier's vendor table is loaded from <code>vendors.yaml</code>. A
+   new vendor (log shipper / webhook host / object-storage prefix)
+   is a YAML edit, not a code change.</li>
+</ol>
+<h2 id="how-to-add-a-wand-rule">How to add a wand rule</h2>
+<ol>
+<li>Add a function returning <code>assessor.Rule</code> in
+   <code>internal/assessor/wand/rules.go</code>, register it in
+   <code>DefaultRules()</code>. Rule IDs follow <code>wand.&lt;dimension&gt;.&lt;short_name&gt;</code>.</li>
+<li>The rule's <code>Match</code> closure consumes <code>[]models.Finding</code> and
+   returns a <code>RuleResult</code>. Filter by <code>ProbeID</code> first; for any
+   ProbeID where the probe also emits meta rows, route through
+   <code>assessor.IsEvidenceLike</code> so a non-resolvable domain or a
+   missing probe does not score positively on absence.</li>
+<li>Add a unit test in <code>rules_test.go</code> and an integration assertion
+   in <code>integration_test.go</code> (the integration test wires real probes
+   to fake resolvers, so a casing or attribute rename in either
+   side breaks the build immediately).</li>
+<li>The SEAL pack at <code>internal/assessor/eucsf/rules.go</code> mirrors the
+   wand shape and should learn the same rule when it makes sense
+   for the SEAL framework.</li>
+</ol>
+<h3 id="vendor-jurisdiction-rules">Vendor-jurisdiction rules</h3>
+<p>Rules that read agent findings and classify their subjects
+against a curated vendor list follow a shared pattern. As of
+2026-05-11 four rule families use it:</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Reads</th>
+<th>YAML list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host telemetry</td>
+<td><code>inventory.packages.*</code>, <code>inventory.systemd.service</code></td>
+<td><code>internal/assessor/host_telemetry.yaml</code></td>
+</tr>
+<tr>
+<td>Nextcloud</td>
+<td><code>inventory.nextcloud.{objectstore,oidc_provider}</code></td>
+<td>none — per-finding <code>country</code> from geoip</td>
+</tr>
+<tr>
+<td>Container images</td>
+<td><code>inventory.docker.{image,container}</code></td>
+<td><code>internal/assessor/container_registries.yaml</code></td>
+</tr>
+<tr>
+<td>Perimeter (legacy)</td>
+<td><code>tls.issuer</code>, <code>ip.asn</code>, <code>whois.registrant</code></td>
+<td>hardcoded <code>eeaCountries</code> / <code>knownUSHyperscalers</code></td>
+</tr>
+</tbody>
+</table>
+<p>The conventions, codified in ADR-0012:</p>
+<ul>
+<li><strong>Negative evidence.</strong> The assessor engine forces verdicts
+  without an <code>Evidence</code> slice to <code>onbekend</code> (see
+  <code>engine.go:scoreDimension</code>). A "clean host" verdict must
+  cite <em>something</em> — each rule pack ships a sample helper
+  (<code>sampleEvidence</code> / <code>sampleNextcloudEvidence</code> /
+  <code>dockerSampleEvidence</code>) that returns up to 10 inspected
+  finding IDs so an operator can deep-link from the soeverein
+  verdict back to the data that produced it. The verdict text
+  carries the inspected count ("inspected 1790 packages")
+  separately for readability.</li>
+<li><strong>Match list as YAML, embedded via <code>go:embed</code>.</strong> Operator-
+  visible, reviewable in one place, no hard-coded Go list.
+  Mirrors the egress probe's <code>vendors.yaml</code> pattern.</li>
+<li><strong>One wand rule per probe family, one EUCSF roll-up.</strong> The
+  wand split keeps each probe surface a separate verdict so an
+  operator can see which surface trips; the EUCSF roll-up is a
+  single supply-chain observation per SEAL convention.</li>
+</ul>
+<p>Real-world examples to copy from:
+<a href="../../internal/assessor/wand/host_rules.go"><code>wand/host_rules.go</code></a>,
+<a href="../../internal/assessor/wand/nextcloud_rules.go"><code>wand/nextcloud_rules.go</code></a>,
+<a href="../../internal/assessor/wand/docker_rules.go"><code>wand/docker_rules.go</code></a>.</p>
+<h2 id="external-systems-and-their-failure-modes">External systems and their failure modes</h2>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Used by</th>
+<th>Failure handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DNS resolver</td>
+<td><code>probe/dns</code></td>
+<td>NXDOMAIN / timeout / SERVFAIL → <code>error</code> attribute on the Finding</td>
+</tr>
+<tr>
+<td>Target <code>:443</code> TLS</td>
+<td><code>probe/tls</code></td>
+<td>Handshake failure → retry with verification off; record both</td>
+</tr>
+<tr>
+<td>crt.sh</td>
+<td><code>probe/tls</code></td>
+<td>Any failure → <code>tls.ct.unavailable</code> Finding; rest of probe continues</td>
+</tr>
+<tr>
+<td>MaxMind GeoLite2</td>
+<td><code>probe/ip</code>, egress</td>
+<td>Missing/corrupt DB → fail fast at startup, never mid-scan. Setup: see <a href="../../how-to/operator/"><code>docs/operator.md</code></a> "GeoLite2 setup"</td>
+</tr>
+<tr>
+<td>Target <code>:80</code> / <code>:443</code></td>
+<td><code>probe/http</code></td>
+<td>HTTP fallback if HTTPS fails (<code>http.scheme_downgrade</code>); body capped at 2 MiB</td>
+</tr>
+<tr>
+<td>RDAP at <code>rdap.org</code></td>
+<td><code>probe/whois</code></td>
+<td>5s timeout; failure → single <code>whois.unavailable</code> Finding</td>
+</tr>
+<tr>
+<td>Docker socket</td>
+<td><code>inventory/docker</code></td>
+<td>Missing / EACCES → <code>inventory.docker.unavailable</code>; non-2xx → <code>.error</code></td>
+</tr>
+<tr>
+<td>Wanderer core (remote agent)</td>
+<td><code>agent.Remote</code></td>
+<td>3 retries (0s / 250ms / 1s + jitter), then spool to local outbox</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-to-look-next">Where to look next</h2>
+<ul>
+<li><a href="../../reference/findings/"><code>docs/findings.md</code></a> — every ProbeID and its attributes</li>
+<li><a href="../../reference/assessor/"><code>docs/assessor.md</code></a> — wand + SEAL rule packs</li>
+<li><a href="../agent/"><code>docs/agent.md</code></a> — agent configuration, trust model,
+  outbox spool</li>
+<li><a href="../../reference/egress/"><code>docs/egress.md</code></a> — egress sources, classifier vendor
+  list, redaction</li>
+<li><a href="../../reference/drift/"><code>docs/drift.md</code></a> — diffing two scans</li>
+<li><a href="../../reference/exporters/"><code>docs/exporters.md</code></a> — CSV / JSONL exports</li>
+<li><a href="../../reference/mcp/"><code>docs/mcp.md</code></a> — MCP server over JSON-RPC stdio</li>
+<li><a href="../../how-to/scheduling/"><code>docs/scheduling.md</code></a> — cron-based scan scheduling</li>
+<li><a href="../../how-to/operator/"><code>docs/operator.md</code></a> — running the binary, logs, the
+  read-only UI</li>
+<li><a href="../../reference/observability/"><code>docs/observability.md</code></a> — metrics, tracing, log
+  shape</li>
+<li><a href="../maintainability/"><code>docs/maintainability.md</code></a> — <code>CHANGELOG.md</code>,
+  ADRs, package conventions</li>
+<li><a href="../../how-to/tutorial/"><code>docs/tutorial.md</code></a> — end-to-end first-run walkthrough</li>
+<li><a href="adr/"><code>docs/decisions/</code></a> — numbered ADRs for the choices that
+  constrain future work</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Gekopieerd naar klembord", "clipboard.copy": "Kopi\u00ebren naar klembord", "search.result.more.one": "1 extra overeenkomst op deze pagina", "search.result.more.other": "# extra overeenkomsten op deze pagina", "search.result.none": "Geen overeenkomende documenten", "search.result.one": "1 overeenkomende document", "search.result.other": "# overeenkomende documenten", "search.result.placeholder": "Typ om te beginnen met zoeken", "search.result.term.missing": "Ontbreekt", "select.version": "Selecteer versie"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

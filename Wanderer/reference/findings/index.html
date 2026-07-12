@@ -1,0 +1,3590 @@
+
+<!doctype html>
+<html lang="nl" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mwest2020.github.io/handbook/Wanderer/reference/findings/">
+      
+      
+        <link rel="prev" href="../exporters/">
+      
+      
+        <link rel="next" href="../mcp/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Findings Reference - Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#findings-reference" class="md-skip">
+          Ga naar inhoud
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Handbook" class="md-header__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Findings Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Zoeken" placeholder="Zoeken" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Zoeken">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Leegmaken" aria-label="Leegmaken" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Zoeken initialiseren
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatie" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Handbook" class="md-nav__button md-logo" aria-label="Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MWest2020/handbook" title="Ga naar repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../conventies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventies
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wanderer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved: Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wanderer agent
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/maintainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintainability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_4" id="__nav_3_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Adr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Decision Records
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0000-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NNNN. Short title
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0001-openspec-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0001. OpenSpec workflow for non-trivial changes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0002-api-stability-classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0002. API stability classes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0003-dependency-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0003. Dependency policy
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0004-assessor-rule-engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0004. Assessor rule engine: Go functions, not a DSL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0005-mcp-transport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0005. MCP transport: hand-rolled stdio JSON-RPC
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0006-in-process-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0006. In-process cron scheduler, not Kubernetes CronJob
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0007-agent-trust-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0007. Agent → core trust model: HMAC over TLS
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0008-egress-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0008. Egress redaction: hard contract, tested first
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0009-dual-framework-assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0009. Dual framework assessor: DICTU + EU CSF / SEAL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0010-ebpf-flow-probe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0010 — eBPF for the egress flow probe
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0011-rename-dictu-to-wand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0011 — Rename the first-party rule pack from dictu to wand
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0012-host-rule-pattern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0012 — Vendor-jurisdiction rule pattern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0013-oidc-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0013 — Nextcloud as OIDC login for wanderer serve --ui
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0014-marketplace-appapi-exapp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0014 — Nextcloud marketplace distribution via AppAPI ExApp
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0015-sovereignty-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0015 — Sovereignty overview (the synthesis view)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0016-ui-dev-scan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0016 — Dev-mode scan form in the UI (read-only stays the prod default)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0017-ui-personas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0017 — UI information architecture: Tourist / Explorer / Farmer
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator Guide
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releasing Wanderer + keeping the ExApp in sync
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduling
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: your first Wanderer scan
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assessor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assessor
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drift
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../egress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exporters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exporters
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings Reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings Reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#finding-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finding shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#severity-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Severity ladder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sovereignty-dimension-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sovereignty dimension hints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scanner-level-meta-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scanner-level meta findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scanner-level meta findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probe-level-meta-finding-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe-level meta-finding convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-probe-internalprobedns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS probe — internal/probe/dns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-probe-internalprobetls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS probe — internal/probe/tls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-probe-internalprobeip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IP probe — internal/probe/ip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-probe-internalprobehttp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP probe — internal/probe/http
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whois-rdap-probe-internalprobewhois" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WHOIS / RDAP probe — internal/probe/whois
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drift-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drift Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inventory-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inventory Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#egress-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stability-promise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stability promise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observability
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estafette
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estafette
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    estafette — documentation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moved
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--deprecated"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/catalog-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoC catalogue — entry specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/manifest-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer manifest specification
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../estafette/reference/tiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transferability tiers
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Homelab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../homelab/herstel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wordsworth
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wordsworth
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    wordsworth docs
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture reference
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#finding-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finding shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#severity-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Severity ladder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sovereignty-dimension-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sovereignty dimension hints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scanner-level-meta-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scanner-level meta findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scanner-level meta findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probe-level-meta-finding-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe-level meta-finding convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-probe-internalprobedns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS probe — internal/probe/dns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-probe-internalprobetls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS probe — internal/probe/tls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-probe-internalprobeip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IP probe — internal/probe/ip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-probe-internalprobehttp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP probe — internal/probe/http
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whois-rdap-probe-internalprobewhois" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WHOIS / RDAP probe — internal/probe/whois
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drift-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drift Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inventory-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inventory Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#egress-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress Findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stability-promise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stability promise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="findings-reference">Findings Reference</h1>
+<p>Every probe produces <code>models.Finding</code> records with a shared shape. This
+document is the catalogue: which ProbeIDs exist, what they mean, which
+sovereignty dimension they inform.</p>
+<blockquote>
+<p><strong>Probe-ID / rule-ID drift is build-breaking.</strong> Each ProbeID listed
+here is referenced by string from at least one assessor rule
+(<code>internal/assessor/wand</code>, <code>internal/assessor/eucsf</code>). The
+integration tests in <code>internal/assessor/wand/integration_test.go</code>
+drive real probes through real rules; renaming a ProbeID without
+updating the matching rule fails CI immediately rather than silently
+returning Onbekend on every real scan. Treat this catalogue as the
+contract — not a description.</p>
+</blockquote>
+<h2 id="finding-shape">Finding shape</h2>
+<pre><code class="language-go">type Finding struct {
+    ID            string              // assigned on persist
+    ScanID        string              // set by the scanner
+    ProbeID       string              // &quot;dns.mx&quot;, &quot;tls.issuer&quot;, ...
+    DimensionHint DimensionHint       // optional sovereignty dimension
+    CriteriumHint string              // optional rule-pack criterium ref
+    Subject       string              // the thing being described
+    Severity      Severity
+    Attributes    map[string]any      // probe-specific structured data
+    Evidence      []byte              // raw source material (cert PEM, TXT record, ...)
+    CreatedAt     time.Time
+}
+</code></pre>
+<p>See <code>pkg/models/finding.go</code> for the canonical definition.</p>
+<h2 id="severity-ladder">Severity ladder</h2>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>info</code></td>
+<td>Neutral fact. Not a problem, not praise.</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Noteworthy fact that may matter in context.</td>
+</tr>
+<tr>
+<td><code>concern</code></td>
+<td>Fact that likely bears on sovereignty posture.</td>
+</tr>
+<tr>
+<td><code>finding</code></td>
+<td>Fact the assessor should almost certainly reflect in the score.</td>
+</tr>
+</tbody>
+</table>
+<p>The ladder is deliberately coarse. Fine-grained weighting belongs to
+the assessor, not to the probe.</p>
+<h2 id="sovereignty-dimension-hints">Sovereignty dimension hints</h2>
+<p>The dimension labels are shared between the wand and SEAL rule
+packs.</p>
+<table>
+<thead>
+<tr>
+<th>Hint</th>
+<th>Dimension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>juridisch</code></td>
+<td>Juridisch</td>
+</tr>
+<tr>
+<td><code>technologie</code></td>
+<td>Technologie</td>
+</tr>
+<tr>
+<td><code>data_ai</code></td>
+<td>Data &amp; AI</td>
+</tr>
+<tr>
+<td><code>operationeel</code></td>
+<td>Operationeel</td>
+</tr>
+<tr>
+<td><code>mens</code></td>
+<td>Mens</td>
+</tr>
+<tr>
+<td>(empty)</td>
+<td>no hint — raw observation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scanner-level-meta-findings">Scanner-level meta findings</h2>
+<p>These are produced by the orchestrator, not by any individual probe.</p>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>When produced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;probe&gt;.timeout</code></td>
+<td>info</td>
+<td>A probe exceeded its per-probe timeout.</td>
+</tr>
+<tr>
+<td><code>&lt;probe&gt;.error</code></td>
+<td>concern</td>
+<td>A probe returned a non-timeout error.</td>
+</tr>
+<tr>
+<td><code>&lt;probe&gt;.panic</code></td>
+<td>concern</td>
+<td>A probe panicked; recovered by the scanner.</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;probe&gt;</code> is the probe ID: <code>dns</code>, <code>tls</code>, <code>ip</code>, <code>http</code>.</p>
+<h3 id="probe-level-meta-finding-convention">Probe-level meta-finding convention</h3>
+<p>Individual probes also emit non-evidence rows that share the schema of
+real findings but explicitly mark their meta status. The convention is
+one of three attributes:</p>
+<ul>
+<li><code>error</code> — string error message; the row records <em>why</em> the probe could
+  not produce evidence (e.g. NXDOMAIN, timeout). Set on <code>dns.&lt;rrtype&gt;</code>,
+  <code>http.parse_failed</code>, <code>tls.ct.unavailable</code>, etc.</li>
+<li><code>no_answer: true</code> — the lookup succeeded but returned zero records
+  (e.g. <code>dns.caa</code> against a domain with no CAA policy). The row stays
+  observable so absence is auditable.</li>
+<li><code>unavailable: true</code> — the probe could not run at all on this host
+  (e.g. <code>ip.unavailable</code> when no GeoLite2 DB is wired,
+  <code>inventory.&lt;id&gt;.unavailable</code> when an inspector requires absent
+  state).</li>
+</ul>
+<p>Assessor rules SHALL skip these rows when deciding whether evidence
+backs a verdict — see <code>assessor.IsEvidenceLike</code> in
+<code>internal/assessor/rule.go</code>. A rule that aggregates by <code>ProbeID</code>
+without filtering through this helper risks scoring positively on
+the absence of real signal (e.g. <code>wand.data_ai.mx_present</code> once
+counted lookup-error rows as configured mail exchangers).</p>
+<h2 id="dns-probe-internalprobedns">DNS probe — <code>internal/probe/dns</code></h2>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>Dimension</th>
+<th>Attributes (non-exhaustive)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dns.a</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>address</code> (IPv4); on failure: <code>error</code>, <code>kind</code></td>
+</tr>
+<tr>
+<td><code>dns.aaaa</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>address</code> (IPv6)</td>
+</tr>
+<tr>
+<td><code>dns.mx</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>host</code>, <code>preference</code>; Evidence: <code>&lt;pref&gt; &lt;host&gt;</code></td>
+</tr>
+<tr>
+<td><code>dns.ns</code></td>
+<td>observation</td>
+<td><code>operationeel</code></td>
+<td><code>host</code></td>
+</tr>
+<tr>
+<td><code>dns.cname</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>target</code> (only recorded if non-apex)</td>
+</tr>
+<tr>
+<td><code>dns.txt.spf</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>record</code>, <code>kind: "spf"</code></td>
+</tr>
+<tr>
+<td><code>dns.txt.dkim</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>record</code>, <code>kind: "dkim"</code></td>
+</tr>
+<tr>
+<td><code>dns.txt.dmarc</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>record</code>, <code>kind: "dmarc"</code></td>
+</tr>
+<tr>
+<td><code>dns.txt.other</code></td>
+<td>info</td>
+<td><code>data_ai</code></td>
+<td><code>record</code>, <code>kind: "other"</code></td>
+</tr>
+<tr>
+<td><code>dns.caa</code></td>
+<td>observation</td>
+<td><code>operationeel</code></td>
+<td><code>flag</code>, <code>tag</code>, <code>value</code></td>
+</tr>
+<tr>
+<td><code>dns.subdomain</code></td>
+<td>observation</td>
+<td>—</td>
+<td><code>apex_domain</code>, <code>source: "ct_log" \| "prefix_probe"</code>, <code>addresses</code> (prefix_probe only)</td>
+</tr>
+<tr>
+<td><code>dns.subdomain.wildcard</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>apex_domain</code>, <code>source: "prefix_probe"</code>, <code>hit_count</code>, <code>ips</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Subdomain sources.</strong> <code>dns.subdomain</code> Findings come from two passive
+sources: SubjectAlternativeName entries on the apex certificate
+(<code>source: "ct_log"</code>) and a small fixed prefix sweep
+(<code>internal/probe/dns/subdomains.go</code>, <code>source: "prefix_probe"</code>). When
+every prefix resolves to the same IP set the probe collapses the noise
+into a single <code>dns.subdomain.wildcard</code> Finding rather than 18 spurious
+hits.</p>
+<p><strong>Failure variants.</strong> For <code>dns.a</code>, <code>dns.mx</code>, <code>dns.ns</code>, <code>dns.txt</code>,
+<code>dns.caa</code>, a lookup that fails produces a finding of severity <code>info</code>
+with <code>error: "&lt;string&gt;"</code> and <code>kind: "nxdomain" | "timeout" |
+"temporary" | "error"</code>.</p>
+<p><strong>CAA caveat.</strong> The Go standard library resolver does not expose CAA.
+The default adapter returns an empty result (recorded as "no CAA
+records"). Swap in a <code>miekg/dns</code>-based resolver if CAA visibility is
+load-bearing for your assessment.</p>
+<h2 id="tls-probe-internalprobetls">TLS probe — <code>internal/probe/tls</code></h2>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>Dimension</th>
+<th>Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tls.handshake</code></td>
+<td>concern</td>
+<td><code>operationeel</code></td>
+<td><code>error</code>, <code>kind: "timeout" \| "other"</code> — when the handshake could not be made</td>
+</tr>
+<tr>
+<td><code>tls.verify</code></td>
+<td>concern</td>
+<td><code>operationeel</code></td>
+<td><code>verified: false</code>, <code>subject_cn</code> — only when the chain did not verify</td>
+</tr>
+<tr>
+<td><code>tls.issuer</code></td>
+<td>finding</td>
+<td><code>juridisch</code></td>
+<td><code>issuer_cn</code>, <code>issuer_o</code>, <code>issuer_country</code>, <code>subject_cn</code>, <code>serial</code>, <code>not_before</code>, <code>not_after</code>, <code>signature_algo</code>, <code>public_key_algo</code>. Evidence: cert PEM</td>
+</tr>
+<tr>
+<td><code>tls.san</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>dns_names</code>, <code>ip_addresses</code></td>
+</tr>
+<tr>
+<td><code>tls.validity</code></td>
+<td>info | observation (expiring) | concern (expired)</td>
+<td><code>operationeel</code></td>
+<td><code>not_before</code>, <code>not_after</code>, <code>days_left</code>, <code>expired?</code>, <code>expiring_soon?</code></td>
+</tr>
+<tr>
+<td><code>tls.chain</code></td>
+<td>info</td>
+<td><code>operationeel</code></td>
+<td><code>length</code>, <code>intermediates</code> (list of intermediate CNs)</td>
+</tr>
+<tr>
+<td><code>tls.ct</code></td>
+<td>observation | info (unavailable)</td>
+<td><code>juridisch</code> | —</td>
+<td><code>total_entries</code>, <code>issuer_counts</code>; on failure: <code>unavailable: true</code>, <code>error</code></td>
+</tr>
+</tbody>
+</table>
+<p>The TLS probe will first try a verified handshake; on failure it
+retries with verification off so the certificate can still be
+inspected. In that path it emits both <code>tls.verify</code> (concern) and the
+usual cert-inspection findings.</p>
+<h2 id="ip-probe-internalprobeip">IP probe — <code>internal/probe/ip</code></h2>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>Dimension</th>
+<th>Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ip.asn</code></td>
+<td>finding</td>
+<td><code>juridisch</code></td>
+<td><code>address</code>, <code>asn</code>, <code>organisation</code>, <code>country</code></td>
+</tr>
+<tr>
+<td><code>ip.resolve</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>error</code> — hostname did not resolve</td>
+</tr>
+<tr>
+<td><code>ip.lookup</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>address</code>, <code>error</code> — IP present, MaxMind lookup failed</td>
+</tr>
+<tr>
+<td><code>ip.unavailable</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>reason</code> — probe started with no GeoLite2 DB</td>
+</tr>
+</tbody>
+</table>
+<p>The IP probe fails fast at startup if the GeoLite2 DB is missing or
+corrupt. It does not degrade silently.</p>
+<h2 id="http-probe-internalprobehttp">HTTP probe — <code>internal/probe/http</code></h2>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>Dimension</th>
+<th>Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>http.response</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>status</code>, <code>final_url</code>, <code>scheme</code>, <code>server</code>, <code>powered_by</code></td>
+</tr>
+<tr>
+<td><code>http.security_headers</code></td>
+<td>observation</td>
+<td><code>operationeel</code></td>
+<td><code>present</code> (map of header→value), <code>missing</code> (list of header names)</td>
+</tr>
+<tr>
+<td><code>http.scheme_downgrade</code></td>
+<td>concern</td>
+<td><code>operationeel</code></td>
+<td><code>reason</code> — HTTPS failed, HTTP fallback succeeded</td>
+</tr>
+<tr>
+<td><code>http.third_party</code></td>
+<td>observation</td>
+<td><code>technologie</code></td>
+<td><code>source_domain</code>, <code>kinds</code> (one or more of <code>script</code>, <code>link</code>, <code>img</code>, <code>iframe</code>, <code>source</code>)</td>
+</tr>
+<tr>
+<td><code>http.robots_blocked</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>robots_txt_fetched: true</code>; Evidence: robots.txt body</td>
+</tr>
+<tr>
+<td><code>http.fetch_failed</code></td>
+<td>concern</td>
+<td>—</td>
+<td><code>error</code> — neither HTTPS nor HTTP worked</td>
+</tr>
+<tr>
+<td><code>http.parse_failed</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>error</code> — response fetched but HTML parsing failed</td>
+</tr>
+</tbody>
+</table>
+<p><code>http.third_party</code> has one Finding <strong>per external host</strong>. The <code>Subject</code>
+is the external host, not the scanned domain. Use <code>source_domain</code> in
+Attributes to link it back.</p>
+<h2 id="whois-rdap-probe-internalprobewhois">WHOIS / RDAP probe — <code>internal/probe/whois</code></h2>
+<p>Issues <code>GET https://rdap.org/domain/&lt;domain&gt;</code> with a 5-second
+timeout and walks the returned vCard array per RFC 7483. Stdlib
+<code>net/http</code> only — no WHOIS-43 socket, no third-party SDK.</p>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>Severity</th>
+<th>Dimension</th>
+<th>Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>whois.registrant</code></td>
+<td>finding</td>
+<td><code>juridisch</code></td>
+<td><code>country</code> (ISO 3166-1 alpha-2, uppercase)</td>
+</tr>
+<tr>
+<td><code>whois.registrar</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>name</code> (registrar organisation)</td>
+</tr>
+<tr>
+<td><code>whois.unavailable</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>reason</code> — emitted on any network error, non-2xx, parse error, or response with no registrant/registrar entities, so the rest of the scan continues</td>
+</tr>
+</tbody>
+</table>
+<p>Consumed by <code>wand.juridisch.registrar_jurisdiction</code>, which maps
+EEA registrant countries to soeverein, anything outside the EEA to
+afhankelijk, and absence (<code>whois.unavailable</code>) to onbekend.</p>
+<h2 id="drift-findings">Drift Findings</h2>
+<p>Drift Findings are produced by the scheduler when a new scan differs
+from the previous scan of the same target. Their <code>ProbeID</code> starts
+with <code>drift.</code>; their <code>Attributes</code> always contain
+<code>source_modus: "drift"</code>, <code>prev_scan_id</code>, and <code>curr_scan_id</code>.</p>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>severity</th>
+<th>dimension</th>
+<th>attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>drift.baseline_established</code></td>
+<td>info</td>
+<td>—</td>
+<td>(first scan for a target — no comparison possible)</td>
+</tr>
+<tr>
+<td><code>drift.no_changes</code></td>
+<td>info</td>
+<td>—</td>
+<td>(two scans identical modulo IDs/timestamps)</td>
+</tr>
+<tr>
+<td><code>drift.tls.issuer_changed</code></td>
+<td>finding</td>
+<td><code>juridisch</code></td>
+<td><code>prev_issuer_cn</code>, <code>curr_issuer_cn</code></td>
+</tr>
+<tr>
+<td><code>drift.tls.days_left_dropped</code></td>
+<td>concern</td>
+<td><code>operationeel</code></td>
+<td><code>prev_days_left</code>, <code>curr_days_left</code> (fired on crossing 30d)</td>
+</tr>
+<tr>
+<td><code>drift.dns.mx_set_changed</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>added: []</code>, <code>removed: []</code></td>
+</tr>
+<tr>
+<td><code>drift.dns.ns_set_changed</code></td>
+<td>observation</td>
+<td><code>operationeel</code></td>
+<td><code>added: []</code>, <code>removed: []</code></td>
+</tr>
+<tr>
+<td><code>drift.ip.country_changed</code></td>
+<td>finding</td>
+<td><code>juridisch</code></td>
+<td><code>prev_country</code>, <code>curr_country</code> (per host)</td>
+</tr>
+<tr>
+<td><code>drift.http.third_party_added</code></td>
+<td>observation</td>
+<td><code>technologie</code></td>
+<td><code>hosts: []</code> — newly seen subjects</td>
+</tr>
+<tr>
+<td><code>drift.http.third_party_removed</code></td>
+<td>info</td>
+<td><code>technologie</code></td>
+<td><code>hosts: []</code> — subjects that disappeared</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../drift/"><code>drift.md</code></a> for the rule semantics and how the
+assessor consumes drift Findings.</p>
+<h2 id="inventory-findings">Inventory Findings</h2>
+<p>Inventory Findings are produced by <code>wanderer agent</code> running on a
+host. They carry <code>SourceModus = "inventory"</code> (top-level field on
+<code>Finding</code> since the inventory probe landed) so the assessor's
+completeness calculation can distinguish them from perimeter data.</p>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>severity</th>
+<th>dimension</th>
+<th>attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inventory.systemd.service</code></td>
+<td>info</td>
+<td><code>operationeel</code></td>
+<td><code>load_state</code>, <code>active_state</code>, <code>sub_state</code>, <code>description</code></td>
+</tr>
+<tr>
+<td><code>inventory.packages.dpkg</code></td>
+<td>info / observation</td>
+<td><code>operationeel</code></td>
+<td><code>version</code>, <code>arch</code>, <code>status</code> (observation when EOL)</td>
+</tr>
+<tr>
+<td><code>inventory.packages.rpm</code></td>
+<td>info / observation</td>
+<td><code>operationeel</code></td>
+<td><code>version</code>, <code>arch</code></td>
+</tr>
+<tr>
+<td><code>inventory.docker.container</code></td>
+<td>info</td>
+<td><code>operationeel</code></td>
+<td><code>image</code>, <code>image_digest</code>, <code>state</code>, <code>status</code>, <code>created_at</code>, <code>labels?</code></td>
+</tr>
+<tr>
+<td><code>inventory.docker.image</code></td>
+<td>info</td>
+<td><code>technologie</code></td>
+<td><code>digest</code>, <code>repo_tags?</code>, <code>size_bytes</code>, <code>created_at</code></td>
+</tr>
+<tr>
+<td><code>inventory.nextcloud.app</code></td>
+<td>info</td>
+<td><code>technologie</code></td>
+<td><code>version</code>, <code>enabled</code></td>
+</tr>
+<tr>
+<td><code>inventory.&lt;id&gt;.unavailable</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>reason</code> — inspector could not run on this host</td>
+</tr>
+<tr>
+<td><code>inventory.&lt;id&gt;.error</code></td>
+<td>info</td>
+<td>—</td>
+<td><code>error</code> — inspector ran but failed mid-run</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../../explanation/agent/"><code>agent.md</code></a> for how to run <code>wanderer agent</code> and how
+inventory data raises a dimension's Completeness from <code>partial</code> to
+<code>complete</code>.</p>
+<h2 id="egress-findings">Egress Findings</h2>
+<p>Egress Findings are produced by the <code>wanderer agent</code>'s egress probe
+when it identifies an external endpoint in a config file, a process
+environment, or a systemd unit. They carry <code>SourceModus = "egress"</code>.
+Every non-<code>unknown</code> Finding includes a <code>classifier_rule</code> attribute
+naming the rule that fired. Secrets are redacted before any value
+reaches Attributes or Evidence — see <a href="../egress/"><code>egress.md</code></a> and
+ADR-0008 for the redaction contract.</p>
+<table>
+<thead>
+<tr>
+<th>ProbeID</th>
+<th>severity</th>
+<th>dimension</th>
+<th>attributes (in addition to <code>config_source</code>, <code>config_key</code>, <code>value</code>, <code>classifier_rule</code>, <code>confidence</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>egress.object_storage</code></td>
+<td>observation</td>
+<td><code>juridisch</code></td>
+<td><code>provider</code> (aws/gcs/azure/generic), <code>region</code> (best-effort), <code>asn</code>/<code>organisation</code>/<code>country</code> when GeoLite2 is wired</td>
+</tr>
+<tr>
+<td><code>egress.database</code></td>
+<td>observation</td>
+<td><code>juridisch</code></td>
+<td><code>provider</code> (postgres/mysql/…), <code>port</code></td>
+</tr>
+<tr>
+<td><code>egress.smtp</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td><code>port</code></td>
+</tr>
+<tr>
+<td><code>egress.oidc</code></td>
+<td>observation</td>
+<td><code>data_ai</code></td>
+<td>(host only)</td>
+</tr>
+<tr>
+<td><code>egress.log_shipper</code></td>
+<td>observation</td>
+<td><code>operationeel</code></td>
+<td>(host only)</td>
+</tr>
+<tr>
+<td><code>egress.webhook</code></td>
+<td>observation</td>
+<td><code>technologie</code></td>
+<td>(host only)</td>
+</tr>
+<tr>
+<td><code>egress.unknown</code></td>
+<td>info</td>
+<td>—</td>
+<td>URL-shaped value the classifier could not bucket</td>
+</tr>
+<tr>
+<td><code>egress.&lt;scanner&gt;.unconfigured</code></td>
+<td>info</td>
+<td>—</td>
+<td>scanner enabled but no paths/sources to read</td>
+</tr>
+<tr>
+<td><code>egress.&lt;scanner&gt;.error</code></td>
+<td>info</td>
+<td>—</td>
+<td>scanner ran but failed mid-run</td>
+</tr>
+<tr>
+<td><code>egress.host_resolution.unavailable</code></td>
+<td>info</td>
+<td>—</td>
+<td>emitted at most once per run when no GeoLite2 DB is wired</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reading-tips">Reading tips</h2>
+<ul>
+<li>Group by <code>ProbeID</code>'s first segment for a per-probe view (the CLI
+  output already does this).</li>
+<li><code>ip.asn</code> findings joined with <code>http.third_party</code> findings give you
+  the non-EU-dependency picture — which hosts does the homepage load
+  from, which country/ASN are those hosted in.</li>
+<li><code>tls.issuer.issuer_country</code> is a strong jurisdictional signal on its
+  own; combine with <code>dns.ns</code> to see who can unilaterally affect cert
+  issuance and DNS continuity.</li>
+<li><code>Evidence</code> always lets you audit without re-scanning. A finding is
+  never "lost" — the raw source is retained.</li>
+</ul>
+<h2 id="stability-promise">Stability promise</h2>
+<p>The <code>Finding</code> struct and the ProbeID namespaces in this document are
+intended to be stable across MVP-era releases. Adding new ProbeIDs is
+non-breaking; renaming or removing an existing one is breaking and
+should come with a documented migration path.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Gekopieerd naar klembord", "clipboard.copy": "Kopi\u00ebren naar klembord", "search.result.more.one": "1 extra overeenkomst op deze pagina", "search.result.more.other": "# extra overeenkomsten op deze pagina", "search.result.none": "Geen overeenkomende documenten", "search.result.one": "1 overeenkomende document", "search.result.other": "# overeenkomende documenten", "search.result.placeholder": "Typ om te beginnen met zoeken", "search.result.term.missing": "Ontbreekt", "select.version": "Selecteer versie"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
