@@ -244,12 +244,12 @@
     "visibility": "public",
     "sensitivity": "public-ok",
     "has_docs": "yes",
-    "has_mcp_json": "no",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). AGPL-3.0 (afwijking van EUPL-standaard; waarschijnlijk bewust).",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). AGPL-3.0 (afwijking van EUPL-standaard; waarschijnlijk bewust). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "Assembly-basics",
@@ -286,12 +286,12 @@
     "visibility": "public",
     "sensitivity": "public-ok",
     "has_docs": "yes",
-    "has_mcp_json": "no",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). 13 docs-pagina's zonder front matter -> migratie. Geen LICENSE -> toevoegen.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). 13 docs-pagina's zonder front matter -> migratie. Geen LICENSE -> toevoegen. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "billbird-client",
@@ -299,13 +299,13 @@
     "tier": "active",
     "visibility": "public",
     "sensitivity": "public-ok",
-    "has_docs": "partial",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). MIT (bewuste afwijking van EUPL? vastleggen in notes/ADR).",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). MIT (bewuste afwijking van EUPL? vastleggen in notes/ADR). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "BOIDS_python",
@@ -369,13 +369,13 @@
     "tier": "active",
     "visibility": "public",
     "sensitivity": "public-ok",
-    "has_docs": "no",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). project.md noemt certswap als maintained-voorbeeld, maar er zijn commits <90 dagen -> beslistabel wint: active.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). project.md noemt certswap als maintained-voorbeeld, maar er zijn commits <90 dagen -> beslistabel wint: active. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "character-creator",
@@ -481,13 +481,13 @@
     "tier": "active",
     "visibility": "public",
     "sensitivity": "public-ok",
-    "has_docs": "no",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). ",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "crowdfunding_solana",
@@ -775,13 +775,13 @@
     "tier": "active",
     "visibility": "public",
     "sensitivity": "public-ok",
-    "has_docs": "partial",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Geen LICENSE -> EUPL-1.2 toevoegen bij change 2-PR.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Geen LICENSE -> EUPL-1.2 toevoegen bij change 2-PR. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "GoChain",
@@ -930,12 +930,12 @@
     "visibility": "public",
     "sensitivity": "public-ok",
     "has_docs": "yes",
-    "has_mcp_json": "no",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "ithero",
@@ -1615,13 +1615,13 @@
     "tier": "active",
     "visibility": "public",
     "sensitivity": "public-ok",
-    "has_docs": "no",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). ",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "Slackbot",
@@ -2120,12 +2120,12 @@
     "visibility": "public",
     "sensitivity": "public-ok",
     "has_docs": "yes",
-    "has_mcp_json": "no",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "wsos-calculator",
@@ -2161,13 +2161,13 @@
     "tier": "active",
     "visibility": "private",
     "sensitivity": "private-only",
-    "has_docs": "no",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed.",
-    "contract_applied": "no"
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   },
   {
     "repo": "zettelkast",
@@ -2175,12 +2175,12 @@
     "tier": "active",
     "visibility": "private",
     "sensitivity": "private-only",
-    "has_docs": "no",
-    "has_mcp_json": "no",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed.",
-    "contract_applied": "no"
+    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "contract_applied": "yes"
   }
 ]

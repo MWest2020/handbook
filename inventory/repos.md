@@ -29,16 +29,16 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | Applied_Cryptography_Chatappp | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | appstore | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | Artsy.v001 | github | archive | public | public-ok | no | no | no | no | no | Dood sinds 2022 -> archiveren. |
-| ash-nazg | github | active | public | public-ok | yes | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). AGPL-3.0 (afwijking van EUPL-standaard; waarschijnlijk bewust). |
+| ash-nazg | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). AGPL-3.0 (afwijking van EUPL-standaard; waarschijnlijk bewust). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | Assembly-basics | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | awesome-networking | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge fork |
-| Billbird | github | active | public | public-ok | yes | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). 13 docs-pagina's zonder front matter -> migratie. Geen LICENSE -> toevoegen. |
-| billbird-client | github | active | public | public-ok | partial | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). MIT (bewuste afwijking van EUPL? vastleggen in notes/ADR). |
+| Billbird | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). 13 docs-pagina's zonder front matter -> migratie. Geen LICENSE -> toevoegen. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| billbird-client | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). MIT (bewuste afwijking van EUPL? vastleggen in notes/ADR). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | BOIDS_python | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | buildspace-projects | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | can_nextcloud_run_doom | github | archive | public | public-ok | no | no | no | no | no | Grap-project -> archiveren. |
 | certified-claude-architect | github | TBD | private | private-only | no | no | no | no | no | Vraag: zelfde als claude_certified — samenvoegen/archiveren? |
-| certswap | github | active | public | public-ok | no | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). project.md noemt certswap als maintained-voorbeeld, maar er zijn commits <90 dagen -> beslistabel wint: active. |
+| certswap | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). project.md noemt certswap als maintained-voorbeeld, maar er zijn commits <90 dagen -> beslistabel wint: active. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | character-creator | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | charting-library-tutorial | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | CKA-playground | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -46,7 +46,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | code-lama | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | complete-guide-to-full-stack-solana-development | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | Corgistration | github | archive | public | public-ok | no | no | no | no | no | Experiment -> archiveren. |
-| crible | github | active | public | public-ok | no | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12).  |
+| crible | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | crowdfunding_solana | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | DAO | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | docGPT | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -67,7 +67,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | get-pr-data | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | GH-Notifier | github | archive | public | public-ok | no | no | no | no | no | Geen activiteit sinds 2025-11; vermoedelijk vervangen door hosted alternatieven -> archiveren. Zo niet: maintained maken. |
 | GithubBundle | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
-| Gitsweeper | github | active | public | public-ok | partial | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Geen LICENSE -> EUPL-1.2 toevoegen bij change 2-PR. |
+| Gitsweeper | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Geen LICENSE -> EUPL-1.2 toevoegen bij change 2-PR. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | GoChain | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | grapher | github | archive | public | public-ok | yes | no | no | no | no | Afgeschoten (besluit Mark 2026-07-12) -> archiveren op de forge. |
 | Grip-op-data-Nextcloud-als-open-source-alternatief-voor-Microsoft-365 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -78,7 +78,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | Honeypot | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | instagram-clone | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Install_scripts | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| iso-audit | github | active | public | public-ok | yes | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2. |
+| iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | ithero | github | TBD | private | private-only | no | no | no | no | no | Claude Code-config (skills/hooks/global instructions). Vraag: meenemen in private sectie? Overlapt met dotfiles. |
 | javascript-basics-practice | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | keysentry | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
@@ -127,7 +127,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | rust_the_book | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | SCHOOL-REST-API | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Shoe-store | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| skill-forge | github | active | public | public-ok | no | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12).  |
+| skill-forge | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | Slackbot | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | softwarecatalog | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | solana-access-platform | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -163,11 +163,11 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | woo-website-zutphen | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | wordsworth | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | workflow-test | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| workstation-security | github | active | public | public-ok | yes | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2. |
+| workstation-security | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | wsos-calculator | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | zeef | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
-| zeef-eval | github | active | private | private-only | no | no | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed. |
-| zettelkast | github | active | private | private-only | no | no | yes | yes | yes | Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. |
+| zeef-eval | github | active | private | private-only | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| zettelkast | github | active | private | private-only | yes | yes | yes | yes | yes | Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 
 ## Vastgesteld (Mark, 2026-07-12)
 
