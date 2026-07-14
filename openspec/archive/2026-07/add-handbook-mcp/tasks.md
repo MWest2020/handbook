@@ -9,7 +9,7 @@
       per tool + geweigerd pad + geweigerd repo. Draait in CI.
 - [x] 2.2 `.mcp.json` in dit repo: handbook-server via `uv run handbook-mcp`
       (lokale checkout) — sessies die hier starten gebruiken de bron direct.
-- [ ] 3.1 Rol de stdio-configuratie uit naar alle 17 spokes (placeholder
+- [x] 3.1 Rol de stdio-configuratie uit naar alle 17 spokes (placeholder
       `TODO-change-3` vervangen), één PR per repo.
-- [ ] 4.1 Issue #1 sluiten met verwijzing; change archiveren
+- [x] 4.1 Issue #1 sluiten met verwijzing; change archiveren
       (propose→apply→archive).
