@@ -2145,14 +2145,14 @@
     "repo": "zeef",
     "forge": "github",
     "tier": "active",
-    "visibility": "private",
-    "sensitivity": "private-only",
+    "visibility": "public",
+    "sensitivity": "public-ok",
     "has_docs": "yes",
     "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep over volledige history: schoon). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
