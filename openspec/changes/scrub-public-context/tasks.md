@@ -2,8 +2,9 @@
 
 ## 1. Site-pagina's (direct, in deze branch)
 
-- [x] 1.1 `docs/index.md`: trajectlabels weg, "eerste habitat-afnemer"
-      weg, private-sectie-alinea vervangen door één kale verwijzingszin.
+- [x] 1.1 `docs/index.md`: trajectlabels weg, koppeling van een publiek
+      repo aan een privaat repo weg, private-sectie-alinea vervangen
+      door één kale verwijzingszin.
 - [x] 1.2 `docs/homelab/herstel.md`: private repo-namen en
       redactie-datum verwijderd; alleen de functionele uitleg blijft.
 - [ ] 1.3 Private overzichtspagina toevoegen die alleen in
