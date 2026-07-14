@@ -1,6 +1,6 @@
 # Tasks: add-handbook-portal
 
-Vereist: change 2 gemerged voor minimaal de NLnet-repos + homelab. Beantwoord
+Vereist: change 2 gemerged voor minimaal de kernset-repos + homelab. Beantwoord
 eerst de drie open vragen uit proposal.md.
 
 ## 1. Repos aanmaken

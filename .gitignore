@@ -23,3 +23,6 @@ __pycache__/
 .vscode/
 *.swp
 .DS_Store
+
+# Private build-config: leeft op de beheer-host, niet in dit publieke repo
+mkdocs.private.yml

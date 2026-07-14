@@ -640,7 +640,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. docs/ bevat 3 spec-pagina's zonder contract-structuur. Interne hostnaam duikt op in openspec/project.md en archief -> scrubben bij change 2. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). docs/ bevat 3 spec-pagina's zonder contract-structuur. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -850,7 +850,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo, noemt Tailscale/interne context -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -878,7 +878,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC; eis = nooit geheimen. Wave 1-PR bevat daarom een security-scrub (secrets/keys/credentials eruit; hostnames/topologie mogen volgens Mark blijven). Handbook-import vooralsnog private sectie: het project.md-uitgangspunt (geen interne hostnames/overlay-details op publieke Pages) staat nog; publieke import vereist een spec-aanpassing, voorstel-eerst. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: docs geredigeerd (redact-homelab-docs, reviewer+security PASS) -> publieke import; geen private build meer nodig voor homelab.",
+    "notes": "KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab.",
     "contract_applied": "yes"
   },
   {
@@ -934,7 +934,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -1998,7 +1998,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. Rijke docs incl. 17 ADR's (decisions/) -> migreren naar explanation/adr/. Licentie NOASSERTION -> vaststellen (EUPL-1.2?). Interne hostnaam in test-fixtures -> scrubben. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Rijke docs incl. 17 ADR's (decisions/) -> migreren naar explanation/adr/. Licentie NOASSERTION -> vaststellen (EUPL-1.2?). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -2124,7 +2124,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -2152,7 +2152,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -2166,7 +2166,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef. Privaat; datasets mogelijk gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {

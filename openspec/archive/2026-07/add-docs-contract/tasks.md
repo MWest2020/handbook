@@ -5,9 +5,9 @@ Vereist: door Mark vastgestelde `inventory/repos.json` uit change 1.
 ## 1. Volgorde bepalen
 
 - [ ] 1.1 Sorteer repos met `needs_docs: yes` op prioriteit:
-      (1) NLnet-traject-repos (zeef, openanonymiser, wanderer, estafette),
+      (1) kernset-repos (zeef, openanonymiser, wanderer, estafette),
       (2) homelab-infra, (3) overige active, (4) maintained.
-      Rationale: grant-reviewers kijken naar docs; dat is de deadline-druk.
+      Rationale: deze repos hebben externe docs-lezers; daar zit de deadline-druk.
 
 ## 2. Per repo (herhaal, één PR per repo)
 

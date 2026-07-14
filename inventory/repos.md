@@ -57,7 +57,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | Enjoy_Your_Flight | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | ERC-20 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | ERC-721 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| estafette | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. docs/ bevat 3 spec-pagina's zonder contract-structuur. Interne hostnaam duikt op in openspec/project.md en archief -> scrubben bij change 2. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| estafette | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). docs/ bevat 3 spec-pagina's zonder contract-structuur. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | fallback-page | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | First_Anchor_App | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Flash-Cards | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -72,13 +72,13 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | grapher | github | archive | public | public-ok | yes | no | no | no | no | Afgeschoten (besluit Mark 2026-07-12) -> archiveren op de forge. |
 | Grip-op-data-Nextcloud-als-open-source-alternatief-voor-Microsoft-365 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | GuardingWatch | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| habitat | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo, noemt Tailscale/interne context -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| habitat | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | habitat-testrepo | github | archive | private | private-only | no | no | no | no | no | Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol. |
-| homelab | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC; eis = nooit geheimen. Wave 1-PR bevat daarom een security-scrub (secrets/keys/credentials eruit; hostnames/topologie mogen volgens Mark blijven). Handbook-import vooralsnog private sectie: het project.md-uitgangspunt (geen interne hostnames/overlay-details op publieke Pages) staat nog; publieke import vereist een spec-aanpassing, voorstel-eerst. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: docs geredigeerd -> publieke import. |
+| homelab | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab. |
 | Honeypot | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | instagram-clone | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Install_scripts | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Gebruikersnaam in gearchiveerd design-doc -> scrubben bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | ithero | github | TBD | private | private-only | no | no | no | no | no | Claude Code-config (skills/hooks/global instructions). Vraag: meenemen in private sectie? Overlapt met dotfiles. |
 | javascript-basics-practice | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | keysentry | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
@@ -154,7 +154,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | TypeScript | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | UDPPinger | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | WaardepapierenRegister | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
-| Wanderer | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. Rijke docs incl. 17 ADR's (decisions/) -> migreren naar explanation/adr/. Licentie NOASSERTION -> vaststellen (EUPL-1.2?). Interne hostnaam in test-fixtures -> scrubben. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| Wanderer | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Rijke docs incl. 17 ADR's (decisions/) -> migreren naar explanation/adr/. Licentie NOASSERTION -> vaststellen (EUPL-1.2?). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | wanderer-exapp | github | active | public | public-ok | no | no | no | yes | no | Downstream packaging van Wanderer; docs horen bij het hoofdrepo, aparte import zou dubbel zijn. Licentie NOASSERTION. |
 | wave-portal | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | westerweel-work | github | TBD | public | public-ok | no | no | no | no | no | Persoonlijke website. Vraag: hoort een portfoliosite in de handbook-import, of volstaat een link vanaf de handbook-index? |
@@ -163,10 +163,10 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | woo-website-zutphen | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | wordsworth | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | workflow-test | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| workstation-security | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model), maar map alma/ bevat host-specifieke scripts in een public repo -> reviewen bij change 2. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| workstation-security | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | wsos-calculator | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
-| zeef | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). NLnet-traject. docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
-| zeef-eval | github | active | private | private-only | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef (NLnet). Privaat; datasets mogelijk gevoelig (Woo-stukken) -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| zeef | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| zeef-eval | github | active | private | private-only | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef. Privaat; datasets mogelijk gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | zettelkast | github | active | private | private-only | yes | yes | yes | yes | yes | Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 
 ## Vastgesteld (Mark, 2026-07-12)
@@ -178,11 +178,8 @@ zijn afgeschoten/deprecated -> archiveren.
 
 ## TBD — resterende open vragen
 
-1. ~~homelab public?~~ BESLOTEN (2026-07-12): blijft public, eis = nooit
-   geheimen; security-scrub in de wave 1-PR. Restvraag: mogen homelab-docs
-   ook in de PUBLIEKE handbook-import? Het project.md-uitgangspunt zegt nu
-   van niet (geen interne hostnames op publieke Pages) — zo ja, dan eerst
-   een spec-aanpassing (voorstel-eerst).
+1. ~~homelab public?~~ BESLOTEN (2026-07-12): blijft public. Restvraag
+   over publieke handbook-import BESLOTEN (2026-07-14): publieke import.
 2. **zeef** — nu privaat; wanneer publiek? Bepaalt publieke vs. private import.
 3. **openanonymiser** — leeft in de werkgever-org op Codeberg (afgeschermd
    voor deze agent). Alleen linken vanaf de handbook-index, of buiten scope?

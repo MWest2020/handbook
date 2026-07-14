@@ -7,10 +7,12 @@ naar het hub-and-spoke-model. Docs leven in de project-repos zelf
 specs en de pipeline.
 
 - **Site**: publieke build → GitHub Pages
-  (https://mwest2020.github.io/handbook/); private build (homelab, private
-  repos) draait lokaal: `GH_TOKEN=… uv run mkdocs build -f mkdocs.private.yml -d site-private`
+  (https://mwest2020.github.io/handbook/); de private build draait alleen
+  waar zijn config staat (niet in dit repo):
+  `GH_TOKEN=… uv run mkdocs build -f mkdocs.private.yml -d site-private`
 - **Importlijst**: `inventory/repos.json` → `scripts/gen_imports.py` →
-  `mkdocs.yml` / `mkdocs.private.yml`; CI faalt bij drift
+  `mkdocs.yml` (en de niet-getrackte private config waar aanwezig); CI
+  faalt bij drift
 - **Specs**: `openspec/` (northstar in `project.md`, changes met
   propose→apply→archive)
 - **Checks**: `scripts/check_contract.py` (docs-contract per import),

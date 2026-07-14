@@ -36,11 +36,11 @@ read-only fundering onder changes 2 en 3.
 | `needs_mcp_json` | yes / no | Zie beslistabel |
 | `needs_docs` | yes / no | Zie beslistabel |
 | `handbook_import` | yes / no | Komt in de mkdocs-importlijst |
-| `notes` | vrij | Bijzonderheden, licentie-afwijkingen, NLnet-relevantie |
+| `notes` | vrij | Bijzonderheden, licentie-afwijkingen |
 
 ## Beslistabel tiers
 
-- **active**: commits in de laatste 90 dagen ÓF genoemd in lopend NLnet/grant-
+- **active**: commits in de laatste 90 dagen ÓF genoemd in een lopend extern
   traject (zeef, openanonymiser, wanderer, estafette) ÓF homelab-infra die
   draait. → `needs_docs: yes`, `needs_mcp_json: yes` als er Claude Code-sessies
   in draaien (heuristiek: aanwezigheid van `.claude/`, `CLAUDE.md`, of

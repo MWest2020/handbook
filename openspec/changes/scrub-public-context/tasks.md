@@ -11,21 +11,21 @@
       `mkdocs.private.yml` genavigeerd wordt (template staat in de
       gitignored `openspec/private/` van het Westmarch-spec-repo).
 
-## 2. Repo-bestanden (na scope-besluit Mark)
+## 2. Repo-bestanden (scope-besluiten Mark, 2026-07-14)
 
-- [ ] 2.1 `inventory/repos.json` + `repos.md`: financieringstrajecten uit
-      de notes; koppeling repo↔traject naar een private overlay
-      (gitignored bestand of buiten dit repo). Validatievelden
-      (`handbook_import`, `sensitivity`) blijven ongemoeid.
-- [ ] 2.2 Besluit: blijft `mkdocs.private.yml` (met private import-URLs)
-      in dit publieke repo, of verhuist de private build-config naar de
-      interne beheer-host?
-- [ ] 2.3 `openspec/archive/` en `prep/seeds/`: trajectvermeldingen
-      scrubben of accepteren als historisch (besluit Mark).
-- [ ] 2.4 Besluit git-history: oude index/inventaris blijven in de
-      publieke historie staan. Opties: laten staan, history rewrite
-      (force push, vereist expliciete bevestiging), of repo private
-      (breekt gratis GitHub Pages).
+- [x] 2.1 `inventory/repos.json` + `repos.md`: financieringstrajecten en
+      gevoelige-pointer-notes uit de publieke notes; verplaatst naar de
+      private overlay in de gitignored `openspec/private/`.
+      Validatievelden (`handbook_import`, `sensitivity`) ongemoeid.
+- [x] 2.2 BESLOTEN: private build-config verhuist naar de beheer-host.
+      `mkdocs.private.yml` ge-untrackt + gitignored (lokale kopie blijft
+      voor de private build); `scripts/gen_imports.py` slaat een afwezige
+      private config over, getest met en zonder.
+- [x] 2.3 BESLOTEN: scrubben. `openspec/archive/`, `prep/seeds/` en
+      `openspec/project.md` ontdaan van trajectvermeldingen;
+      repo-namen blijven staan (repo-info mag publiek).
+- [x] 2.4 BESLOTEN: git-history laten staan. Geen rewrite, geen
+      visibility-wijziging; het verbod geldt vanaf nu.
 
 ## 3. Sluitstuk
 

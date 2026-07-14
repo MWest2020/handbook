@@ -10,8 +10,17 @@
 - Directe herstelactie: `docs/index.md` (trajectlabels weg,
   private-sectie-alinea → één verwijzingszin) en
   `docs/homelab/herstel.md` (private repo-namen en redactie-datum weg).
-- Vervolgtaken met scope-besluit: inventaris-notes, `mkdocs.private.yml`,
-  archief/seeds, git-history (zie tasks.md van de change).
+- Scope-besluiten Mark (2026-07-14) uitgevoerd:
+  - Inventaris-notes gescrubd (financieringstrajecten en
+    gevoelige-pointer-notes uit `inventory/repos.json`/`repos.md`);
+    verplaatst naar een private overlay in de gitignored
+    `openspec/private/`.
+  - `mkdocs.private.yml` ge-untrackt + gitignored (private build-config
+    hoort op de beheer-host); `scripts/gen_imports.py` slaat een afwezige
+    private config over. README en conventies bijgewerkt.
+  - `openspec/archive/`, `prep/seeds/` en `openspec/project.md` ontdaan
+    van trajectvermeldingen; repo-namen blijven staan.
+  - Git-history blijft staan (geen rewrite, geen visibility-wijziging).
 
 ## 2026-07-12 (scherpstelling na diff-review)
 

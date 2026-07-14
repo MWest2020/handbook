@@ -38,5 +38,5 @@ tweede waarheid.
 
 Gescheiden op gevoeligheid, niet op onderwerp, en op repo-niveau: een repo
 is public-ok of private-only; per-pagina filters bestaan niet. De private
-build (`mkdocs.private.yml`) draait lokaal of op de beheer-host en gaat
-nooit naar Pages.
+build (`mkdocs.private.yml`, niet getrackt in dit repo) draait op de
+beheer-host en gaat nooit naar Pages.

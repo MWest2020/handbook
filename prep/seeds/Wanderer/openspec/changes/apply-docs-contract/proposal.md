@@ -5,7 +5,7 @@
 
 ## Why
 
-Wanderer is NLnet-traject-repo met de rijkste docs (17 ADR's), maar zonder contractstructuur of front matter.
+Wanderer heeft de rijkste docs (17 ADR's), maar zonder contractstructuur of front matter.
 Zonder uniform contract is handbook-aggregatie zinloos: het handbook (hub)
 importeert `docs/` van dit repo at build time.
 

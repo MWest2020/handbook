@@ -5,7 +5,7 @@
 
 ## Why
 
-zeef-eval (datasets/evaluatie bij zeef, NLnet) heeft geen docs/; wave 2, private sectie.
+zeef-eval (datasets/evaluatie bij zeef) heeft geen docs/; wave 2, private sectie.
 Zonder uniform contract is handbook-aggregatie zinloos: het handbook (hub)
 importeert `docs/` van dit repo at build time.
 

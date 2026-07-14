@@ -91,5 +91,5 @@ voorstel-eerst:
 - **Docs-contract**: `/docs` met Diátaxis-light indeling + front matter. Zie
   change 2 voor de exacte specificatie.
 - **Handbook**: het aggregatie-repo (naam: `handbook`, op GitHub `MWest2020`). Bewust géén
-  "techbook": dit dekt ook niet-platformzaken (grant-administratie-verwijzingen,
+  "techbook": dit dekt ook niet-platformzaken (administratie-verwijzingen,
   project-portfolio), en er is geen tweede boek om tegen af te bakenen.

@@ -5,7 +5,9 @@
 De inventaris is de enige waarheid over welke repos meedoen (northstar:
 site en agents lezen exact dezelfde lijst). Dit script schrijft de blokken
 tussen de BEGIN/END-markers in mkdocs.yml (publiek) en mkdocs.private.yml
-(privaat) — of valideert met --check dat ze niet gedrift zijn (CI).
+(privaat; niet getrackt, leeft alleen waar de private build draait) — of
+valideert met --check dat ze niet gedrift zijn (CI). Een afwezige
+mkdocs.private.yml wordt overgeslagen.
 
 Criteria:
   publiek : handbook_import=yes  sensitivity=public-ok    has_docs=yes
@@ -53,6 +55,11 @@ def main() -> None:
     # privaat = alles (publiek + private-only); publiek = alleen public-ok
     for path, subset in (("mkdocs.yml", pub), ("mkdocs.private.yml", pub + priv)):
         f = ROOT / path
+        if not f.exists():
+            # mkdocs.private.yml is niet getrackt (leeft op de beheer-host);
+            # in CI/verse clones ontbreekt hij en is er niets te valideren.
+            print(f"{path}: afwezig, overgeslagen")
+            continue
         old = f.read_text()
         new = replace_block(old, import_lines(subset), path)
         if old != new:

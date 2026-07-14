@@ -5,7 +5,7 @@
 
 ## Why
 
-estafette is NLnet-traject-repo; er liggen 3 spec-pagina's los in docs/ zonder contractstructuur.
+In estafette liggen 3 spec-pagina's los in docs/ zonder contractstructuur.
 Zonder uniform contract is handbook-aggregatie zinloos: het handbook (hub)
 importeert `docs/` van dit repo at build time.
 

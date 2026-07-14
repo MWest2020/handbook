@@ -5,7 +5,7 @@
 
 ## Why
 
-zeef is NLnet-traject-repo; docs-reviewbaarheid voor grant-reviewers is de deadline-druk. De huidige docs/ is een Hugo-site — het handbook aggregeert platte markdown volgens het contract.
+Docs-reviewbaarheid voor externe reviewers is voor zeef de deadline-druk. De huidige docs/ is een Hugo-site — het handbook aggregeert platte markdown volgens het contract.
 Zonder uniform contract is handbook-aggregatie zinloos: het handbook (hub)
 importeert `docs/` van dit repo at build time.
 
