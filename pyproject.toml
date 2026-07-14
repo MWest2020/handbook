@@ -1,14 +1,29 @@
 [project]
 name = "handbook"
 version = "0.1.0"
-description = "Personal handbook hub: aggregeert docs van alle persoonlijke repos at build time"
+description = "Personal handbook hub: aggregeert docs van alle persoonlijke repos at build time + read-only MCP-server op dezelfde importlijst"
 requires-python = ">=3.11"
 license = "EUPL-1.2"
 dependencies = [
+    "mcp>=1.2",
+]
+
+[project.scripts]
+handbook-mcp = "handbook_mcp:main"
+
+[dependency-groups]
+docs = [
     "mkdocs>=1.6",
     "mkdocs-material>=9.5",
     "mkdocs-multirepo-plugin>=0.8",
 ]
 
 [tool.uv]
-package = false
+default-groups = ["docs"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["handbook_mcp"]

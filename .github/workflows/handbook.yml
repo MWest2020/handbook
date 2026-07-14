@@ -36,6 +36,9 @@ jobs:
       - name: Freshness (waarschuwing, geen gate)
         run: uv run python scripts/check_freshness.py docs
 
+      - name: MCP-sessietest (spec-delta handbook-mcp)
+        run: uv run python scripts/test_mcp.py
+
       - name: Deploy naar gh-pages
         if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v4
