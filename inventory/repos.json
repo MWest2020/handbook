@@ -843,14 +843,14 @@
     "repo": "habitat",
     "forge": "github",
     "tier": "active",
-    "visibility": "private",
-    "sensitivity": "private-only",
+    "visibility": "public",
+    "sensitivity": "public-ok",
     "has_docs": "yes",
     "has_mcp_json": "yes",
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -948,7 +948,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Claude Code-config (skills/hooks/global instructions). Vraag: meenemen in private sectie? Overlapt met dotfiles.",
+    "notes": "Claude Code-config (skills/hooks/global instructions). claude/ en systemd/ gemigreerd naar dotfiles 2026-07-14; repo wacht op verwijdering (delete_repo-scope nodig, besluit Mark).",
     "contract_applied": "no"
   },
   {

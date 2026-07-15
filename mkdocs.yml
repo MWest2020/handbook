@@ -39,6 +39,8 @@ plugins:
           import_url: 'https://github.com/MWest2020/estafette?branch=main&docs_dir=docs/*'
         - section: Gitsweeper
           import_url: 'https://github.com/MWest2020/Gitsweeper?branch=main&docs_dir=docs/*'
+        - section: habitat
+          import_url: 'https://github.com/MWest2020/habitat?branch=main&docs_dir=docs/*'
         - section: homelab
           import_url: 'https://github.com/MWest2020/homelab?branch=main&docs_dir=docs/*'
         - section: iso-audit
@@ -51,4 +53,6 @@ plugins:
           import_url: 'https://github.com/MWest2020/wordsworth?branch=main&docs_dir=docs/*'
         - section: workstation-security
           import_url: 'https://github.com/MWest2020/workstation-security?branch=main&docs_dir=docs/*'
+        - section: zeef
+          import_url: 'https://github.com/MWest2020/zeef?branch=main&docs_dir=docs/*'
         # END IMPORTS
