@@ -850,7 +850,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail).",
     "contract_applied": "yes"
   },
   {
@@ -878,7 +878,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab.",
+    "notes": "KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab. Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths infra-mappen (warn).",
     "contract_applied": "yes"
   },
   {
@@ -1606,7 +1606,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths skills/,src/,config/ (warn).",
     "contract_applied": "yes"
   },
   {
@@ -2082,7 +2082,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths src/,scripts/ (fail).",
     "contract_applied": "yes"
   },
   {
@@ -2166,7 +2166,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (warn).",
     "contract_applied": "yes"
   }
 ]

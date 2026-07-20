@@ -20,15 +20,15 @@
 
 ## 3. Uitrol naar de spokes (na merge hub-PR; spokes referen `@main`)
 
-- [ ] 3.1 habitat (code_paths: dispatch/, worker/, cage/, report/, orchestrator/)
-- [ ] 3.2 homelab
-- [ ] 3.3 wordsworth
-- [ ] 3.4 zettelkast
-- [ ] 3.5 skill-forge
+- [x] 3.1 habitat (code_paths: dispatch/, worker/, cage/, report/, orchestrator/)
+- [x] 3.2 homelab
+- [x] 3.3 wordsworth
+- [x] 3.4 zettelkast
+- [x] 3.5 skill-forge
 - [ ] 3.6 Per spoke: check verplicht maken op main (branch protection — Mark)
 
 ## 4. Afronding
 
 - [x] 4.1 Reference-pagina `docs/reference/docs-gates.md` (wat de gates doen, hoe een
       spoke aanhaakt via de caller-template, wanneer het label gerechtvaardigd is)
-- [ ] 4.2 `inventory/repos.json`-notes bijwerken (gate uitgerold per spoke)
+- [x] 4.2 `inventory/repos.json`-notes bijwerken (gate uitgerold per spoke)
