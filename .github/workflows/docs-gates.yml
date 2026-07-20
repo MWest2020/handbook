@@ -1,0 +1,56 @@
+# Reusable docs-gates voor spokes. Aangeroepen via workflow_call; de checker
+# leeft hier (hub) zodat er geen kopie per spoke verouderd. Zie
+# openspec/changes/add-docs-gates en docs/reference/docs-gates.md.
+name: docs-gates
+
+on:
+  workflow_call:
+    inputs:
+      code_paths:
+        description: "Komma-/newline-gescheiden globs/prefixes die docs vereisen"
+        required: true
+        type: string
+      drift_mode:
+        description: "fail (default) of warn"
+        required: false
+        default: "fail"
+        type: string
+      handbook_ref:
+        description: "Ref van de hub-checker (default main)"
+        required: false
+        default: "main"
+        type: string
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout spoke (volledige historie voor de diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout hub-checker
+        uses: actions/checkout@v4
+        with:
+          repository: MWest2020/handbook
+          ref: ${{ inputs.handbook_ref }}
+          path: .handbook-gates
+
+      - name: Contract-gate (docs-vorm)
+        run: python3 .handbook-gates/scripts/check_contract.py --repo-dir "$GITHUB_WORKSPACE"
+
+      - name: Drift-gate (code ↔ docs)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          CODE_PATHS: ${{ inputs.code_paths }}
+          DRIFT_MODE: ${{ inputs.drift_mode }}
+          HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'docs-drift-ok') }}
+        run: |
+          override=""
+          [ "$HAS_LABEL" = "true" ] && override="--override"
+          git diff --name-only "$BASE" "$HEAD" \
+            | python3 .handbook-gates/scripts/check_drift.py \
+                --code-paths "$CODE_PATHS" --mode "$DRIFT_MODE" $override

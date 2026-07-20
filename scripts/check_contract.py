@@ -8,9 +8,10 @@ Checks per repo (shallow clone):
      (ADR's onder explanation/adr/); asset-mappen zonder .md zijn vrij
   3. elke pagina heeft front matter met status + last_reviewed, geen owner
 
-Gebruik: check_contract.py [--all]
-  default: alleen public-ok imports (anonieme clones, CI op elke PR)
-  --all  : ook private-only imports (vereist GH_TOKEN met read-scope)
+Gebruik: check_contract.py [--all | --repo-dir PATH]
+  default        : alleen public-ok imports (anonieme clones, CI op elke PR)
+  --all          : ook private-only imports (vereist GH_TOKEN met read-scope)
+  --repo-dir PATH: check één lokale werkkopie (spoke-PR-gate, geen clone/inventaris)
 Exit 1 bij schending. Bare output (CI-script).
 """
 import json
@@ -62,7 +63,28 @@ def check_repo(repo: str, docs: pathlib.Path) -> list[str]:
     return errs
 
 
+def check_local(repo_dir: str) -> None:
+    """Spoke-PR-gate: valideer één lokale werkkopie, zonder clone of inventaris."""
+    root = pathlib.Path(repo_dir)
+    name = root.name
+    if not (root / "docs").is_dir():
+        print(f"OK {name}: geen docs/ (contract n.v.t.)")
+        return
+    errs = check_repo(name, root / "docs")
+    if errs:
+        for e in errs:
+            print(f"SCHENDING {name}: {e}")
+        sys.exit(1)
+    print(f"OK {name}: docs-contract voldaan")
+
+
 def main() -> None:
+    if "--repo-dir" in sys.argv:
+        i = sys.argv.index("--repo-dir")
+        if i + 1 >= len(sys.argv):
+            sys.exit("--repo-dir vereist een pad")
+        check_local(sys.argv[i + 1])
+        return
     include_private = "--all" in sys.argv
     token = os.environ.get("GH_TOKEN")
     rows = json.loads((ROOT / "inventory" / "repos.json").read_text())
