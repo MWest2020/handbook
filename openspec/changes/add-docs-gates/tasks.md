@@ -2,12 +2,12 @@
 
 ## 1. Hub (dit repo)
 
-- [ ] 1.1 `scripts/check_contract.py`: `--repo-dir PATH`-modus (hergebruik
+- [x] 1.1 `scripts/check_contract.py`: `--repo-dir PATH`-modus (hergebruik
       `check_repo()`, geen clone/inventaris; bare output, exit 1 bij schending)
-- [ ] 1.2 `.github/workflows/docs-gates.yml` (`workflow_call`): inputs
+- [x] 1.2 `.github/workflows/docs-gates.yml` (`workflow_call`): inputs
       `code_paths` (globs), `drift_mode` (warn|fail, default fail);
       contract-gate + drift-gate; label-override `docs-drift-ok`
-- [ ] 1.3 Caller-template vastleggen in de docs (±12 regels, met
+- [x] 1.3 Caller-template vastleggen in de docs (±12 regels, met
       voorbeeld-`code_paths` per spoke-type)
 
 ## 2. Testmatrix (habitat als proefspoke)
