@@ -1,7 +1,9 @@
 # test-gate Specification
 
 ## Purpose
-TBD - created by archiving change add-test-gate. Update Purpose after archive.
+Niet mergen zonder groene verificatie: elke import-spoke draait een
+`verify`-check op PR's (unit-tests waar die bestaan, anders lint/validatie),
+met uniforme naam en getelde dekking.
 ## Requirements
 ### Requirement: Elke import-spoke heeft een verify-check op PR's
 

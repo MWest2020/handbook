@@ -1,8 +1,9 @@
 # handbook-mcp Specification
 
 ## Purpose
-TBD - hersteld uit de archief-change add-handbook-mcp (canonieke spec was nooit
-naar openspec/specs/ gepromoveerd). Update Purpose na archive.
+Read-only MCP-toegang tot de contentlaag van het ecosysteem: agents lezen de
+docs van elk geïmporteerd spoke-repo én de hub zelf, uit één waarheid (de
+inventaris), binnen strakke pad- en token-grenzen.
 ## Requirements
 ### Requirement: Eén waarheid
 

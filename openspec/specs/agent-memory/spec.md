@@ -1,7 +1,9 @@
 # agent-memory Specification
 
 ## Purpose
-TBD - created by archiving change add-memory-backup. Update Purpose after archive.
+Het geheugen van de coördinerende sessie duurzaam, versiebeheerd en lekvrij
+bewaren: privaat geback-upt en op gevoeligheid gesplitst, nooit naar een
+publiek repo.
 ## Requirements
 ### Requirement: Agent-geheugen wordt privaat en op gevoeligheid gesplitst geback-upt
 

@@ -1,7 +1,8 @@
 # docs-gates Specification
 
 ## Purpose
-TBD - created by archiving change add-docs-gates. Update Purpose after archive.
+Docs bij het gedrag houden per spoke-PR: een contract-check (vorm) en een
+drift-check (code↔docs), als signaal in de PR waar de fix nog goedkoop is.
 ## Requirements
 ### Requirement: Contract-gate draait in de spoke-PR
 

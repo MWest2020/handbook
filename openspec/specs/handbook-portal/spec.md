@@ -1,7 +1,9 @@
 # handbook-portal Specification
 
 ## Purpose
-TBD - created by archiving change scrub-public-context. Update Purpose after archive.
+De publieke hub-build lekt geen private of financiële context: hub-eigen
+pagina's én niet-gerenderde repo-bestanden blijven vrij van
+financieringstrajecten, private repo-namen en homelab-details.
 ## Requirements
 ### Requirement: Hub-eigen pagina's lekken geen private of financiële context
 
