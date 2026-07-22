@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-07-22 (mcp-hub-self-read)
+
+- handbook-mcp ontsluit nu ook de hub zelf: `list_repos` toont `handbook`,
+  `list_docs`/`read_doc` lezen zijn `docs/**/*.md` — code-exceptie in
+  `_imports()`; de inventarisvlaggen blijven site-semantiek en de site
+  importeert zichzelf nog steeds niet (`handbook_import: no`).
+- Aanleiding: agents (o.a. zettelkast-sessies) konden elk spoke-repo lezen
+  maar niet de hub-docs die het ecosysteem beschrijven; besluit Mark
+  2026-07-22.
+- `scripts/test_mcp.py` dekt het nieuwe gedrag (hub verplicht in de lijst +
+  leescheck op `handbook docs/index.md`); hub-notes in
+  `inventory/repos.json` vermelden de uitzondering; spec-delta op
+  `handbook-mcp` "Eén waarheid" onder `openspec/changes/mcp-hub-self-read/`.
+
 ## 2026-07-14 (scrub-public-context)
 
 - Nieuwe openspec-change `scrub-public-context` na review van de live

@@ -2043,7 +2043,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "no",
-    "notes": "Hub-repo (voorheen Westmarch, hernoemd 2026-07-12): specs, inventaris, mkdocs-pipeline, sessie-startpunt (CLAUDE.md-mandaat). Importeert zichzelf niet.",
+    "notes": "Hub-repo (voorheen Westmarch, hernoemd 2026-07-12): specs, inventaris, mkdocs-pipeline, sessie-startpunt (CLAUDE.md-mandaat). Site importeert zichzelf niet (handbook_import blijft no); docs/ wel leesbaar via handbook-mcp (hub-exceptie in code, mcp-hub-self-read, 2026-07-22).",
     "contract_applied": "no"
   },
   {

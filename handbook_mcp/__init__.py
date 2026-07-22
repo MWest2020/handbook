@@ -2,7 +2,8 @@
 """handbook-mcp — read-only MCP-server op de contentlaag van het handbook.
 
 Leest exact dezelfde importlijst als de site (inventory/repos.json op main)
-en ontsluit uitsluitend docs/**/*.md van geïmporteerde repos. Stdio-server;
+en ontsluit uitsluitend docs/**/*.md van geïmporteerde repos én van de
+hub zelf (expliciete uitzondering; de site importeert zichzelf niet). Stdio-server;
 spokes starten hem via `uvx --from git+https://github.com/MWest2020/handbook
 handbook-mcp`. Optioneel GH_TOKEN in de omgeving voor private repos —
 tokens verschijnen nooit in output of foutmeldingen.
@@ -42,7 +43,10 @@ def _imports() -> dict[str, dict]:
     return {
         r["repo"]: r
         for r in rows
-        if r.get("handbook_import") == "yes" and r.get("contract_applied") == "yes"
+        # Hub-uitzondering (mcp-hub-self-read): de vlaggen zijn site-semantiek;
+        # de hub-docs zijn via MCP altijd leesbaar, de site importeert zichzelf niet.
+        if r["repo"] == HANDBOOK
+        or (r.get("handbook_import") == "yes" and r.get("contract_applied") == "yes")
     }
 
 
@@ -64,8 +68,8 @@ def _guard_path(path: str) -> str:
 
 @mcp.tool()
 def list_repos() -> list[dict]:
-    """Alle geïmporteerde repos (dezelfde lijst als de handbook-site),
-    met tier, visibility, sensitivity en notes uit de inventaris."""
+    """Alle geïmporteerde repos (dezelfde lijst als de handbook-site) plus
+    de hub zelf, met tier, visibility, sensitivity en notes uit de inventaris."""
     velden = ("repo", "tier", "visibility", "sensitivity", "notes")
     return [{k: r.get(k) for k in velden} for r in _imports().values()]
 

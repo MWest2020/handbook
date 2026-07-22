@@ -47,9 +47,14 @@ async def main() -> None:
             if r.isError:
                 die("list_repos faalde")
             repo_names = {x["repo"] for x in items(r)}
-            if "Wanderer" not in repo_names or "handbook" in repo_names:
+            if "Wanderer" not in repo_names or "handbook" not in repo_names:
                 die(f"importlijst klopt niet: {sorted(repo_names)}")
-            print(f"list_repos: {len(repo_names)} geïmporteerde repos")
+            print(f"list_repos: {len(repo_names)} repos (incl. hub)")
+
+            r = await session.call_tool("read_doc", {"repo": "handbook", "path": "docs/index.md"})
+            if r.isError or "status:" not in r.content[0].text:
+                die("read_doc(handbook, docs/index.md) leverde geen front matter (hub-exceptie)")
+            print("read_doc(handbook): hub-docs leesbaar (ok)")
 
             r = await session.call_tool("list_docs", {"repo": "Wanderer"})
             docs = items(r)
