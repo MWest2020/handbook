@@ -17,6 +17,7 @@ dist/
 build/
 node_modules/
 site/
+site-private/
 .venv/
 __pycache__/
 *.pyc
