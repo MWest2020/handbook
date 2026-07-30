@@ -14,7 +14,7 @@
         <link rel="prev" href="../../explanation/architecture/">
       
       
-        <link rel="next" href="../../../homelab/">
+        <link rel="next" href="../roles/">
       
       
         
@@ -5337,6 +5337,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rollen-referentie
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -9365,7 +9400,7 @@ De uitkomst komt uit <code>Job.status.conditions</code>, niet uit de pod-exit-co
 <tr>
 <td><code>&lt;rol&gt;</code></td>
 <td>ja</td>
-<td><code>builder</code> | <code>reviewer</code> | <code>security</code></td>
+<td><code>architect</code> | <code>builder</code> | <code>reviewer</code> | <code>security</code></td>
 </tr>
 <tr>
 <td><code>&lt;change&gt;</code></td>
@@ -9384,6 +9419,9 @@ De uitkomst komt uit <code>Job.status.conditions</code>, niet uit de pod-exit-co
 </tr>
 </tbody>
 </table>
+<p>De worker dwingt per rol een settings-allowlist (<code>worker/settings/&lt;rol&gt;.json</code>,
+deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-schema
+(<code>worker/schemas/&lt;rol&gt;.json</code>) af; zie <a href="../roles/"><code>roles.md</code></a>.</p>
 <h2 id="environment-variabelen">Environment-variabelen</h2>
 <table>
 <thead>
