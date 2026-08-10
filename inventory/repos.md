@@ -1,6 +1,6 @@
 # Repo-inventaris (audit-repo-inventory, 2026-07-12)
 
-Read-only audit. GitHub `MWest2020`: 156 repos. Codeberg `MWest2020`:
+Read-only audit. GitHub `MWest2020`: 155 repos. Codeberg `MWest2020`:
 0 persoonlijke repos (account bestaat, alle toegankelijke repos zijn
 werkgever-org en vallen buiten scope van dit persoonlijke handbook).
 
