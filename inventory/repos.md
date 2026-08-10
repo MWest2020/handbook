@@ -10,6 +10,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 
 ## GitHub (alfabetisch)
 
+<!-- BEGIN generated:github-table (uit inventory/repos.json; niet met de hand bewerken) -->
 | repo | forge | tier | visibility | sensitivity | has_docs | has_mcp_json | needs_mcp_json | needs_docs | handbook_import | notes |
 |---|---|---|---|---|---|---|---|---|---|---|
 | .github | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
@@ -46,7 +47,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | code-lama | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | complete-guide-to-full-stack-solana-development | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | Corgistration | github | archive | public | public-ok | no | no | no | no | no | Experiment -> archiveren. |
-| crible | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| crible | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | crowdfunding_solana | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | DAO | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | docGPT | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -72,14 +73,14 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | grapher | github | archive | public | public-ok | yes | no | no | no | no | Afgeschoten (besluit Mark 2026-07-12) -> archiveren op de forge. |
 | Grip-op-data-Nextcloud-als-open-source-alternatief-voor-Microsoft-365 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | GuardingWatch | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| habitat | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Privaat repo -> private sectie. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
-| habitat-testrepo | github | archive | private | private-only | no | no | no | no | no | Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol. |
-| homelab | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab. |
+| habitat | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail). Verify-gate uitgerold 2026-07-22 (add-test-gate): shellcheck+yaml-syntax. Rol-architectuur gebouwd+gereviewd (add-role-architecture, PR #11 2x PASS, gemerged 14351b8): architect/reviewer/security naast builder, per-rol deny-by-default allowlists, schema-output, hooks. add-worker-image gearchiveerd 2026-08-10 (image blijft prive via ghcr-pull-secret; nieuwe specs worker-execution + worker-image-build). add-run-output gearchiveerd 2026-08-10 (agent-eind-uitvoer als .habitat/run-output-<id>.md op de branch). Enige open change: add-role-architecture - wacht op cluster-livetests (3.1-3.3, kubectl); runbook staat in docs/reference/dispatch.md. |
+| habitat-testrepo | github | archive | private | private-only | no | no | no | no | no | Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol. Wordt gebruikt als doelrepo voor de add-role-architecture cluster-livetests. |
+| handbook | github | active | public | public-ok | yes | no | yes | yes | no | Hub-repo (voorheen Westmarch, hernoemd 2026-07-12): specs, inventaris, mkdocs-pipeline, sessie-startpunt (CLAUDE.md-mandaat). Site importeert zichzelf niet (handbook_import blijft no); docs/ wel leesbaar via handbook-mcp (hub-exceptie in code, mcp-hub-self-read, 2026-07-22). |
+| homelab | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab. Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths infra-mappen (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): terraform fmt+yaml-syntax. |
 | Honeypot | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | instagram-clone | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Install_scripts | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
-| ithero | github | TBD | private | private-only | no | no | no | no | no | Claude Code-config (skills/hooks/global instructions). Vraag: meenemen in private sectie? Overlapt met dotfiles. |
 | javascript-basics-practice | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | keysentry | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | Langchain | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -127,7 +128,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | rust_the_book | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | SCHOOL-REST-API | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Shoe-store | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
-| skill-forge | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| skill-forge | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12).  Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths skills/,src/,config/ (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): uv+pytest. |
 | Slackbot | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | softwarecatalog | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | solana-access-platform | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
@@ -158,16 +159,16 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | wanderer-exapp | github | active | public | public-ok | no | no | no | yes | no | Downstream packaging van Wanderer; docs horen bij het hoofdrepo, aparte import zou dubbel zijn. Licentie NOASSERTION. |
 | wave-portal | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | westerweel-work | github | TBD | public | public-ok | no | no | no | no | no | Persoonlijke website. Vraag: hoort een portfoliosite in de handbook-import, of volstaat een link vanaf de handbook-index? |
-| handbook | github | active | public | public-ok | yes | no | yes | yes | no | Hub-repo (voorheen Westmarch, hernoemd 2026-07-12): specs, inventaris, mkdocs-pipeline, sessie-startpunt. Importeert zichzelf niet. |
 | woo-website-template-apiv2 | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
 | woo-website-zutphen | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
-| wordsworth | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| wordsworth | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). Eerste habitat-afnemer. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths src/,scripts/ (fail). |
 | workflow-test | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | workstation-security | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). docs/ is conceptueel (strategy/threat-model). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | wsos-calculator | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge fork |
-| zeef | github | active | private | private-only | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Repo is privaat; zodra publiek kan sensitivity naar public-ok (inhoud oogt publiceerbaar). Vraag: wanneer gaat zeef open? Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
+| zeef | github | active | public | public-ok | yes | yes | yes | yes | yes | KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep over volledige history: schoon). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). |
 | zeef-eval | github | active | private | private-only | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Hoort bij zeef. Privaat; datasets mogelijk gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
-| zettelkast | github | active | private | private-only | yes | yes | yes | yes | yes | Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| zettelkast | github | active | private | private-only | yes | yes | yes | yes | yes | Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): uv+pytest. Telefoon->vault-clipping werkt: phone-intake-v1 en url-intake-v1 afgerond+gearchiveerd (2026-08-10). Clippen bewezen via de telefoon-share-tekstroute (eerste inhoudelijke clip 2026-08-04, MCP-architectuur); dispatch-shortcut niet geinstalleerd maar de dispatch-keten zelf is groen bewezen. Geen open openspec-changes meer. |
+<!-- END generated:github-table -->
 
 ## Vastgesteld (Mark, 2026-07-12)
 

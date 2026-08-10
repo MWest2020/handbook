@@ -13,7 +13,9 @@ apart hub-repo (verschil met de werkopzet): één eigenaar, één hub.
   `HABITAT_BASE_BRANCH=habitat/builder/<change>`.
 - **De inventaris is de enige waarheid.** `inventory/repos.json` bepaalt wat
   meedoet (site én agents). Wijzigingen aan de importlijst gaan via
-  `scripts/gen_imports.py`, nooit met de hand.
+  `scripts/gen_imports.py`, nooit met de hand. De tabel in `inventory/repos.md`
+  is afgeleid: regenereer met `scripts/gen_inventory_md.py` (bewerkt alleen het
+  gemarkeerde tabelblok; het proza eromheen blijft handwerk).
 - **Voorstel-eerst.** Nieuwe changes/repos/entiteiten ontstaan via een
   openspec-proposal onder `openspec/changes/`, nooit impliciet.
 - **Escalatie.** Niet in een proposal of dit mandaat beschreven = eerst
