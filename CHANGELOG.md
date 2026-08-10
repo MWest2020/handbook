@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-08-10 (habitat: rol-architectuur live-bewezen)
+
+- **Cluster-livetests van `add-role-architecture` groen** (image 232583a) op
+  `habitat-testrepo`: architect/reviewer/security aantoonbaar read-only
+  (diff_hash = leeg-hash), builder door de Stop-hook geverifieerd, idempotentie
+  (identieke diff_hash bij herhaling), end-to-end keten met verdict-propagatie
+  (rol-FAIL → Job Failed), en de Stop-hook blokkeert een falende verify.
+- **Bug gevonden én gefixt via de eigen keten:** de PreToolUse-guard blokkeerde
+  élk `.claude/`-pad, terwijl de worker elke rol opdraagt `.claude/agents/<rol>.md`
+  te lezen → architect faalde. Fix `fix-guard-role-definition` (PR #13): Read-
+  uitzondering voor rol-definities, symlink-hardening (component-walk), 2 review-
+  rondes (reviewer+security, ronde 1 FAIL op symlink-bypass → ronde 2 beide PASS).
+- **Deploy-fix:** de `role-architect`-ServiceAccount ontbrak op het cluster →
+  `cage/rbac.yaml` toegepast.
+- **Beide changes gearchiveerd** (`add-role-architecture`,
+  `fix-guard-role-definition`). Habitat heeft nu **geen open openspec-changes**.
+- Follow-ups genoteerd (niet-blokkerend): `Glob`/`Grep` buiten de guard,
+  hardlink-vector, interpreter-exfil — pre-existing.
+
 ## 2026-08-10 (spoke-status: zettelkast + habitat)
 
 Coördinatie-update, geen hub-code gewijzigd — alleen inventaris-notes
