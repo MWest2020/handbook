@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-10 (habitat-testrepo: livetest-fixture 2.1)
+
+- De `add-greeting`-fixture op `habitat-testrepo` liet de rol-keten struikelen:
+  taak 2.1 eiste de exitcode van `scripts/verify.sh`, die niemand produceert
+  (de builder mag geen `bash` draaien), dus 2.1 bleef onafgevinkt → reviewer-FAIL.
+  Herschreven zodat de builder 2.1 kan afvinken via inspectie (Read), met de
+  builder-Stop-hook als uitvoeringsbewijs (groene Job = verify gedraaid+geslaagd).
+  Testrepo-only (wegwerp-fixture), geen platform-code. Her-geverifieerd met
+  `chain.sh` (architect+builder `AFGEROND`; reviewer/security-run ter afronding).
+
 ## 2026-08-10 (habitat: robuuste dispatch-wait)
 
 - `dispatch.sh` wachtte te kort (~180s) → een cold image-pull of lange run
