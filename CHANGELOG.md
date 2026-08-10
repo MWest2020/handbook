@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-08-10 (habitat: run-unieke branches + chain.sh)
+
+- Vervolg op de rol-architectuur-livetest: de worker pushte niet-deterministisch
+  (`habitat/<rol>/<change>` met `-<run_id>`-fallback), wat de reviewer/security-
+  lookup na een builder-retry brak. `run-unique-branches` (PR #14): branch is nu
+  **altijd** `habitat/<rol>/<change>-<run_id>` (niet-destructief, geen force,
+  elke run bewaard), en nieuw `dispatch/chain.sh` draait de volle keten en geeft
+  de builder-branch door aan reviewer/security. Besluit Mark: niet force-pushen,
+  wél run-uniek + threading.
+- Cluster-geverifieerd (image 4b11c83): run-unieke namen, `chain.sh`-threading en
+  keten-gate (stopt bij rol-FAIL) werken. 2 reviewrondes (reviewer+security PASS;
+  fix: chain stopt nu op de dispatch-exit i.p.v. die te negeren).
+- Gearchiveerd. Habitat blijft **zonder open openspec-changes**.
+
 ## 2026-08-10 (habitat: rol-architectuur live-bewezen)
 
 - **Cluster-livetests van `add-role-architecture` groen** (image 232583a) op
