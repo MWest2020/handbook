@@ -8,7 +8,9 @@
   Herschreven zodat de builder 2.1 kan afvinken via inspectie (Read), met de
   builder-Stop-hook als uitvoeringsbewijs (groene Job = verify gedraaid+geslaagd).
   Testrepo-only (wegwerp-fixture), geen platform-code. Her-geverifieerd met
-  `chain.sh` (architect+builder `AFGEROND`; reviewer/security-run ter afronding).
+  `chain.sh`: **hele keten groen** — architect/builder/reviewer/security alle vier
+  `AFGEROND`; reviewer flipte van `failed` naar `ok` (reviewer+security read-only,
+  leeg-hash diff).
 
 ## 2026-08-10 (habitat: robuuste dispatch-wait)
 
