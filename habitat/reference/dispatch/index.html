@@ -9658,6 +9658,12 @@ deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-s
   onder <code>.habitat/</code> schrijft wél meetelt (geen smokkelkanaal). Het exacte
   reproductie-commando (mét de concrete run-id) staat in het veld
   <code>diff_hash_scope</code> van <code>run-report.json</code>.</li>
+<li>De agent-eind-uitvoer (<code>result</code>) staat als <code>.habitat/run-output-&lt;run-id&gt;.md</code>
+  op de branch. Habitat schrijft dit bestand <strong>altijd</strong> — ook zonder leesbaar
+  <code>result</code> (dan een placeholder) — ná de diff-hash, zodat het artefact
+  deterministisch habitat-eigendom is en een agent er geen eigen versie voor kan
+  smokkelen. Een onleesbare <code>.habitat/audit.jsonl</code>-regel is fail-closed: het
+  rapport crasht niet en toont zo'n regel als expliciet gebroken rij.</li>
 <li>Reviewer/security bouwen op de <strong>builder-branch</strong> via
   <code>HABITAT_BASE_BRANCH</code>. Gebruik <code>chain.sh</code> (zie hieronder) zodat die branch
   automatisch wordt doorgegeven; handmatig kan ook met de naam uit de
