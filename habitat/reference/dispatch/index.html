@@ -9662,7 +9662,10 @@ security en geeft de run-unieke builder-branch automatisch door aan reviewer en
 security (<code>HABITAT_BASE_BRANCH</code>). Zelfde env als <code>dispatch.sh</code> (<code>WORKER_IMAGE</code>
 verplicht).</p>
 <h2 id="uitkomst">Uitkomst</h2>
-<p><code>dispatch.sh</code> leest <code>Job.status.conditions</code> en vertaalt die naar een exit-code:</p>
+<p><code>dispatch.sh</code> wacht op een <strong>terminale</strong> <code>Job.status.conditions</code> (<code>Complete</code>
+of <code>Failed</code>) en vertaalt die naar een exit-code. De wachttimeout is
+<code>ACTIVE_DEADLINE_SECONDS + 600s</code> — ruim genoeg voor scheduling en een cold
+image-pull, zodat een trage start niet als "onbekend" eindigt.</p>
 <table>
 <thead>
 <tr>
@@ -9688,14 +9691,14 @@ verplicht).</p>
 <td><code>1</code></td>
 </tr>
 <tr>
-<td>onbekend</td>
-<td><code>onbekende status</code></td>
+<td>geen conditie binnen de timeout</td>
+<td><code>GEEN uitkomst binnen &lt;n&gt;s</code></td>
 <td><code>2</code></td>
 </tr>
 </tbody>
 </table>
-<p>De logs worden gestreamd (<code>kubectl logs -f</code>) en gearchiveerd naar
-<code>$HABITAT_LOGDIR/&lt;job-naam&gt;.log</code>.</p>
+<p>De logs worden gestreamd (<code>kubectl logs -f</code> zodra de pod draait) en
+gearchiveerd naar <code>$HABITAT_LOGDIR/&lt;job-naam&gt;.log</code>.</p>
 <h2 id="runbook-cluster-livetests-add-role-architecture-3133">Runbook: cluster-livetests (add-role-architecture 3.1–3.3)</h2>
 <p>Draai dit op een host met <code>kubectl</code>-toegang tot het <code>agents</code>-cluster en een
 verse Claude-sessie (voor de credentials-sync). Plak blok voor blok.</p>
