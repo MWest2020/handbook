@@ -850,7 +850,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail). Verify-gate uitgerold 2026-07-22 (add-test-gate): shellcheck+yaml-syntax.",
+    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail). Verify-gate uitgerold 2026-07-22 (add-test-gate): shellcheck+yaml-syntax. Rol-architectuur gebouwd+gereviewd (add-role-architecture, PR #11 2x PASS, gemerged 14351b8): architect/reviewer/security naast builder, per-rol deny-by-default allowlists, schema-output, hooks. add-worker-image gearchiveerd 2026-08-10 (image blijft prive via ghcr-pull-secret; nieuwe specs worker-execution + worker-image-build). add-run-output gearchiveerd 2026-08-10 (agent-eind-uitvoer als .habitat/run-output-<id>.md op de branch). Enige open change: add-role-architecture - wacht op cluster-livetests (3.1-3.3, kubectl); runbook staat in docs/reference/dispatch.md.",
     "contract_applied": "yes",
     "verify_gate": "yes"
   },
@@ -865,7 +865,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol.",
+    "notes": "Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol. Wordt gebruikt als doelrepo voor de add-role-architecture cluster-livetests.",
     "contract_applied": "no"
   },
   {
@@ -2170,7 +2170,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): uv+pytest.",
+    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): uv+pytest. Telefoon->vault-clipping werkt: phone-intake-v1 en url-intake-v1 afgerond+gearchiveerd (2026-08-10). Clippen bewezen via de telefoon-share-tekstroute (eerste inhoudelijke clip 2026-08-04, MCP-architectuur); dispatch-shortcut niet geinstalleerd maar de dispatch-keten zelf is groen bewezen. Geen open openspec-changes meer.",
     "contract_applied": "yes",
     "verify_gate": "yes"
   }

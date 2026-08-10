@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-08-10 (spoke-status: zettelkast + habitat)
+
+Coördinatie-update, geen hub-code gewijzigd — alleen inventaris-notes
+(`inventory/repos.json`) bijgewerkt met de afgeronde spoke-changes.
+
+- **zettelkast — telefoon→vault-clipping werkt.** `phone-intake-v1` en
+  `url-intake-v1` afgerond en gearchiveerd. Clippen is bewezen via de
+  telefoon-share-tekstroute (eerste inhoudelijke clip 2026-08-04,
+  MCP-architectuur); de dispatch-shortcut is niet geïnstalleerd, maar de
+  dispatch-keten zelf is groen bewezen. Besluit Mark 2026-08-10: niet langer
+  op de dispatch-route wachten → `url-intake-v1` afgerond via de tekst-route
+  (3.3/3.4 met notitie). Geen open openspec-changes meer op zettelkast.
+- **habitat — rol-architectuur gebouwd, twee changes gearchiveerd.**
+  `add-role-architecture` (PR #11, 2× PASS reviewer+security, gemerged
+  14351b8): architect/reviewer/security naast de builder, per-rol
+  deny-by-default allowlists, schema-output, PreToolUse/Stop-hooks.
+  `add-worker-image` gearchiveerd (besluit Mark 2026-08-10, "route B": image
+  blijft privé via het `ghcr-pull`-pull-secret i.p.v. publieke
+  package-visibility; nieuwe specs `worker-execution` + `worker-image-build`).
+  `add-run-output` gearchiveerd (agent-eind-uitvoer als
+  `.habitat/run-output-<id>.md` op de branch).
+- **Openstaand (buiten deze machine):** `add-role-architecture` blijft open —
+  de cluster-livetests (3.1–3.3) vereisen `kubectl` op een orchestrator-host.
+  Paste-klaar runbook toegevoegd in habitat `docs/reference/dispatch.md`.
+- **Signaal:** `inventory/repos.md` (de leesbare tabel) loopt achter op
+  `repos.json` sinds ±2026-07-13 (o.a. habitat-visibility/notes). `repos.json`
+  is de waarheid; `repos.md` is niet bijgewerkt om bestaande drift niet half
+  te repareren — kandidaat om te regenereren uit `repos.json`.
+
 ## 2026-07-22 (mcp-hub-self-read)
 
 - handbook-mcp ontsluit nu ook de hub zelf: `list_repos` toont `handbook`,
