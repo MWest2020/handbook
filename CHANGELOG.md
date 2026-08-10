@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-10 (habitat: robuuste dispatch-wait)
+
+- `dispatch.sh` wachtte te kort (~180s) → een cold image-pull of lange run
+  eindigde ten onrechte als "onbekend" (exit 2), wat de exit-code onbetrouwbaar
+  maakte (ook voor `chain.sh`). `robust-dispatch-wait` (PR #15): één lus die
+  wacht op een terminale Job-conditie met timeout `ACTIVE_DEADLINE_SECONDS+600`.
+  Dispatch-only (geen image). Reviewer PASS; cluster-sanity: `AFGEROND` + exit 0.
+  Gearchiveerd. Habitat blijft zonder open openspec-changes.
+
 ## 2026-08-10 (habitat: run-unieke branches + chain.sh)
 
 - Vervolg op de rol-architectuur-livetest: de worker pushte niet-deterministisch
