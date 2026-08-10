@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-08-11 (habitat: run-artefacten gehard — N1 + N3)
+
+- Vervolg op `reproducible-diff-hash`: de twee lage security-residuen (round 3)
+  netjes afgerond in `harden-run-artifacts`. **N1** — `.habitat/run-output-<id>.md`
+  werd alleen geschreven bij een `result` in de `claude -p`-JSON; nu schrijft
+  `habitat_report.py` dit **altijd** (placeholder zonder result), ná de diff-hash
+  en per exacte naam uitgesloten, zodat habitat het artefact bezit en een agent er
+  geen eigen versie voor kan smokkelen. **N3** — een beschadigde `audit.jsonl`-regel
+  liet het rapport crashen; nu fail-closed (`prev_hash=""`) en onleesbare regels
+  worden als expliciet gebroken rij getoond i.p.v. stil weggelaten (security-F1),
+  zodat de keten niet "opgeschoond" kan worden. Reviewer + security **PASS**;
+  nieuwe image (`e5dcfac`); cluster-sanity groen (run-output habitat-geschreven,
+  `diff_hash` reproduceerbaar). Direct naar `main` (thuislab, geen PR).
+  Gearchiveerd; habitat zonder open changes.
+
 ## 2026-08-10 (habitat: reproduceerbare diff_hash, geen .habitat/-smokkelkanaal)
 
 - Een livetest-reviewer signaleerde dat `run-report.json` **2** bestanden meldde
