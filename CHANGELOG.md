@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-10 (habitat: reproduceerbare diff_hash, geen .habitat/-smokkelkanaal)
+
+- Een livetest-reviewer signaleerde dat `run-report.json` **2** bestanden meldde
+  terwijl de commit er **6** bevatte: de `diff_hash` werd op report-tijd berekend
+  (vóór de habitat-artefacten gecommit werden), dus niet reproduceerbaar vanaf de
+  gepushte branch — precies het punt van de audit-keten. `reproducible-diff-hash`
+  sluit nu **exact de run-artefacten** uit (vaste naam + dispatch-run-id,
+  `literal`-pathspec, géén wildcard): `.habitat/audit.jsonl`,
+  `.habitat/run-report-<id>.html`, `.habitat/run-output-<id>.md`,
+  `run-report.json`. Security-review ging **3 rondes**: grove `.habitat/`-exclusie
+  (round 1) en naam-wildcard (round 2, `*` matcht ook `/`) waren allebei
+  agent-noembare smokkelkanalen → exacte run-id-exclusie sluit ze; élk ander
+  bestand dat de agent onder `.habitat/` schrijft blijft nu in de hash. Nieuwe
+  worker-image (`084f9db`); cluster-sanity groen: de opgeslagen `diff_hash`
+  reproduceert exact vanaf de branch via het `diff_hash_scope`-commando. Eerste
+  change **direct naar `main`** gemerged (thuislab, geen PR); reviews + gates als
+  kwaliteitscheck vóór de merge. Gearchiveerd; habitat zonder open changes.
+
 ## 2026-08-10 (habitat-testrepo: livetest-fixture 2.1)
 
 - De `add-greeting`-fixture op `habitat-testrepo` liet de rol-keten struikelen:
