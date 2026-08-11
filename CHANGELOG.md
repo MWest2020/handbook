@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-11 (ash-nazg: wire-dosbox-engine host-side + emulator/ROM-seam)
+
+- `wire-dosbox-engine` host-side afgemaakt op MWest2020/ash-nazg. De registry/
+  engine/dispatch/entrypoint bestonden al; de concrete gap was `selftest.py`
+  (nog de skipped-stub). Nu **echte 4-check self-test** (host-health,
+  engines-registered, deploy-daemon-spawn via een nieuwe `spawner.preflight()`,
+  audit-log-write) met concrete foutmeldingen en onveranderd JSON-schema; +tests.
+  **97 host-tests groen, ruff schoon.** Change blijft **OPEN**: §1 HaRP-verifier,
+  §2 GHCR-pull, §6 route-handshake, §9.3-vol en de level-3-acceptatie (NC 32 +
+  AppAPI 5.x + HaRP + docker) zijn env-gated — de agent-omgeving heeft geen
+  docker-daemon/NC-stack.
+- **Emulator/ROM-playthrough-seam** gelegd voor Marks Pokémon-caveat:
+  `host/tests/test_gameboy_playthrough.py` + `fixtures/roms/README.md`.
+  Import-veilig, skipt netjes tot er (a) een legaal ROM-fixture en (b) een Game
+  Boy-emulator-engine op de `ash_nazg.engines`-entrypoint zijn; dán draait 'ie de
+  echte dispatch→engine→spawn-pipeline. Mark levert ROM + emulator-files later
+  (→ `wire-gameboy-engine`-follow-up). ROMs zijn ge-gitignored (copyright).
+
 ## 2026-08-11 (OpenAnonymiser-fork: strip-to-text-only)
 
 - `strip-to-text-only` uitgevoerd op de MWest2020-fork. Bevinding: de fork was al
