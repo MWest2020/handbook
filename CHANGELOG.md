@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-08-11 (OpenAnonymiser-fork: strip-to-text-only)
+
+- `strip-to-text-only` uitgevoerd op de MWest2020-fork. Bevinding: de fork was al
+  gestript (geen document/DB/crypto/PDF/transformers-laag; die files bestonden hier
+  niet, base-deps schoon, geen `charts/`). De change was tegen de zwaardere upstream
+  geschreven. **Effectieve wijziging:** de default plugin-config (`plugins.yaml`)
+  draaide GLiNER (torch) met de regex-recognizers uit, waardoor de slanke build niet
+  startte (`ImportError: GLiNER is not installed`) — nu de text-only default (SpaCy
+  NER + alle regex-recognizers, geen GLiNER/torch); GLiNER/GPU blijft in
+  `plugins.gpu.yaml` (`Dockerfile.gpu`). Live geverifieerd: `/health`, `/analyze`
+  (BSN/PERSON/PHONE/IBAN via SpaCy+regex), `/anonymize`. `Dockerfile.classic` al
+  text-only (statisch geverifieerd; docker build/run niet mogelijk in de agent-omgeving
+  — geen daemon-toegang). Spec `text-only-api` naar delta-format + gearchiveerd.
+  `split-into-3-flavors` blijft open (niet gevraagd).
+
 ## 2026-08-11 (zeef: 4 gereconcilieerd + gearchiveerd; bm25 hand-rolled)
 
 - Op beslissing Mark de zeef-4 spec-owner-reconciliatie gedaan: criteria-scoring,
