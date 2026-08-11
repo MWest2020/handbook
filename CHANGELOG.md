@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-08-11 (ecosysteem-sweep: open punten "graph style" opgeruimd)
+
+- Graph-style aanpak: eerst een read-only triage-workflow (7 thuislabrepos, 1
+  lezer per repo), daarna gericht uitvoeren. **Gearchiveerd (af, alleen
+  bookkeeping):** zeef-eval 3, Billbird 4 (plan-command's live-deploy-taken als
+  operator-deferred), zeef 6, Wanderer 1 (research-high-signal-observability, op
+  beslissing Mark; design-principe naar project-hygiene gemerged). **Gecommit:**
+  homelab CrowdSec A.2 (live-infra-merge, 21 remote-commits, CHANGELOG-union).
+  **Gebouwd:** estafette `submission-v1` — PR-submissie + crawl/harvester
+  (poc.yaml, publiccode-fallback), verse reviewer+security PASS incl. hardening
+  (https-only fetch/redirects, `assessment`-strip op geharvestte entries,
+  slug-guard), 17 tests, gearchiveerd.
+- **Eerlijke muren (spec-owner/omgeving, niet geforceerd):** zeef `bm25-reuse`
+  (rank_bm25-swap breekt ordening-equivalentie op kleine corpora → semantiek-
+  keuze); zeef ×4 (criteria-scoring/converge-ranking/structured-llm-score/
+  topic-clustering: stale/gesuperseded spec-deltas vs gedreven base →
+  reconciliatie); ash-nazg `wire-dosbox-engine` (vereist docker + NC/AppAPI-stack);
+  OpenAnonymiser ×2 (breaking refactors op de MWest2020-fork — groot/richting).
+- OpenAnonymiser_light lokaal omgehangen naar de MWest2020-fork (weg van de
+  Conduction/Codeberg-remote) zodat het in-mandate bewerkbaar is.
+- Buiten scope/geblokkeerd: Conduction-repos (hard geblokkeerd). `apply-docs-contract`
+  blijft in meerdere repos open (delta-loze cross-repo docs-change, vers remote-werk).
+
 ## 2026-08-11 (habitat: run-artefacten gehard — N1 + N3)
 
 - Vervolg op `reproducible-diff-hash`: de twee lage security-residuen (round 3)
