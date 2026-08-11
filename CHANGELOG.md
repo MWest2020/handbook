@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-08-11 (zeef: 4 gereconcilieerd + gearchiveerd; bm25 hand-rolled)
+
+- Op beslissing Mark de zeef-4 spec-owner-reconciliatie gedaan: criteria-scoring,
+  converge-ranking, structured-llm-score, topic-clustering archiveerden niet
+  doordat hun MODIFIED-deltas op hernoemde/gesuperseded requirement-headers
+  mikten. Per requirement op inhoud gemerged in dependency-volgorde (export
+  "Inventory export" → base "Excel inventory of the selection" + motivatie/doc_type
+  als superset; retrieve-rerank LLM-scoring gemerged tot converge's side-score-
+  invariant + structured-output, stale top-K-demotie verwijderd). Niets uit
+  al-gearchiveerde changes overschreven; eindspecs zonder dubbele headers. Alle
+  vier gearchiveerd. **bm25-reuse afgevoerd** (beslissing Mark: hand-rolled BM25
+  behouden — de rank_bm25-swap brak ordening-equivalentie op kleine corpora).
+  zeef heeft nu geen open changes meer behalve het cross-repo `apply-docs-contract`.
+
 ## 2026-08-11 (ecosysteem-sweep: open punten "graph style" opgeruimd)
 
 - Graph-style aanpak: eerst een read-only triage-workflow (7 thuislabrepos, 1
