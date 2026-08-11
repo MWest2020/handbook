@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-11 (handbook-docs-contract-uitrol + homelab-docs-redactie)
+
+- **`redact-homelab-docs`** afgerond (homelab). Security-gate (Claude):
+  `docs/` bevat geen LAN-IP's, tailnet-namen, MAC's of persoonlijke user/host-
+  namen meer — geredigeerd voor de publieke handbook-import. Publieke DNS
+  (1.1.1.1/8.8.8.8) en het publieke domein `westerweel.work` blijven per de
+  contract-regel "publieke URL's niet vervangen"; de domein-redactie is apart
+  bij Mark geflagd (zijn keuze). Delta-loze seed-change → handmatig gearchiveerd.
+- **`apply-docs-contract`-uitrol** afgerond over **7 repos** (ash-nazg, Billbird,
+  estafette, homelab, Wanderer, zeef, zeef-eval). Per repo geverifieerd: docs
+  gemigreerd naar het handbook-contract (`how-to`/`reference`/`explanation` +
+  `index.md`, frontmatter, één taal), `.mcp.json` met de echte handbook-URL
+  aanwezig, alleen toegestane submappen dragen markdown (Wanderer's `docs/preview`
+  is HTML, geen schending). Enige open taak was de seed-PR/STOP-stap → onder het
+  thuislab-mandaat op main, geen PR. Delta-loze changes → handmatig naar archive/.
+- Ecosysteem-open nu: alleen **ash-nazg/`wire-dosbox-engine`** (host-side klaar,
+  level-3 env-gated) en **OpenAnonymiser/`split-into-3-flavors`** (niet gevraagd).
+
 ## 2026-08-11 (ash-nazg: wire-dosbox-engine host-side + emulator/ROM-seam)
 
 - `wire-dosbox-engine` host-side afgemaakt op MWest2020/ash-nazg. De registry/
