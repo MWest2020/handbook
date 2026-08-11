@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-08-11 (OpenAnonymiser: GLiNER-only + run-locatie-bevinding)
+
+- Besluit Mark: OpenAnonymiser draait één detectiepad — **GLiNER** (`gliner-only`
+  change; vervangt de nooit-gebouwde `split-into-3-flavors` en superseded de
+  "geen torch"-eis uit strip-to-text-only). Eén `plugins.yaml` (spaCy NER +
+  GLiNER + MAC), `gliner`(+torch) naar base-deps, één `Dockerfile`, uv.lock
+  hergeresolved, README/flavors.md bij, spec `text-only-api` bijgewerkt. Gepusht.
+- **Run-locatie:** de GLiNER-API lokaal op de agent-host draaien **bevroor de box**
+  (4 GiB/2 vCPU/geen GPU → OOM-thrash, reboot nodig). Conclusie: zware
+  ML-inferentie (torch/GLiNER) hoort NIET op de agent-host. Kan wel op een homelab
+  K8s-worker (`node-01..03`: 16 GiB RAM, maar 1 CPU/geen GPU → traag), op **alma**
+  (productie, read-only — vraag eerst), of een GPU-node voor productie-latency.
+  Model in het image bakken (geen runtime-download).
+
 ## 2026-08-11 (handbook-docs-contract-uitrol + homelab-docs-redactie)
 
 - **`redact-homelab-docs`** afgerond (homelab). Security-gate (Claude):
