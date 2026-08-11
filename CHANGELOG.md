@@ -5,9 +5,10 @@
 - **`redact-homelab-docs`** afgerond (homelab). Security-gate (Claude):
   `docs/` bevat geen LAN-IP's, tailnet-namen, MAC's of persoonlijke user/host-
   namen meer — geredigeerd voor de publieke handbook-import. Publieke DNS
-  (1.1.1.1/8.8.8.8) en het publieke domein `westerweel.work` blijven per de
-  contract-regel "publieke URL's niet vervangen"; de domein-redactie is apart
-  bij Mark geflagd (zijn keuze). Delta-loze seed-change → handmatig gearchiveerd.
+  (1.1.1.1/8.8.8.8) blijft (didactisch). Het persoonlijke domein `westerweel.work`
+  is op verzoek van Mark alsnog geredigeerd naar het RFC-2606-voorbeelddomein
+  `example.com` (+ secret-naam `example-com-tls`) over 7 pagina's — nul
+  `westerweel`-treffers meer in `docs/`. Delta-loze seed-change → handmatig gearchiveerd.
 - **`apply-docs-contract`-uitrol** afgerond over **7 repos** (ash-nazg, Billbird,
   estafette, homelab, Wanderer, zeef, zeef-eval). Per repo geverifieerd: docs
   gemigreerd naar het handbook-contract (`how-to`/`reference`/`explanation` +
