@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-11 (OpenAnonymiser GLiNER draait op een homelab-worker)
+
+- OpenAnonymiser (GLiNER-only) **gedeployed en live-geverifieerd op node-01**
+  (homelab K8s-worker, 16 GiB). Image → **GHCR** (`ghcr.io/mwest2020/openanonymiser-
+  light:latest`, public) via de fork-CI met `GITHUB_TOKEN` (geen Docker-Hub-secret;
+  push-triggers staan op de fork uit → handmatig `gh workflow run`). Onderweg de
+  Trivy-gate volledig doorgewerkt: **48 CVE's** — 35 OS (via `apt upgrade`) + 11
+  Python-wheel incl. de **transformers-RCE** (gerichte dep-bumps: cryptography 50,
+  starlette 1.6/fastapi 0.136, transformers 5.13.1, urllib3 2.7, python-multipart
+  0.0.32) **echt gepatcht**; 2 build-tool-metadata (wheel, jaraco.context) met een
+  gemotiveerde scoped `.trivyignore` (niet op het runtime-pad). Deploy-manifest:
+  `deploy/homelab-deployment.yaml` (namespace `openanonymiser`, mem 3/6 Gi,
+  startupProbe ~300s voor de GLiNER-warmup; image pullde 4.25 GB in ~4 min).
+  Smoke: `/health` ok, `/analyze` detecteert PERSON+LOCATION via GLiNER.
+- **Les (memory):** zware ML-inferentie (torch/GLiNER) draait NIET op de agent-host
+  (4 GiB → freeze); runtime hoort op een cluster-worker/alma. Zie
+  [[agent-host-resource-limit]].
+
 ## 2026-08-11 (OpenAnonymiser: GLiNER-only + run-locatie-bevinding)
 
 - Besluit Mark: OpenAnonymiser draait één detectiepad — **GLiNER** (`gliner-only`
