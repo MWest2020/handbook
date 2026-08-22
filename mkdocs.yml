@@ -48,6 +48,8 @@ plugins:
           import_url: 'https://github.com/MWest2020/habitat?branch=main&docs_dir=docs/*'
         - section: homelab
           import_url: 'https://github.com/MWest2020/homelab?branch=main&docs_dir=docs/*'
+        - section: internetnl-cli
+          import_url: 'https://github.com/MWest2020/internetnl-cli?branch=main&docs_dir=docs/*'
         - section: iso-audit
           import_url: 'https://github.com/MWest2020/iso-audit?branch=main&docs_dir=docs/*'
         - section: skill-forge

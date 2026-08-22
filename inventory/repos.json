@@ -926,6 +926,21 @@
     "contract_applied": "no"
   },
   {
+    "repo": "internetnl-cli",
+    "forge": "github",
+    "tier": "active",
+    "visibility": "public",
+    "sensitivity": "public-ok",
+    "has_docs": "yes",
+    "has_mcp_json": "no",
+    "needs_mcp_json": "yes",
+    "needs_docs": "yes",
+    "handbook_import": "yes",
+    "notes": "Habitat-doelrepo (toegevoegd 2026-08-22): CLI voor de Internet.nl batch-API + self-host-recept. MIT (bewuste afwijking van EUPL-standaard, besluit Mark 2026-08-22). Docs-contract en verify-gate (uv+pytest) vanaf de eerste commit. Route: self-hosted batch-instance + eigen API (wordsworth-stijl); hosted accounts bewust overgeslagen (bottleneck).",
+    "contract_applied": "yes",
+    "verify_gate": "yes"
+  },
+  {
     "repo": "iso-audit",
     "forge": "github",
     "tier": "active",

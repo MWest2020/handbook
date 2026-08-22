@@ -80,6 +80,7 @@ Geen persoonlijke repos. Het `handbook`-repo (change 3) wordt het eerste.
 | Honeypot | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | instagram-clone | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | Install_scripts | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
+| internetnl-cli | github | active | public | public-ok | yes | no | yes | yes | yes | Habitat-doelrepo (toegevoegd 2026-08-22): CLI voor de Internet.nl batch-API + self-host-recept. MIT (bewuste afwijking van EUPL-standaard, besluit Mark 2026-08-22). Docs-contract en verify-gate (uv+pytest) vanaf de eerste commit. Route: self-hosted batch-instance + eigen API (wordsworth-stijl); hosted accounts bewust overgeslagen (bottleneck). |
 | iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
 | javascript-basics-practice | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | keysentry | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
