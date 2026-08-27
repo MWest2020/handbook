@@ -27,6 +27,9 @@ jobs:
       - name: Importlijst synchroon met inventaris
         run: uv run python scripts/gen_imports.py --check
 
+      - name: Agent-seeds synchroon met canonieke bron (drift-gate)
+        run: uv run python scripts/gen_agent_seeds.py --check
+
       - name: Publieke build (strict)
         run: uv run mkdocs build --strict
 

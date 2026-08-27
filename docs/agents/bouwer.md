@@ -52,3 +52,5 @@ Wanneer de bouwer werk daadwerkelijk uitvoert, doet hij dat als habitats
 > Deze facet is de canonieke bron waarvan habitats per-repo
 > `.claude/agents/builder.md`-seed wordt afgeleid (drift-gate), i.p.v. met de
 > hand gekopieerd.
+
+Canonieke seed: [`docs/agents/seeds/builder.md`](seeds/builder.md) — de habitat-seed wordt hieruit afgeleid (drift-gate).
