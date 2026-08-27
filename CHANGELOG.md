@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-27 — feat: agent-seed-derivation (drift-gate)
+
+Habitat-executie-seeds afgeleid van de canonieke bron: docs/agents/seeds/<rol>.md
+is de waarheid; scripts/gen_agent_seeds.py genereert de per-spoke
+.claude/agents/<rol>.md en --check is de CI drift-gate (stap in handbook.yml).
+Sluit de habitat-kant van add-agent-registry. Raakt de kooi niet.
+
 ## 2026-08-11 (OpenAnonymiser GLiNER draait op een homelab-worker)
 
 - OpenAnonymiser (GLiNER-only) **gedeployed en live-geverifieerd op node-01**

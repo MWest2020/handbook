@@ -36,4 +36,5 @@ executie). Het `## Mandaat` is voor beide facetten én voor mensen de bron.
 - [bouwer](bouwer.md) — bouw-scoping (chat, #bouw) + habitat-`builder` (executie)
 - architect — architectuur-sparring (chat, #architectuur) + habitat-plan (executie) *(volgt)*
 - assistent — algemene chat-agent (alle kanalen), geen executie *(volgt)*
-- reviewer / security — alleen executie (habitat) *(volgt)*
+- [reviewer](reviewer.md) / [security](security.md) — alleen executie (habitat)
+- **seeds/** — canonieke executie-seeds; de per-spoke `.claude/agents/` worden hieruit afgeleid (generator + drift-gate)

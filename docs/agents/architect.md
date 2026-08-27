@@ -40,3 +40,5 @@ Plan-only, read-only: produceert een plan voor één OpenSpec-change, bouwt niet
 Tools read-only (`Read, Bash, Grep, Glob`), output conform habitats
 `worker/schemas/architect.json` (`plan`). Bron waarvan een eventuele
 habitat-seed wordt afgeleid.
+
+Canonieke seed: [`docs/agents/seeds/architect.md`](seeds/architect.md) — de habitat-seed wordt hieruit afgeleid (drift-gate).
