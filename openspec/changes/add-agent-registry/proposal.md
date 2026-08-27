@@ -35,6 +35,10 @@ samen op één plek.
     drift-fix.
 - **`docs/agents/index.md`**: mens-leesbaar overzicht (Diátaxis-reference) van
   wie de agents zijn en waar ze draaien.
+- **Guardrail (enforcement, geen afspraak)**: consumenten draaien een agent
+  alleen op basis van de canonieke bron; een drift-gate vangt afwijking, en
+  `docs/agents/` valt onder CODEOWNERS zodat "wie de agents zijn" langs Mark
+  loopt. De closed relay (identiteit-lidmaatschap) is de live achtervang.
 
 ## Non-goals
 
