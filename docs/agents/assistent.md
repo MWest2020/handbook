@@ -5,7 +5,7 @@ agent:
   naam: assistent
   npub: npub1x7927r72vyfnc99m6rn2f2exe6jvml77klf9z07ugk93h8vxgf2snlh3gt
   chat:
-    channels: [runs, escalatie, bouw, review, architectuur, marketing]
+    channels: [general, runs, escalatie, bouw, review, architectuur, marketing]
   executie: null   # alleen chat, geen kooi-rol
 ---
 

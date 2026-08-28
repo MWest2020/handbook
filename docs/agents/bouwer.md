@@ -5,7 +5,7 @@ agent:
   naam: bouwer
   npub: npub19qn78kzy25dcraqe8lt7vjmqzst4nfdysjzg9aytntfv9lvn3d6qaak4eq
   chat:
-    channels: [bouw]
+    channels: [general, bouw]
   executie:
     habitat_rol: builder
 ---

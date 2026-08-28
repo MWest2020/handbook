@@ -5,7 +5,7 @@ agent:
   naam: architect
   npub: npub15xxw2fxjx3pn5pczlp0sjvj3vhge4fh7t6wz35q7ytlu74vj94ysanckju
   chat:
-    channels: [architectuur]
+    channels: [general, architectuur]
   executie:
     habitat_rol: architect   # plan-only, read-only (habitat)
 ---
