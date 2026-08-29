@@ -33,6 +33,7 @@ executie). Het `## Mandaat` is voor beide facetten én voor mensen de bron.
 
 ## Rollen
 
+- [coordinator](coordinator.md) — meta-agent: routeert droppings (route/nieuw/update)
 - [bouwer](bouwer.md) — bouw-scoping (chat, #bouw) + habitat-`builder` (executie)
 - architect — architectuur-sparring (chat, #architectuur) + habitat-plan (executie) *(volgt)*
 - assistent — algemene chat-agent (alle kanalen), geen executie *(volgt)*
