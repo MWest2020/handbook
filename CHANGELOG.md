@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-31 — docs: bedieningsafspraken (VC reveal-gate)
+
+Nieuwe reference-pagina `docs/reference/bedieningsafspraken.md` voor
+operationele afspraken die niet in code/spec staan. Eerste afspraak: zet
+wordsworth `WORDSWORTH_VC_REQUIRED=true` **nooit** aan met een test/publieke
+VC-issuer — een publiek beschikbare credential zou de afdwinging teniet doen;
+echte afdwinging vereist een niet-publieke issuer + holder-binding. Tot dan
+blijft de gate additief (`REQUIRED=false`, versmalt alleen).
+
 ## 2026-08-27 — feat: agent-seed-derivation (drift-gate)
 
 Habitat-executie-seeds afgeleid van de canonieke bron: docs/agents/seeds/<rol>.md
