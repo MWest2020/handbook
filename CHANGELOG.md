@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-03 — feat: skills gevalideerd tegen het skill-register
+
+De agent-def `skills:`-velden worden nu gecontroleerd tegen
+`inventory/skills-register.yml` — een mirror van skill-forge's `forge register`
+(de gezaghebbende catalogus van gepromoveerde skills). Onbekende skill → gate FAILt;
+`security` draagt nu `skills: [thinking-red-team]` (gepromoveerd, dus geldig). Zo is
+"welke skills heeft een agent" even hard afdwingbaar als de tools. skill-forge blijft
+de bron; de handbook spiegelt. Drift-gate tegen skill-forge's live output = vervolg.
+
 ## 2026-09-03 — feat: agent-tool/skill-contract (allow/deny + skills)
 
 Elk niet-leeg facet van een agent-definitie (`docs/agents/*.md`) declareert nu

@@ -12,7 +12,10 @@ inline per facet. Checks per `docs/agents/<naam>.md` met een `agent:`-front-matt
   2. `allow` en `deny` overlappen niet;
   3. voor een executie-facet met een seed (expliciet `seed:` of per conventie
      `docs/agents/seeds/<habitat_rol>.md`) is `executie.tools.allow` gelijk aan de
-     `tools:`-regel van die seed — de allowlist die habitat uitvoert.
+     `tools:`-regel van die seed — de allowlist die habitat uitvoert;
+  4. elke `skills:`-entry bestaat in het skill-register (`inventory/skills-register.yml`,
+     mirror van skill-forge) — onbekende skill of ontbrekend register bij niet-lege
+     skills → FAIL.
 
 Gebruik: check_agent_tools.py        (exit 1 bij schending; bare output, CI-script)
 """
@@ -63,9 +66,19 @@ def seed_tools(seed_rel: str):
 
 
 SKIP_NO_AGENT = {"index.md"}  # docs/agents/*.md die géén agent-def zijn
+REGISTER = ROOT / "inventory" / "skills-register.yml"  # mirror van skill-forge
 
 
-def check_facet(rel: str, facet: str, block: str, errs: list, notices: list):
+def register_slugs():
+    """De slugs uit het skill-register (mirror van skill-forge's `register.yml`),
+    of None als het manifest ontbreekt. Stdlib: elke skill staat als `- slug: <x>`.
+    Zo blijft "welke skills bestaan" één bron (skill-forge), hier alleen gespiegeld."""
+    if not REGISTER.exists():
+        return None
+    return set(re.findall(r"^\s*-\s*slug:\s*(\S+)", REGISTER.read_text(), re.M))
+
+
+def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg):
     mt = re.search(r"^\s*tools:\s*(.*)$", block, re.M)
     ma = re.search(r"allow:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
     md = re.search(r"deny:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
@@ -78,6 +91,17 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list):
         errs.append(f"{rel}/{facet}: mist `skills` (gebruik `[]` als er geen zijn)")
     elif not msl:
         errs.append(f"{rel}/{facet}: `skills` moet een lijst zijn (`[...]`)")
+    else:
+        skills = _list(msl.group(1))
+        if skills:
+            if reg is None:
+                errs.append(f"{rel}/{facet}: skills {skills} maar het register "
+                            f"({REGISTER.relative_to(ROOT)}) ontbreekt — kan niet valideren")
+            else:
+                unknown = sorted(s for s in skills if s not in reg)
+                if unknown:
+                    errs.append(f"{rel}/{facet}: onbekende skill(s) {unknown} — niet in het "
+                                f"skill-register (alleen gepromoveerde skill-forge-skills)")
 
     allow, deny = _list(ma.group(1)), _list(md.group(1))
     overlap = sorted(set(allow) & set(deny))
@@ -110,6 +134,7 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list):
 def main() -> int:
     errs: list[str] = []
     notices: list[str] = []
+    reg = register_slugs()
     checked = 0
     for path in sorted(AGENTS.glob("*.md")):
         rel = str(path.relative_to(ROOT))
@@ -131,7 +156,7 @@ def main() -> int:
                 errs.append(f"{rel}: mist de `{facet}:`-sleutel — gebruik een blok of "
                             f"expliciet `{facet}: null`")
             elif not is_null:
-                check_facet(rel, facet, block, errs, notices)
+                check_facet(rel, facet, block, errs, notices, reg)
     for n in notices:
         print("  · " + n)
     if errs:
