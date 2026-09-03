@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-03 — feat: skills gevalideerd tegen het skill-register
+
+De agent-def `skills:`-velden worden nu gecontroleerd tegen
+`inventory/skills-register.yml` — een mirror van skill-forge's `forge register`
+(de gezaghebbende catalogus van gepromoveerde skills). Onbekende skill → gate FAILt;
+`security` draagt nu `skills: [thinking-red-team]` (gepromoveerd, dus geldig). Zo zijn phantom-skillnamen uitgesloten. (De skill echt aan de kooi *leveren* —
+seed-`skills:` + mount, pariteit zoals tools↔seed — is een aparte vervolg-change;
+`skills:` is hier een gevalideerde declaratie, geen runtime-garantie.) skill-forge blijft
+de bron; de handbook spiegelt. Drift-gate tegen skill-forge's live output = vervolg.
+
 ## 2026-09-03 — feat: agent-tool/skill-contract (allow/deny + skills)
 
 Elk niet-leeg facet van een agent-definitie (`docs/agents/*.md`) declareert nu

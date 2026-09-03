@@ -27,3 +27,21 @@ oplevert. Echte afdwinging vereist een **niet-publieke issuer** én
 Tot dat er is blijft de gate **additief** (`REQUIRED=false`): een gepresenteerde
 credential kan een reveal alleen **versmallen** (doorsnede met de grant), nooit
 verbreden. Zo levert de gate defense-in-depth zonder enkelvoudig steunpunt.
+
+## Skill-register — verversen van de mirror
+
+`inventory/skills-register.yml` is een **mirror** van skill-forge's catalogus van
+gepromoveerde skills (bron: skill-forge, niet de handbook). De agent-tool/skill-gate
+valideert elke `skills:`-entry in een agent-def hiertegen.
+
+Verversen na een `promote`/`demote` in skill-forge:
+
+    # in skill-forge:
+    uv run forge register
+    # kopieer de uitvoer naar de handbook-mirror:
+    cp ~/skill-forge/register.yml ~/handbook/inventory/skills-register.yml
+
+Commit de mirror in de handbook. Een gedeclareerde skill die niet (meer) in het
+register staat laat de gate falen — dat is de bedoeling: geen phantom-skills.
+Automatisch verversen + een drift-gate tegen skill-forge's live output (zoals de
+seed-drift-gate) is uitgesteld werk.
