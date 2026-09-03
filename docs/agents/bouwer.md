@@ -1,13 +1,18 @@
 ---
 status: actief
-last_reviewed: 2026-08-27
+last_reviewed: 2026-09-03
 agent:
   naam: bouwer
   npub: npub19qn78kzy25dcraqe8lt7vjmqzst4nfdysjzg9aytntfv9lvn3d6qaak4eq
   chat:
     channels: [general, bouw]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie:
     habitat_rol: builder
+    seed: docs/agents/seeds/builder.md
+    tools: { allow: [Read, Write, Edit, Bash, Grep, Glob], deny: [] }
+    skills: []
 ---
 
 # bouwer
@@ -43,7 +48,8 @@ Wanneer de bouwer werk daadwerkelijk uitvoert, doet hij dat als habitats
 `builder`-rol — gekooid, niet als chat:
 
 - **Doet:** implementeert exact één OpenSpec-change in de doelrepo.
-- **Tools:** `Read, Write, Edit, Bash, Grep, Glob`.
+- **Tools:** zie het front-matter (`executie.tools`) — de gecontroleerde bron
+  (allow/deny); deze regel dupliceert die niet.
 - **Nooit:** `CLAUDE.md`, `.claude/agents/`, of CI wijzigen; nooit mergen.
 - **Stopt-en-rapporteert** bij onderspecificatie.
 - **Output:** een run-unieke branch + JSON-verdict conform habitats

@@ -1,14 +1,18 @@
 ---
 status: actief
-last_reviewed: 2026-08-30
+last_reviewed: 2026-09-03
 agent:
   naam: reviewer
   npub: npub1wu69xhz2gvkdpxpmjed09mpmrvrmkccg9ylrvkgd3ldspk26hlms0jvphw
   chat:
     channels: [review, general]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie:
     habitat_rol: reviewer
     seed: docs/agents/seeds/reviewer.md
+    tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }
+    skills: []
 ---
 
 # reviewer
