@@ -27,8 +27,10 @@ executie). Het `## Mandaat` is voor beide facetten én voor mensen de bron.
 Elk niet-leeg facet declareert in het front-matter expliciet `tools.allow`,
 `tools.deny` (welke tools juist níet) en `skills` — leeg (`[]`) is een geldige,
 expliciete keuze. De gate `scripts/check_agent_tools.py` bewaakt dat het contract
-er staat en dat een executie-`allow` overeenkomt met de seed die habitat uitvoert;
-de CI-stap die 'm draait wordt met de hand ingehaakt (CI-config is een human-gate).
+er staat, dat een executie-`allow` overeenkomt met de seed die habitat uitvoert, én
+dat elke `skills:`-entry bestaat in het skill-register (`inventory/skills-register.yml`,
+mirror van skill-forge); de CI-stap die 'm draait wordt met de hand ingehaakt
+(CI-config is een human-gate).
 
 ## Guardrails
 
