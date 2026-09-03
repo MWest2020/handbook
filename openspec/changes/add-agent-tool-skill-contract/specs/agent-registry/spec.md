@@ -2,7 +2,7 @@
 
 ### Requirement: Facetten declareren tools (allow/deny) en skills expliciet
 
-Elk niet-leeg facet van een agent-definitie SHALL in het front-matter expliciet `tools.allow`, `tools.deny` en `skills` declareren, waarbij `tools.deny` en `skills` leeg mogen zijn en `allow` en `deny` niet mogen overlappen. Voor een executie-facet met een seed SHALL `executie.tools.allow` gelijk zijn aan de `tools:`-regel van die seed. Een gate in `docs-gates` SHALL de PR laten falen bij een ontbrekend veld, een allow/deny-overlap of een afwijking tussen `allow` en de seed.
+Elk niet-leeg facet van een agent-definitie SHALL in het front-matter expliciet `tools.allow`, `tools.deny` en `skills` declareren, waarbij `tools.deny` en `skills` leeg mogen zijn en `allow` en `deny` niet mogen overlappen. Voor een executie-facet met een seed SHALL `executie.tools.allow` gelijk zijn aan de `tools:`-regel van die seed. Een gate in de handbook-pipeline (`handbook.yml`) SHALL de PR laten falen bij een ontbrekend veld, een allow/deny-overlap of een afwijking tussen `allow` en de seed.
 
 #### Scenario: Read-only rol is machine-checkbaar
 

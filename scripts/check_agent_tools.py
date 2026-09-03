@@ -41,26 +41,42 @@ def seed_tools(seed_rel: str) -> list[str]:
     return [t.strip() for t in str(raw).split(",") if t.strip()]
 
 
+def seed_for(f: dict) -> str | None:
+    """Het seed-pad van een executie-facet: expliciet `seed:`, anders per conventie
+    `docs/agents/seeds/<habitat_rol>.md`. Zo wordt de consistentiecheck NIET stil
+    overgeslagen als iemand `seed:` vergeet terwijl de seed wél bestaat."""
+    if f.get("seed"):
+        return f["seed"]
+    rol = f.get("habitat_rol")
+    cand = f"docs/agents/seeds/{rol}.md" if rol else None
+    return cand if cand and (ROOT / cand).exists() else None
+
+
 def check_facet(rel: str, facet: str, f: dict, errs: list):
     tools = f.get("tools")
-    if not isinstance(tools, dict) or "allow" not in tools or "deny" not in tools:
+    tools_ok = isinstance(tools, dict) and "allow" in tools and "deny" in tools
+    if not tools_ok:
         errs.append(f"{rel}/{facet}: mist `tools.allow`/`tools.deny`")
-        tools = {}
     if "skills" not in f:
         errs.append(f"{rel}/{facet}: mist `skills` (gebruik `[]` als er geen zijn)")
-    allow = tools.get("allow") or []
-    deny = tools.get("deny") or []
+    if not tools_ok:
+        return  # zonder tools-blok geen zin in overlap-/seed-check (dubbele fout)
+    allow, deny = tools.get("allow") or [], tools.get("deny") or []
     for key, val in (("allow", tools.get("allow")), ("deny", tools.get("deny")), ("skills", f.get("skills"))):
         if val is not None and not isinstance(val, list):
             errs.append(f"{rel}/{facet}: `{key}` moet een lijst zijn")
     overlap = sorted(set(allow) & set(deny))
     if overlap:
         errs.append(f"{rel}/{facet}: allow en deny overlappen: {overlap}")
-    if facet == "executie" and f.get("seed"):
-        st = seed_tools(f["seed"])
-        if set(allow) != set(st):
-            errs.append(f"{rel}/executie: `tools.allow` {sorted(allow)} wijkt af van "
-                        f"seed {f['seed']} tools {sorted(st)}")
+    if facet == "executie":
+        seed = seed_for(f)
+        if seed and not (ROOT / seed).exists():
+            errs.append(f"{rel}/executie: `seed:` wijst naar niet-bestaand pad {seed}")
+        elif seed:
+            st = seed_tools(seed)
+            if set(allow) != set(st):
+                errs.append(f"{rel}/executie: `tools.allow` {sorted(allow)} wijkt af van "
+                            f"seed {seed} tools {sorted(st)}")
 
 
 def main() -> int:

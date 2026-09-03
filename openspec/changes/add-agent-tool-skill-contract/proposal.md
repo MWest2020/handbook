@@ -29,8 +29,8 @@ terwijl de afgeleide seed een losse `tools:`-allowlist heeft. Gevolg:
   (`docs/agents/seeds/<rol>.md`) SHALL `executie.tools.allow` gelijk zijn aan de
   `tools:`-regel van de seed — de allowlist die habitat daadwerkelijk uitvoert.
 - **Gate.** `scripts/check_agent_tools.py` faalt als een facet het contract mist
-  of als een seed-`tools:` afwijkt van `executie.tools.allow`. Ingehaakt in
-  `docs-gates`.
+  of als een seed-`tools:` afwijkt van `executie.tools.allow`. Ingehaakt in de handbook-pipeline
+  (`handbook.yml`), naast de bestaande seed-drift-gate.
 - **CHANGELOG**-entry.
 
 Downstream-consumptie (habitat die `deny` als `--disallowedTools` doorgeeft; de
@@ -42,5 +42,5 @@ het contract + de afdwinging in de naaf vast.
 
 - Betrokken specs: `agent-registry` (nieuwe eis).
 - Betrokken code: `docs/agents/*.md`, `scripts/check_agent_tools.py`,
-  `.github/workflows/docs-gates.yml`, `CHANGELOG.md`.
+  `.github/workflows/handbook.yml`, `CHANGELOG.md`.
 - Geen runtime-/kooiwijziging; puur declaratie + gate in de handbook.

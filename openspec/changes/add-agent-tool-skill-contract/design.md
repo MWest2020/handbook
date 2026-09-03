@@ -51,9 +51,11 @@ veld aanwezig is (ook `[]`), zodat "vergeten" niet als "geen" leest.
 ## Waarom een gate en geen afspraak
 
 Conform het handbook-uitgangspunt "enforcement, geen afspraak": een los contract
-zonder check drift terug. `check_agent_tools.py` draait in `docs-gates` naast de
-bestaande contract-/freshness-checks en faalt de PR bij een ontbrekend veld,
-allow/deny-overlap of seed-mismatch.
+zonder check drift terug. `check_agent_tools.py` draait in de handbook-pipeline
+(`handbook.yml`) naast de bestaande seed-drift-/contract-checks en faalt de PR bij
+een ontbrekend veld, allow/deny-overlap of seed-mismatch. (`docs-gates.yml` is
+bewust NIET de plek: dat is de reusable workflow die hub-checkers tegen een spoke
+draait, en een spoke heeft geen `docs/agents/`.)
 
 ## Verworpen alternatieven
 

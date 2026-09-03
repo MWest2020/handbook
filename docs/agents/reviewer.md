@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-08-30
+last_reviewed: 2026-09-03
 agent:
   naam: reviewer
   npub: npub1wu69xhz2gvkdpxpmjed09mpmrvrmkccg9ylrvkgd3ldspk26hlms0jvphw

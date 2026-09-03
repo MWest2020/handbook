@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-08-27
+last_reviewed: 2026-09-03
 agent:
   naam: security
   npub: null            # executie-only rol (habitat), geen boomhuis-chat-identiteit

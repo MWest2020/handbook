@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-08-29
+last_reviewed: 2026-09-03
 agent:
   naam: ontwerper
   npub: npub1yj4sxv5hw0sjlvvrmylrfcz5skes25jxcyncd6w2634rzx676rsqn8vhmm

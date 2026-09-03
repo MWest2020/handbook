@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-08-27
+last_reviewed: 2026-09-03
 agent:
   naam: assistent
   npub: npub1x7927r72vyfnc99m6rn2f2exe6jvml77klf9z07ugk93h8vxgf2snlh3gt

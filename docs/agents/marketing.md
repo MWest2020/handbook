@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-08-27
+last_reviewed: 2026-09-03
 agent:
   naam: marketing
   npub: npub1hfdln445qzvcgdu9v8p45drwvj6gs2p0l50mclwdmcw3n3g4l4jqcezul9
