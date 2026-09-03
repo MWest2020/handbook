@@ -30,9 +30,6 @@ jobs:
       - name: Agent-seeds synchroon met canonieke bron (drift-gate)
         run: uv run python scripts/gen_agent_seeds.py --check
 
-      - name: Agent-tool/skill-contract (allow/deny + skills per facet)
-        run: uv run python scripts/check_agent_tools.py
-
       - name: Publieke build (strict)
         run: uv run mkdocs build --strict
 

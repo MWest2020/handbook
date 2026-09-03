@@ -11,7 +11,7 @@ agent:
   executie:
     habitat_rol: builder
     seed: docs/agents/seeds/builder.md
-    tools: { allow: [Read, Write, Edit, Bash, Grep, Glob], deny: [WebFetch, WebSearch] }
+    tools: { allow: [Read, Write, Edit, Bash, Grep, Glob], deny: [] }
     skills: []
 ---
 

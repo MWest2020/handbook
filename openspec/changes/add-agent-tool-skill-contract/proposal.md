@@ -28,9 +28,11 @@ terwijl de afgeleide seed een losse `tools:`-allowlist heeft. Gevolg:
 - **Consistentie-tie met de seeds.** Voor elke executie-rol met een seed
   (`docs/agents/seeds/<rol>.md`) SHALL `executie.tools.allow` gelijk zijn aan de
   `tools:`-regel van de seed — de allowlist die habitat daadwerkelijk uitvoert.
-- **Gate.** `scripts/check_agent_tools.py` faalt als een facet het contract mist
-  of als een seed-`tools:` afwijkt van `executie.tools.allow`. Ingehaakt in de handbook-pipeline
-  (`handbook.yml`), naast de bestaande seed-drift-gate.
+- **Gate.** `scripts/check_agent_tools.py` (stdlib-only, geen yaml-dep) faalt als
+  een facet het contract mist, allow/deny overlappen, of een seed-`tools:` afwijkt
+  van `executie.tools.allow`. De CI-stap die 'm in `handbook.yml` inhaakt wordt
+  door Mark met de hand toegevoegd (CI-config is een human-gate; deze PR raakt CI
+  niet), precedent a1c3ebc.
 - **CHANGELOG**-entry.
 
 Downstream-consumptie (habitat die `deny` als `--disallowedTools` doorgeeft; de
@@ -41,6 +43,7 @@ het contract + de afdwinging in de naaf vast.
 ## Impact
 
 - Betrokken specs: `agent-registry` (nieuwe eis).
-- Betrokken code: `docs/agents/*.md`, `scripts/check_agent_tools.py`,
-  `.github/workflows/handbook.yml`, `CHANGELOG.md`.
+- Betrokken code: `docs/agents/*.md`, `docs/agents/index.md`,
+  `scripts/check_agent_tools.py`, `CHANGELOG.md`. De CI-stap in
+  `.github/workflows/handbook.yml` past Mark met de hand toe (buiten deze PR).
 - Geen runtime-/kooiwijziging; puur declaratie + gate in de handbook.

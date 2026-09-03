@@ -5,8 +5,9 @@
       facet (9 defs incl. archivaris; index.md valt buiten).
 - [x] 1.3 `scripts/check_agent_tools.py`: gate die faalt bij ontbrekend veld,
       allow/deny-overlap of seed-`tools:`-mismatch met `executie.tools.allow`.
-- [x] 1.4 `.github/workflows/handbook.yml`: de gate meedraaien naast de bestaande
-      seed-drift-/contract-checks (docs-gates.yml is de reusable spoke-workflow).
+- [ ] 1.4 CI-stap (gate in `handbook.yml`) — HAND-toegepast door Mark als hub-commit
+      (CI-config is een human-gate; een gekooide bouwer wijzigt geen CI). Precedent:
+      a1c3ebc. Snippet staat in de PR-omschrijving.
 - [x] 1.5 `CHANGELOG.md`: entry (expliciete tools allow/deny + skills per facet,
       afgedwongen).
 - [x] 1.6 `uv run scripts/check_agent_tools.py` slaagt lokaal op de retrofitte

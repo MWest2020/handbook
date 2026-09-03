@@ -16,5 +16,5 @@ Elk niet-leeg facet van een agent-definitie SHALL in het front-matter expliciet 
 
 #### Scenario: Leeg is een geldige, expliciete keuze
 
-- **WHEN** een rol geen tools weigert en geen skills nodig heeft
-- **THEN** zijn `tools.deny: []` en `skills: []` geldig en slaagt de gate
+- **WHEN** een chat-facet geen tools verleent (`allow: []`) en geen tools weigert en geen skills nodig heeft
+- **THEN** zijn `tools.allow: []`, `tools.deny: []` en `skills: []` geldig en slaagt de gate — leeg betekent expliciet "geen", niet "onbekend"

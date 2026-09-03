@@ -3,73 +3,88 @@
 """Contract-gate: elk niet-leeg facet van een agent-definitie declareert tools
 (allow/deny) en skills, en de executie-allowlist komt overeen met de seed.
 
-Checks per `docs/agents/<naam>.md` met een `agent:`-front-matter (index.md en de
-seeds/ vallen buiten):
+Stdlib-only (geen yaml-dep — conform de andere hub-scripts). Het front-matter-
+formaat is gecontroleerd: `tools: { allow: [...], deny: [...] }` en `skills: [...]`
+inline per facet. Checks per `docs/agents/<naam>.md` met een `agent:`-front-matter
+(index.md en de seeds/ vallen buiten):
   1. elk niet-leeg facet (chat/executie) heeft `tools.allow`, `tools.deny` en
      `skills` (lijsten; deny/skills mogen leeg zijn);
   2. `allow` en `deny` overlappen niet;
-  3. voor een executie-facet met `seed:` is `executie.tools.allow` gelijk aan de
-     `tools:`-regel van die seed (de allowlist die habitat uitvoert).
+  3. voor een executie-facet met een seed (expliciet `seed:` of per conventie
+     `docs/agents/seeds/<habitat_rol>.md`) is `executie.tools.allow` gelijk aan de
+     `tools:`-regel van die seed — de allowlist die habitat uitvoert.
 
 Gebruik: check_agent_tools.py        (exit 1 bij schending; bare output, CI-script)
 """
 import pathlib
+import re
 import sys
-
-import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 AGENTS = ROOT / "docs" / "agents"
 
 
-def front_matter(path: pathlib.Path):
+def front_matter(path: pathlib.Path) -> str:
     txt = path.read_text()
     if not txt.startswith("---"):
-        return None
-    try:
-        return yaml.safe_load(txt.split("---", 2)[1])
-    except yaml.YAMLError as e:
-        raise SystemExit(f"{path.relative_to(ROOT)}: front matter is geen geldige YAML: {e}")
+        return ""
+    return txt.split("---", 2)[1]
+
+
+def _list(inner: str) -> list[str]:
+    return [x.strip() for x in inner.split(",") if x.strip()]
+
+
+def facet_block(fm: str, facet: str):
+    """(aanwezig, is_null, blok-tekst) voor een facet op 2-spatie-indent."""
+    lines = fm.splitlines()
+    hdr = next((i for i, ln in enumerate(lines) if re.match(rf"^  {facet}:", ln)), None)
+    if hdr is None:
+        return (False, False, "")
+    rest = re.match(rf"^  {facet}:\s*(\S.*)?$", lines[hdr]).group(1) or ""
+    if rest.split("#")[0].strip() == "null":
+        return (True, True, "")
+    body = []
+    for ln in lines[hdr + 1:]:
+        if ln.strip() == "":
+            continue
+        if len(ln) - len(ln.lstrip()) <= 2:
+            break
+        body.append(ln)
+    return (True, False, "\n".join(body))
 
 
 def seed_tools(seed_rel: str) -> list[str]:
-    """De `tools:`-regel van een seed als lijst (seed-formaat: 'A, B, C')."""
-    fm = front_matter(ROOT / seed_rel)
-    raw = (fm or {}).get("tools", "")
-    if isinstance(raw, list):
-        return [str(t).strip() for t in raw]
-    return [t.strip() for t in str(raw).split(",") if t.strip()]
+    m = re.search(r"^tools:\s*(.*)$", front_matter(ROOT / seed_rel), re.M)
+    return _list(m.group(1)) if m else []
 
 
-def seed_for(f: dict) -> str | None:
-    """Het seed-pad van een executie-facet: expliciet `seed:`, anders per conventie
-    `docs/agents/seeds/<habitat_rol>.md`. Zo wordt de consistentiecheck NIET stil
-    overgeslagen als iemand `seed:` vergeet terwijl de seed wél bestaat."""
-    if f.get("seed"):
-        return f["seed"]
-    rol = f.get("habitat_rol")
-    cand = f"docs/agents/seeds/{rol}.md" if rol else None
-    return cand if cand and (ROOT / cand).exists() else None
-
-
-def check_facet(rel: str, facet: str, f: dict, errs: list):
-    tools = f.get("tools")
-    tools_ok = isinstance(tools, dict) and "allow" in tools and "deny" in tools
-    if not tools_ok:
-        errs.append(f"{rel}/{facet}: mist `tools.allow`/`tools.deny`")
-    if "skills" not in f:
+def check_facet(rel: str, facet: str, block: str, errs: list):
+    mt = re.search(r"^\s*tools:\s*(.*)$", block, re.M)
+    ma = re.search(r"allow:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
+    md = re.search(r"deny:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
+    if not (mt and ma and md):
+        errs.append(f"{rel}/{facet}: mist `tools.allow`/`tools.deny` als inline-lijsten")
+        return  # zonder geldig tools-blok geen overlap-/seed-check (dubbele fout vermeden)
+    ms = re.search(r"^\s*skills:\s*(.*)$", block, re.M)
+    msl = re.search(r"^\s*\[([^\]]*)\]\s*$", ms.group(1)) if ms else None
+    if not ms:
         errs.append(f"{rel}/{facet}: mist `skills` (gebruik `[]` als er geen zijn)")
-    if not tools_ok:
-        return  # zonder tools-blok geen zin in overlap-/seed-check (dubbele fout)
-    allow, deny = tools.get("allow") or [], tools.get("deny") or []
-    for key, val in (("allow", tools.get("allow")), ("deny", tools.get("deny")), ("skills", f.get("skills"))):
-        if val is not None and not isinstance(val, list):
-            errs.append(f"{rel}/{facet}: `{key}` moet een lijst zijn")
+    elif not msl:
+        errs.append(f"{rel}/{facet}: `skills` moet een lijst zijn (`[...]`)")
+
+    allow, deny = _list(ma.group(1)), _list(md.group(1))
     overlap = sorted(set(allow) & set(deny))
     if overlap:
         errs.append(f"{rel}/{facet}: allow en deny overlappen: {overlap}")
+
     if facet == "executie":
-        seed = seed_for(f)
+        mseed = re.search(r"^\s*seed:\s*(\S+)", block, re.M)
+        mrol = re.search(r"^\s*habitat_rol:\s*([^\s#]+)", block, re.M)
+        seed = mseed.group(1) if mseed else None
+        if not seed and mrol:
+            cand = f"docs/agents/seeds/{mrol.group(1)}.md"
+            seed = cand if (ROOT / cand).exists() else None
         if seed and not (ROOT / seed).exists():
             errs.append(f"{rel}/executie: `seed:` wijst naar niet-bestaand pad {seed}")
         elif seed:
@@ -84,14 +99,14 @@ def main() -> int:
     checked = 0
     for path in sorted(AGENTS.glob("*.md")):
         fm = front_matter(path)
-        if not isinstance(fm, dict) or "agent" not in fm:
+        if not re.search(r"^agent:", fm, re.M):
             continue  # index.md e.d. — geen agent-def
         checked += 1
         rel = str(path.relative_to(ROOT))
         for facet in ("chat", "executie"):
-            f = fm["agent"].get(facet)
-            if isinstance(f, dict):
-                check_facet(rel, facet, f, errs)
+            present, is_null, block = facet_block(fm, facet)
+            if present and not is_null:
+                check_facet(rel, facet, block, errs)
     if errs:
         print("FAIL — agent-tool/skill-contract geschonden:", file=sys.stderr)
         for e in errs:
