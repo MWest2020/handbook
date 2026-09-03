@@ -6,8 +6,12 @@ agent:
   npub: npub19qn78kzy25dcraqe8lt7vjmqzst4nfdysjzg9aytntfv9lvn3d6qaak4eq
   chat:
     channels: [general, bouw]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie:
     habitat_rol: builder
+    tools: { allow: [Read, Write, Edit, Bash, Grep, Glob], deny: [WebFetch, WebSearch] }
+    skills: []
 ---
 
 # bouwer

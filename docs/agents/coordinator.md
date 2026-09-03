@@ -6,6 +6,8 @@ agent:
   npub: npub1c9x3ehgexyrp4utk8yhnnlghxq6ertcvautaxl324h6tc2ek4rwqxf6nvn
   chat:
     channels: [general]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie: null
 ---
 

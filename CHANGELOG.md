@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-09-03 — feat: agent-tool/skill-contract (allow/deny + skills)
+
+Elk niet-leeg facet van een agent-definitie (`docs/agents/*.md`) declareert nu
+gestructureerd `tools.allow`, `tools.deny` en `skills` in het front-matter —
+i.p.v. tools-in-proza. Zo is "reviewer/security is read-only" machine-checkbaar
+(`deny: [Write, Edit]`) i.p.v. een belofte, en staat expliciet wélke tools een
+rol NIET mag. Gate `scripts/check_agent_tools.py` (in de handbook-CI) faalt bij
+een ontbrekend veld, allow/deny-overlap, of afwijking tussen `executie.tools.allow`
+en de seed-allowlist die habitat uitvoert. Downstream-consumptie (habitat
+`--disallowedTools`, boomhuis-listener) is vervolgwerk.
+
 ## 2026-08-31 — docs: bedieningsafspraken (VC reveal-gate)
 
 Nieuwe reference-pagina `docs/reference/bedieningsafspraken.md` voor

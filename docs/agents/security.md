@@ -8,6 +8,8 @@ agent:
   executie:
     habitat_rol: security
     seed: docs/agents/seeds/security.md
+    tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }
+    skills: [thinking-red-team]
 ---
 
 # security
