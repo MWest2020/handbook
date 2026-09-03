@@ -1,13 +1,17 @@
 ---
 status: actief
-last_reviewed: 2026-08-27
+last_reviewed: 2026-09-03
 agent:
   naam: architect
   npub: npub15xxw2fxjx3pn5pczlp0sjvj3vhge4fh7t6wz35q7ytlu74vj94ysanckju
   chat:
     channels: [general, architectuur]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie:
     habitat_rol: architect   # plan-only, read-only (habitat)
+    tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }
+    skills: []
 ---
 
 # architect
@@ -37,8 +41,9 @@ Kanaal-scope: `#architectuur`.
 ## Executie-facet (habitat · architect)
 
 Plan-only, read-only: produceert een plan voor één OpenSpec-change, bouwt niet.
-Tools read-only (`Read, Bash, Grep, Glob`), output conform habitats
-`worker/schemas/architect.json` (`plan`). Bron waarvan een eventuele
-habitat-seed wordt afgeleid.
+De toegestane/geweigerde tools staan in het front-matter (`executie.tools`) — de
+bron. Let op: architect heeft (nog) geen seed, dus de gate kruist deze `allow`
+tegen niets; de declaratie staat er als intentie tot architect een seed krijgt.
+Output conform habitats `worker/schemas/architect.json` (`plan`).
 
 Canonieke seed: [`docs/agents/seeds/architect.md`](seeds/architect.md) — de habitat-seed wordt hieruit afgeleid (drift-gate).
