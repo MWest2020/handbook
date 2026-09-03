@@ -1,11 +1,13 @@
 ---
 status: actief
-last_reviewed: 2026-08-29
+last_reviewed: 2026-09-03
 agent:
   naam: coordinator
   npub: npub1c9x3ehgexyrp4utk8yhnnlghxq6ertcvautaxl324h6tc2ek4rwqxf6nvn
   chat:
     channels: [general]
+    tools: { allow: [], deny: [] }
+    skills: []
   executie: null
 ---
 
