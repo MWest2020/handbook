@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/internetnl-cli/how-to/deploy-facade/">
       
       
-        <link rel="prev" href="../ci/">
+        <link rel="prev" href="../demo-run/">
       
       
         <link rel="next" href="../deploy-instance-vps/">
@@ -7398,6 +7398,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../demo-run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the netnl demo
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -7479,6 +7514,28 @@
     <span class="md-ellipsis">
       
         Two supported topologies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brute-force-rate-limiting-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brute-force / rate limiting at the edge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-demo-family-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The /demo/* family at the edge
       
     </span>
   </a>
@@ -7674,6 +7731,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supporter-webhook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic supporter-key issuance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7728,6 +7820,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/demo-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The demo API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -11096,6 +11223,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#brute-force-rate-limiting-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brute-force / rate limiting at the edge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-demo-family-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The /demo/* family at the edge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11255,6 +11404,123 @@ topologies") pins two ways to run the facade:</p>
 </ol>
 <p>The rest of this page covers topology 2. This page deploys
 <code>deploy/compose.yaml</code> next to (not inside) the instance's own stack.</p>
+<h2 id="brute-force-rate-limiting-at-the-edge">Brute-force / rate limiting at the edge</h2>
+<p>The facade itself only offers a last-resort backstop against
+credential-guessing traffic: <code>netnl.auth</code> fast-fails a request with no (or
+an unparseable) <code>Authorization</code> header without touching the password
+hasher, and caps how many password verifications may run <em>concurrently</em>
+(a small, fixed number) — see
+<code>openspec/changes/add-measurement-api/design.md</code>, "Tenancy and identity"
+("Authentication cost is bounded on two axes"). That bound protects this
+process's own CPU and memory from a burst of concurrent bad-credential
+requests; it is <strong>not</strong> a rate limit, and it does nothing to slow down a
+sustained, low-concurrency credential-guessing campaign spread out over
+time. That is the edge's job, and it differs by topology:</p>
+<ul>
+<li><strong>Topology 1 (Cloudflare Tunnel in front of K8s).</strong> Add a Cloudflare
+  <a href="https://developers.cloudflare.com/waf/rate-limiting-rules/">rate limiting rule</a>
+  scoped to the auth-bearing paths (<code>POST /requests</code>, <code>GET
+  /requests/*</code>, <code>GET /metadata/report</code> — everything except <code>GET /health</code>
+  and the opt-in <code>security.txt</code>), keyed on the client IP, with a
+  low-enough threshold that a credential-guessing script gets throttled or
+  challenged long before it can run through any meaningful password space.
+  This is configured in the Cloudflare dashboard/API for the tunnel's
+  hostname, not in this repo.</li>
+</ul>
+<p><strong>Topology 1 has a second public ingress this rule does not cover
+  (reviewer-M7).</strong> Per <code>design.md</code>, "Two supported topologies", the same
+  facade is also reachable via the <strong>Tailscale Funnel</strong> <code>*.ts.net</code>
+  hostname kept up in parallel as a fallback (see <code>docs/how-to/beta.md</code>).
+  A Cloudflare rate-limiting rule is scoped to the Cloudflare Tunnel's own
+  hostname — it does nothing at all for traffic that goes straight to the
+  Funnel hostname instead, which serves the exact same facade over a
+  completely separate public path. Two honest options, pick one
+  deliberately rather than assuming the Cloudflare rule alone covers this
+  topology:
+  - <strong>Turn the Funnel off</strong> except when actually needed for a specific
+    fallback test or incident, so there is only one public ingress to rate
+    limit at any given time; or
+  - <strong>Accept it as a known gap</strong>: while the Funnel stays up, the facade's
+    own in-process scrypt-concurrency cap (<code>netnl.auth</code>, bounded wait +
+    503 <code>overloaded</code> on sustained saturation — see "Authentication cost is
+    bounded" in design.md) is the <em>only</em> backstop against credential
+    guessing over that path, since nothing at the edge is rate-limiting
+    it. That backstop protects this process's own CPU/memory; it is not a
+    rate limit and does not slow down a sustained, low-concurrency
+    guessing campaign the way the Cloudflare rule does for the primary
+    hostname.
+- <strong>Topology 2 (Caddy at the edge, the compose recipe on this page).</strong>
+  Vanilla Caddy, as shipped in <code>deploy/Caddyfile</code>, has <strong>no built-in rate
+  limiting</strong> — being honest about that rather than implying protection
+  that is not actually there. Two realistic options, neither wired up by
+  default in <code>deploy/compose.yaml</code>:
+  - The third-party
+    <a href="https://github.com/mholt/caddy-ratelimit"><code>caddy-ratelimit</code></a> plugin,
+    built into a custom Caddy image (<code>xcaddy build --with
+    github.com/mholt/caddy-ratelimit</code>) and configured with a <code>rate_limit</code>
+    directive on the auth-bearing paths, keyed on the client IP — the
+    closest equivalent to the Cloudflare rule above.
+  - A <strong>fail2ban-on-logs</strong> approach: point <code>fail2ban</code> at Caddy's JSON
+    access log (<code>deploy/Caddyfile</code> already logs to a file the compose unit
+    can mount into a <code>fail2ban</code> sidecar or the host), with a filter that
+    matches repeated 401 responses from the same client IP against the
+    facade's auth-bearing paths, and a ban action (e.g. a host firewall
+    rule) once a threshold is crossed. Coarser than a proper rate-limiter
+    (it reacts after the fact, per IP) but needs no custom Caddy build.</p>
+<p>Either way, this is a deployment-time addition an operator running
+  topology 2 needs to make deliberately; it is not part of the
+  <code>deploy/compose.yaml</code> recipe as shipped.</p>
+<h2 id="the-demo-family-at-the-edge">The <code>/demo/*</code> family at the edge</h2>
+<p><code>openspec/changes/add-demo-run</code> adds an opt-in, anonymous route family
+(<code>/demo/*</code>, see <a href="../demo-run/">how-to/demo-run.md</a>) with no credential in
+front of it at all. Everything above about the <em>auth-bearing</em> paths does
+not apply to it the same way — there is no <code>Authorization</code> header to
+guess, so a Cloudflare rule or <code>caddy-ratelimit</code>/<code>fail2ban</code> config scoped to
+"the auth-bearing paths" (as written above) simply does not cover
+<code>/demo/*</code>, and should not be extended to it naively either: the demo's own
+in-process bounds (the demo tenant's hourly/concurrency cap, a per-IP
+hourly cap on accepted submissions, a per-domain cooldown, and — added in
+the builder-review hardening pass — a separate per-IP budget on <em>polling</em>,
+<code>NETNL_DEMO_POLLS_PER_IP_PER_HOUR</code> — see <code>design.md</code>, D3–D5) are already
+the load-bearing limits for this surface, not a backstop behind an
+edge-level one the way <code>netnl.auth</code>'s scrypt cap is for the authenticated
+paths. See <a href="../demo-run/#header-trust-and-the-client-ip">how-to/demo-run.md</a>
+for the header-trust assumption those per-IP bounds rest on, and its
+per-process/per-replica scope. Two things worth doing at the edge anyway,
+both optional:</p>
+<ul>
+<li><strong>A separate, generous rate-limiting rule scoped to <code>/demo/*</code> only</strong>
+  (still recommended), if the edge already has the machinery from the
+  section above — high enough not to fight the demo's own per-IP caps
+  (<code>NETNL_DEMO_PER_IP_PER_HOUR</code> on submissions, <code>NETNL_DEMO_POLLS_PER_IP_
+  PER_HOUR</code> on status/results polls) for a legitimate visitor, low enough
+  to blunt a volumetric flood before it reaches the process at all. Not
+  required: the demo's own bounds hold without it, the poll budget
+  included.</li>
+<li><strong>A CDN/edge cache rule that never caches <code>/demo/*</code> responses.</strong> Every
+  demo reply already carries <code>Cache-Control: no-store</code> (design.md, D7), so
+  a compliant cache will not store them regardless — this is belt-and-
+  braces for an edge that might not honour that header for every response
+  shape.</li>
+</ul>
+<p><strong>The Tailscale Funnel gap (see above) applies to <code>/demo/*</code> too, and in one
+way more sharply.</strong> If the demo is enabled and the facade is reachable via
+both the Cloudflare Tunnel and the Funnel fallback (topology 1), a
+<code>/demo/*</code>-scoped Cloudflare rule (if added per the bullet above) covers only
+the Cloudflare Tunnel hostname — the exact same gap the authenticated
+surface has. Unlike the authenticated surface, there is no credential at
+all standing between an anonymous caller and an upstream submission on this
+path, so while the Funnel stays up, the demo's own in-process bounds are
+the <em>only</em> thing standing between the Funnel hostname and the shared
+upstream instance's capacity. Read <code>NETNL_DEMO_ALLOWED_ORIGIN</code> in this
+light too: it only rejects a <strong>browser</strong> carrying a mismatched <code>Origin</code>
+header (D6) — it does nothing against a non-browser caller hitting the
+Funnel hostname directly with no <code>Origin</code> header at all, since an absent
+<code>Origin</code> is allowed through by design (see
+<a href="../../reference/demo-api/">reference/demo-api.md</a>). The same two options
+from the section above apply: turn the Funnel off outside of an active
+fallback need, or accept the gap and rely on the demo's own bounds while it
+stays up.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>A batch instance already running, on a machine with a <strong>fixed public

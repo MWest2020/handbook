@@ -14,7 +14,7 @@
         <link rel="prev" href="../deploy-instance-vps/">
       
       
-        <link rel="next" href="../../reference/self-hosted/">
+        <link rel="next" href="../supporter-webhook/">
       
       
         
@@ -7401,6 +7401,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../demo-run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the netnl demo
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../deploy-facade/" class="md-nav__link">
         
   
@@ -7578,10 +7613,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issuing-a-supporter-key-operator-procedure" class="md-nav__link">
+  <a href="#getting-a-supporter-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Issuing a supporter key (operator procedure)
+        Getting a supporter key
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-issuance-the-normal-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic issuance (the normal path)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-issuance-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual issuance (fallback)
       
     </span>
   </a>
@@ -7593,17 +7650,6 @@
     <span class="md-ellipsis">
       
         Revoking a supporter key
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-a-supporter-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Getting a supporter key
       
     </span>
   </a>
@@ -7625,6 +7671,41 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supporter-webhook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic supporter-key issuance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
     </li>
   
 
@@ -7684,6 +7765,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/demo-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The demo API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -11074,10 +11190,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issuing-a-supporter-key-operator-procedure" class="md-nav__link">
+  <a href="#getting-a-supporter-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Issuing a supporter key (operator procedure)
+        Getting a supporter key
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-issuance-the-normal-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic issuance (the normal path)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-issuance-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual issuance (fallback)
       
     </span>
   </a>
@@ -11089,17 +11227,6 @@
     <span class="md-ellipsis">
       
         Revoking a supporter key
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-a-supporter-key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Getting a supporter key
       
     </span>
   </a>
@@ -11142,10 +11269,14 @@
 beyond the handful of known users in
 <a href="../beta/">Running the netnl private beta</a> — task 5 of
 <code>openspec/changes/add-measurement-api</code> ("community opening"). The
-donation link now exists (see "Getting a supporter key" below), but
-issuance itself is still a manual, out-of-band process, the same as
-onboarding a beta user — there is no self-serve automation tying a
-donation to a credential.</p>
+donation link (<a href="https://buymeacoffee.com/mark.westerweel">https://buymeacoffee.com/mark.westerweel</a>) is live, and
+issuance is now automatic once an operator has enabled the webhook
+bridge described below — see
+<a href="../supporter-webhook/">Automatic supporter-key issuance</a> for the
+operator runbook (enabling it, testing it, troubleshooting it). Manual
+issuance, the process this page originally described, remains the
+fallback for when the bridge is disabled or the mail path is
+unavailable.</p>
 <h2 id="the-model-in-one-paragraph">The model, in one paragraph</h2>
 <p>Someone makes a small, one-off donation and gets back a <code>netnl</code>
 tenant credential (<code>INTERNETNL_USERNAME</code>/<code>INTERNETNL_PASSWORD</code>) that
@@ -11163,9 +11294,9 @@ facade container, one VPS instance, cron-scheduled retention, no
 managed-service guarantee. A donation buys a <strong>lifetime key</strong>, not
 <strong>lifetime uptime</strong> — the service can go down, change limits, or (in
 the worst case) be discontinued, and "I donated" does not create an
-SLA the operator does not otherwise offer. State this plainly to
-every supporter at issuance time, the same way <code>beta.md</code>'s "Terms"
-section states it to beta users.</p>
+SLA the operator does not otherwise offer. The credential mail sent by
+the automatic bridge states this plainly; state it just as plainly if
+you ever issue a key by hand.</p>
 <h2 id="fair-use-not-a-paid-tier">Fair use, not a paid tier</h2>
 <p>A supporter key is a <code>netnl</code> tenant credential like any other —
 subject to the same defaults as <code>beta.md</code>'s table:</p>
@@ -11199,7 +11330,31 @@ tier, usage-based billing, or expiry to stay operable. If a supporter
 has a legitimate need that does not fit the defaults, that is the
 same "observe and adjust the default" loop <code>beta.md</code> already
 describes, not a reason to special-case one credential.</p>
-<h2 id="issuing-a-supporter-key-operator-procedure">Issuing a supporter key (operator procedure)</h2>
+<h2 id="getting-a-supporter-key">Getting a supporter key</h2>
+<p>Donate via <a href="https://buymeacoffee.com/mark.westerweel">Buy Me a Coffee</a>.
+When the webhook bridge is enabled, a qualifying donation mints a
+credential automatically and mails it to the address BMC has on file
+for that donation — nothing further to do. If the bridge is disabled
+(or a delivery genuinely cannot be completed — see
+<a href="../supporter-webhook/#troubleshooting">Automatic supporter-key issuance</a>),
+issuance falls back to the manual process below.</p>
+<h2 id="automatic-issuance-the-normal-path">Automatic issuance (the normal path)</h2>
+<p>See <a href="../supporter-webhook/">Automatic supporter-key issuance</a> for the
+full operator runbook: enabling <code>NETNL_BMC_WEBHOOK_SECRET</code> and the
+mail configuration it requires, verifying the bridge actually rejects
+an unsigned request, running a test donation, and troubleshooting a
+delivery that did not arrive.</p>
+<p>In short, once enabled: BMC calls <code>POST /webhooks/bmc</code> for every
+donation event; the facade verifies the signature, mints a credential
+for a qualifying live donation, and mails it directly to the donor —
+the same credential shape, the same fair-use limits, and the same
+"beta, best-effort, no SLA" terms as a manually-issued key. No
+supporter email address or name is ever stored by the facade; only the
+BMC transaction id, the generated username, and delivery state are
+kept (and pruned on the existing audit-retention window), which is
+enough to make a duplicate delivery a safe no-op and a failed delivery
+retryable, without holding onto anything that identifies the donor.</p>
+<h2 id="manual-issuance-fallback">Manual issuance (fallback)</h2>
 <p>Once a donation is confirmed (out of band — the facade has no
 payment integration and none is planned), issue the credential the
 same way as any other <code>netnl-admin</code> user, using the donor's chosen
@@ -11223,26 +11378,24 @@ donor out of band, together with:</p>
   bug or a broken promise.</li>
 </ul>
 <h2 id="revoking-a-supporter-key">Revoking a supporter key</h2>
-<p>Revocation is the same operation as for any other tenant, effective
+<p>Revocation is the same operation regardless of how the key was issued
+— automatically by the webhook bridge, or by hand — effective
 immediately, no grace period:</p>
-<pre><code class="language-sh">kubectl -n netnl exec deploy/netnl -- netnl-admin user revoke &lt;donor-name&gt;
+<pre><code class="language-sh">kubectl -n netnl exec deploy/netnl -- netnl-admin user revoke &lt;username&gt;
 </code></pre>
 <p>"Lifetime" describes the intended issuance policy (no built-in
 expiry), not an unrevokable guarantee — abuse of the rate limit,
 measuring hosts without permission, or the operator discontinuing the
 service are all still grounds to revoke, same as for a beta
 credential.</p>
-<h2 id="getting-a-supporter-key">Getting a supporter key</h2>
-<p>Donate via <a href="https://buymeacoffee.com/mark.westerweel">Buy Me a Coffee</a>.
-There is no automated link between the donation page and credential
-issuance — "supporter key" is a documented model with a real payment
-link, not a self-serve flow; issuance still goes through the same
-manual, out-of-band <code>netnl-admin</code> process (see "Issuing a supporter
-key" above) as a beta credential.</p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="../beta/">Running the netnl private beta</a> — the process that is
-  actually live today, for the handful of known users.</li>
+<li><a href="../supporter-webhook/">Automatic supporter-key issuance</a> — the
+  operator runbook for the webhook bridge: enabling it, testing it,
+  and troubleshooting a delivery that did not arrive.</li>
+<li><a href="../beta/">Running the netnl private beta</a> — the process this model
+  builds on, for the handful of known users onboarded before the
+  donation link existed.</li>
 <li><a href="../ci/#e-getting-a-credential">Use in CI</a> — where this page is
   linked from as one of the ways to get a credential.</li>
 </ul>

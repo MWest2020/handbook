@@ -14,7 +14,7 @@
         <link rel="prev" href="../beta/">
       
       
-        <link rel="next" href="../deploy-facade/">
+        <link rel="next" href="../demo-run/">
       
       
         
@@ -7510,6 +7510,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../demo-run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the netnl demo
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../deploy-facade/" class="md-nav__link">
         
   
@@ -7608,6 +7643,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supporter-webhook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic supporter-key issuance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7662,6 +7732,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/demo-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The demo API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -11106,12 +11211,32 @@ action. Minimal use:</p>
   with:
     hosts: example.org example.com
     endpoint: https://api.westerweel.work
+    credential: ${{ secrets.INTERNETNL_CREDENTIAL }}
+</code></pre>
+<p><code>credential</code> is a single <code>username:password</code> string, split on the
+<em>first</em> colon: a password may contain one, but per RFC 7617 a Basic
+userid never can — a username containing a colon could never
+authenticate over HTTP Basic in the first place (a compliant server,
+the <code>netnl</code> facade included, parses everything from the first colon
+onward as the password), so this split is unambiguous for every
+credential that could ever actually work. It is the preferred way to
+pass a credential to the action: one secret instead of two.
+<code>username</code>/<code>password</code> still work as separate inputs if you already
+have the credential split that way:</p>
+<pre><code class="language-yaml">- uses: MWest2020/internetnl-cli@main
+  with:
+    hosts: example.org example.com
+    endpoint: https://api.westerweel.work
     username: ${{ secrets.INTERNETNL_USERNAME }}
     password: ${{ secrets.INTERNETNL_PASSWORD }}
 </code></pre>
+<p>Provide exactly one of the two forms — <code>credential</code>, or both <code>username</code>
+and <code>password</code> — never a mix; the action's "Validate inputs" step fails
+closed otherwise.</p>
 <p>Pin <code>@main</code> to a tag or commit SHA once one exists, the same way this
 repo pins its own third-party actions (see <code>.github/workflows/ci.yml</code>).
-Never put the password directly in the workflow file — always a secret.</p>
+Never put the password (or the combined credential) directly in the
+workflow file — always a secret.</p>
 <p>Note the trade-off while there is no tag/SHA to pin yet: the action
 resolves its own install source from <code>github.action_repository</code>/
 <code>github.action_ref</code>, which are only populated when consumed as <code>uses:
@@ -11175,16 +11300,22 @@ change this fallback's behaviour when it triggers.</p>
 <td><code>INTERNETNL_ENDPOINT</code></td>
 </tr>
 <tr>
-<td><code>username</code></td>
-<td><strong>yes</strong></td>
+<td><code>credential</code></td>
+<td>one of <code>credential</code>/(<code>username</code>+<code>password</code>)</td>
 <td>—</td>
-<td><code>INTERNETNL_USERNAME</code></td>
+<td><code>INTERNETNL_CREDENTIAL</code>, <code>username:password</code> (split on the first <code>:</code>), from a secret; preferred</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td>one of <code>credential</code>/(<code>username</code>+<code>password</code>)</td>
+<td>—</td>
+<td><code>INTERNETNL_USERNAME</code>; alternative to <code>credential</code>, pair with <code>password</code></td>
 </tr>
 <tr>
 <td><code>password</code></td>
-<td><strong>yes</strong></td>
+<td>one of <code>credential</code>/(<code>username</code>+<code>password</code>)</td>
 <td>—</td>
-<td><code>INTERNETNL_PASSWORD</code>, from a secret</td>
+<td><code>INTERNETNL_PASSWORD</code>, from a secret; alternative to <code>credential</code>, pair with <code>username</code></td>
 </tr>
 </tbody>
 </table>
@@ -11243,10 +11374,11 @@ directly. GitLab CI example:</p>
     paths: [results.json]
 </code></pre>
 <p>Credentials are still environment variables only (<code>INTERNETNL_ENDPOINT</code>
-/ <code>INTERNETNL_USERNAME</code> / <code>INTERNETNL_PASSWORD</code>) — never command-line
-arguments. Mark the username/password as masked (and protected, if your
-CI supports it) CI/CD variables, the same way you would for any other
-credential.</p>
+/ <code>INTERNETNL_USERNAME</code> / <code>INTERNETNL_PASSWORD</code>, or the single
+<code>INTERNETNL_CREDENTIAL</code> in <code>username:password</code> form — never both at
+once) — never command-line arguments. Mark the username/password (or
+the combined credential) as masked (and protected, if your CI supports
+it) CI/CD variables, the same way you would for any other credential.</p>
 <h2 id="c-the-gate-exit-codes-and-what-scored-means">c) The gate: exit codes and what "scored" means</h2>
 <p><code>internetnl submit</code>/<code>poll</code>/<code>results</code> return one of these exit codes
 (the full table is in
@@ -11281,6 +11413,10 @@ credential.</p>
 </tr>
 </tbody>
 </table>
+<p>Exit code 2's message includes the endpoint's own error body verbatim
+in the CI log, so against a third-party batch API you do not control
+(unlike the <code>netnl</code> facade, which is built not to do this) that body
+could itself echo your username unmasked.</p>
 <p>Exit code 4 is the one most likely to bite a large run: the default
 <code>INTERNETNL_POLL_MAX</code> is 3600 seconds (one hour), and a batch of many
 hosts can legitimately take longer than that to finish scoring. The
@@ -11325,8 +11461,10 @@ tool does not enforce this — you do, by keeping the host list under
 your own control (a file committed to the repo, not something derived
 from untrusted input).</p>
 <h2 id="e-getting-a-credential">e) Getting a credential</h2>
-<p>Every route needs <code>INTERNETNL_ENDPOINT</code> / <code>INTERNETNL_USERNAME</code> /
-<code>INTERNETNL_PASSWORD</code>. Options, cheapest first:</p>
+<p>Every route needs <code>INTERNETNL_ENDPOINT</code> and a credential — either
+<code>INTERNETNL_USERNAME</code> / <code>INTERNETNL_PASSWORD</code>, or the single
+<code>INTERNETNL_CREDENTIAL</code> (<code>username:password</code>, split on the first <code>:</code>).
+Options, cheapest first:</p>
 <ul>
 <li>An account on the hosted <code>batch.internet.nl</code> API (ask upstream).</li>
 <li>A credential on the <code>netnl</code> facade at <code>https://api.westerweel.work</code>:

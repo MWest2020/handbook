@@ -7538,6 +7538,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../demo-run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the netnl demo
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../deploy-facade/" class="md-nav__link">
         
   
@@ -7636,6 +7671,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supporter-webhook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic supporter-key issuance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7690,6 +7760,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/demo-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The demo API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -11177,7 +11282,10 @@ these names are traceable back to their source.)</p>
 it cannot be recovered later — only rotated (<code>user revoke</code> followed by
 a fresh <code>user add</code>). Hand the printed username/password pair to the
 beta user out of band (not over the same channel you'd use to discuss
-the beta publicly, and never committed anywhere in this repo).</p>
+the beta publicly, and never committed anywhere in this repo). Handing
+it over as a single <code>username:password</code> string works too — the CLI's
+<code>INTERNETNL_CREDENTIAL</code> (and the action's <code>credential</code> input) accept
+that form directly, split on the first <code>:</code>.</p>
 <p>Revoke a credential (effective immediately, no grace period — see the
 spec's "Credential lifecycle" requirement):</p>
 <pre><code class="language-sh">kubectl -n netnl exec deploy/netnl -- netnl-admin user revoke &lt;naam&gt;
@@ -11266,8 +11374,21 @@ things up further:</p>
 <td>non-terminal runs/credential</td>
 <td>beta users queuing behind their own earlier runs that haven't finished</td>
 </tr>
+<tr>
+<td>in-process scrypt-concurrency cap (<code>max(4, min(8, cpu_count))</code>, not env-tunable)</td>
+<td>concurrent password-hash verifications this process will run at once</td>
+<td>a 503 <code>overloaded</code> reaching a beta user under ordinary (not attack) traffic — that means legitimate concurrent logins are queuing past the cap's short bounded wait, worth escalating rather than a symptom of a credential-guessing campaign</td>
+</tr>
 </tbody>
 </table>
+<p>A 503 <code>overloaded</code> carries a <code>Retry-After: 1</code> header; a well-behaved
+client should back off briefly and retry. It is distinct from 429
+<code>rate-limited</code> (a per-credential quota) — 503 can hit a caller who has
+never made a request before, because it reflects this process's own
+authentication-verification capacity, not anything the caller did wrong.
+See design.md's "Authentication cost is bounded" and
+<a href="../deploy-facade/#brute-force--rate-limiting-at-the-edge">deploy-facade.md</a>
+for what actually causes it and what backstops it at the edge.</p>
 <p>Also watch the <strong>upstream instance's</strong> capacity directly — CPU, memory
 and how long a batch of N domains actually takes on the VPS sizing
 from <a href="../../reference/self-hosted/">reference/self-hosted.md</a> — since
@@ -11317,10 +11438,13 @@ for a handful of known users, not the public-facing story.</p>
 <p>Task 5.2's self-serve runbook is <a href="../supporter-key/">Supporter keys</a>: a
 lifetime tenant credential issued after a small donation, still
 subject to the same per-tenant rate limits described above as its
-fair-use mechanism. The donation link is live, but issuance itself
-remains a manual, out-of-band process, the same as onboarding a beta
-user — see that page's "Getting a supporter key" for how to donate and
-what happens (and does not yet happen automatically) after.</p>
+fair-use mechanism. The donation link is live, and — once an operator
+has enabled the webhook bridge described in
+<a href="../supporter-webhook/">Automatic supporter-key issuance</a> — issuance
+itself is automatic: a qualifying donation mints and mails the
+credential without an operator in the loop. The manual, out-of-band
+<code>netnl-admin user add</code> process described above remains the fallback
+when the bridge is disabled or unavailable.</p>
 <h2 id="not-an-sla">Not an SLA</h2>
 <p>Same caveat as the deployment recipes
 (<a href="../deploy-facade/#not-an-sla">deploy-facade.md</a>,

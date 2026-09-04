@@ -7475,6 +7475,41 @@
   
   
     <li class="md-nav__item">
+      <a href="how-to/demo-run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the netnl demo
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="how-to/deploy-facade/" class="md-nav__link">
         
   
@@ -7573,6 +7608,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/supporter-webhook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic supporter-key issuance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7627,6 +7697,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/demo-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The demo API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -11038,6 +11143,10 @@ until the implementation lands.</p>
   edge TLS, credential issuance and the prune cron for the public facade
   in front of a private batch instance; also covers the two supported
   topologies (co-located, and facade-in-K8s over a tailnet).</li>
+<li><a href="how-to/demo-run/">Running the netnl demo</a> — enabling the anonymous,
+  single-domain <code>/demo/*</code> route family, issuing (and discarding the
+  password of) its borrowed credential, the smoke check, and the kill
+  switch.</li>
 <li><a href="how-to/deploy-instance-vps/">Deploying the upstream instance on a VPS, reached over a tailnet</a> —
   the batch instance on a fixed-public-IP VPS, joined to a Tailscale
   tailnet so a homelab facade can reach it privately.</li>
@@ -11048,6 +11157,10 @@ until the implementation lands.</p>
 <li><a href="how-to/supporter-key/">Supporter keys</a> — the lifetime credential
   issued for a small donation: beta, best-effort, no SLA, with the
   per-tenant rate limit as the fair-use mechanism.</li>
+<li><a href="how-to/supporter-webhook/">Automatic supporter-key issuance</a> — the
+  Buy Me a Coffee webhook bridge that mints and mails a supporter key
+  without an operator in the loop: enabling it, testing it, and
+  troubleshooting a delivery that did not arrive.</li>
 <li><a href="how-to/ci/">Use in CI</a> — the bundled GitHub Action, a plain-CLI
   recipe for other CI systems, and the gate's exit-code semantics.</li>
 </ul>
@@ -11056,6 +11169,9 @@ until the implementation lands.</p>
 <li><a href="reference/self-hosted/">Self-hosting a batch instance</a> — requirements,
   the fixed-public-IP caveat, deployment notes, running costs, and how batch
   results differ from the website's.</li>
+<li><a href="reference/demo-api/">The demo API</a> — the page contract for <code>/demo/*</code>:
+  endpoints, poll cadence, CORS requirements, id hygiene and the full error
+  table with the literal, directly-showable visitor-facing messages.</li>
 </ul>
 
 
