@@ -11,6 +11,10 @@ apart hub-repo (verschil met de werkopzet): één eigenaar, één hub.
   (`dispatch.sh <rol> <change> <repo>` vanaf een host met kubectl; zie
   habitat `docs/reference/dispatch.md`). Reviewer/security altijd met
   `HABITAT_BASE_BRANCH=habitat/builder/<change>`.
+  Dit geldt voor een *interactieve* sessie die hier start. Een **gedispatchte
+  habitat-rol** volgt zijn eigen rolbestand (`.claude/agents/<rol>.md`) en bouwt
+  hier wél — uitsluitend binnen de change waarvoor hij gedispatcht is, en zonder
+  `CLAUDE.md`, `.claude/agents/` of CI aan te raken. Mergen blijft mens.
 - **De inventaris is de enige waarheid.** `inventory/repos.json` bepaalt wat
   meedoet (site én agents). Wijzigingen aan de importlijst gaan via
   `scripts/gen_imports.py`, nooit met de hand. De tabel in `inventory/repos.md`
