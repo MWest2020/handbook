@@ -5874,6 +5874,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#worker-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker-auth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#job-conventies" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11448,6 +11459,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#worker-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker-auth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#job-conventies" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11661,10 +11683,30 @@ deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-s
 <tr>
 <td><code>CLAUDE_CREDS_FILE</code></td>
 <td><code>~/.claude/.credentials.json</code></td>
-<td>bron voor de <code>claude-credentials</code>-sync per dispatch (subscription-token verloopt ~8u); leeg = sync overslaan</td>
+<td>bron voor de <code>claude-credentials</code>-sync per dispatch (subscription-token verloopt ~8u); leeg = sync overslaan. Overbodig zodra het Secret <code>claude-oauth-token</code> bestaat — zie hieronder</td>
 </tr>
 </tbody>
 </table>
+<h2 id="worker-auth">Worker-auth</h2>
+<p>De entrypoint kiest, in deze volgorde:</p>
+<ol>
+<li><strong><code>CLAUDE_CODE_OAUTH_TOKEN</code></strong> uit het optionele Secret <code>claude-oauth-token</code>
+   (sleutel <code>token</code>). Een <code>claude setup-token</code>-token: subscription-auth die een
+   jaar geldig is, dus geen sync per dispatch en geen verlopen token halverwege
+   een keten. Aanmaken op een host met browser-toegang:</li>
+</ol>
+<p><code>claude setup-token
+   kubectl -n agents create secret generic claude-oauth-token --from-literal=token=&lt;token&gt;</code></p>
+<p>Daarna mag <code>CLAUDE_CREDS_FILE=</code> (leeg) en kan het Secret
+   <code>claude-credentials</code> weg; beide mounts zijn <code>optional</code>.
+2. <strong>Gemounte sessie-credentials</strong> (<code>claude-credentials</code>) — het oude
+   sub-first-pad, alleen vers zolang <code>dispatch.sh</code> ze meesynchroniseert.
+3. <strong><code>ANTHROPIC_API_KEY</code></strong> — Console-key, verloopt niet, maar rekent per token
+   af buiten het abonnement om.</p>
+<p>Workers refreshen nooit zelf: een refresh in een wegwerp-Job kan de
+refresh-token roteren zonder te persisteren, wat bij parallelle runs racet.
+Vandaar dat optie 1 de voorkeur heeft boven een steeds opnieuw te synchroniseren
+sessie-token.</p>
 <p>Het script exporteert daarnaast <code>JOB_NAME</code>, <code>HABITAT_ROLE</code>, <code>HABITAT_CHANGE</code>,
 <code>HABITAT_REPO</code> en <code>HABITAT_RUN_ID</code> naar het manifest (via <code>envsubst</code>).</p>
 <h2 id="job-conventies">Job-conventies</h2>
