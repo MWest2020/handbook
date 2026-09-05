@@ -46,4 +46,5 @@ mirror van skill-forge); de CI-stap die 'm draait wordt met de hand ingehaakt
 - architect — architectuur-sparring (chat, #architectuur) + habitat-plan (executie) *(volgt)*
 - assistent — algemene chat-agent (alle kanalen), geen executie *(volgt)*
 - [reviewer](reviewer.md) / [security](security.md) — alleen executie (habitat)
+- [roodteam](roodteam.md) — security/red-team-agent (chat, #red-team, #review), geen executie
 - **seeds/** — canonieke executie-seeds; de per-spoke `.claude/agents/` worden hieruit afgeleid (generator + drift-gate)
