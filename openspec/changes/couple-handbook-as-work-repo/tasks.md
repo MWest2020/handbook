@@ -19,7 +19,8 @@
 
 ## 3. Bewijs
 
-- [ ] 3.1 Aantonen dat de rolinstructie nu vindbaar is op het pad dat de worker
-      gebruikt (`.claude/agents/<rol>.md` in de kloon van deze repo).
+- [x] 3.1 Aangetoond met een verse `git clone --depth 50` van deze branch (dezelfde
+      stap die de worker doet): `.claude/agents/{builder,reviewer,security}.md`
+      resolven alle drie. Op `main` bestaat de map niet — precies de blokkade.
 - [ ] 3.2 Vervolgstap benoemd, niet gedaan: pas ná merge kan een dispatch op de
       handbook zinvol draaien.
