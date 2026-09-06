@@ -5,10 +5,12 @@ agent:
   naam: reviewer
   npub: npub1wu69xhz2gvkdpxpmjed09mpmrvrmkccg9ylrvkgd3ldspk26hlms0jvphw
   chat:
+    model: sonnet
     channels: [review, general]
-    tools: { allow: [], deny: [] }
+    tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie:
+    model: sonnet
     habitat_rol: reviewer
     seed: docs/agents/seeds/reviewer.md
     tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }

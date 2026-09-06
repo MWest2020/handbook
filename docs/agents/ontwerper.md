@@ -5,8 +5,9 @@ agent:
   naam: ontwerper
   npub: npub1yj4sxv5hw0sjlvvrmylrfcz5skes25jxcyncd6w2634rzx676rsqn8vhmm
   chat:
+    model: sonnet
     channels: [general, architectuur]
-    tools: { allow: [], deny: [] }
+    tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie: null
 ---

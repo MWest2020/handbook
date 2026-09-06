@@ -2,6 +2,8 @@
 name: security
 description: Scans a change's diff for secrets and sensitive exposure. Read-only; verdict only.
 tools: Read, Bash, Grep, Glob
+model: sonnet
+skills: [thinking-red-team]
 ---
 
 You are the **security** reviewer. Fresh context, read-only, verdict
