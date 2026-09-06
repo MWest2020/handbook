@@ -5,8 +5,9 @@ agent:
   naam: coordinator
   npub: npub1c9x3ehgexyrp4utk8yhnnlghxq6ertcvautaxl324h6tc2ek4rwqxf6nvn
   chat:
+    model: sonnet
     channels: [general]
-    tools: { allow: [], deny: [] }
+    tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie: null
 ---

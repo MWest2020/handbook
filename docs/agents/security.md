@@ -6,6 +6,7 @@ agent:
   npub: null            # executie-only rol (habitat), geen boomhuis-chat-identiteit
   chat: null
   executie:
+    model: sonnet
     habitat_rol: security
     seed: docs/agents/seeds/security.md
     tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }

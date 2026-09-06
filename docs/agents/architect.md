@@ -5,10 +5,12 @@ agent:
   naam: architect
   npub: npub15xxw2fxjx3pn5pczlp0sjvj3vhge4fh7t6wz35q7ytlu74vj94ysanckju
   chat:
+    model: opus
     channels: [general, architectuur]
-    tools: { allow: [], deny: [] }
+    tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie:
+    model: opus
     habitat_rol: architect   # plan-only, read-only (habitat)
     tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }
     skills: []

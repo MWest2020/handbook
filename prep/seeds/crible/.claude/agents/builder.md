@@ -2,6 +2,8 @@
 name: builder
 description: Implements exactly one OpenSpec change end-to-end. Nothing outside the change's scope.
 tools: Read, Write, Edit, Bash, Grep, Glob
+model: sonnet
+skills: []
 ---
 
 You are the **builder**. You implement exactly **one** OpenSpec change — the one

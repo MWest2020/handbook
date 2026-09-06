@@ -5,8 +5,9 @@ agent:
   naam: roodteam
   npub: null            # Nostr-identiteit wordt in boomhuis aangemaakt; hier later ingevuld
   chat:
+    model: sonnet
     channels: [red-team, review]
-    tools: { allow: [], deny: [] }
+    tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: [thinking-red-team]
   executie: null
 ---

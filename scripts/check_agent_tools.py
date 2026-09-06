@@ -78,7 +78,21 @@ def register_slugs():
     return set(re.findall(r"^\s*-\s*slug:\s*(\S+)", REGISTER.read_text(), re.M))
 
 
+# Toegestane modellen. De def legt de INTENTIE vast (zoeken/denken/uitzondering),
+# niet een exacte model-id: die rouleert per release en zou elke def laten verlopen.
+# Regel (Mark, 2026-09-06): zoeken = haiku, denken = sonnet, uitzonderlijk = opus.
+MODELS = {"haiku", "sonnet", "opus"}
+
+
 def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg):
+    # Model: verplicht en uit de vaste set. Zonder dit veld draait een agent op wat
+    # de omgeving toevallig default is — precies wat we niet willen weten-noch-zien.
+    mm = re.search(r"^\s*model:\s*(\S+)\s*$", block, re.M)
+    if not mm:
+        errs.append(f"{rel}/{facet}: mist `model` (een van {sorted(MODELS)})")
+    elif mm.group(1) not in MODELS:
+        errs.append(f"{rel}/{facet}: onbekend model {mm.group(1)!r} "
+                    f"(toegestaan: {sorted(MODELS)})")
     # Skills EERST, onafhankelijk van het tools-blok: anders zou een def die z'n
     # tools-blok kwijt is (early return hieronder) een onbekende skill pas volgende
     # run tonen. reg is None = register ontbreekt; lege set = register kapot/leeg
@@ -121,6 +135,15 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg
         if seed and not (ROOT / seed).exists():
             errs.append(f"{rel}/executie: `seed:` wijst naar niet-bestaand pad {seed}")
         elif seed:
+            # Model kruisen: de worker leest straks het rolbestand in de doelrepo,
+            # dus seed en def moeten hetzelfde model noemen — anders draait een run
+            # op iets anders dan de registry belooft.
+            sm = re.search(r"^model:\s*(\S+)\s*$", (ROOT / seed).read_text(), re.M)
+            if not sm:
+                errs.append(f"{rel}/executie: seed {seed} heeft geen `model:`-regel")
+            elif mm and sm.group(1) != mm.group(1):
+                errs.append(f"{rel}/executie: model {mm.group(1)!r} wijkt af van "
+                            f"seed {seed} model {sm.group(1)!r}")
             st = seed_tools(seed)
             if st is None:
                 errs.append(f"{rel}/executie: seed {seed} heeft geen `tools:`-regel — "
