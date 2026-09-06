@@ -30,3 +30,9 @@ __pycache__/
 
 # Private build-config: leeft op de beheer-host, niet in dit publieke repo
 mkdocs.private.yml
+
+# Habitat-run-artefacten: lokaal bij de operator, 14 dagen (habitat#19).
+run-report.json
+.habitat/audit.jsonl
+.habitat/run-output-*.md
+.habitat/run-report-*.html
