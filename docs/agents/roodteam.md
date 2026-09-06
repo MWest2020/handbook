@@ -3,7 +3,7 @@ status: actief
 last_reviewed: 2026-09-05
 agent:
   naam: roodteam
-  npub: null            # Nostr-identiteit wordt in boomhuis aangemaakt; hier later ingevuld
+  npub: npub1yud808js04yljt6z7pnyw70mz90m4ddftm4lt6e70mkc52qhdy8s2rzkex
   chat:
     model: sonnet
     channels: [red-team, review]
