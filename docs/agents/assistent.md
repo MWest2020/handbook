@@ -6,7 +6,7 @@ agent:
   npub: npub1x7927r72vyfnc99m6rn2f2exe6jvml77klf9z07ugk93h8vxgf2snlh3gt
   chat:
     model: haiku
-    channels: [general, runs, escalatie, bouw, review, architectuur, marketing]
+    channels: [runs, escalatie, bouw, review, architectuur, marketing]
     tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie: null   # alleen chat, geen kooi-rol

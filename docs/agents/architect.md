@@ -6,7 +6,7 @@ agent:
   npub: npub15xxw2fxjx3pn5pczlp0sjvj3vhge4fh7t6wz35q7ytlu74vj94ysanckju
   chat:
     model: opus
-    channels: [general, architectuur]
+    channels: [architectuur]
     tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie:
