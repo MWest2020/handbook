@@ -6,7 +6,7 @@ agent:
   npub: npub1hfdln445qzvcgdu9v8p45drwvj6gs2p0l50mclwdmcw3n3g4l4jqcezul9
   chat:
     model: sonnet
-    channels: [general, marketing]
+    channels: [marketing]
     tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie: null

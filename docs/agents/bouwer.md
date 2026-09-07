@@ -6,7 +6,7 @@ agent:
   npub: npub19qn78kzy25dcraqe8lt7vjmqzst4nfdysjzg9aytntfv9lvn3d6qaak4eq
   chat:
     model: sonnet
-    channels: [general, bouw]
+    channels: [bouw]
     tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie:

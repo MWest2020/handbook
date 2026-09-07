@@ -6,7 +6,7 @@ agent:
   npub: npub1wu69xhz2gvkdpxpmjed09mpmrvrmkccg9ylrvkgd3ldspk26hlms0jvphw
   chat:
     model: sonnet
-    channels: [review, general]
+    channels: [review]
     tools: { allow: [Read, Grep, Glob], deny: [Write, Edit, Bash] }
     skills: []
   executie:
