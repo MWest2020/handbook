@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-09-07 — feat: de agent-registry is één bron per rol, met een gate erop
+
+`docs/agents/` is de canonieke definitie per agent-rol: één bestand per rol, met
+een **chat-facet** (systemprompt, kanalen, model, tools) en een **executie-facet**
+(kooi-regels, tools, seed) in dezelfde front-matter. Consumenten *lezen* daar —
+de boomhuis-listener haalt de chat-facet op via `registry_base`, habitat leidt de
+per-spoke seeds eruit af — in plaats van byte-kopieën te onderhouden die stil uit
+elkaar lopen ("ow, dat had ik niet meegekregen").
+
+`scripts/check_agent_tools.py` bewaakt nu ook het identiteitsdeel van dat
+contract: elke definitie heeft `naam` (gelijk aan de bestandsnaam, want
+consumenten halen de def op via die naam) en `npub` (expliciet `null` als de
+identiteit nog niet bestaat, met een melding — een chat-facet kan daar niet mee
+draaien). Verloor een def eerder haar `npub`, dan faalde er niets, terwijl de
+listener juist op die npub fail-closed vergelijkt.
+
+`inventory/repos.json` wijst de hub-notes naar `docs/agents/` als registry.
+
+De nav blijft **automatisch** (mappenstructuur, zoals `mkdocs.yml` bovenaan
+vastlegt): een handgeschreven "Agents"-sectie zou precies de uitzondering zijn
+waar dat commentaar tegen waarschuwt. Via MCP nagemeten: `list_docs("handbook")`
+geeft 20 pagina's waarvan 14 agent-pagina's, en
+`read_doc("handbook","docs/agents/bouwer.md")` levert de definitie mét naam, npub
+en chat-facet.
+
 ## 2026-09-03 — feat: skills gevalideerd tegen het skill-register
 
 De agent-def `skills:`-velden worden nu gecontroleerd tegen

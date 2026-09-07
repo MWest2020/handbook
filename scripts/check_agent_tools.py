@@ -157,6 +157,26 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg
             notices.append(f"{rel}/executie: geen seed — `allow` niet gekruist (intentie).")
 
 
+def check_identity(rel: str, stem: str, fm: str, errs: list, notices: list) -> None:
+    """Front-matter-contract op identiteitsniveau (add-agent-registry 1.5): een
+    definitie noemt zichzelf en haar sleutel. Zonder deze check kon een def haar
+    `naam` of `npub` verliezen zonder dat er iets faalde — terwijl de listener op
+    precies die npub fail-closed vergelijkt en een verkeerde naam een agent naar
+    het verkeerde bestand laat wijzen."""
+    m = re.search(r"^  naam:\s*(\S.*)$", fm, re.M)
+    if not m:
+        errs.append(f"{rel}: mist `naam:` in de front-matter")
+    elif m.group(1).strip() != stem:
+        errs.append(f"{rel}: `naam: {m.group(1).strip()}` wijkt af van de bestandsnaam "
+                    f"{stem!r} — consumenten halen de def op via de bestandsnaam")
+    if not re.search(r"^  npub:\s*\S", fm, re.M):
+        errs.append(f"{rel}: mist `npub:` — gebruik expliciet `npub: null` als de "
+                    f"identiteit nog niet bestaat")
+    elif re.search(r"^  npub:\s*null\s*(#.*)?$", fm, re.M):
+        notices.append(f"{rel}: `npub: null` — identiteit bestaat nog niet "
+                       f"(een chat-facet kan hiermee niet draaien).")
+
+
 def main() -> int:
     errs: list[str] = []
     notices: list[str] = []
@@ -179,6 +199,7 @@ def main() -> int:
                             f"'m te hebben (of zet 'm in {sorted(SKIP_NO_AGENT)}).")
             continue
         checked += 1
+        check_identity(rel, path.stem, fm, errs, notices)
         for facet in ("chat", "executie"):
             present, is_null, block = facet_block(fm, facet)
             if not present:
