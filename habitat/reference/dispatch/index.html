@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5926,6 +5961,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Uitkomst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-artefacten-lokaal-niet-in-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run-artefacten: lokaal, niet in git
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote kubectl
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -7698,6 +7761,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../internetnl-cli/how-to/self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../internetnl-cli/how-to/supporter-key/" class="md-nav__link">
         
   
@@ -7705,7 +7803,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7830,7 +7928,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7866,6 +7964,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../internetnl-cli/reference/service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11511,6 +11644,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Uitkomst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-artefacten-lokaal-niet-in-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run-artefacten: lokaal, niet in git
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote kubectl
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -11653,7 +11814,7 @@ deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-s
 <tr>
 <td><code>KUBECTL</code></td>
 <td><code>kubectl</code></td>
-<td>kubectl-binary/-wrapper</td>
+<td>kubectl-binary/-wrapper; mag een remote wrapper zijn (<code>KUBECTL="ssh &lt;host&gt; kubectl"</code>) — zie <a href="#remote-kubectl">Remote kubectl</a></td>
 </tr>
 <tr>
 <td><code>HABITAT_BASE_BRANCH</code></td>
@@ -11789,6 +11950,35 @@ image-pull, zodat een trage start niet als "onbekend" eindigt.</p>
 </table>
 <p>De logs worden gestreamd (<code>kubectl logs -f</code> zodra de pod draait) en
 gearchiveerd naar <code>$HABITAT_LOGDIR/&lt;job-naam&gt;.log</code>.</p>
+<h3 id="run-artefacten-lokaal-niet-in-git">Run-artefacten: lokaal, niet in git</h3>
+<p>De Job schrijft <code>run-report-&lt;id&gt;.html</code>, <code>run-output-&lt;id&gt;.md</code>, <code>run-report.json</code>
+en <code>audit.jsonl</code> naar <code>/work/artifacts</code> — <strong>buiten</strong> de working tree. De gepushte
+branch bevat dus alleen de wijziging van de agent.</p>
+<p>De artefacten bereiken de operator via het Job-log: de worker print ze als
+<code>&lt;naam&gt; &lt;base64&gt;</code> tussen <code>===habitat-artifact-begin===</code> en
+<code>===habitat-artifact-end===</code>, en <code>dispatch.sh</code> knipt ze eruit naar
+<code>$HABITAT_LOGDIR/artifacts/&lt;repo&gt;/&lt;run_id&gt;/</code>. Via het log en niet met
+<code>kubectl cp</code>, omdat de pod na de Job-TTL weg is en <code>cp</code> breekt met een remote
+<code>KUBECTL</code> (zie <a href="#remote-kubectl">Remote kubectl</a>).</p>
+<p><strong>Retentie: 14 dagen.</strong> <code>dispatch.sh</code> ruimt bij elke run artefactmappen en
+<code>*.log</code> op die ouder zijn. Wil je iets bewaren, haal het dan binnen die termijn
+weg — er is geen tweede kopie, en in git komt het niet.</p>
+<p>Een oudere worker-image zonder markers levert geen artefacten op; dispatch merkt
+dat en gaat door zonder fout.</p>
+<h3 id="remote-kubectl">Remote kubectl</h3>
+<p>Draai je vanaf een host zonder cluster-toegang, dan is <code>KUBECTL</code> een wrapper:</p>
+<pre><code>KUBECTL=&quot;ssh -o BatchMode=yes &lt;host&gt; kubectl&quot;
+</code></pre>
+<p>Let op: zo'n wrapper geeft het commando als één string door, waarna de shell op
+de <em>doelhost</em> het opnieuw parseert. Argumenten met spaties, haakjes of
+aanhalingstekens overleven dat niet. Daarom leest <code>dispatch.sh</code> de
+Job-condities via <code>-o json</code> + een lokale <code>python3</code>-filter (<code>job_conditions()</code>)
+in plaats van een jsonpath met <code>[?(@.status=="True")]</code>: die template gaf op de
+doelhost <code>syntax error near unexpected token '('</code>, <code>2&gt;/dev/null</code> slikte de fout
+op, en <strong>elke</strong> run — ook een geslaagde — eindigde als <code>GEEN uitkomst</code> met exit
+2 (waargenomen 2026-09-05 op een reviewer-run die PASS was).</p>
+<p>Bouw je hier iets bij, houd kubectl-argumenten dan vrij van spaties en
+aanhalingstekens, of haal <code>-o json</code> op en filter lokaal.</p>
 <h2 id="runbook-cluster-livetests-add-role-architecture-3133">Runbook: cluster-livetests (add-role-architecture 3.1–3.3)</h2>
 <p>Draai dit op een host met <code>kubectl</code>-toegang tot het <code>agents</code>-cluster en een
 verse Claude-sessie (voor de credentials-sync). Plak blok voor blok.</p>

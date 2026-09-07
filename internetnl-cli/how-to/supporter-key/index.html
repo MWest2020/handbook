@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/internetnl-cli/how-to/supporter-key/">
       
       
-        <link rel="prev" href="../deploy-instance-vps/">
+        <link rel="prev" href="../self-hosting-pitfalls/">
       
       
         <link rel="next" href="../supporter-webhook/">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Supporter keys: a lifetime credential for a small donation - Handbook</title>
+        <title>Supporter keys: a lifetime credential for a 2.00-or-more donation - Handbook</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#supporter-keys-a-lifetime-credential-for-a-small-donation" class="md-skip">
+        <a href="#supporter-keys-a-lifetime-credential-for-a-200-or-more-donation" class="md-skip">
           Ga naar inhoud
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Supporter keys: a lifetime credential for a small donation
+              Supporter keys: a lifetime credential for a 2.00-or-more donation
             
           </span>
         </div>
@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7503,6 +7538,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -7522,7 +7592,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7547,7 +7617,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7780,7 +7850,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7816,6 +7886,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11494,7 +11599,7 @@
   
 
 
-<h1 id="supporter-keys-a-lifetime-credential-for-a-small-donation">Supporter keys: a lifetime credential for a small donation</h1>
+<h1 id="supporter-keys-a-lifetime-credential-for-a-200-or-more-donation">Supporter keys: a lifetime credential for a 2.00-or-more donation</h1>
 <p>This page describes the issuance model for opening the <code>netnl</code> facade
 beyond the handful of known users in
 <a href="../beta/">Running the netnl private beta</a> — task 5 of
@@ -11508,8 +11613,10 @@ issuance, the process this page originally described, remains the
 fallback for when the bridge is disabled or the mail path is
 unavailable.</p>
 <h2 id="the-model-in-one-paragraph">The model, in one paragraph</h2>
-<p>Someone makes a small, one-off donation and gets back a <code>netnl</code>
-tenant credential that does not expire — the automatic mail (see
+<p>Someone makes a one-off donation of 2.00 or more (in the account's
+currency, the default floor — see
+<a href="../supporter-webhook/">Automatic supporter-key issuance</a>) and gets back a
+<code>netnl</code> tenant credential that does not expire — the automatic mail (see
 <a href="../supporter-webhook/">Automatic supporter-key issuance</a>) presents it
 as a single <code>INTERNETNL_CREDENTIAL=username:password</code> string, plus
 copy-paste GitHub Actions and CLI snippets and a link to the CI guide,

@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7615,6 +7650,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../supporter-key/" class="md-nav__link">
         
   
@@ -7622,7 +7692,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7747,7 +7817,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7783,6 +7853,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11437,7 +11542,7 @@ system by installing the CLI directly.</p>
 <h2 id="a-github-actions">a) GitHub Actions</h2>
 <p>The repository root ships <a href="../../action.yml"><code>action.yml</code></a>, a composite
 action. Minimal use:</p>
-<pre><code class="language-yaml">- uses: MWest2020/internetnl-cli@main
+<pre><code class="language-yaml">- uses: MWest2020/internetnl-cli@v1
   with:
     hosts: example.org example.com
     endpoint: https://api.westerweel.work
@@ -11453,7 +11558,7 @@ credential that could ever actually work. It is the preferred way to
 pass a credential to the action: one secret instead of two.
 <code>username</code>/<code>password</code> still work as separate inputs if you already
 have the credential split that way:</p>
-<pre><code class="language-yaml">- uses: MWest2020/internetnl-cli@main
+<pre><code class="language-yaml">- uses: MWest2020/internetnl-cli@v1
   with:
     hosts: example.org example.com
     endpoint: https://api.westerweel.work
@@ -11597,7 +11702,7 @@ directly. GitLab CI example:</p>
     INTERNETNL_USERNAME: $INTERNETNL_USERNAME   # CI/CD variable, masked
     INTERNETNL_PASSWORD: $INTERNETNL_PASSWORD   # CI/CD variable, masked+protected
   script:
-    - pip install &quot;git+https://github.com/MWest2020/internetnl-cli@main&quot;
+    - pip install &quot;git+https://github.com/MWest2020/internetnl-cli@v1.0.0&quot;
     - internetnl submit --file hosts.txt --fail-on-scored --json &gt; results.json
   artifacts:
     when: always
@@ -11657,7 +11762,7 @@ setting <code>INTERNETNL_POLL_MAX</code> (raise the timeout), <code>INTERNETNL_P
 (poll less often), or <code>INTERNETNL_BATCH_SIZE</code> (cap how many hosts one
 request may contain, forcing you to split a large host list across
 multiple <code>submit</code> calls/jobs) on the job that calls <code>uses:
-MWest2020/internetnl-cli@main</code> reaches the action's own <code>internetnl</code>
+MWest2020/internetnl-cli@v1</code> reaches the action's own <code>internetnl</code>
 invocation:</p>
 <pre><code class="language-yaml">jobs:
   scan:
@@ -11665,7 +11770,7 @@ invocation:</p>
     env:
       INTERNETNL_POLL_MAX: &quot;7200&quot;
     steps:
-      - uses: MWest2020/internetnl-cli@main
+      - uses: MWest2020/internetnl-cli@v1
         with: { ... }
 </code></pre>
 <p>"Scored" means a subtest whose Internet.nl API status is <code>failed</code> —

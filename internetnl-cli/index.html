@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7580,6 +7615,41 @@
   
   
     <li class="md-nav__item">
+      <a href="how-to/self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="how-to/supporter-key/" class="md-nav__link">
         
   
@@ -7587,7 +7657,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7712,7 +7782,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7748,6 +7818,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11373,13 +11478,18 @@ until the implementation lands.</p>
   edge TLS, credential issuance and the prune cron for the public facade
   in front of a private batch instance; also covers the two supported
   topologies (co-located, and facade-in-K8s over a tailnet).</li>
-<li><a href="how-to/demo-run/">Running the netnl demo</a> — enabling the anonymous,
+<li><a href="how-to/demo-run/">Running the anonymous browser page</a> — enabling the anonymous,
   single-domain <code>/demo/*</code> route family, issuing (and discarding the
   password of) its borrowed credential, the smoke check, and the kill
   switch.</li>
 <li><a href="how-to/deploy-instance-vps/">Deploying the upstream instance on a VPS, reached over a tailnet</a> —
   the batch instance on a fixed-public-IP VPS, joined to a Tailscale
   tailnet so a homelab facade can reach it privately.</li>
+<li><a href="how-to/self-hosting-pitfalls/">Self-hosting: four traps</a> — the places
+  where following the upstream batch documentation literally still leaves you
+  with a broken instance: the public-IP setting that kills all container
+  egress, the certbot that cannot start so certificates never renew, the
+  compose wrapper that needs a TTY, and the stranded-network race.</li>
 <li><a href="how-to/beta/">Running the netnl private beta</a> — issuing and
   revoking tenant credentials, onboarding a handful of known beta
   users, what to observe against the default limits, and the
@@ -11396,10 +11506,13 @@ until the implementation lands.</p>
 </ul>
 <h2 id="reference">Reference</h2>
 <ul>
+<li><a href="reference/service/">The netnl service</a> — what a tenant of the hosted
+  facade can count on: endpoint, terms, how to get a credential, the
+  published limits and retention windows, and the no-SLA statement.</li>
 <li><a href="reference/self-hosted/">Self-hosting a batch instance</a> — requirements,
   the fixed-public-IP caveat, deployment notes, running costs, and how batch
   results differ from the website's.</li>
-<li><a href="reference/demo-api/">The demo API</a> — the page contract for <code>/demo/*</code>:
+<li><a href="reference/demo-api/">The anonymous page API</a> — the page contract for <code>/demo/*</code>:
   endpoints, poll cadence, CORS requirements, id hygiene and the full error
   table with the literal, directly-showable visitor-facing messages.</li>
 </ul>

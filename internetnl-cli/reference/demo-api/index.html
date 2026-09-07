@@ -25,7 +25,7 @@
     
     
       
-        <title>The demo API - Handbook</title>
+        <title>The anonymous page API - Handbook</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-demo-api" class="md-skip">
+        <a href="#the-anonymous-page-api" class="md-skip">
           Ga naar inhoud
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              The demo API
+              The anonymous page API
             
           </span>
         </div>
@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7504,6 +7539,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/supporter-key/" class="md-nav__link">
         
   
@@ -7511,7 +7581,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7647,7 +7717,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7672,7 +7742,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7833,6 +7903,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11528,7 +11633,13 @@
   
 
 
-<h1 id="the-demo-api">The demo API</h1>
+<h1 id="the-anonymous-page-api">The anonymous page API</h1>
+<blockquote>
+<p>The browser page is not a demonstration version — it is this service at
+v1.0.0, measuring for real. No reply below calls it a demo; the <code>/demo/*</code>
+path and the <code>demo-unavailable</code> code are the historical spelling, kept on
+the wire until the page and the facade are renamed in one release.</p>
+</blockquote>
 <p>This is the contract the dark-launched demo page (in the
 <code>internetnl-cli-demo</code> repo) relies on for the anonymous <code>/demo/*</code> route
 family. It exists so that page and this facade never drift apart silently —
@@ -11699,7 +11810,7 @@ not a structured API error body).</p>
 <td>429</td>
 <td><code>rate-limited</code></td>
 <td>The submitted domain was checked too recently (cooldown), <strong>or</strong> too many accepted runs from this network recently (per-IP cap)</td>
-<td><code>too many demo runs recently from this network; please try again later</code> — the same text for both, deliberately (see "Cooldown and the per-IP cap" below)</td>
+<td><code>too many runs recently from this network; please try again later</code> — the same text for both, deliberately (see "Cooldown and the per-IP cap" below)</td>
 </tr>
 <tr>
 <td>429</td>
@@ -11711,7 +11822,7 @@ not a structured API error body).</p>
 <td>429</td>
 <td><code>rate-limited</code></td>
 <td>The demo's own hourly or concurrency cap is at its limit</td>
-<td><code>the demo is busy right now; please try again shortly</code></td>
+<td><code>the service is busy right now; please try again shortly</code></td>
 </tr>
 <tr>
 <td>502</td>
@@ -11723,7 +11834,7 @@ not a structured API error body).</p>
 <td>503</td>
 <td><code>demo-unavailable</code></td>
 <td>The borrowed demo credential is missing or revoked (the kill switch), <strong>or</strong> the upstream instance could not be reached at the network level at all</td>
-<td><code>the live demo is temporarily unavailable; please try again shortly</code> — both causes share this one outcome; the page cannot (and does not need to) tell them apart</td>
+<td><code>the service is temporarily unavailable; please try again shortly</code> — both causes share this one outcome; the page cannot (and does not need to) tell them apart</td>
 </tr>
 <tr>
 <td>501</td>

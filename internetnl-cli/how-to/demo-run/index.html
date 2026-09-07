@@ -3564,6 +3564,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    roodteam
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/security/" class="md-nav__link">
         
   
@@ -3607,10 +3642,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3628,8 +3663,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7519,6 +7554,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#abuse-response-who-pulls-it-and-on-what-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abuse response: who pulls it, and on what signal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#smoke-check" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7648,6 +7694,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../self-hosting-pitfalls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-hosting an Internet.nl batch instance: four traps
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../supporter-key/" class="md-nav__link">
         
   
@@ -7655,7 +7736,7 @@
   <span class="md-ellipsis">
     
   
-    Supporter keys: a lifetime credential for a small donation
+    Supporter keys: a lifetime credential for a 2.00-or-more donation
   
 
     
@@ -7780,7 +7861,7 @@
   <span class="md-ellipsis">
     
   
-    The demo API
+    The anonymous page API
   
 
     
@@ -7816,6 +7897,41 @@
     
   
     Self-hosting a batch instance
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The netnl service: endpoint, terms, limits, retention
   
 
     
@@ -11431,6 +11547,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#abuse-response-who-pulls-it-and-on-what-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abuse response: who pulls it, and on what signal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#smoke-check" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11599,9 +11726,45 @@ active. This is the kill switch's other half: <code>revoke</code> turns the demo
 change. <code>reissue</code> also prints a generated password once, to stdout — throw
 it away exactly like <code>user add</code>'s: the demo never authenticates as this
 credential either way (design.md, D9).</p>
-<p>This is the operator's entire abuse-response lever for the demo surface —
-see <code>tasks.md</code>, owner input O5, for the (not-yet-written) runbook on when to
-pull it.</p>
+<p>This is the operator's entire abuse-response lever for the demo surface.
+When to pull it is below.</p>
+<h2 id="abuse-response-who-pulls-it-and-on-what-signal">Abuse response: who pulls it, and on what signal</h2>
+<p>Decided 2026-09-05 (owner Mark): <strong>one human revoker, one written
+threshold.</strong> No automatic revocation — a false positive would take the
+public demo offline unattended, and this surface is not load-bearing enough
+to justify that. Mark revokes; nobody else has <code>netnl-admin</code> on the pod.</p>
+<p>Pull the switch when any of these holds:</p>
+<ul>
+<li><strong>Sustained saturation.</strong> The demo hits <code>NETNL_DEMO_MAX_PER_HOUR</code> for
+  three consecutive hours <em>and</em> tenant submissions are visibly queueing
+  behind it. One busy hour is the cap doing its job; three in a row with
+  tenant impact is the demo crowding out the people it was meant to
+  advertise to.</li>
+<li><strong>Single-source flooding.</strong> One IP burns the per-IP cap every hour for
+  three consecutive hours — the per-IP bound is holding, but somebody is
+  clearly automating against it rather than trying the demo.</li>
+<li><strong>Targeting.</strong> Submitted domains are plainly not the submitter's own
+  (a run of unrelated third-party domains, or anything on a well-known
+  target list). The terms permit measuring hosts you operate; the demo
+  cannot verify that, so this is the one signal that is judged by eye.</li>
+</ul>
+<p>What to look at, on the pod:</p>
+<pre><code class="language-sh">netnl-admin user list          # is the demo row still active?
+
+# demo submissions per hour over the last day
+sqlite3 &quot;$NETNL_DB&quot; \
+  &quot;SELECT substr(at,1,13) AS hour, count(*), sum(domain_count)
+     FROM audit WHERE credential='netnl-demo' AND event='submit'
+       AND at &gt; datetime('now','-1 day')
+   GROUP BY hour ORDER BY hour;&quot;
+</code></pre>
+<p>The audit table is append-only and <code>submit</code> rows carry the credential and
+the domain count, so this is the whole picture for the demo surface — there
+is no separate metrics stack to consult.</p>
+<p>After revoking: say so on the demo page (it already renders
+<code>demo-unavailable</code> as a plain message), and note the reason and the hour
+range in the change's <code>tasks.md</code> or a handover note, so the eventual
+decision to raise the caps has evidence under it rather than a memory.</p>
 <h2 id="smoke-check">Smoke check</h2>
 <p>The demo page itself probes a fixed, all-zero id on load to tell whether the
 demo is live, without needing a real submission first:</p>
