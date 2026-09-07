@@ -41,10 +41,12 @@ mirror van skill-forge); de CI-stap die 'm draait wordt met de hand ingehaakt
 
 ## Rollen
 
-- [coordinator](coordinator.md) — meta-agent: routeert droppings (route/nieuw/update)
+- [odin](odin.md) — **de hub**: de enige agent in #general. Mark praat met odin;
+  odin routeert naar de spokes (route / nieuwe agent / uitbreiding).
+  Was `coordinator`; hernoemd 2026-09-07 op besluit van Mark.
 - [bouwer](bouwer.md) — bouw-scoping (chat, #bouw) + habitat-`builder` (executie)
 - architect — architectuur-sparring (chat, #architectuur) + habitat-plan (executie) *(volgt)*
-- assistent — algemene chat-agent (alle kanalen), geen executie *(volgt)*
+- assistent — algemene chat-agent (spoke-kanalen), geen executie *(volgt)*
 - [reviewer](reviewer.md) / [security](security.md) — alleen executie (habitat)
 - [roodteam](roodteam.md) — security/red-team-agent (chat, #red-team, #review), geen executie
 - **seeds/** — canonieke executie-seeds; de per-spoke `.claude/agents/` worden hieruit afgeleid (generator + drift-gate)
