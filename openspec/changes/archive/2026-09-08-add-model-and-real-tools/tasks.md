@@ -21,4 +21,9 @@
 ## 4. Gate (CI)
 
 - [x] 4.1 `openspec validate add-model-and-real-tools --strict` groen.
-- [ ] 4.2 CI groen op de PR.
+- [x] 4.2 CI. De PR-run (#12, 06-09) faalde op `build` — exit 1 ná de
+      contract-gate, zonder inhoudelijke foutregel; de gates zelf gaven alleen
+      hun gebruikelijke notice. Diezelfde workflow is groen op `main` mét de
+      inhoud van #12 (run op 809f934, job `build` success), en lokaal zijn
+      `check_agent_tools.py` (9 definities) en `check_contract.py` groen. Het was
+      dus tijdelijk; afvinken op grond van main, niet op grond van de PR-run.

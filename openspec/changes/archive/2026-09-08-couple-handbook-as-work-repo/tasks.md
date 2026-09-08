@@ -15,12 +15,15 @@
       `check_freshness.py` meldt alleen de drie al bestaande seeds zonder
       `last_reviewed` (pre-existing, geen regressie); `check_drift.py` draait in CI
       met `--code-paths`.
-- [ ] 2.4 CI groen op de PR.
+- [x] 2.4 CI groen op de PR (#10, alle checks pass).
 
 ## 3. Bewijs
 
 - [x] 3.1 Aangetoond met een verse `git clone --depth 50` van deze branch (dezelfde
       stap die de worker doet): `.claude/agents/{builder,reviewer,security}.md`
       resolven alle drie. Op `main` bestaat de map niet — precies de blokkade.
-- [ ] 3.2 Vervolgstap benoemd, niet gedaan: pas ná merge kan een dispatch op de
-      handbook zinvol draaien.
+- [x] 3.2 De vervolgstap is intussen ook echt gebeurd: er heeft een habitat-run
+      op de handbook gedraaid. Bewijs in de geschiedenis van deze repo — commit
+      91ff6e9 (`add-agent-roodteam`, PR #11) voegde `.habitat/`-artefacten toe, en
+      die kunnen alleen uit een run komen. Daarmee is aangetoond waar deze change
+      voor bedoeld was: de naaf is een werk-repo.
