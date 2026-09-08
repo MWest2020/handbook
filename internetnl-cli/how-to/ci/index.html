@@ -11752,8 +11752,10 @@ next week"), not a way to silence a whole class of findings.</p>
 <p>A subtest the API omitted for a host renders as <strong>unknown</strong>, never as
 passing — a gap in the response is not silent success.</p>
 <h2 id="d-the-rule">d) The rule</h2>
-<p><strong>Only measure hosts you operate or have explicit permission to
-test.</strong> This applies in CI exactly as it does on a laptop: a workflow
+<p><strong>Measure your own hosts freely; measure someone else's only where the
+measurement is one their operator already invites</strong> (see "The rule" in the
+<a href="../../README.md">README</a>). In CI the second half barely applies and the
+first half matters more than anywhere else: a workflow
 that runs on every pull request from outside contributors, or that
 lets a PR body or branch name influence which hosts get submitted, can
 turn "scan my own site" into "scan whatever a stranger asks for." The

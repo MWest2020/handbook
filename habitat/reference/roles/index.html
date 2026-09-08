@@ -11661,11 +11661,27 @@ roldefinities leven als <code>.claude/agents/&lt;rol&gt;.md</code> in de dóelre
 <ul>
 <li>Allow: <code>Read</code>, <code>Grep</code>, <code>Glob</code>, <code>Bash(git diff|log|status|show …)</code>.</li>
 <li>Deny: <code>Edit</code>, <code>Write</code>, <code>NotebookEdit</code>, <code>WebFetch</code>, <code>WebSearch</code>, <code>git push</code>,
-  secrets-/credential-paden (<code>.env</code>, <code>**/secrets/**</code>, <code>*.pem</code>, <code>id_rsa*</code>,
-  <code>.credentials.json</code>).</li>
+  secrets-/credential-paden (<code>.env</code> en de ingevulde varianten, zie hieronder;
+  <code>**/secrets/**</code>, <code>*.pem</code>, <code>id_rsa*</code>, <code>.credentials.json</code>).</li>
 <li>Architect extra: repo-wijzigingen draait de entrypoint terug en de run
   faalt (<code>worker/entrypoint.sh</code>, stap 4c).</li>
 </ul>
+<p><strong>Welke env-bestanden geblokkeerd zijn</strong> (2026-09-07/08, change
+<code>harden-role-output-and-env-deny</code>). Let op: dit geldt in twee lagen — de
+settings-deny én de PreToolUse-guard. De guard heeft een eigen <code>.env</code>-regel
+en is dus apart aangepast; alleen de settings versmallen was niet genoeg,
+zoals een builder-run op 2026-09-08 aantoonde. De guard-uitzondering geldt
+uitsluitend voor de padtools (Read/Edit/Write), niet voor Bash: een
+Bash-commando is vrije tekst waarin een sjabloonnaam een echte read kan
+meesmokkelen (<code>cat .env.example .env</code>). Geblokkeerd zijn: <code>.env</code> zelf, plus de conventioneel
+ingevulde varianten — <code>.env.local</code>, <code>.env.*.local</code>, <code>.env.development</code>,
+<code>.env.dev</code>, <code>.env.production</code>, <code>.env.prod</code>, <code>.env.staging</code>, <code>.env.test</code>,
+<code>.env.secret</code>, <code>.env.secrets</code>. <strong>Niet</strong> geblokkeerd: <code>.env.example</code> en
+soortgenoten. Dat zijn gecommitte sjablonen zonder geheimen die een builder
+moet kunnen bijwerken; het eerdere <code>Read(**/.env.*)</code> ving die ook, wat een
+builder een taak kostte zonder iets te beschermen — de worker kloont vers
+van GitHub, dus alles wat op <code>.env*</code> matcht staat al in de repo die de rol
+sowieso mag lezen.</p>
 <p><strong>builder</strong>:</p>
 <ul>
 <li>Allow: bovenstaande leestools plus <code>Edit</code>, <code>Write</code>, git-werkcommando's
@@ -11682,6 +11698,14 @@ script komt uit de basiscommit, dus de builder kan de gate niet ontwapenen.</p>
 <h2 id="output-schema-kort">Output-schema (kort)</h2>
 <p>Elk schema eist minimaal <code>verdict</code> (<code>PASS</code>/<code>FAIL</code>) en <code>summary</code>;
 <code>additionalProperties: false</code>.</p>
+<p><code>summary</code> heeft een ondergrens van <strong>200 tekens</strong> (2026-09-07, change
+<code>harden-role-output-and-env-deny</code>). Aanleiding: een reviewer-run leverde na
+55 beurten <code>{"verdict":"PASS","summary":"test","findings":[]}</code> — schema-geldig,
+dus de gate liet hem door en de keten liep verder terwijl er geen review in
+zat. Een lege samenvatting is erger dan een FAIL: het leest als dekking die
+er nooit was. De ondergrens maakt vullen niet onmogelijk, maar haalt de
+goedkoopste variant weg. Of een review inhoudelijk deugt blijft mensenwerk:
+lees <code>run-output-&lt;run-id&gt;.md</code> op de branch vóór je een verdict vertrouwt.</p>
 <table>
 <thead>
 <tr>
