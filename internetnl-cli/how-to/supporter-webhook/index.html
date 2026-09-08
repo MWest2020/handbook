@@ -7506,6 +7506,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../measure-capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring what your instance can actually carry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../self-hosting-pitfalls/" class="md-nav__link">
         
   
@@ -11612,7 +11647,7 @@
 <p><code>POST /webhooks/bmc</code>, opt-in via <code>NETNL_BMC_WEBHOOK_SECRET</code>, turns a
 qualifying Buy Me a Coffee (BMC) donation into a <code>netnl</code> tenant credential,
 mailed directly to the donor — see
-<code>openspec/changes/add-supporter-issuance/design.md</code> for the pinned
+<code>openspec/changes/archive/2026-09-08-add-supporter-issuance/design.md</code> for the pinned
 decisions this runbook operates. It replaces the manual half of
 <a href="../supporter-key/">Supporter keys</a>: an operator no longer has to notice a
 donation and run <code>netnl-admin user add</code> by hand, though that fallback still
@@ -11790,7 +11825,7 @@ credential.</p>
   indistinguishable from a brand-new one: it mints a <em>second</em> credential,
   and the original stays active unless separately revoked. This is
   accepted, not closed by a tombstone table — see
-  <code>openspec/changes/add-supporter-issuance/design.md</code>, "Post-prune
+  <code>openspec/changes/archive/2026-09-08-add-supporter-issuance/design.md</code>, "Post-prune
   replay", for why (in short: closing it that way reintroduces the
   unbounded-growth problem retention exists to bound, against a threat
   that already requires the webhook secret or a captured signed request —
@@ -11808,7 +11843,7 @@ credential.</p>
 <ul>
 <li><a href="../supporter-key/">Supporter keys</a> — the issuance model this bridge
   automates, and the manual fallback.</li>
-<li><code>openspec/changes/add-supporter-issuance/design.md</code> — the pinned
+<li><code>openspec/changes/archive/2026-09-08-add-supporter-issuance/design.md</code> — the pinned
   decisions (D1-D5), configuration table, and route ordering this runbook
   operates.</li>
 <li><a href="../deploy-facade/">deploy-facade.md</a> — where the facade's own secrets

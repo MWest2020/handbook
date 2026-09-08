@@ -7670,6 +7670,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../internetnl-cli/how-to/measure-capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring what your instance can actually carry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../internetnl-cli/how-to/self-hosting-pitfalls/" class="md-nav__link">
         
   
@@ -11687,7 +11722,11 @@ sowieso mag lezen.</p>
 <li>Allow: bovenstaande leestools plus <code>Edit</code>, <code>Write</code>, git-werkcommando's
   (<code>add</code>, <code>commit</code>, <code>rm</code>, <code>mv</code>, <code>checkout</code>, <code>branch</code>), test-/buildrunners
   (<code>uv run</code>, <code>uvx</code>, <code>npm test|run|ci</code>, <code>npx</code>, <code>go test|build|vet</code>, <code>make</code>,
-  <code>pytest</code>, <code>shellcheck</code>), <code>openspec validate</code> en <code>mkdir</code>, <code>ls</code>, <code>chmod</code>.</li>
+  <code>pytest</code>, <code>shellcheck</code>), <code>openspec validate</code> en <code>mkdir</code>, <code>ls</code>, <code>chmod</code>.
+  Sinds change <code>add-shellcheck-to-worker</code> (2026-09-08) zit <code>shellcheck</code> ook
+  echt in de worker-image, niet alleen in deze allowlist — daarvoor kon een
+  toegestaan commando ontbreken en liet een <code>verify.sh</code> die shellcheck alleen
+  "indien aanwezig" draait, de controle stil een no-op worden.</li>
 <li>Deny: <code>git push</code> (pushen doet de entrypoint), netwerk (<code>curl</code>, <code>wget</code>,
   <code>ssh</code>, <code>scp</code>, <code>nc</code>), infra (<code>kubectl</code>, <code>docker</code>), dezelfde secrets-paden.</li>
 </ul>

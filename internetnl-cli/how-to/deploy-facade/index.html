@@ -7703,6 +7703,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../measure-capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring what your instance can actually carry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../self-hosting-pitfalls/" class="md-nav__link">
         
   
@@ -11682,7 +11717,7 @@ that tenants never see. It does not replace
 <a href="../../reference/self-hosted/">Self-hosting a batch instance</a> — read that
 first if the instance itself does not exist yet.</p>
 <h2 id="two-supported-topologies">Two supported topologies</h2>
-<p><code>openspec/changes/add-measurement-api/design.md</code> ("Two supported
+<p><code>openspec/changes/archive/2026-09-08-add-measurement-api/design.md</code> ("Two supported
 topologies") pins two ways to run the facade:</p>
 <ol>
 <li><strong>Instance on a VPS, facade in a Kubernetes cluster (the one we run).</strong>
@@ -11710,7 +11745,7 @@ credential-guessing traffic: <code>netnl.auth</code> fast-fails a request with n
 an unparseable) <code>Authorization</code> header without touching the password
 hasher, and caps how many password verifications may run <em>concurrently</em>
 (a small, fixed number) — see
-<code>openspec/changes/add-measurement-api/design.md</code>, "Tenancy and identity"
+<code>openspec/changes/archive/2026-09-08-add-measurement-api/design.md</code>, "Tenancy and identity"
 ("Authentication cost is bounded on two axes"). That bound protects this
 process's own CPU and memory from a burst of concurrent bad-credential
 requests; it is <strong>not</strong> a rate limit, and it does nothing to slow down a
@@ -11866,7 +11901,7 @@ this recipe targets).</p>
 </ul>
 <p>Leave the tunables (rate limit, max domains, retention, ...) at their
 commented-out defaults to start; see <code>deploy/.env.example</code> and
-<code>openspec/changes/add-measurement-api/design.md</code>'s configuration table for
+<code>openspec/changes/archive/2026-09-08-add-measurement-api/design.md</code>'s configuration table for
 what each one does. <code>deploy/.env</code> is gitignored — never commit it.</p>
 <p>Optionally, uncomment <code>NETNL_SECURITY_CONTACT</code> and set it to a <code>mailto:</code>
 or <code>https:</code> contact value to publish <code>GET /.well-known/security.txt</code>

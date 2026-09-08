@@ -14,7 +14,7 @@
         <link rel="prev" href="../deploy-facade/">
       
       
-        <link rel="next" href="../self-hosting-pitfalls/">
+        <link rel="next" href="../measure-capacity/">
       
       
         
@@ -7687,6 +7687,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../measure-capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring what your instance can actually carry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../self-hosting-pitfalls/" class="md-nav__link">
         
   
@@ -11644,7 +11679,7 @@
 
 <h1 id="deploying-the-upstream-instance-on-a-vps-reached-over-a-tailnet">Deploying the upstream instance on a VPS, reached over a tailnet</h1>
 <p>This page covers <strong>topology 1</strong> from
-<code>openspec/changes/add-measurement-api/design.md</code>, "Two supported
+<code>openspec/changes/archive/2026-09-08-add-measurement-api/design.md</code>, "Two supported
 topologies": the upstream batch instance runs on a VPS with a fixed
 public IPv4 + IPv6, and the facade runs elsewhere (a homelab Kubernetes
 cluster, in our case) and reaches it privately over a
@@ -11748,7 +11783,7 @@ open, <code>PasswordAuthentication no</code> and <code>KbdInteractiveAuthenticat
 inbound and only opens SSH (rate-limited) and the Tailscale UDP port,
 and the host already joined to your tailnet. See
 <code>deploy/vps/cloud-init.yaml</code> for the exact detail, and
-<code>openspec/changes/add-measurement-api/design.md</code>, "VPS provisioning
+<code>openspec/changes/archive/2026-09-08-add-measurement-api/design.md</code>, "VPS provisioning
 (Hetzner) — for topology 1", for why each piece is there.</p>
 <p>The instance's batch API is <strong>not</strong> opened publicly by any of this —
 only ports needed for the batch stack itself (see step 2) go in the

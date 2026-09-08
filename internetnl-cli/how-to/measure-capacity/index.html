@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://mwest2020.github.io/handbook/iso-audit/">
+        <link rel="canonical" href="https://mwest2020.github.io/handbook/internetnl-cli/how-to/measure-capacity/">
       
       
-        <link rel="prev" href="../internetnl-cli/reference/service/">
+        <link rel="prev" href="../deploy-instance-vps/">
       
       
-        <link rel="next" href="compensating-control/">
+        <link rel="next" href="../self-hosting-pitfalls/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>iso-audit documentation - Handbook</title>
+        <title>Measuring what your instance can actually carry - Handbook</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -48,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#iso-audit-documentation" class="md-skip">
+        <a href="#measuring-what-your-instance-can-actually-carry" class="md-skip">
           Ga naar inhoud
         </a>
       
@@ -82,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Handbook" class="md-header__button md-logo" aria-label="Handbook" data-md-component="logo">
+    <a href="../../.." title="Handbook" class="md-header__button md-logo" aria-label="Handbook" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              iso-audit documentation
+              Measuring what your instance can actually carry
             
           </span>
         </div>
@@ -192,7 +192,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigatie" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Handbook" class="md-nav__button md-logo" aria-label="Handbook" data-md-component="logo">
+    <a href="../../.." title="Handbook" class="md-nav__button md-logo" aria-label="Handbook" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -222,7 +222,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -256,7 +256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../conventies/" class="md-nav__link">
+      <a href="../../../conventies/" class="md-nav__link">
         
   
   
@@ -337,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/" class="md-nav__link">
+      <a href="../../../Billbird/" class="md-nav__link">
         
   
   
@@ -372,7 +372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/api-tokens/" class="md-nav__link">
+      <a href="../../../Billbird/api-tokens/" class="md-nav__link">
         
   
   
@@ -407,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/architecture/" class="md-nav__link">
+      <a href="../../../Billbird/architecture/" class="md-nav__link">
         
   
   
@@ -442,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/client-attribution/" class="md-nav__link">
+      <a href="../../../Billbird/client-attribution/" class="md-nav__link">
         
   
   
@@ -477,7 +477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/commands/" class="md-nav__link">
+      <a href="../../../Billbird/commands/" class="md-nav__link">
         
   
   
@@ -512,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/configuration/" class="md-nav__link">
+      <a href="../../../Billbird/configuration/" class="md-nav__link">
         
   
   
@@ -547,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/contributing/" class="md-nav__link">
+      <a href="../../../Billbird/contributing/" class="md-nav__link">
         
   
   
@@ -582,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/corrections/" class="md-nav__link">
+      <a href="../../../Billbird/corrections/" class="md-nav__link">
         
   
   
@@ -617,7 +617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/dev-time-hook/" class="md-nav__link">
+      <a href="../../../Billbird/dev-time-hook/" class="md-nav__link">
         
   
   
@@ -652,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/labels/" class="md-nav__link">
+      <a href="../../../Billbird/labels/" class="md-nav__link">
         
   
   
@@ -687,7 +687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/operations/" class="md-nav__link">
+      <a href="../../../Billbird/operations/" class="md-nav__link">
         
   
   
@@ -722,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/self-hosting/" class="md-nav__link">
+      <a href="../../../Billbird/self-hosting/" class="md-nav__link">
         
   
   
@@ -757,7 +757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/setup/" class="md-nav__link">
+      <a href="../../../Billbird/setup/" class="md-nav__link">
         
   
   
@@ -792,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/webhook-idempotency/" class="md-nav__link">
+      <a href="../../../Billbird/webhook-idempotency/" class="md-nav__link">
         
   
   
@@ -874,7 +874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/explanation/architecture/" class="md-nav__link">
+      <a href="../../../Billbird/explanation/architecture/" class="md-nav__link">
         
   
   
@@ -964,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/how-to/dev-time-hook/" class="md-nav__link">
+      <a href="../../../Billbird/how-to/dev-time-hook/" class="md-nav__link">
         
   
   
@@ -999,7 +999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/how-to/operations/" class="md-nav__link">
+      <a href="../../../Billbird/how-to/operations/" class="md-nav__link">
         
   
   
@@ -1034,7 +1034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/how-to/self-hosting/" class="md-nav__link">
+      <a href="../../../Billbird/how-to/self-hosting/" class="md-nav__link">
         
   
   
@@ -1069,7 +1069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/how-to/setup/" class="md-nav__link">
+      <a href="../../../Billbird/how-to/setup/" class="md-nav__link">
         
   
   
@@ -1159,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/api-tokens/" class="md-nav__link">
+      <a href="../../../Billbird/reference/api-tokens/" class="md-nav__link">
         
   
   
@@ -1194,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/client-attribution/" class="md-nav__link">
+      <a href="../../../Billbird/reference/client-attribution/" class="md-nav__link">
         
   
   
@@ -1229,7 +1229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/commands/" class="md-nav__link">
+      <a href="../../../Billbird/reference/commands/" class="md-nav__link">
         
   
   
@@ -1264,7 +1264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/configuration/" class="md-nav__link">
+      <a href="../../../Billbird/reference/configuration/" class="md-nav__link">
         
   
   
@@ -1299,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/corrections/" class="md-nav__link">
+      <a href="../../../Billbird/reference/corrections/" class="md-nav__link">
         
   
   
@@ -1334,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/labels/" class="md-nav__link">
+      <a href="../../../Billbird/reference/labels/" class="md-nav__link">
         
   
   
@@ -1369,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Billbird/reference/webhook-idempotency/" class="md-nav__link">
+      <a href="../../../Billbird/reference/webhook-idempotency/" class="md-nav__link">
         
   
   
@@ -1466,7 +1466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gitsweeper/" class="md-nav__link">
+      <a href="../../../Gitsweeper/" class="md-nav__link">
         
   
   
@@ -1501,7 +1501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gitsweeper/mcp/" class="md-nav__link">
+      <a href="../../../Gitsweeper/mcp/" class="md-nav__link">
         
   
   
@@ -1536,7 +1536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gitsweeper/reconcile/" class="md-nav__link">
+      <a href="../../../Gitsweeper/reconcile/" class="md-nav__link">
         
   
   
@@ -1618,7 +1618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gitsweeper/reference/mcp/" class="md-nav__link">
+      <a href="../../../Gitsweeper/reference/mcp/" class="md-nav__link">
         
   
   
@@ -1653,7 +1653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gitsweeper/reference/reconcile/" class="md-nav__link">
+      <a href="../../../Gitsweeper/reference/reconcile/" class="md-nav__link">
         
   
   
@@ -1750,7 +1750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/" class="md-nav__link">
+      <a href="../../../Wanderer/" class="md-nav__link">
         
   
   
@@ -1785,7 +1785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/decisions/" class="md-nav__link">
+      <a href="../../../Wanderer/decisions/" class="md-nav__link">
         
   
   
@@ -1867,7 +1867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/agent/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/agent/" class="md-nav__link">
         
   
   
@@ -1902,7 +1902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/architecture/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/architecture/" class="md-nav__link">
         
   
   
@@ -1937,7 +1937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/maintainability/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/maintainability/" class="md-nav__link">
         
   
   
@@ -2019,7 +2019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/" class="md-nav__link">
         
   
   
@@ -2054,7 +2054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0000-template/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0000-template/" class="md-nav__link">
         
   
   
@@ -2089,7 +2089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0001-openspec-workflow/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0001-openspec-workflow/" class="md-nav__link">
         
   
   
@@ -2124,7 +2124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0002-api-stability-classes/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0002-api-stability-classes/" class="md-nav__link">
         
   
   
@@ -2159,7 +2159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0003-dependency-policy/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0003-dependency-policy/" class="md-nav__link">
         
   
   
@@ -2194,7 +2194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0004-assessor-rule-engine/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0004-assessor-rule-engine/" class="md-nav__link">
         
   
   
@@ -2229,7 +2229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0005-mcp-transport/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0005-mcp-transport/" class="md-nav__link">
         
   
   
@@ -2264,7 +2264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0006-in-process-scheduler/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0006-in-process-scheduler/" class="md-nav__link">
         
   
   
@@ -2299,7 +2299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0007-agent-trust-model/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0007-agent-trust-model/" class="md-nav__link">
         
   
   
@@ -2334,7 +2334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0008-egress-redaction/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0008-egress-redaction/" class="md-nav__link">
         
   
   
@@ -2369,7 +2369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0009-dual-framework-assessor/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0009-dual-framework-assessor/" class="md-nav__link">
         
   
   
@@ -2404,7 +2404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0010-ebpf-flow-probe/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0010-ebpf-flow-probe/" class="md-nav__link">
         
   
   
@@ -2439,7 +2439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0011-rename-dictu-to-wand/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0011-rename-dictu-to-wand/" class="md-nav__link">
         
   
   
@@ -2474,7 +2474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0012-host-rule-pattern/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0012-host-rule-pattern/" class="md-nav__link">
         
   
   
@@ -2509,7 +2509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0013-oidc-login/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0013-oidc-login/" class="md-nav__link">
         
   
   
@@ -2544,7 +2544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0014-marketplace-appapi-exapp/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0014-marketplace-appapi-exapp/" class="md-nav__link">
         
   
   
@@ -2579,7 +2579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0015-sovereignty-overview/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0015-sovereignty-overview/" class="md-nav__link">
         
   
   
@@ -2614,7 +2614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0016-ui-dev-scan/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0016-ui-dev-scan/" class="md-nav__link">
         
   
   
@@ -2649,7 +2649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/explanation/adr/0017-ui-personas/" class="md-nav__link">
+      <a href="../../../Wanderer/explanation/adr/0017-ui-personas/" class="md-nav__link">
         
   
   
@@ -2747,7 +2747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/how-to/operator/" class="md-nav__link">
+      <a href="../../../Wanderer/how-to/operator/" class="md-nav__link">
         
   
   
@@ -2782,7 +2782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/how-to/releasing/" class="md-nav__link">
+      <a href="../../../Wanderer/how-to/releasing/" class="md-nav__link">
         
   
   
@@ -2817,7 +2817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/how-to/scheduling/" class="md-nav__link">
+      <a href="../../../Wanderer/how-to/scheduling/" class="md-nav__link">
         
   
   
@@ -2852,7 +2852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/how-to/tutorial/" class="md-nav__link">
+      <a href="../../../Wanderer/how-to/tutorial/" class="md-nav__link">
         
   
   
@@ -2942,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/assessor/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/assessor/" class="md-nav__link">
         
   
   
@@ -2977,7 +2977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/drift/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/drift/" class="md-nav__link">
         
   
   
@@ -3012,7 +3012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/egress/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/egress/" class="md-nav__link">
         
   
   
@@ -3047,7 +3047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/exporters/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/exporters/" class="md-nav__link">
         
   
   
@@ -3082,7 +3082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/findings/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/findings/" class="md-nav__link">
         
   
   
@@ -3117,7 +3117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/mcp/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/mcp/" class="md-nav__link">
         
   
   
@@ -3152,7 +3152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Wanderer/reference/observability/" class="md-nav__link">
+      <a href="../../../Wanderer/reference/observability/" class="md-nav__link">
         
   
   
@@ -3249,7 +3249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/" class="md-nav__link">
+      <a href="../../../agents/" class="md-nav__link">
         
   
   
@@ -3284,7 +3284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/architect/" class="md-nav__link">
+      <a href="../../../agents/architect/" class="md-nav__link">
         
   
   
@@ -3319,7 +3319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/assistent/" class="md-nav__link">
+      <a href="../../../agents/assistent/" class="md-nav__link">
         
   
   
@@ -3354,7 +3354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/bouwer/" class="md-nav__link">
+      <a href="../../../agents/bouwer/" class="md-nav__link">
         
   
   
@@ -3389,7 +3389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/marketing/" class="md-nav__link">
+      <a href="../../../agents/marketing/" class="md-nav__link">
         
   
   
@@ -3424,7 +3424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/odin/" class="md-nav__link">
+      <a href="../../../agents/odin/" class="md-nav__link">
         
   
   
@@ -3459,7 +3459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/ontwerper/" class="md-nav__link">
+      <a href="../../../agents/ontwerper/" class="md-nav__link">
         
   
   
@@ -3494,7 +3494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/reviewer/" class="md-nav__link">
+      <a href="../../../agents/reviewer/" class="md-nav__link">
         
   
   
@@ -3529,7 +3529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/roodteam/" class="md-nav__link">
+      <a href="../../../agents/roodteam/" class="md-nav__link">
         
   
   
@@ -3564,7 +3564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/security/" class="md-nav__link">
+      <a href="../../../agents/security/" class="md-nav__link">
         
   
   
@@ -3646,7 +3646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/seeds/builder/" class="md-nav__link">
+      <a href="../../../agents/seeds/builder/" class="md-nav__link">
         
   
   
@@ -3674,7 +3674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/seeds/reviewer/" class="md-nav__link">
+      <a href="../../../agents/seeds/reviewer/" class="md-nav__link">
         
   
   
@@ -3702,7 +3702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../agents/seeds/security/" class="md-nav__link">
+      <a href="../../../agents/seeds/security/" class="md-nav__link">
         
   
   
@@ -3792,7 +3792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/" class="md-nav__link">
+      <a href="../../../ash-nazg/" class="md-nav__link">
         
   
   
@@ -3827,7 +3827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/bring-your-own-content/" class="md-nav__link">
+      <a href="../../../ash-nazg/bring-your-own-content/" class="md-nav__link">
         
   
   
@@ -3862,7 +3862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/demo/" class="md-nav__link">
+      <a href="../../../ash-nazg/demo/" class="md-nav__link">
         
   
   
@@ -3897,7 +3897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/installation/" class="md-nav__link">
+      <a href="../../../ash-nazg/installation/" class="md-nav__link">
         
   
   
@@ -3932,7 +3932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/security-model/" class="md-nav__link">
+      <a href="../../../ash-nazg/security-model/" class="md-nav__link">
         
   
   
@@ -3967,7 +3967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/testing/" class="md-nav__link">
+      <a href="../../../ash-nazg/testing/" class="md-nav__link">
         
   
   
@@ -4002,7 +4002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/user-guide/" class="md-nav__link">
+      <a href="../../../ash-nazg/user-guide/" class="md-nav__link">
         
   
   
@@ -4084,7 +4084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/explanation/security-model/" class="md-nav__link">
+      <a href="../../../ash-nazg/explanation/security-model/" class="md-nav__link">
         
   
   
@@ -4119,7 +4119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/explanation/testing/" class="md-nav__link">
+      <a href="../../../ash-nazg/explanation/testing/" class="md-nav__link">
         
   
   
@@ -4209,7 +4209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/how-to/bring-your-own-content/" class="md-nav__link">
+      <a href="../../../ash-nazg/how-to/bring-your-own-content/" class="md-nav__link">
         
   
   
@@ -4244,7 +4244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/how-to/demo/" class="md-nav__link">
+      <a href="../../../ash-nazg/how-to/demo/" class="md-nav__link">
         
   
   
@@ -4279,7 +4279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/how-to/installation/" class="md-nav__link">
+      <a href="../../../ash-nazg/how-to/installation/" class="md-nav__link">
         
   
   
@@ -4314,7 +4314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ash-nazg/how-to/user-guide/" class="md-nav__link">
+      <a href="../../../ash-nazg/how-to/user-guide/" class="md-nav__link">
         
   
   
@@ -4411,7 +4411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/" class="md-nav__link">
+      <a href="../../../billbird-client/" class="md-nav__link">
         
   
   
@@ -4446,7 +4446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/cli/" class="md-nav__link">
+      <a href="../../../billbird-client/cli/" class="md-nav__link">
         
   
   
@@ -4481,7 +4481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/mcp/" class="md-nav__link">
+      <a href="../../../billbird-client/mcp/" class="md-nav__link">
         
   
   
@@ -4516,7 +4516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/release/" class="md-nav__link">
+      <a href="../../../billbird-client/release/" class="md-nav__link">
         
   
   
@@ -4598,7 +4598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/how-to/release/" class="md-nav__link">
+      <a href="../../../billbird-client/how-to/release/" class="md-nav__link">
         
   
   
@@ -4688,7 +4688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/reference/cli/" class="md-nav__link">
+      <a href="../../../billbird-client/reference/cli/" class="md-nav__link">
         
   
   
@@ -4723,7 +4723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../billbird-client/reference/mcp/" class="md-nav__link">
+      <a href="../../../billbird-client/reference/mcp/" class="md-nav__link">
         
   
   
@@ -4820,7 +4820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../certswap/" class="md-nav__link">
+      <a href="../../../certswap/" class="md-nav__link">
         
   
   
@@ -4902,7 +4902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../certswap/reference/cli/" class="md-nav__link">
+      <a href="../../../certswap/reference/cli/" class="md-nav__link">
         
   
   
@@ -4999,7 +4999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../crible/" class="md-nav__link">
+      <a href="../../../crible/" class="md-nav__link">
         
   
   
@@ -5081,7 +5081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../crible/reference/configuration/" class="md-nav__link">
+      <a href="../../../crible/reference/configuration/" class="md-nav__link">
         
   
   
@@ -5178,7 +5178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/" class="md-nav__link">
+      <a href="../../../estafette/" class="md-nav__link">
         
   
   
@@ -5213,7 +5213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/catalog-spec/" class="md-nav__link">
+      <a href="../../../estafette/catalog-spec/" class="md-nav__link">
         
   
   
@@ -5248,7 +5248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/manifest-spec/" class="md-nav__link">
+      <a href="../../../estafette/manifest-spec/" class="md-nav__link">
         
   
   
@@ -5283,7 +5283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/submitting/" class="md-nav__link">
+      <a href="../../../estafette/submitting/" class="md-nav__link">
         
   
   
@@ -5318,7 +5318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/tiers/" class="md-nav__link">
+      <a href="../../../estafette/tiers/" class="md-nav__link">
         
   
   
@@ -5400,7 +5400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/reference/catalog-spec/" class="md-nav__link">
+      <a href="../../../estafette/reference/catalog-spec/" class="md-nav__link">
         
   
   
@@ -5435,7 +5435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/reference/manifest-spec/" class="md-nav__link">
+      <a href="../../../estafette/reference/manifest-spec/" class="md-nav__link">
         
   
   
@@ -5470,7 +5470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../estafette/reference/tiers/" class="md-nav__link">
+      <a href="../../../estafette/reference/tiers/" class="md-nav__link">
         
   
   
@@ -5567,7 +5567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../habitat/" class="md-nav__link">
+      <a href="../../../habitat/" class="md-nav__link">
         
   
   
@@ -5602,7 +5602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../habitat/architecture/" class="md-nav__link">
+      <a href="../../../habitat/architecture/" class="md-nav__link">
         
   
   
@@ -5684,7 +5684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../habitat/explanation/architecture/" class="md-nav__link">
+      <a href="../../../habitat/explanation/architecture/" class="md-nav__link">
         
   
   
@@ -5774,7 +5774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../habitat/reference/dispatch/" class="md-nav__link">
+      <a href="../../../habitat/reference/dispatch/" class="md-nav__link">
         
   
   
@@ -5809,7 +5809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../habitat/reference/roles/" class="md-nav__link">
+      <a href="../../../habitat/reference/roles/" class="md-nav__link">
         
   
   
@@ -5906,7 +5906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/" class="md-nav__link">
+      <a href="../../../homelab/" class="md-nav__link">
         
   
   
@@ -5941,7 +5941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/00-overview/" class="md-nav__link">
+      <a href="../../../homelab/00-overview/" class="md-nav__link">
         
   
   
@@ -5976,7 +5976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/01-hardware/" class="md-nav__link">
+      <a href="../../../homelab/01-hardware/" class="md-nav__link">
         
   
   
@@ -6011,7 +6011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/02-network/" class="md-nav__link">
+      <a href="../../../homelab/02-network/" class="md-nav__link">
         
   
   
@@ -6046,7 +6046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/03-installation/" class="md-nav__link">
+      <a href="../../../homelab/03-installation/" class="md-nav__link">
         
   
   
@@ -6081,7 +6081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/04-post-install/" class="md-nav__link">
+      <a href="../../../homelab/04-post-install/" class="md-nav__link">
         
   
   
@@ -6116,7 +6116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/07-vm-provisioning-stack/" class="md-nav__link">
+      <a href="../../../homelab/07-vm-provisioning-stack/" class="md-nav__link">
         
   
   
@@ -6151,7 +6151,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/20-stappenplan-gitops/" class="md-nav__link">
+      <a href="../../../homelab/20-stappenplan-gitops/" class="md-nav__link">
         
   
   
@@ -6186,7 +6186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/22-cilium-gateway/" class="md-nav__link">
+      <a href="../../../homelab/22-cilium-gateway/" class="md-nav__link">
         
   
   
@@ -6221,7 +6221,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/23-metallb/" class="md-nav__link">
+      <a href="../../../homelab/23-metallb/" class="md-nav__link">
         
   
   
@@ -6256,7 +6256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/24-cert-manager/" class="md-nav__link">
+      <a href="../../../homelab/24-cert-manager/" class="md-nav__link">
         
   
   
@@ -6291,7 +6291,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/25-gateway-tls/" class="md-nav__link">
+      <a href="../../../homelab/25-gateway-tls/" class="md-nav__link">
         
   
   
@@ -6326,7 +6326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/herstel/" class="md-nav__link">
+      <a href="../../../homelab/herstel/" class="md-nav__link">
         
   
   
@@ -6408,7 +6408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/explanation/BUILDLOG-migratie-kubeadm/" class="md-nav__link">
+      <a href="../../../homelab/explanation/BUILDLOG-migratie-kubeadm/" class="md-nav__link">
         
   
   
@@ -6443,7 +6443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/explanation/BUILDLOG/" class="md-nav__link">
+      <a href="../../../homelab/explanation/BUILDLOG/" class="md-nav__link">
         
   
   
@@ -6533,7 +6533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/03-installation/" class="md-nav__link">
+      <a href="../../../homelab/how-to/03-installation/" class="md-nav__link">
         
   
   
@@ -6568,7 +6568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/04-post-install/" class="md-nav__link">
+      <a href="../../../homelab/how-to/04-post-install/" class="md-nav__link">
         
   
   
@@ -6603,7 +6603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/05-ansible/" class="md-nav__link">
+      <a href="../../../homelab/how-to/05-ansible/" class="md-nav__link">
         
   
   
@@ -6638,7 +6638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/06-kubernetes/" class="md-nav__link">
+      <a href="../../../homelab/how-to/06-kubernetes/" class="md-nav__link">
         
   
   
@@ -6673,7 +6673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/07-vm-provisioning-stack/" class="md-nav__link">
+      <a href="../../../homelab/how-to/07-vm-provisioning-stack/" class="md-nav__link">
         
   
   
@@ -6708,7 +6708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/20-stappenplan-gitops/" class="md-nav__link">
+      <a href="../../../homelab/how-to/20-stappenplan-gitops/" class="md-nav__link">
         
   
   
@@ -6743,7 +6743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/21-gateway-api-crds/" class="md-nav__link">
+      <a href="../../../homelab/how-to/21-gateway-api-crds/" class="md-nav__link">
         
   
   
@@ -6778,7 +6778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/22-cilium-gateway/" class="md-nav__link">
+      <a href="../../../homelab/how-to/22-cilium-gateway/" class="md-nav__link">
         
   
   
@@ -6813,7 +6813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/23-metallb/" class="md-nav__link">
+      <a href="../../../homelab/how-to/23-metallb/" class="md-nav__link">
         
   
   
@@ -6848,7 +6848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/24-cert-manager/" class="md-nav__link">
+      <a href="../../../homelab/how-to/24-cert-manager/" class="md-nav__link">
         
   
   
@@ -6883,7 +6883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/25-gateway-tls/" class="md-nav__link">
+      <a href="../../../homelab/how-to/25-gateway-tls/" class="md-nav__link">
         
   
   
@@ -6918,7 +6918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/26-argocd-bootstrap/" class="md-nav__link">
+      <a href="../../../homelab/how-to/26-argocd-bootstrap/" class="md-nav__link">
         
   
   
@@ -6953,7 +6953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/30-migratie-kubeadm/" class="md-nav__link">
+      <a href="../../../homelab/how-to/30-migratie-kubeadm/" class="md-nav__link">
         
   
   
@@ -6988,7 +6988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
+      <a href="../../../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
         
   
   
@@ -7078,7 +7078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/reference/00-overview/" class="md-nav__link">
+      <a href="../../../homelab/reference/00-overview/" class="md-nav__link">
         
   
   
@@ -7113,7 +7113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/reference/01-hardware/" class="md-nav__link">
+      <a href="../../../homelab/reference/01-hardware/" class="md-nav__link">
         
   
   
@@ -7148,7 +7148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homelab/reference/02-network/" class="md-nav__link">
+      <a href="../../../homelab/reference/02-network/" class="md-nav__link">
         
   
   
@@ -7195,18 +7195,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" checked>
         
           
           <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
@@ -7227,7 +7229,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_14">
             <span class="md-nav__icon md-icon"></span>
             
@@ -7245,7 +7247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -7277,18 +7279,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_2" checked>
         
           
           <label class="md-nav__link" for="__nav_14_2" id="__nav_14_2_label" tabindex="0">
@@ -7309,7 +7313,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_14_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -7327,7 +7331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/beta/" class="md-nav__link">
+      <a href="../beta/" class="md-nav__link">
         
   
   
@@ -7362,7 +7366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/ci/" class="md-nav__link">
+      <a href="../ci/" class="md-nav__link">
         
   
   
@@ -7397,7 +7401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/demo-run/" class="md-nav__link">
+      <a href="../demo-run/" class="md-nav__link">
         
   
   
@@ -7432,7 +7436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/deploy-facade/" class="md-nav__link">
+      <a href="../deploy-facade/" class="md-nav__link">
         
   
   
@@ -7467,7 +7471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/deploy-instance-vps/" class="md-nav__link">
+      <a href="../deploy-instance-vps/" class="md-nav__link">
         
   
   
@@ -7499,10 +7503,44 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/measure-capacity/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring what your instance can actually carry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -7525,6 +7563,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running the queries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-the-answer-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the answer honestly
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -7537,7 +7628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/self-hosting-pitfalls/" class="md-nav__link">
+      <a href="../self-hosting-pitfalls/" class="md-nav__link">
         
   
   
@@ -7572,7 +7663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/supporter-key/" class="md-nav__link">
+      <a href="../supporter-key/" class="md-nav__link">
         
   
   
@@ -7607,7 +7698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/how-to/supporter-webhook/" class="md-nav__link">
+      <a href="../supporter-webhook/" class="md-nav__link">
         
   
   
@@ -7697,7 +7788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/reference/demo-api/" class="md-nav__link">
+      <a href="../../reference/demo-api/" class="md-nav__link">
         
   
   
@@ -7732,7 +7823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/reference/self-hosted/" class="md-nav__link">
+      <a href="../../reference/self-hosted/" class="md-nav__link">
         
   
   
@@ -7767,7 +7858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internetnl-cli/reference/service/" class="md-nav__link">
+      <a href="../../reference/service/" class="md-nav__link">
         
   
   
@@ -7814,20 +7905,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
         
           
           <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
@@ -7848,7 +7937,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_15">
             <span class="md-nav__icon md-icon"></span>
             
@@ -7863,44 +7952,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    iso-audit documentation
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--draft"></span>
-  
-
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../iso-audit/" class="md-nav__link">
         
   
   
@@ -7923,37 +7978,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Inhoudsopgave
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#sections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sections
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -7966,7 +7990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="compensating-control/" class="md-nav__link">
+      <a href="../../../iso-audit/compensating-control/" class="md-nav__link">
         
   
   
@@ -8001,7 +8025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="memo-architecture/" class="md-nav__link">
+      <a href="../../../iso-audit/memo-architecture/" class="md-nav__link">
         
   
   
@@ -8036,7 +8060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="miro-auditor-bord-prompt/" class="md-nav__link">
+      <a href="../../../iso-audit/miro-auditor-bord-prompt/" class="md-nav__link">
         
   
   
@@ -8071,7 +8095,7 @@
   
   
     <li class="md-nav__item">
-      <a href="miro-interview-prompt/" class="md-nav__link">
+      <a href="../../../iso-audit/miro-interview-prompt/" class="md-nav__link">
         
   
   
@@ -8106,7 +8130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="missie/" class="md-nav__link">
+      <a href="../../../iso-audit/missie/" class="md-nav__link">
         
   
   
@@ -8141,7 +8165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="modes/" class="md-nav__link">
+      <a href="../../../iso-audit/modes/" class="md-nav__link">
         
   
   
@@ -8223,7 +8247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/compensating-control/" class="md-nav__link">
+      <a href="../../../iso-audit/explanation/compensating-control/" class="md-nav__link">
         
   
   
@@ -8258,7 +8282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/memo-architecture/" class="md-nav__link">
+      <a href="../../../iso-audit/explanation/memo-architecture/" class="md-nav__link">
         
   
   
@@ -8293,7 +8317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/missie/" class="md-nav__link">
+      <a href="../../../iso-audit/explanation/missie/" class="md-nav__link">
         
   
   
@@ -8328,7 +8352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/portal-auth/" class="md-nav__link">
+      <a href="../../../iso-audit/explanation/portal-auth/" class="md-nav__link">
         
   
   
@@ -8418,7 +8442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/miro-auditor-bord-prompt/" class="md-nav__link">
+      <a href="../../../iso-audit/how-to/miro-auditor-bord-prompt/" class="md-nav__link">
         
   
   
@@ -8453,7 +8477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/miro-interview-prompt/" class="md-nav__link">
+      <a href="../../../iso-audit/how-to/miro-interview-prompt/" class="md-nav__link">
         
   
   
@@ -8488,7 +8512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/verify-portal-auth/" class="md-nav__link">
+      <a href="../../../iso-audit/how-to/verify-portal-auth/" class="md-nav__link">
         
   
   
@@ -8578,7 +8602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/configuratie/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/configuratie/" class="md-nav__link">
         
   
   
@@ -8613,7 +8637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/modelkeuze/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/modelkeuze/" class="md-nav__link">
         
   
   
@@ -8648,7 +8672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/modes/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/modes/" class="md-nav__link">
         
   
   
@@ -8683,7 +8707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/notifier-email/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/notifier-email/" class="md-nav__link">
         
   
   
@@ -8718,7 +8742,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/notifier-mattermost/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/notifier-mattermost/" class="md-nav__link">
         
   
   
@@ -8753,7 +8777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/notifier-slack/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/notifier-slack/" class="md-nav__link">
         
   
   
@@ -8788,7 +8812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/notifier-teams/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/notifier-teams/" class="md-nav__link">
         
   
   
@@ -8823,7 +8847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/run-historie/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/run-historie/" class="md-nav__link">
         
   
   
@@ -8858,7 +8882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/sinks/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/sinks/" class="md-nav__link">
         
   
   
@@ -8893,7 +8917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-drive/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-drive/" class="md-nav__link">
         
   
   
@@ -8928,7 +8952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-jira/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-jira/" class="md-nav__link">
         
   
   
@@ -8963,7 +8987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-mcp/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-mcp/" class="md-nav__link">
         
   
   
@@ -8998,7 +9022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-nextcloud/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-nextcloud/" class="md-nav__link">
         
   
   
@@ -9033,7 +9057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-planning/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-planning/" class="md-nav__link">
         
   
   
@@ -9068,7 +9092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/source-rest/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/source-rest/" class="md-nav__link">
         
   
   
@@ -9103,7 +9127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/vraagassistent/" class="md-nav__link">
+      <a href="../../../iso-audit/reference/vraagassistent/" class="md-nav__link">
         
   
   
@@ -9200,7 +9224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/bedieningsafspraken/" class="md-nav__link">
+      <a href="../../../reference/bedieningsafspraken/" class="md-nav__link">
         
   
   
@@ -9235,7 +9259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/docs-gates/" class="md-nav__link">
+      <a href="../../../reference/docs-gates/" class="md-nav__link">
         
   
   
@@ -9270,7 +9294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/test-gate/" class="md-nav__link">
+      <a href="../../../reference/test-gate/" class="md-nav__link">
         
   
   
@@ -9359,7 +9383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../skill-forge/" class="md-nav__link">
+      <a href="../../../skill-forge/" class="md-nav__link">
         
   
   
@@ -9441,7 +9465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../skill-forge/explanation/2026-09-04-curatiebesluit-obsidian-graphify/" class="md-nav__link">
+      <a href="../../../skill-forge/explanation/2026-09-04-curatiebesluit-obsidian-graphify/" class="md-nav__link">
         
   
   
@@ -9531,7 +9555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../skill-forge/reference/configuration/" class="md-nav__link">
+      <a href="../../../skill-forge/reference/configuration/" class="md-nav__link">
         
   
   
@@ -9628,7 +9652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/" class="md-nav__link">
+      <a href="../../../wordsworth/" class="md-nav__link">
         
   
   
@@ -9710,7 +9734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/nora-gap-analysis/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/nora-gap-analysis/" class="md-nav__link">
         
   
   
@@ -9792,7 +9816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/adr/0001-nifi-orchestration/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/adr/0001-nifi-orchestration/" class="md-nav__link">
         
   
   
@@ -9827,7 +9851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/adr/0002-key-management/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/adr/0002-key-management/" class="md-nav__link">
         
   
   
@@ -9862,7 +9886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/adr/0003-verifiable-credential-reveal-auth/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/adr/0003-verifiable-credential-reveal-auth/" class="md-nav__link">
         
   
   
@@ -9897,7 +9921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/adr/0004-loose-coupling-and-experience-layers/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/adr/0004-loose-coupling-and-experience-layers/" class="md-nav__link">
         
   
   
@@ -9932,7 +9956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/explanation/adr/0005-nora-target-architecture-alignment/" class="md-nav__link">
+      <a href="../../../wordsworth/explanation/adr/0005-nora-target-architecture-alignment/" class="md-nav__link">
         
   
   
@@ -10030,7 +10054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/how-to/api-auth/" class="md-nav__link">
+      <a href="../../../wordsworth/how-to/api-auth/" class="md-nav__link">
         
   
   
@@ -10065,7 +10089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/how-to/dataset-pseudonymisation/" class="md-nav__link">
+      <a href="../../../wordsworth/how-to/dataset-pseudonymisation/" class="md-nav__link">
         
   
   
@@ -10100,7 +10124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/how-to/detection-lists/" class="md-nav__link">
+      <a href="../../../wordsworth/how-to/detection-lists/" class="md-nav__link">
         
   
   
@@ -10135,7 +10159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/how-to/grants/" class="md-nav__link">
+      <a href="../../../wordsworth/how-to/grants/" class="md-nav__link">
         
   
   
@@ -10170,7 +10194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/how-to/reversible-backfill/" class="md-nav__link">
+      <a href="../../../wordsworth/how-to/reversible-backfill/" class="md-nav__link">
         
   
   
@@ -10260,7 +10284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/reference/architecture/" class="md-nav__link">
+      <a href="../../../wordsworth/reference/architecture/" class="md-nav__link">
         
   
   
@@ -10295,7 +10319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/reference/cli/" class="md-nav__link">
+      <a href="../../../wordsworth/reference/cli/" class="md-nav__link">
         
   
   
@@ -10330,7 +10354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wordsworth/reference/evaluation/" class="md-nav__link">
+      <a href="../../../wordsworth/reference/evaluation/" class="md-nav__link">
         
   
   
@@ -10427,7 +10451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/" class="md-nav__link">
+      <a href="../../../workstation-security/" class="md-nav__link">
         
   
   
@@ -10462,7 +10486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/compliance/" class="md-nav__link">
+      <a href="../../../workstation-security/compliance/" class="md-nav__link">
         
   
   
@@ -10497,7 +10521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/strategy/" class="md-nav__link">
+      <a href="../../../workstation-security/strategy/" class="md-nav__link">
         
   
   
@@ -10532,7 +10556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/supply-chain-cooldown/" class="md-nav__link">
+      <a href="../../../workstation-security/supply-chain-cooldown/" class="md-nav__link">
         
   
   
@@ -10567,7 +10591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/threat-model/" class="md-nav__link">
+      <a href="../../../workstation-security/threat-model/" class="md-nav__link">
         
   
   
@@ -10649,7 +10673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/explanation/strategy/" class="md-nav__link">
+      <a href="../../../workstation-security/explanation/strategy/" class="md-nav__link">
         
   
   
@@ -10684,7 +10708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/explanation/supply-chain-cooldown/" class="md-nav__link">
+      <a href="../../../workstation-security/explanation/supply-chain-cooldown/" class="md-nav__link">
         
   
   
@@ -10719,7 +10743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/explanation/threat-model/" class="md-nav__link">
+      <a href="../../../workstation-security/explanation/threat-model/" class="md-nav__link">
         
   
   
@@ -10809,7 +10833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../workstation-security/reference/compliance/" class="md-nav__link">
+      <a href="../../../workstation-security/reference/compliance/" class="md-nav__link">
         
   
   
@@ -10906,7 +10930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/" class="md-nav__link">
+      <a href="../../../zeef/" class="md-nav__link">
         
   
   
@@ -10988,7 +11012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/explanation/architectuur/" class="md-nav__link">
+      <a href="../../../zeef/explanation/architectuur/" class="md-nav__link">
         
   
   
@@ -11023,7 +11047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/explanation/bijdragen/" class="md-nav__link">
+      <a href="../../../zeef/explanation/bijdragen/" class="md-nav__link">
         
   
   
@@ -11058,7 +11082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/explanation/roadmap/" class="md-nav__link">
+      <a href="../../../zeef/explanation/roadmap/" class="md-nav__link">
         
   
   
@@ -11093,7 +11117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/explanation/wat-is-zeef/" class="md-nav__link">
+      <a href="../../../zeef/explanation/wat-is-zeef/" class="md-nav__link">
         
   
   
@@ -11183,7 +11207,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/how-to/aan-de-slag/" class="md-nav__link">
+      <a href="../../../zeef/how-to/aan-de-slag/" class="md-nav__link">
         
   
   
@@ -11273,7 +11297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/reference/audit-trail/" class="md-nav__link">
+      <a href="../../../zeef/reference/audit-trail/" class="md-nav__link">
         
   
   
@@ -11308,7 +11332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/reference/de-pijplijn/" class="md-nav__link">
+      <a href="../../../zeef/reference/de-pijplijn/" class="md-nav__link">
         
   
   
@@ -11343,7 +11367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zeef/reference/scope-filter/" class="md-nav__link">
+      <a href="../../../zeef/reference/scope-filter/" class="md-nav__link">
         
   
   
@@ -11413,10 +11437,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sections" class="md-nav__link">
+  <a href="#the-three-numbers-that-matter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sections
+        The three numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running the queries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-the-answer-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the answer honestly
       
     </span>
   </a>
@@ -11443,37 +11489,86 @@
   
 
 
-<h1 id="iso-audit-documentation">iso-audit documentation</h1>
-<p>iso-audit is a pluggable ISO 9001 + ISO 27001 audit pipeline, built as a
-structural mitigation for the auditor role-conflict that ISO 19011 §6.4.2
-recognises: it draws evidence from sources the auditor does not curate, detects
-patterns across runs, and mirrors auditor decisions back for reflection. For the
-project overview, setup, and current milestone status, start at the
-<a href="../README.md">README</a>; the <em>why</em> behind the design lives in
-<a href="explanation/missie/">explanation/missie.md</a>.</p>
-<blockquote>
-<p><strong>Status:</strong> milestone A. Most pages below are migrated from the old flat
-<code>docs/</code> layout and carry <code>status: draft</code> until reviewed. Several pages are
-written in Dutch — the language decision is deferred to the maintainer (see
-the PR that introduced this contract).</p>
-</blockquote>
-<h2 id="sections">Sections</h2>
-<ul>
-<li><strong>how-to/</strong> — task-oriented guides:</li>
-<li><a href="how-to/miro-auditor-bord-prompt/">Set up a Miro auditor board via Miro-AI</a></li>
-<li><a href="how-to/miro-interview-prompt/">Interview flow without Python automation</a></li>
-<li><a href="how-to/verify-portal-auth/">Verify portal fail-closed auth without a cluster</a></li>
-<li><strong>reference/</strong> — facts about protocols, adapters, and configuration:</li>
-<li><a href="reference/modes/">Pipeline modes (autonoom / integer)</a></li>
-<li>Sources: <a href="reference/source-drive/">Drive</a> · <a href="reference/source-planning/">Planning</a> · <a href="reference/source-jira/">Jira</a> · <a href="reference/source-mcp/">MCP</a> · <a href="reference/source-rest/">REST</a></li>
-<li><a href="reference/sinks/">Sinks</a></li>
-<li>Notifiers: <a href="reference/notifier-slack/">Slack</a> · <a href="reference/notifier-email/">Email</a> · <a href="reference/notifier-teams/">Teams</a> · <a href="reference/notifier-mattermost/">Mattermost</a></li>
-<li><strong>explanation/</strong> — design decisions and rationale:</li>
-<li><a href="explanation/missie/">Missie — why this tool exists (three capabilities)</a></li>
-<li><a href="explanation/memo-architecture/">Auditmemo architecture</a></li>
-<li><a href="explanation/compensating-control/">Compensating control — audit log</a></li>
-<li><a href="explanation/portal-auth/">Portal auth — why the identity header is trustworthy</a></li>
-</ul>
+<h1 id="measuring-what-your-instance-can-actually-carry">Measuring what your instance can actually carry</h1>
+<p>The upstream batch stack ships a full monitoring set — Prometheus, Grafana,
+a node exporter, a Celery exporter and more — and on the reference
+deployment it retains five years. So the question "how much can this box
+take" does not need new tooling. It needs the right three queries, and a
+load event to point them at.</p>
+<p>This page is the queries. It assumes the deployment from
+<a href="../deploy-instance-vps/">deploy-instance-vps.md</a>; adjust container names if
+yours differ.</p>
+<h2 id="the-three-numbers-that-matter">The three numbers that matter</h2>
+<p><strong>Available memory</strong> is the first wall you hit. Each Celery worker is capped
+by <code>WORKER_MEMORY_LIMIT</code> (1 GB by default) and the stack runs several, on top
+of routinator's several hundred megabytes of RPKI data.</p>
+<p><strong>Queue depth</strong> tells you whether work is piling up or being consumed. If
+<code>celery_queue_length</code> stays at zero under load, the bottleneck is not a
+backlog — the workers are keeping up and something else is the limit.</p>
+<p><strong>Load average</strong> says whether the CPUs are saturated. Read it against your
+core count: 3.75 on two cores is nearly 2× subscribed.</p>
+<h2 id="running-the-queries">Running the queries</h2>
+<p>Prometheus listens inside the compose network, with <code>/prometheus/</code> as its
+external path. From the host:</p>
+<pre><code class="language-sh">q() {
+  docker exec internetnl-prod-prometheus-1 sh -c \
+    &quot;wget -qO- \&quot;http://127.0.0.1:9090/prometheus/api/v1/query?query=$1\&quot;&quot; \
+    | sed -e 's/.*&quot;value&quot;:\[[0-9.]*,&quot;//' -e 's/&quot;\].*//'
+}
+</code></pre>
+<p>Current state:</p>
+<pre><code class="language-sh">q &quot;node_memory_MemAvailable_bytes/1024/1024&quot;   # MB free
+q &quot;sum(celery_queue_length)&quot;                   # total queue depth
+q &quot;node_load1&quot;                                 # 1-minute load
+</code></pre>
+<p>Looking back at a window that has already passed — this is the useful one,
+because you rarely watch a load event live. <code>@ &lt;unix-timestamp&gt;</code> anchors the
+query to the end of the window you care about:</p>
+<pre><code class="language-sh">E=$(date -u -d '2026-09-08 09:10' +%s)         # end of the window
+q &quot;min_over_time(node_memory_MemAvailable_bytes[110m]%20@%20${E})/1024/1024&quot;
+q &quot;max_over_time(sum(celery_queue_length)[110m:]%20@%20${E})&quot;
+q &quot;max_over_time(node_load1[110m]%20@%20${E})&quot;
+</code></pre>
+<p>Note the <code>%20</code> — the query goes in a URL, so spaces must be encoded. And note
+the <code>[110m:]</code> with a colon in the queue query: <code>sum(...)</code> produces an instant
+vector, so it needs a <em>subquery</em> range, not a plain range selector.</p>
+<h2 id="reading-the-answer-honestly">Reading the answer honestly</h2>
+<p>A measurement of your own sequential batch tells you about sequential
+batches. It does not tell you what happens when two tenants submit at the
+same moment — for that you need either real concurrent users or a deliberate
+concurrent test.</p>
+<p>Worked example, from the reference deployment on a 2-core, 3.7 GB VPS
+measuring 362 domains in blocks of 25:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Idle</th>
+<th>Under load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Available memory</td>
+<td>~995 MB</td>
+<td>520 MB</td>
+</tr>
+<tr>
+<td>Queue depth</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>node_load1</code></td>
+<td>~0.3</td>
+<td>3.75</td>
+</tr>
+</tbody>
+</table>
+<p>Conclusion drawn from it: memory is the constraint, the workers kept up, and
+the CPUs were saturated but coping. About half the memory headroom went to a
+single sequential user — which is a reason to be careful about promising
+concurrency, not a reason to believe there is 520 MB spare.</p>
 
 
 
@@ -11526,10 +11621,10 @@ the PR that introduced this contract).</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Gekopieerd naar klembord", "clipboard.copy": "Kopi\u00ebren naar klembord", "search.result.more.one": "1 extra overeenkomst op deze pagina", "search.result.more.other": "# extra overeenkomsten op deze pagina", "search.result.none": "Geen overeenkomende documenten", "search.result.one": "1 overeenkomende document", "search.result.other": "# overeenkomende documenten", "search.result.placeholder": "Typ om te beginnen met zoeken", "search.result.term.missing": "Ontbreekt", "select.version": "Selecteer versie"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Gekopieerd naar klembord", "clipboard.copy": "Kopi\u00ebren naar klembord", "search.result.more.one": "1 extra overeenkomst op deze pagina", "search.result.more.other": "# extra overeenkomsten op deze pagina", "search.result.none": "Geen overeenkomende documenten", "search.result.one": "1 overeenkomende document", "search.result.other": "# overeenkomende documenten", "search.result.placeholder": "Typ om te beginnen met zoeken", "search.result.term.missing": "Ontbreekt", "select.version": "Selecteer versie"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
