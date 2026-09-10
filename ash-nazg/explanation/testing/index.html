@@ -11629,15 +11629,33 @@ before merge.</p>
 <p>Runs only on tag pushes (<code>v*.*.*</code>) and manual workflow_dispatch.
 <strong>Currently a placeholder</strong> — the script logs a TODO and exits 0.
 The implementation lands in a follow-up change.</p>
-<p>When fully implemented, what it will cover:</p>
+<p>What it covers today (<code>scripts/verify-against-nextcloud.sh</code>, green
+on NC 32.0.14 + AppAPI 5.x + HaRP v0.4.0):</p>
 <ul>
-<li>Spinning up an ephemeral Nextcloud (&gt;= 30) + AppAPI + HaRP +
-  postgres + redis stack via docker compose.</li>
+<li>Spinning up an ephemeral Nextcloud 32 + AppAPI + HaRP + postgres</li>
+<li>valkey + Caddy + a local registry via docker compose.</li>
 <li>Registering Ash Nazg as an ExApp via
-  <code>occ app_api:app:register ash_nazg ...</code>.</li>
-<li>HTTP-checking the host shim's <code>/health</code>, <code>/heartbeat</code>, and (once
-  wired) the admin settings page route.</li>
-<li>Tearing the stack down on success or failure.</li>
+  <code>occ app_api:app:register ash_nazg harp --wait-finish</code>, so HaRP
+  pulls the image from the registry and spawns the container.</li>
+<li>Asserting the container exists, that <code>oc_ex_apps.port</code> equals the
+  <code>APP_PORT</code> HaRP injected (no SQL patch anywhere), and that
+  <code>/health</code>, <code>/admin/settings</code> and <code>/selftest</code> all answer <strong>through
+  the AppAPI proxy</strong>.</li>
+<li>Asserting the self-test's three implementable checks pass and the
+  fourth (<code>deploy-daemon-spawn</code>) fails with a concrete message.</li>
+<li>Tearing the stack down on success or failure (<code>KEEP_STACK=1</code>
+  leaves it up).</li>
+</ul>
+<p>Two requirements are easy to get wrong and are pinned by the
+verifier because they cost hours to rediscover:</p>
+<ul>
+<li><code>/heartbeat</code> must answer <code>{"status": "ok"}</code> as JSON. AppAPI reads
+  the body; a plain-text <code>ok</code> is logged as a <em>failed</em> heartbeat at
+  HTTP 200 and registration never finishes.</li>
+<li>The deploy daemon's <code>nextcloud_url</code> must point at the reverse
+  proxy that routes <code>/exapps/*</code> to HaRP (<code>http://caddy</code> in the
+  stack), not at the Nextcloud container. Apache answers those
+  paths with 404.</li>
 </ul>
 <p>What it does <strong>not</strong> cover (even when fully implemented):</p>
 <ul>

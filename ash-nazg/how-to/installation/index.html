@@ -4422,6 +4422,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#isolation-what-a-session-is-and-is-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Isolation — what a session is, and is not
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11535,6 +11546,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#isolation-what-a-session-is-and-is-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Isolation — what a session is, and is not
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11562,6 +11584,11 @@ covering the <code>wire-dosbox-engine</code> end-to-end demo. Steps below
 are written from the design docs, not from a verified install.
 Expect minor inaccuracies until that change lands; treat this
 as a sketch, not a procedure.</p>
+<p>What <em>is</em> verified (wire-dosbox-engine, on NC 32.0.14 + AppAPI 5.x
++ HaRP v0.4.0): the deploy path — image pull, HaRP-spawned
+container, port allocation, the heartbeat/init/enabled handshake,
+and reaching the app through the AppAPI proxy. Running a binary is
+not: see the engine-spawn gap in that change's tasks.</p>
 </blockquote>
 <h2 id="requirements">Requirements</h2>
 <table>
@@ -11575,13 +11602,23 @@ as a sketch, not a procedure.</p>
 <tbody>
 <tr>
 <td>Nextcloud</td>
-<td>30</td>
-<td>AppAPI 5.x is GA from Nextcloud 30; earlier versions are NOT supported.</td>
+<td>32</td>
+<td>Verified against 32.0.14 with AppAPI 5.x. NC 30 was the scaffold's first target and is no longer supported.</td>
 </tr>
 <tr>
 <td>AppAPI</td>
 <td>5.x</td>
 <td>Install from the App Store before installing Ash Nazg.</td>
+</tr>
+<tr>
+<td>HaRP FRP tunnel</td>
+<td>on</td>
+<td>The ExApp opens an FRP tunnel back to HaRP; the image ships <code>frpc</code> for it.</td>
+</tr>
+<tr>
+<td>Sessions</td>
+<td>in-app</td>
+<td>A session runs inside the Ash Nazg container, not in a container of its own — see <em>Isolation</em> below.</td>
 </tr>
 <tr>
 <td>Deploy daemon</td>
@@ -11696,6 +11733,33 @@ occ app:remove ash_nazg
 <p>Removes the manifest registration and the host container. User
 Files are untouched (Ash Nazg stores no persistent state of its
 own outside the AppAPI volume; sessions are ephemeral).</p>
+<h2 id="isolation-what-a-session-is-and-is-not">Isolation — what a session is, and is not</h2>
+<p>A Run does not start a container. The emulator ships inside the Ash Nazg
+app container, and a session is a process tree there. An ExApp cannot
+start a sibling container: it has no Docker CLI, no socket, and the
+deploy daemon offers ExApps no spawn API.</p>
+<p>What that means for you as an administrator:</p>
+<ul>
+<li>The binary your user runs is a <strong>DOS program inside DOSBox-X</strong>. The
+  emulator is the boundary — the program never executes as native code
+  on your host.</li>
+<li>A session has <strong>no cgroup CPU or memory limit</strong>. It runs at a lower
+  scheduling priority than the app itself, the number of concurrent
+  sessions is capped, and every session has a maximum duration, but a
+  busy session can use the CPU the container is allowed.</li>
+<li>A session runs <strong>under the same user as the app</strong>, so a compromise of
+  DOSBox-X itself — not of the DOS program it runs — reaches the app's
+  environment, including its Nextcloud credentials. The app keeps its
+  own variables out of the session's environment, but that is hygiene,
+  not a boundary.</li>
+<li>A session gets a <strong>private directory containing only the binary</strong>,
+  downloaded from Files. There is no WebDAV mount, so a session cannot
+  reach the rest of the user's Files, and the directory is removed when
+  the session ends.</li>
+</ul>
+<p>If you need container-level isolation per session, this release is not
+the one for you: that arrives when each engine becomes its own ExApp,
+deployed by AppAPI.</p>
 
 
 
