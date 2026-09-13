@@ -3511,6 +3511,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-boomhuis-general-het-hub-kanaal" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11446,6 +11457,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-boomhuis-general-het-hub-kanaal" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11500,11 +11522,38 @@
 <li><strong>Moet een bestaande agent uitgebreid?</strong> → stel de <strong>update</strong> voor: welke
    agent, welke toevoeging aan mandaat/scope.</li>
 </ol>
-<p>Odin maakt of wijzigt zelf niets (conversatie-only, geen shell/repo).
+<p>Odin maakt of wijzigt zelf niets (conversatie-only, geen shell/repo).</p>
+<h2 id="capabilities">Capabilities</h2>
+<ul>
+<li><strong><code>route_message</code></strong> — odin mag een bericht van Mark <strong>letterlijk</strong> doorsturen
+  naar een kanaal uit <code>chat.routes</code> (nu: <code>#bouw</code>), met de marker <code>!route #bouw</code>
+  gevolgd door de tekst. Dat is wat het hub/spoke-model bruikbaar maakt: de hub
+  moet iets kunnen doorgeven, anders is hij een extra stap in plaats van een
+  doorgeefluik.</li>
+</ul>
+<p>Drie grenzen, alle drie afgedwongen in de listener (<code>agents/routing.py</code> in
+  ratatoskr) en niet in deze tekst — een regel die alleen hier staat is een
+  regel die zo sterk is als het model van vandaag:</p>
+<ol>
+<li><strong>Woordelijk.</strong> De doorgestuurde tekst moet voorkomen in het bericht van de
+     mens dat de beurt opriep. Voegt odin iets toe, dan gaat er niets weg en
+     verschijnt de weigering in #escalatie.</li>
+<li><strong>Bronvermelding uit de code.</strong> Wie, welk kanaal, welk bericht-id. Odin
+     schrijft die regel niet en kan hem niet weglaten.</li>
+<li>
+<p><strong>Alleen deze kanalen.</strong> <code>chat.routes</code> is de lijst; leeg of afwezig betekent
+     niets doorsturen.</p>
+</li>
+<li>
+<p><strong>Expliciet uitgesloten en dat blijft zo:</strong> eigen mandaat, sleutels of
+  relay-configuratie wijzigen, en inhoud bedenken namens een andere agent. Odin
+  wijst aan wélke woorden van Mark waarheen gaan; hij formuleert niet.
 Hij beslist, motiveert kort, en levert een concreet voorstel dat Mark met één
 stap kan uitvoeren. Eén bron van waarheid: alle agent-definities leven in de
 handbook (<code>docs/agents/</code>); odin kent de huidige vloot en verwijst
 ernaar.</p>
+</li>
+</ol>
 <h2 id="chat-facet-boomhuis-general-het-hub-kanaal">Chat-facet (boomhuis · #general — het hub-kanaal)</h2>
 <blockquote>
 <p>Je bent 'odin', de meta-agent die Marks agent-vloot beheert. De huidige

@@ -11889,24 +11889,33 @@ sessie-token.</p>
 <li>Naast de code staat <code>run-report.json</code> op die branch. De <code>diff_hash</code> daarin
   dekt uitsluitend de agent-codewijziging; <strong>exact de door habitat gegenereerde
   artefacten van de run</strong> vallen erbuiten — op vaste naam plus de run-id, zónder
-  wildcards (<code>.habitat/audit.jsonl</code>, <code>.habitat/run-report-&lt;run-id&gt;.html</code>,
-  <code>.habitat/run-output-&lt;run-id&gt;.md</code>, <code>run-report.json</code>). Niet de hele
-  <code>.habitat/</code>-map en geen naam-wildcard, zodat élk ander bestand dat de agent
-  onder <code>.habitat/</code> schrijft wél meetelt (geen smokkelkanaal). Het exacte
+  wildcards (<code>.habitat/audit.jsonl</code>, <code>.habitat/run-report.json</code>,
+  <code>.habitat/run-report-&lt;run-id&gt;.html</code>, <code>.habitat/run-output-&lt;run-id&gt;.md</code>). Niet
+  de hele <code>.habitat/</code>-map en geen naam-wildcard, zodat élk ander bestand dat de
+  agent onder <code>.habitat/</code> schrijft wél meetelt (geen smokkelkanaal). Het exacte
   reproductie-commando (mét de concrete run-id) staat in het veld
   <code>diff_hash_scope</code> van <code>run-report.json</code>.</li>
-<li>De agent-eind-uitvoer (<code>result</code>) staat als <code>.habitat/run-output-&lt;run-id&gt;.md</code>
+</ul>
+<p>Die lijst noemt <strong>precies de paden die habitat zelf schrijft, en geen pad
+  meer</strong>, en dat is in beide richtingen load-bearing. Ontbreekt er één — zoals
+  <code>.habitat/run-report.json</code> tot 2026-09-13 — dan wijkt de hash die het rapport
+  meldt af van de hash die je vanaf de branch narekent, en meldt de verificatie
+  manipulatie terwijl er niets aan de hand is. Staat er één te veel — zoals
+  <code>run-report.json</code> in de repo-wortel, waar habitat sinds
+  <code>move-run-artifacts-out-of-git</code> niets meer neerzet — dan is dat vrije
+  ongehashte ruimte: de agent maakt dat bestand aan, het wordt gecommit, en het
+  valt buiten <code>diff_hash</code>.
+- De agent-eind-uitvoer (<code>result</code>) staat als <code>.habitat/run-output-&lt;run-id&gt;.md</code>
   op de branch. Habitat schrijft dit bestand <strong>altijd</strong> — ook zonder leesbaar
   <code>result</code> (dan een placeholder) — ná de diff-hash, zodat het artefact
   deterministisch habitat-eigendom is en een agent er geen eigen versie voor kan
   smokkelen. Een onleesbare <code>.habitat/audit.jsonl</code>-regel is fail-closed: het
-  rapport crasht niet en toont zo'n regel als expliciet gebroken rij.</li>
-<li>Reviewer/security bouwen op de <strong>builder-branch</strong> via
+  rapport crasht niet en toont zo'n regel als expliciet gebroken rij.
+- Reviewer/security bouwen op de <strong>builder-branch</strong> via
   <code>HABITAT_BASE_BRANCH</code>. Gebruik <code>chain.sh</code> (zie hieronder) zodat die branch
   automatisch wordt doorgegeven; handmatig kan ook met de naam uit de
-  builder-dispatch-output.</li>
-<li>Merges naar <code>main</code> doet <strong>altijd Mark</strong>; dispatch merget nooit.</li>
-</ul>
+  builder-dispatch-output.
+- Merges naar <code>main</code> doet <strong>altijd Mark</strong>; dispatch merget nooit.</p>
 <h2 id="volle-keten-chainsh">Volle keten: <code>chain.sh</code></h2>
 <p><code>dispatch/chain.sh &lt;change&gt; &lt;repo&gt;</code> draait architect → builder → reviewer →
 security en geeft de run-unieke builder-branch automatisch door aan reviewer en
