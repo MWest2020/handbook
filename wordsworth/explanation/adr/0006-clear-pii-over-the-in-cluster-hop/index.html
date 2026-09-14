@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/explanation/adr/0002-key-management/">
+        <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/explanation/adr/0006-clear-pii-over-the-in-cluster-hop/">
       
       
-        <link rel="prev" href="../0001-nifi-orchestration/">
+        <link rel="prev" href="../0005-nora-target-architecture-alignment/">
       
       
-        <link rel="next" href="../0003-verifiable-credential-reveal-auth/">
+        <link rel="next" href="../../../how-to/api-auth/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>ADR 0002 — Sovereign key management for reversible pseudonymisation - Handbook</title>
+        <title>ADR-0006 — Clear PII crosses one in-cluster hop over http - Handbook</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adr-0002-sovereign-key-management-for-reversible-pseudonymisation" class="md-skip">
+        <a href="#adr-0006-clear-pii-crosses-one-in-cluster-hop-over-http" class="md-skip">
           Ga naar inhoud
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR 0002 — Sovereign key management for reversible pseudonymisation
+              ADR-0006 — Clear PII crosses one in-cluster hop over http
             
           </span>
         </div>
@@ -9798,44 +9798,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ADR 0002 — Sovereign key management for reversible pseudonymisation
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--accepted"></span>
-  
-
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../0002-key-management/" class="md-nav__link">
         
   
   
@@ -9858,70 +9824,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Inhoudsopgave
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Context
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#decision" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decision
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alternatives-considered" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Alternatives considered
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consequences" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Consequences
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -10036,10 +9938,44 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../0006-clear-pii-over-the-in-cluster-hop/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0006 — Clear PII crosses one in-cluster hop over http
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -10062,6 +9998,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhoudsopgave">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhoudsopgave
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-mtls-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why not mTLS now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consequences
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternatives considered
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -11542,10 +11553,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#alternatives-considered" class="md-nav__link">
+  <a href="#why-not-mtls-now" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Alternatives considered
+        Why not mTLS now
       
     </span>
   </a>
@@ -11557,6 +11568,17 @@
     <span class="md-ellipsis">
       
         Consequences
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternatives considered
       
     </span>
   </a>
@@ -11583,77 +11605,57 @@
   
 
 
-<h1 id="adr-0002-sovereign-key-management-for-reversible-pseudonymisation">ADR 0002 — Sovereign key management for reversible pseudonymisation</h1>
-<ul>
-<li>Status: accepted</li>
-<li>Date: 2026-08-20</li>
-<li>Context: Fase B (reversible pseudonymisation + key-gated selective reveal)</li>
-</ul>
+<h1 id="adr-0006-clear-pii-crosses-one-in-cluster-hop-over-http">ADR-0006 — Clear PII crosses one in-cluster hop over http</h1>
 <h2 id="context">Context</h2>
-<p>Reversible pseudonymisation stores, per PII type, an AES-256-GCM ciphertext of the
-original value keyed by a per-type data key (see the <code>pseudonymization</code> and
-<code>key-lifecycle</code> capabilities). Until now the <code>KeyProvider</code> held those data keys
-<strong>in memory only</strong> — they do not survive a restart, so nothing pseudonymised
-could be revealed after the pod recycles. Key management is exactly the aspect on
-which prior government attempts stalled, so it must be durable, sovereign, and
-auditable, using open tooling (OpenBao / SOPS+age — never CyberArk/Conjur).</p>
+<p>Anonymisation is the whole promise: nothing with personal data reaches the
+index, the object store or a model. There is exactly one place where that
+promise is in transit rather than kept — the ingest POSTs the <strong>raw extracted
+text</strong>, still containing PII, to the OpenAnonymiser service over in-cluster
+<code>http://</code>:</p>
+<pre><code>WORDSWORTH_OPENANONYMISER_URL:
+  http://openanonymiser.openanonymiser.svc.cluster.local:8080
+</code></pre>
+<p>Everywhere else the data is either already de-identified (index, S3, RAG) or
+encrypted at rest (the mapping store). This hop is the exception, and until now
+it lived as a bullet in <code>deploy/README.md</code> under "hardening follow-ups" — a note,
+not a decision. A note has no owner and no expiry; it is how a known weakness
+becomes an old weakness.</p>
 <h2 id="decision">Decision</h2>
-<p><strong>Envelope encryption with OpenBao Transit as the key-encryption key (KEK).</strong></p>
-<ul>
-<li>Wordsworth generates a fresh 32-byte <strong>data key</strong> per <code>(scope, version)</code> where
-  scope is the PII type (<code>PERSON</code>, <code>BSN</code>, …). The data key encrypts that type's
-  mappings (unchanged from today).</li>
-<li>Each data key is <strong>wrapped</strong> (encrypted) by OpenBao's Transit engine under a
-  named KEK that never leaves OpenBao. Only the <em>wrapped</em> blob is persisted, in a
-  durable <code>key_vault</code> table (<code>key_id</code>, <code>scope</code>, <code>wrapped_material</code>, <code>status</code>
-  active/retired, <code>created_at</code>). Clear data-key material is never written to disk.</li>
-<li>To use a key, Wordsworth calls Transit <strong>unwrap</strong>; unwrapped material is cached
-  in memory with a short TTL so the hot path does not hit OpenBao per call and a
-  brief OpenBao blip does not stall the straat (resilience, ADR-0007/cycle 7).</li>
-<li>This slots behind the existing seams: a <code>DurableKeyProvider</code> implements
-  <code>KeyProvider</code> (current_key/key/rotate per scope) over the vault + Transit, and
-  the <code>Escrow</code> seam is satisfied by "the wrapped keys in <code>key_vault</code> + the OpenBao
-  KEK". Rotation mints+wraps+stores a new active version; prior versions stay
-  resolvable by <code>key_id</code> (so existing mappings still decrypt).</li>
-</ul>
-<p><strong>Authentication.</strong> Wordsworth authenticates to OpenBao with a scoped AppRole/
-token limited to Transit wrap/unwrap for its KEK — <strong>never</strong> the root token.</p>
-<p><strong>Custody (the crown jewels).</strong> OpenBao runs in-cluster on the homelab (this is
-the lab/factory, not alma prod). Initialisation yields unseal shares + a root
-token. For the lab:</p>
-<ul>
-<li>Initialise with a small set of unseal shares; <strong>escrow the unseal material and
-  root token out-of-band via the repo's SOPS+age flow</strong> (age identity held by the
-  operator, Mark) — never in plaintext in git or logs.</li>
-<li>A sealed OpenBao (after a restart) means reveal is <strong>unavailable</strong> (fail-closed;
-  we never reveal without keys) and pseudonymising a not-yet-keyed type <strong>blocks</strong>
-  (fail-hard; no clear PII reaches the index). Both are consistent with the
-  sovereignty invariants — degrade safely, never leak.</li>
-</ul>
-<p>Production (alma, out of scope here and off-limits to this workstream) MUST harden
-this: <strong>auto-unseal</strong> (Transit auto-unseal from a separate OpenBao, or an HSM/KMS)
-and <strong>split custody</strong> of unseal shares among multiple custodians.</p>
-<h2 id="alternatives-considered">Alternatives considered</h2>
-<ul>
-<li><strong>OpenBao KV holding raw data keys</strong> — simpler, but the data keys then live only
-  in OpenBao with no local wrapped-key vault, and it is not "envelope" encryption.
-  Rejected in favour of Transit-wrapped keys in a durable vault (matches the
-  key-lifecycle spec's "envelope encryption of the data keys").</li>
-<li><strong>SOPS+age for the data keys directly</strong> — good for static bootstrap secrets, but
-  it has no rotation/unwrap-on-demand story for per-type versioned data keys.
-  Retained only for escrowing OpenBao's own unseal material.</li>
-</ul>
+<p><strong>Accept the plaintext hop for a single-tenant cluster, and name the condition
+under which it stops being acceptable.</strong></p>
+<p>The condition, explicitly: <strong>the moment this cluster carries a second tenant, or
+any workload not operated by the same party, this becomes a blocker.</strong> Not a
+follow-up — a blocker, in the same sense as "no clear PII to the index".</p>
+<p>Until then the mitigation is the boundary, not the transport: the pod network
+belongs to one operator, the service is not exposed outside the cluster, and the
+call never leaves it.</p>
+<h2 id="why-not-mtls-now">Why not mTLS now</h2>
+<p>A service mesh to protect one hop adds more new surface than it removes. It
+brings sidecars or a CNI-level encryption layer, certificate rotation, and a
+second failure mode for every call in the cluster — and the thing it protects
+against (another tenant sniffing pod traffic) does not exist here yet. That is
+the clever-instead-of-boring trade this repository rejects elsewhere; there is no
+reason to make it here.</p>
+<p>The cheap step, when the condition triggers, is not a mesh: set
+<code>WORDSWORTH_OPENANONYMISER_URL</code> to <code>https://…</code> and give the service a
+certificate. httpx verifies by default, so the client side needs no change. That
+is the intended path, written down so the next person does not start by
+evaluating meshes.</p>
 <h2 id="consequences">Consequences</h2>
 <ul>
-<li>New durable <code>key_vault</code> table; a Transit client; a <code>DurableKeyProvider</code>; config
-  for the OpenBao URL, auth, KEK name, and cache TTL. Built behind the existing
-  seams, so the pipeline and reveal API are unchanged in shape.</li>
-<li>Reveal and new-type pseudonymisation depend on OpenBao availability; the
-  in-memory unwrap cache and fail-closed/fail-hard behaviour bound the blast
-  radius. Grants (revocation) remain the primary reveal gate; key retirement is
-  the cryptographic backstop.</li>
-<li>Code is provable in CI against a <strong>fake in-memory Transit</strong> (same wrap/unwrap
-  contract); a real OpenBao is deployed and smoke-tested separately.</li>
+<li><code>deploy/README.md</code> points here instead of carrying the reasoning.</li>
+<li>A second tenant on this cluster is a <strong>blocking</strong> change, not a nice-to-have.</li>
+<li>If anyone proposes a mesh for this hop alone, this ADR is the answer; if the
+  condition above has triggered, this ADR is superseded rather than argued with.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><strong>mTLS via a service mesh</strong> — declined, see above.</li>
+<li><strong>In-process anonymisation</strong> (no network hop at all) — declined by ADR-0001 and
+  ADR-0004: OpenAnonymiser is a separate, independently deployable component, and
+  folding it in would put an ML runtime inside the API image.</li>
+<li><strong>Encrypt the payload at the application layer</strong> — declined: that is TLS with
+  extra steps and a key-management problem of its own.</li>
 </ul>
 
 

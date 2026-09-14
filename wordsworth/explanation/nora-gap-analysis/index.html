@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/explanation/nora-gap-analysis/">
       
       
-        <link rel="prev" href="../../">
+        <link rel="prev" href="../meting-woo-corpus-01/">
       
       
         <link rel="next" href="../adr/0001-nifi-orchestration/">
@@ -9644,6 +9644,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../meting-woo-corpus-01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 01 — 200 gepubliceerde Woo-documenten door de straat
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -9743,6 +9778,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#nieuw-gat-gevonden-op-echte-documenten-2026-09-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nieuw gat, gevonden op echte documenten (2026-09-13)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bewust-niet-nu-2026-09-13-akkoord-mark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bewust niet nu (2026-09-13, akkoord Mark)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#3-what-to-build-in-order" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9788,10 +9845,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_3" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_2" id="__nav_18_2_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_3" id="__nav_18_2_3_label" tabindex="0">
             
   
   
@@ -9809,8 +9866,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -9975,6 +10032,41 @@
     
   
     ADR-0005: Alignment with the NORA "bij de Bron" target architecture — what wordsworth adopts, adapts, and declines
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/0006-clear-pii-over-the-in-cluster-hop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0006 — Clear PII crosses one in-cluster hop over http
   
 
     
@@ -11470,6 +11562,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#nieuw-gat-gevonden-op-echte-documenten-2026-09-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nieuw gat, gevonden op echte documenten (2026-09-13)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bewust-niet-nu-2026-09-13-akkoord-mark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bewust niet nu (2026-09-13, akkoord Mark)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#3-what-to-build-in-order" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11514,13 +11628,31 @@
 <h1 id="gap-analysis-wordsworth-vs-anatomie-van-anonimiseren-pseudonimiseren-bij-de-bron">Gap analysis — wordsworth vs. "Anatomie van Anonimiseren &amp; Pseudonimiseren bij de Bron"</h1>
 <p>Source: NORA Expertgroep Gegevensmanagement deck (Gemeente Haarlem &amp; Zandvoort,
 Programma Open Overheid / XENA), 15 slides. Method: every functional statement in
-the deck was extracted (≈120 atomic requirements) and tested against the code on
-<code>main</code> at <code>7d26cec</code> with file-level evidence. This page keeps the verdicts; the
-proposals under <code>openspec/changes/</code> and ADR-0005 carry the detail.</p>
+the deck was extracted (≈120 atomic requirements) and tested against the code
+with file-level evidence. This page keeps the verdicts; the proposals under
+<code>openspec/changes/</code> and ADR-0005 carry the detail.</p>
+<p><strong>Herzien 2026-09-13.</strong> De eerste versie toetste tegen <code>main</code> op <code>7d26cec</code>
+(2026-09-03). De dag erna zijn zeven changes gebouwd en gearchiveerd —
+<code>add-detection-confidence</code>, <code>add-detection-feedback</code>, <code>add-pii-categories-and-ppl</code>,
+<code>add-legible-placeholders</code>, <code>add-value-normalisation</code>, <code>add-domain-keys</code> en
+<code>add-dataset-pseudonymisation</code> — en dit document bleef staan alsof ze er niet
+waren. Het meldde dus <strong>gap</strong> bij dertien dingen die bestaan, waaronder #17, dat
+het zelf "the biggest correctness gap" noemde.</p>
+<p>Dat is de verkeerde kant om op te falen: dit is het document waarmee je aan een
+gemeente uitlegt wat wordsworth wel en niet kan, en het verzweeg wat er gebouwd
+is. Elke regel hieronder is opnieuw tegen de code gehouden, met bestand en
+regelnummer als bewijs. De drift-poort ving dit niet — die bewaakt <code>src/</code> en
+<code>scripts/</code>, niet <code>docs/</code>.</p>
 <p>Verdict legend: <strong>have</strong> = present and tested · <strong>gap</strong> = missing, fits the
-invariants, proposal written · <strong>decision</strong> = conflicts with a wordsworth
-invariant or ADR, needs Mark (ADR-0005) · <strong>out-of-core</strong> = belongs in a separate
-component per ADR-0001/0004.</p>
+invariants, proposal written · <strong>decided</strong> = conflicted with a wordsworth
+invariant or ADR and was <strong>settled in ADR-0005, accepted by Mark on 2026-09-03</strong>
+(D8 explicitly, D1–D7 and D9–D11 as recommended) · <strong>out-of-core</strong> = belongs in a
+separate component per ADR-0001/0004.</p>
+<p>Let op bij het lezen: <strong>decided</strong> betekent niet "open". Die rijen dragen een
+D-nummer omdat het een besluit vergde, en dat besluit is genomen. Wie een van
+deze punten opnieuw wil aankaarten, doet dat door ADR-0005 te vervangen — niet in
+een PR. Op 2026-09-13 las ik ze zelf verkeerd als openstaand; vandaar deze
+alinea.</p>
 <h2 id="1-where-the-two-designs-agree">1. Where the two designs agree</h2>
 <p>Both put pseudonymisation <em>before</em> anything downstream, both keep keys out of
 the document store, both make audit tamper-evident, both are open source /
@@ -11553,64 +11685,64 @@ deck's "Swiss Cheese", just not named that).</p>
 <td>2</td>
 <td>Anonypy as layer 2</td>
 <td>banned in CLAUDE.md</td>
-<td><strong>decision</strong> D4 (recommend: no; NER covers it)</td>
+<td><strong>decided</strong> D4 (ADR-0005, 2026-09-03) (recommend: no; NER covers it)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Confidence + detection layer per PII, in audit</td>
-<td>service returns <code>score</code>, driver drops it; no layer field</td>
-<td><strong>gap</strong></td>
-<td><code>add-detection-confidence</code></td>
+<td>driver keeps <code>score</code> + layer; pipeline writes per-layer aggregates to the audit (never a value or an offset)</td>
+<td><strong>have</strong></td>
+<td><code>openanonymiser_driver.py</code>, <code>pipeline.py:226</code></td>
 </tr>
 <tr>
 <td>4</td>
 <td>Configurable thresholds per layer</td>
-<td>none</td>
-<td><strong>gap</strong> (counting only; never weakens redaction)</td>
-<td><code>add-detection-confidence</code></td>
+<td>present; counting only — a threshold never weakens redaction (spec <code>audit-trail</code>)</td>
+<td><strong>have</strong></td>
+<td><code>detection_confidence</code> in <code>2026-09-04-add-detection-confidence</code></td>
 </tr>
 <tr>
 <td>5</td>
 <td>FP/FN feedback → rule engine (Drools)</td>
-<td>none</td>
-<td><strong>gap</strong> (boring variant: versioned allow/deny lists + audited feedback)</td>
-<td><code>add-detection-feedback</code></td>
+<td>versioned allow/deny lists; feedback is recorded, never auto-applied</td>
+<td><strong>have</strong> (the boring variant, deliberately)</td>
+<td><code>detection_lists.py</code></td>
 </tr>
 <tr>
 <td>6</td>
 <td>17 PII types incl. gezondheid, religie, etniciteit, biometrie, strafrechtelijk, kenteken</td>
-<td>no taxonomy; 3 hardcoded + passthrough</td>
-<td><strong>gap</strong> (registry) + detector work in OpenAnonymiser</td>
-<td><code>add-pii-categories-and-ppl</code></td>
+<td>registry present</td>
+<td><strong>have</strong> (registry) · detector coverage per type still depends on OpenAnonymiser</td>
+<td><code>pii_categories.py</code></td>
 </tr>
 <tr>
 <td>7</td>
 <td>AVG Art. 6/9/10 legal basis per type</td>
-<td>absent</td>
-<td><strong>gap</strong></td>
-<td><code>add-pii-categories-and-ppl</code></td>
+<td><code>legal_basis</code> per type in the registry</td>
+<td><strong>have</strong></td>
+<td><code>pii_categories.py</code></td>
 </tr>
 <tr>
 <td>8</td>
 <td>PPL 0–3 levels</td>
-<td>grants per type set (finer, no vocabulary)</td>
-<td><strong>gap</strong> (PPL = shorthand over grants)</td>
-<td><code>add-pii-categories-and-ppl</code></td>
+<td>PPL expands to a type set over the existing grants</td>
+<td><strong>have</strong></td>
+<td><code>pii_categories.py</code>, spec <code>grants</code></td>
 </tr>
 <tr>
 <td>9</td>
 <td>ABAC, Entra ID/SSO, roles</td>
 <td>grant_id is a bearer capability; auth model pending</td>
-<td><strong>decision</strong> D7</td>
+<td><strong>decided</strong> D7 (ADR-0005, 2026-09-03)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>10</td>
 <td>Legible placeholders <code>[PERSOON 1]</code></td>
-<td><code>[PERSON:hash8]</code> stored + indexed</td>
-<td><strong>gap</strong> (as a view, not storage)</td>
-<td><code>add-legible-placeholders</code></td>
+<td><code>[PERSON:hash8]</code> stays the stored form; <code>legible.py</code> renders <code>[PERSOON 1]</code> + a legend as a <strong>view</strong></td>
+<td><strong>have</strong> (as a view, as intended)</td>
+<td><code>legible.py</code></td>
 </tr>
 <tr>
 <td>11</td>
@@ -11623,21 +11755,21 @@ deck's "Swiss Cheese", just not named that).</p>
 <td>12</td>
 <td>RDFa-embedded encrypted PII inside the document</td>
 <td>separated encrypted mapping store, deliberately</td>
-<td><strong>decision</strong> D1 (recommend: RDFa as export view referencing tokens, ciphertext stays in store)</td>
+<td><strong>decided</strong> D1 (ADR-0005, 2026-09-03) (recommend: RDFa as export view referencing tokens, ciphertext stays in store)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>13</td>
 <td>Per-document keys derived from category key</td>
 <td>random per-type keys, rotation, escrow</td>
-<td><strong>decision</strong> D2 (recommend: keep; add domain scope)</td>
+<td><strong>decided</strong> D2 (ADR-0005, 2026-09-03) (recommend: keep; add domain scope)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>14</td>
 <td>Algorithm per article: AES-GCM / ChaCha20 / RSA-OAEP</td>
 <td>AES-256-GCM everywhere (ChaCha20 only in escrow)</td>
-<td><strong>decision</strong> D3 (recommend: no; one AEAD, basis as metadata)</td>
+<td><strong>decided</strong> D3 (ADR-0005, 2026-09-03) (recommend: no; one AEAD, basis as metadata)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
@@ -11657,16 +11789,16 @@ deck's "Swiss Cheese", just not named that).</p>
 <tr>
 <td>17</td>
 <td><code>normalize()</code> before HMAC (BSN strip/lpad, NFC, casefold, postcode, ISO date)</td>
-<td>none — <code>Jansen</code>≠<code>jansen</code></td>
-<td><strong>gap</strong> (biggest correctness gap)</td>
-<td><code>add-value-normalisation</code></td>
+<td><code>normalize()</code> runs before the HMAC</td>
+<td><strong>have</strong> — was the biggest correctness gap</td>
+<td><code>normalization.py</code></td>
 </tr>
 <tr>
 <td>18</td>
 <td>Domain keys per department, cross-domain blocked</td>
-<td>one global scope per type</td>
-<td><strong>gap</strong></td>
-<td><code>add-domain-keys</code></td>
+<td>domain scope in the key derivation</td>
+<td><strong>have</strong></td>
+<td><code>keys.py</code>, spec <code>pseudonymization</code></td>
 </tr>
 <tr>
 <td>19</td>
@@ -11699,51 +11831,51 @@ deck's "Swiss Cheese", just not named that).</p>
 <tr>
 <td>23</td>
 <td>Dataset/CSV column pseudonymisation, profiles, per-attribute/per-record</td>
-<td>absent; unit of work is PDF</td>
-<td><strong>decision</strong> D8 → <strong>gap</strong></td>
-<td><code>add-dataset-pseudonymisation</code></td>
+<td>column selection by profile, per record; dataset and document pseudonyms coincide</td>
+<td><strong>have</strong></td>
+<td><code>datasets.py</code>, spec <code>dataset-pseudonymization</code></td>
 </tr>
 <tr>
 <td>24</td>
 <td>NEN 7524 format <code>01-0001-PB|base64</code></td>
-<td>absent</td>
-<td><strong>gap</strong> as output format; conformance <strong>unverified</strong> D9</td>
-<td><code>add-dataset-pseudonymisation</code></td>
+<td><code>format="nen7524"</code> output option</td>
+<td><strong>have</strong> as output format · conformance to NEN 7524:2019 remains <strong>unverified</strong> (D9 — nobody here has read the standard)</td>
+<td><code>datasets.py:25-54</code></td>
 </tr>
 <tr>
 <td>25</td>
 <td>Optional PII validation of unselected columns</td>
-<td>detectors exist</td>
-<td><strong>gap</strong> (advisory only)</td>
-<td><code>add-dataset-pseudonymisation</code></td>
+<td><code>validate_unselected()</code> — advisory, never auto-pseudonymises a column nobody chose</td>
+<td><strong>have</strong></td>
+<td><code>datasets.py:140</code></td>
 </tr>
 <tr>
 <td>26</td>
 <td>TTP key hand-over, PKCS#12 export</td>
 <td>age escrow exists; no PKCS#12</td>
-<td><strong>decision</strong> D6 (recommend: age/JSON envelope; PKCS#12 is for X.509 material)</td>
+<td><strong>decided</strong> D6 (ADR-0005, 2026-09-03) (recommend: age/JSON envelope; PKCS#12 is for X.509 material)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>27</td>
 <td>Audit: who/what/when/key/layer/confidence, tamper-evident, 7 y</td>
-<td>hash chain + WORM, 10 y default; layer/confidence missing</td>
-<td><strong>have</strong> + <strong>gap</strong> via #3</td>
+<td>hash chain + WORM, 10 y default; layer/confidence now included via #3</td>
+<td><strong>have</strong></td>
 <td><code>audit.py</code>, <code>audit_export.py</code></td>
 </tr>
 <tr>
 <td>28</td>
 <td>Key-lifecycle stream WORM-exported</td>
-<td>JSONL, not WORM</td>
-<td><strong>gap</strong> (known; small)</td>
-<td>follow-up to <code>add-audit-export</code></td>
+<td><code>export_key_lifecycle_worm()</code> ships the stream to Object Lock, incrementally, byte-exact</td>
+<td><strong>have</strong> · one layer of tamper-evidence, not two: the stream is append-only but <strong>not hash-chained</strong>, so a host compromised before an export could rewrite it first (follow-up <code>harden-key-audit-chain</code>)</td>
+<td><code>key_audit_export.py</code></td>
 </tr>
 <tr>
 <td>29</td>
 <td>Metrics precision/recall/F1 per type</td>
-<td>IR eval only</td>
-<td><strong>gap</strong></td>
-<td><code>add-pii-detection-eval</code></td>
+<td><code>pii_run</code> scores precision/recall/F1 per type, span- and token-level, plus a leak count</td>
+<td><strong>have</strong> · a <strong>real</strong> gold corpus is still missing; only <code>pii_gold_synthetic.jsonl</code> (10 invented docs) exists</td>
+<td><code>eval/pii.py</code>, <code>eval/pii_run.py</code></td>
 </tr>
 <tr>
 <td>30</td>
@@ -11763,14 +11895,14 @@ deck's "Swiss Cheese", just not named that).</p>
 <td>32</td>
 <td>Thin-client: Web Crypto + detection in the plugin</td>
 <td>keys never leave OpenBao</td>
-<td><strong>decision</strong> D10 (recommend: server-side only)</td>
+<td><strong>decided</strong> D10 (ADR-0005, 2026-09-03) (recommend: server-side only)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
 <td>33</td>
 <td>DMS new version / Woo-portaal / TMLO metadata output</td>
 <td>text-only pipeline; no docx/pdf re-render</td>
-<td><strong>decision</strong> D11 (render service is a separate component)</td>
+<td><strong>decided</strong> D11 (ADR-0005, 2026-09-03) (render service is a separate component)</td>
 <td>ADR-0005</td>
 </tr>
 <tr>
@@ -11803,6 +11935,34 @@ deck's "Swiss Cheese", just not named that).</p>
 </tr>
 </tbody>
 </table>
+<h2 id="nieuw-gat-gevonden-op-echte-documenten-2026-09-13">Nieuw gat, gevonden op echte documenten (2026-09-13)</h2>
+<p>Niet uit het deck, want het deck noemt het ook niet: <strong>pseudonimiseren op een
+combinatie van gegevens bestaat niet.</strong> Elk gegeven wordt op zichzelf beoordeeld,
+dus een record als "vrouw, geboren 1978, postcode 6541 EX, functie X" komt
+ongemoeid door de straat terwijl die vier samen vaak één persoon aanwijzen.
+Raakt vooral <code>dataset-pseudonymization</code>, waar kolommen per profiel gekozen worden
+— precies de plek waar zo'n combinatie ontstaat. Zie
+<a href="../meting-woo-corpus-01/">meting-woo-corpus-01</a>, bevinding 3.</p>
+<h2 id="bewust-niet-nu-2026-09-13-akkoord-mark">Bewust niet nu (2026-09-13, akkoord Mark)</h2>
+<p>Drie dingen zijn geen gap en geen besluit maar een <strong>keuze om te wachten</strong>. Ze
+staan hier zodat ze niet over een maand terugkomen als vergeten werk.</p>
+<ul>
+<li><strong>Een echte gelabelde PII-gold-set.</strong> <code>pii_run</code> meet precision/recall/F1, maar
+  alleen tegen tien verzonnen documenten. Honderd echte documenten handmatig
+  labelen is dagen werk en levert één corpus op dat je niet mag delen. Goedkoper
+  en echter: Woo-documenten dragen <code>[5.1.2e]</code> precies waar een persoonsgegeven
+  is weggehaald — een gratis <strong>negatieve</strong> gold-set (daar hoort niets gevonden te
+  worden), en de niet-geredigeerde delen leveren de omgekeerde vraag op: vindt
+  wordsworth wat de publicerende overheid heeft laten staan? Controleerbaar
+  zonder annotatie. Zie <code>scripts/eval/README.md</code>.</li>
+<li><strong>Qrels en queries voor ranking-kwaliteit.</strong> Zelf verzinnen meet hoe goed je
+  vragen kon bedenken. Wachten tot er een gebruiker is die tien echte zoekvragen
+  aanlevert; dat is een halve middag voor hen en maakt het cijfer pas iets waard.</li>
+<li><strong>NEN 7524-conformiteit (#24).</strong> De norm kost geld en de claim koop je er niet
+  mee — verifiëren vraagt de tekst én iemand die hem toetst. Zolang we niet
+  claimen eraan te voldoen, is "NEN 7524-style" eerlijk en compleet. Zodra een
+  aanbesteding erom vraagt is het een dagtaak, geen project.</li>
+</ul>
 <h2 id="3-what-to-build-in-order">3. What to build, in order</h2>
 <ol>
 <li><code>add-value-normalisation</code> — correctness; unblocks consistent pseudonyms.</li>
