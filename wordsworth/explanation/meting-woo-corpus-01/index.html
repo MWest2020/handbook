@@ -9776,6 +9776,61 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bevinding-4-de-herindexering-telde-haar-eigen-mislukkingen-zonder-ze-aan-te-wijzen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 4 — de herindexering telde haar eigen mislukkingen zonder ze aan te wijzen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-6-retryable-was-een-verkeerd-etiket-en-dat-verborg-het-echte-werk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 6 — "retryable" was een verkeerd etiket, en dat verborg het echte werk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-5-de-schema-migratie-kon-de-hele-api-meetrekken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 5 — de schema-migratie kon de hele api meetrekken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-7-de-controle-hield-acht-documenten-tegen-op-twee-eigen-fouten" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 7 — de controle hield acht documenten tegen op twee eigen fouten
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-8-de-postbus-uitzondering-draaide-in-de-pijplijn-nergens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 8 — de postbus-uitzondering draaide in de pijplijn nergens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wat-deze-meting-niet-zegt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11595,6 +11650,61 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bevinding-4-de-herindexering-telde-haar-eigen-mislukkingen-zonder-ze-aan-te-wijzen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 4 — de herindexering telde haar eigen mislukkingen zonder ze aan te wijzen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-6-retryable-was-een-verkeerd-etiket-en-dat-verborg-het-echte-werk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 6 — "retryable" was een verkeerd etiket, en dat verborg het echte werk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-5-de-schema-migratie-kon-de-hele-api-meetrekken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 5 — de schema-migratie kon de hele api meetrekken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-7-de-controle-hield-acht-documenten-tegen-op-twee-eigen-fouten" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 7 — de controle hield acht documenten tegen op twee eigen fouten
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-8-de-postbus-uitzondering-draaide-in-de-pijplijn-nergens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 8 — de postbus-uitzondering draaide in de pijplijn nergens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wat-deze-meting-niet-zegt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11723,6 +11833,234 @@ niet — maar het is wél een gat in de belofte.</p>
 <p>Het raakt vooral de datasetkant (<code>dataset-pseudonymization</code>), waar kolommen per
 profiel gekozen worden: precies de plek waar een combinatie ontstaat. Een eigen
 change waard, niet hier binnengesmokkeld.</p>
+<h2 id="bevinding-4-de-herindexering-telde-haar-eigen-mislukkingen-zonder-ze-aan-te-wijzen">Bevinding 4 — de herindexering telde haar eigen mislukkingen zonder ze aan te wijzen</h2>
+<p>De postcode-detector kwam ná de eerste meting, dus moest het corpus opnieuw door
+de anonimisering. Nameting op het cluster (2026-09-14, 770 geïndexeerde
+documenten): nul e-mailadressen, nul geldige IBANs, nul geldige BSN's, en <strong>164
+postcodes letterlijk in de tekst</strong>. Daarvan staan er <strong>56 in een
+postbus-context</strong> en blijven terecht staan; <strong>108 moesten alsnog weg</strong>, verspreid
+over 31 documenten.</p>
+<p>Die 56 zijn het bewijs dat de contextregel doet wat hij belooft, nu op echte
+documenten in plaats van op een fixture: <code>Postbus 250, 6800 GD Arnhem</code> is het
+contactadres van een overheid, geen woonadres van een mens.</p>
+<p>Twee dingen gingen mis, en het tweede is het echte.</p>
+<p><strong>De herstelactie was te duur om te draaien.</strong> De reprocess-Job stuurde altijd
+"herdraai alles": 770 documenten × ~2 min GLiNER is ruim 25 uur, voor werk van
+een uur. Zo'n run wordt afgebroken — op 2026-09-13 gebeurde dat toen om 03:00 de
+websocket van een <code>kubectl exec</code> wegviel. Een gate die te duur is om te draaien,
+wordt niet gedraaid, en dan is het geen gate. De Job neemt nu een lijst
+documenten aan.</p>
+<p><strong>De gerichte run faalde, en vertelde niet waarop.</strong> 31 documenten in 1 u 58 m:
+21 gelukt, 8 retryable, 2 gefaald. De Job faalde daardoor netjes in plaats van
+stil <code>Completed</code> te melden. Maar wélke tien was niet te achterhalen: het antwoord
+gaf alleen tellers, en in de audit-keten stond van géén van die documenten een
+regel van die dag. De keten zei dus "hier heeft nooit iemand aan gezeten" terwijl
+er net tien pogingen waren gedaan. De exception werd geteld en weggegooid.</p>
+<p>Daarmee was de enige manier om de tien terug te vinden: alle 770 opnieuw draaien
+— precies de herstelactie van een dag die zojuist was weggebouwd.</p>
+<p>Dit is dezelfde vorm als bevinding 1. Daar was een PII-type end-to-end bedraad
+behalve aan het begin; hier is een run end-to-end bedraad behalve aan het eind.
+De gate telt wel, maar wijst niet aan, en een mislukking zonder spoor is niet te
+onderscheiden van een stap die nooit liep.</p>
+<p>Opgelost: het antwoord noemt per document de exception-<strong>klasse</strong> (niet de
+boodschap — die kan een fragment citeren van het document waarop hij afknapte),
+en er komt een <code>reprocess_failed</code>-regel in de audit-keten met de toestand
+ongewijzigd.</p>
+<p><strong>Wat die reparatie meteen opleverde.</strong> De gerichte herdraai van de acht
+overgebleven documenten meldde: <code>retryable: 8, failed: 0</code>, en alle acht met
+dezelfde oorzaak — <code>AnonymizationEngineError</code>. Niet de data dus, en niet de
+grootte: de anonimiseringsmotor. Een antwoord dat een uur eerder nog helemaal
+niet te krijgen was.</p>
+<p>En meteen de volgende laag van hetzelfde. <code>AnonymizationEngineError</code> is de
+bewuste tekstloze wikkel van de driver: hij zegt dát de motor weigerde, nooit
+waarom. De oorzaak eronder — een timeout, een 503, een contractbreuk — is het
+deel waar je iets mee doet, en die viel weg in de wikkel. De keten van
+exception-<strong>klassen</strong> wordt nu meegeschreven (<code>AnonymizationEngineError &lt;-
+ReadTimeout</code>); nog steeds geen boodschappen, want een klassenaam kan niets
+citeren.</p>
+<p>Handmatig nagemeten op het cluster, ná de mislukte run: de chunks van zo'n
+document slagen stuk voor stuk wél, los aangeroepen. Het gaat dus niet om een
+document dat de motor niet aankan.</p>
+<h2 id="bevinding-6-retryable-was-een-verkeerd-etiket-en-dat-verborg-het-echte-werk">Bevinding 6 — "retryable" was een verkeerd etiket, en dat verborg het echte werk</h2>
+<p>De run mét oorzaakketen gaf een leeg vervolg: alleen
+<code>AnonymizationEngineError</code>, geen <code>&lt;- oorzaak</code>. Dat is zelf het bewijs. De plek
+die de fout mét <code>from exc</code> doorgeeft, was het dus niet; er zijn maar twee
+plekken die hem zónder oorzaak gooien, en allebei zijn het
+<strong>invariant-controles</strong>:</p>
+<ul>
+<li><code>_score()</code> — de motor gaf een entiteit zonder score terug (contractbreuk);</li>
+<li><code>pseudonymizer.py</code> — <em>"a detected entity value survived pseudonymisation"</em>:
+  ná het vervangen staat een gedetecteerde waarde nog in de tekst, en de code
+  weigert die tekst uit te geven.</li>
+</ul>
+<p>Dat weigeren is goed en blijft zo. Het etiket erop was fout. <code>is_transient()</code>
+gaf voor élke <code>AnonymizationEngineError</code> "tijdelijk" terug, dus werden deze acht
+run na run als <code>retryable</code> gemeld. Ze waren niet tijdelijk: dezelfde invoer
+ontmoet dezelfde code en faalt identiek, voor altijd. De run zag er herstelbaar
+uit terwijl er een codewijziging nodig is, en elke poging kostte GLiNER-tijd om
+tot dezelfde conclusie te komen.</p>
+<p>Opgelost met <code>AnonymizationInvariantError</code>, een subklasse — zodat elke
+bestaande <code>except AnonymizationEngineError</code> hem nog vangt en het fail-closed
+gedrag onveranderd blijft. Alleen het etiket is nu waar: deze acht tellen
+voortaan als <code>failed</code>, niet als <code>retryable</code>.</p>
+<p><strong>Nog onbekend: wélke van de twee invarianten brak, en waarom.</strong> De klasse is
+voor beide dezelfde, dus er is nu een vaste <code>code</code> per plek
+(<code>entiteit-zonder-score</code>, <code>waarde-overleefde-vervanging</code>) die meegeschreven
+wordt naast de klassenaam. Een code uit een gesloten woordenlijst kan niets
+citeren; een foutboodschap wel, en daarom blijft die eruit.</p>
+<p>Twee pogingen om het van buitenaf te reproduceren liepen dood, en dat is zelf
+informatie:</p>
+<ul>
+<li>De opgeslagen tekst van zo'n document bevat <strong>nul</strong> bestaande pseudoniem-
+  tokens. De gedachte dat het residu van een vorige ronde zou zijn, klopt niet.</li>
+<li>Een nagebouwde herhaling van de detectie-en-vervangingslus op diezelfde tekst
+  leverde <strong>geen</strong> overlever op. De nabouw is dus niet trouw genoeg: de echte
+  route draait eerst de deterministische laag en chunkt op andere grenzen. Dat
+  is een aanwijzing dat het aan de chunkgrenzen of aan die voorlaag ligt, en
+  géén bewijs.</li>
+</ul>
+<p>Wat er wél hard staat, komt uit de code en niet uit een gok: er zijn precies
+twee plekken die deze fout zónder <code>from</code> gooien, en dat is waarom de keten leeg
+bleef.</p>
+<p><strong>De run wees het aan.</strong> Alle acht:
+<code>AnonymizationInvariantError[waarde-overleefde-vervanging]</code>, en <code>failed: 8,
+retryable: 0</code>. Het is dus niet de motor die zijn contract brak — het is onze
+eigen vervanging die een gedetecteerde waarde laat staan.</p>
+<p>Waarom die waarde blijft staan, was van buitenaf niet te achterhalen: twee
+nabouwen reproduceerden het niet. Daarom schrijft de controle nu zelf veilige
+kenmerken van de overlever op — type, lengte, aantal woorden, hoe vaak hij vóór
+en ná de vervanging voorkomt. Nooit de waarde. De audit-keten is exporteerbaar,
+en een "handige" foutboodschap met de waarde erin zou document-inhoud in een
+exporteerbaar spoor zetten — precies wat deze hele laag moet voorkomen.</p>
+<p><code>in_bron</code> tegenover <code>na_vervanging</code> is het getal dat de vraag beslecht. Zijn ze
+gelijk, dan heeft de vervangings-regex de waarde nooit geraakt. Is
+<code>na_vervanging</code> kleiner, dan zijn sommige voorkomens wél vervangen en andere
+niet, en dan zit het in de context rond die voorkomens — niet in de waarde zelf.</p>
+<h2 id="bevinding-5-de-schema-migratie-kon-de-hele-api-meetrekken">Bevinding 5 — de schema-migratie kon de hele api meetrekken</h2>
+<p>Gevonden tijdens het uitrollen van de reparatie uit bevinding 4, niet gezocht.
+Het init-Job faalde bij de eerste poging en slaagde bij de retry. In het log:</p>
+<pre><code>Process 272007 waits for AccessShareLock on relation 16400;
+blocked by process 272113.
+</code></pre>
+<p><code>init_schema</code> zet een trigger en voegt kolommen toe; beide hebben ACCESS
+EXCLUSIVE nodig op tabellen waar de api uit leest. Er stond geen <code>lock_timeout</code>,
+in de code noch in de deploy.</p>
+<p>Wachten is niet het probleem. Het probleem is wat een <em>wachtend</em> ACCESS
+EXCLUSIVE-verzoek doet met alles wat erna komt: die parkeren er allemaal
+achter, ook gewone lezers. Eén vastgelopen init stalt daarmee de complete api,
+en van buiten ziet dat er niet uit als een migratie — het ziet eruit alsof de
+database weg is.</p>
+<p>Dat het deze keer goed ging, is geluk: Postgres' eigen deadlock-detectie brak
+de cyclus op. Bij een gewone lock-wachtrij zónder cyclus grijpt die niet in en
+wacht hij door.</p>
+<p>Opgelost met <code>SET LOCAL lock_timeout = '5s'</code> in de migratie-transactie. Snel
+falen is hier de betere helft van de afspraak: het init-Job probeert het met
+backoff opnieuw, en een poging een seconde later vindt de lock meestal vrij.</p>
+<h2 id="bevinding-7-de-controle-hield-acht-documenten-tegen-op-twee-eigen-fouten">Bevinding 7 — de controle hield acht documenten tegen op twee eigen fouten</h2>
+<p>De kenmerken uit bevinding 6 wezen het aan. Acht documenten, allemaal
+<code>waarde-overleefde-vervanging</code>, met per document: label, lengte, aantal
+woorden, en hoe vaak de waarde vóór en ná de vervanging voorkomt.</p>
+<table>
+<thead>
+<tr>
+<th>aantal</th>
+<th>label</th>
+<th>lengte</th>
+<th>woorden</th>
+<th>in bron</th>
+<th>na vervanging</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>person / email</td>
+<td>5, 11, 21</td>
+<td>1–4</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>person</td>
+<td>3</td>
+<td>1</td>
+<td>15</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><code>alnum: false</code> bij alle acht: er zitten leestekens of spaties in. Dat zijn
+GLiNER-fragmenten, geen namen.</p>
+<p><strong>Twee oorzaken, allebei van ons.</strong></p>
+<p>De eerste: de controle vergeleek met een tekst waar de ingevoegde tokens uít
+gestript waren, naar <em>niets</em>. Weghalen naar niets plakt de tekst links en
+rechts aan elkaar, en zo ontstaat een woordgrens die in het origineel niet
+bestond. Opgelost door naar één niet-woordteken te strippen: de reden om te
+strippen (een token mag zelf geen waarde matchen) blijft overeind, de twee
+kanten blijven uit elkaar.</p>
+<p>De tweede kwam pas boven bij het schrijven van de test, en die is belangrijker.
+Een entiteitswaarde komt van de dienst (<code>e.text</code>), niet uit een slice van de
+tekst, en draagt de spatiëring van de span mee. Op <code>"Naarden "</code> mét spatie
+matchen mist het woord — er komt een woordteken achteraan, dus de grenscontrole
+slaat niet aan. Gevolg: <strong>"Naarden" bleef leesbaar in de uitvoer</strong> én de
+fail-hard-controle verwierp het hele document. Twee fouten in één keer, en de
+eerste is de ernstigste van de twee: dat is klare PII die bleef staan.</p>
+<p>Dat verklaart ook waarom <code>in_bron: 0</code> niets bewijst op zichzelf. Dat getal telt
+<em>woord-begrensde</em> voorkomens; een waarde met een spatie eraan heeft er nul,
+terwijl het woord er gewoon staat. Nu wordt op de gestripte waarde gematcht.</p>
+<p><strong>Wat dit zegt over de controle.</strong> Hij stond aan de veilige kant en weigerde —
+er is niets gelekt via deze weg. Maar hij weigerde op zijn eigen artefact, en
+dat kostte acht documenten uit het corpus. Een controle die vals alarm slaat,
+wordt uiteindelijk uitgezet; dat is geen theoretisch risico maar de normale
+levensloop van zo'n controle.</p>
+<p><strong>Geen van beide reparaties hielp, en dat was het beslissende gegeven.</strong> Na de
+herdraai: dezelfde acht, dezelfde kenmerken, tot op het getal. Drie ervan
+lieten zien wat er werkelijk aan de hand was — een waarde van drie tekens die
+<strong>vijftien keer</strong> woord-begrensd in de bron voorkomt, alle vijftien vervangen,
+en er verschijnt er <strong>één nieuwe</strong>.</p>
+<p>Dat kan maar op één manier. De vervanging maakt die grens zelf: een buurwoord
+wordt een token, en een token begint met <code>[</code>. Het zestiende voorkomen stond in
+de bron midden in een woord, en dat wordt bewust niet vervangen omdat het
+gewone tekst zou mangelen — dezelfde reden waarom <code>_MIN_ENTITY_LEN</code> bestaat.</p>
+<p>De kern: <strong>de vervanging beoordeelt de woordgrenzen vóór de vervanging, de
+controle beoordeelde ze erna.</strong> Twee verschillende metingen op twee
+verschillende teksten, en het verschil heet vals alarm.</p>
+<p>Opgelost door een token te vervangen door iets met dezelfde
+woord-of-niet-woord-eigenschap aan beide kanten als de waarde die er stond. Dan
+ziet de controle exact de grenzen die de vervanging zag. Naar niets strippen
+plakt de tekst aan elkaar; naar een vast niet-woordteken strippen maakt juist
+een grens waar een woordteken hoorde — allebei fout, in tegengestelde richting.</p>
+<h2 id="bevinding-8-de-postbus-uitzondering-draaide-in-de-pijplijn-nergens">Bevinding 8 — de postbus-uitzondering draaide in de pijplijn nergens</h2>
+<p>De acht documenten liepen na de grens-reparatie door: <code>reanonymized: 8,
+failed: 0</code>. Het corpus van 770 documenten: <strong>nul postcodes die de code nog zou
+redigeren</strong>, nul bsn, nul iban, nul e-mail.</p>
+<p>Maar de nameting van het rúwe aantal klopte niet met wat eerder in deze meting
+staat. Bevinding 1 meldt 56 postcodes die in postbus-context terecht blijven
+staan. In de echte tekst: <strong>304 postbus-regels, waarvan 214 met een vervángen
+postcode en precies één met een leesbare.</strong></p>
+<p>De regel "een postbus houdt zijn postcode" bestond op drie plekken:</p>
+<ul>
+<li><code>find_deterministic()</code> — past hem toe;</li>
+<li><code>redact_postcode()</code> — past hem toe;</li>
+<li>de generieke <code>substitute()</code> — past hem <strong>niet</strong> toe, want een validator ziet
+  alleen de waarde en geen context.</li>
+</ul>
+<p>En <code>substitute()</code> is precies wat de twee échte pijplijnen aanroepen, de
+irreversibele en de reversibele. De regel stond dus in de code, in de
+documentatie en in de tests, en draaide in productie nergens.</p>
+<p><strong>Het venijn zit in hoe het verborgen bleef.</strong> De controle die de 56 telde,
+liep via <code>find_deterministic()</code>. Dat pad past de regel wél toe, dus meldde de
+meting keurig dat de uitzondering werkte. Het meetinstrument liep langs de ene
+weg en de productiecode langs de andere; er is gemeten wat een functie doet die
+in dat pad nooit draait.</p>
+<p>Opgelost door de contextregel een vierde kolom te maken in de gedeelde
+<code>DETECTORS</code>-definitie, waar <code>substitute()</code> en <code>find_deterministic()</code> hem allebei
+uit lezen. <code>redact_postcode()</code> roept nu gewoon <code>substitute()</code> aan in plaats van
+de regel na te bouwen. Eén implementatie, niet drie die op elkaar lijken.</p>
+<p>Dit is geen lek maar overredactie: 214 openbare contactadressen van overheden
+zijn onleesbaar gemaakt zonder dat het iemand beschermde — precies wat die
+uitzondering moest voorkomen.</p>
 <h2 id="wat-deze-meting-niet-zegt">Wat deze meting NIET zegt</h2>
 <p>Ze meet de pijplijn, niet de kwaliteit. <strong>Hoeveel PII er gemist is, weet ik
 niet</strong> — daarvoor is een gelabeld corpus nodig en dat is er niet. Wat hier staat
