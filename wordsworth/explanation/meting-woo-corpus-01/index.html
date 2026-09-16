@@ -9831,6 +9831,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bevinding-9-tokens-in-tokens-stil-dataverlies-in-een-vijfde-van-het-corpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 9 — tokens in tokens: stil dataverlies in een vijfde van het corpus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-10-het-venster-leek-wankel-en-is-dat-niet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 10 — het venster leek wankel en is dat niet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wat-deze-meting-over-zichzelf-leert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wat deze meting over zichzelf leert
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wat-deze-meting-niet-zegt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11705,6 +11738,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bevinding-9-tokens-in-tokens-stil-dataverlies-in-een-vijfde-van-het-corpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 9 — tokens in tokens: stil dataverlies in een vijfde van het corpus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bevinding-10-het-venster-leek-wankel-en-is-dat-niet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bevinding 10 — het venster leek wankel en is dat niet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wat-deze-meting-over-zichzelf-leert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wat deze meting over zichzelf leert
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wat-deze-meting-niet-zegt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12061,6 +12127,67 @@ de regel na te bouwen. Eén implementatie, niet drie die op elkaar lijken.</p>
 <p>Dit is geen lek maar overredactie: 214 openbare contactadressen van overheden
 zijn onleesbaar gemaakt zonder dat het iemand beschermde — precies wat die
 uitzondering moest voorkomen.</p>
+<h2 id="bevinding-9-tokens-in-tokens-stil-dataverlies-in-een-vijfde-van-het-corpus">Bevinding 9 — tokens in tokens: stil dataverlies in een vijfde van het corpus</h2>
+<p>Gevonden bij de nameting van de postbus-herstelrun, niet gezocht. <strong>266 geneste
+tokens in 150 van de 770 documenten</strong>, van de vorm:</p>
+<pre><code>[POSTCODE:[EMAIL:52a0d245]]
+</code></pre>
+<p>De deterministische laag maakt <code>[POSTCODE:007f03af]</code>. Daarna draait de
+entiteitslaag over díé tekst, en GLiNER geeft iets terug wat op een e-mailadres
+lijkt — de hash staat tussen <code>:</code> en <code>]</code>, dus tussen twee niet-woordtekens, en de
+grenscontrole slaat netjes aan. De vervanging grijpt dus midden in een token.</p>
+<p>Er lekt niets: er staat nog steeds geen klare PII. Maar het POSTCODE-token is
+kapot. De pseudoniem-string komt niet meer overeen met de sleutel in de
+mapping, dus <strong>die waarde is niet meer te onthullen</strong> — en onthulbaarheid is de
+hele belofte van de reversibele kant. Stil dataverlies in bijna een vijfde van
+het corpus, en niemand had het gemerkt.</p>
+<p>Opgelost: de entiteitslaag kent de posities van de al geplaatste tokens (één
+<code>finditer</code>) en vervangt daar niet in. Nagemeten dat de test niet vacuüm slaagt —
+zonder die wacht faalt hij.</p>
+<p><strong>En een restje uit dezelfde meting.</strong> Negentien postbus-regels vielen buiten de
+contextregel omdat briefhoofden hun regels met een pijp naast elkaar zetten:
+<code>Postbus 2341 | 6800 GD Arnhem</code>. De regel verwachtte een komma, punt of
+witruimte tussen nummer en postcode. De pijp hoort erbij.</p>
+<h2 id="bevinding-10-het-venster-leek-wankel-en-is-dat-niet">Bevinding 10 — het venster leek wankel en is dat niet</h2>
+<p>De contextregel voor postbussen kijkt veertig tekens terug, en doet dat op tekst
+waar bsn, iban en e-mail al vervangen zijn. Placeholders hebben een andere lengte
+dan de waarden die ze vervingen, dus leek de reikwijdte van die regel mee te
+schuiven met wat er toevallig vóór stond. Er lag een voorstel om contextregels de
+<strong>brontekst</strong> te laten zien, met positievertaling.</p>
+<p>Gebouwd (68 regels), nagemeten, weer weggegooid. <strong>Op alle 1016
+postcode-voorkomens in 627 documenten geeft de regel op de brontekst precies
+hetzelfde antwoord als op de werktekst. Nul verschillen.</strong></p>
+<p>De reden zat al in de code, in één teken. <code>_POSTBUS_RE</code> eindigt op <code>$</code>: de
+markering moet pál vóór de postcode staan. Stond hij daar in de bron, dan zat er
+niets tussen, dus is er ook niets vervangen, dus staat hij er in de werktekst
+ook. En andersom kan een vervanging de match niet máken — een placeholder bevat
+<code>[</code>, en dat zit niet in de toegestane scheidingstekens, dus tussenliggende
+vervanging breekt hem juist.</p>
+<p>De aanleiding was bovendien een meetfout van mij: vier postcodes die "onterecht
+bewaard" leken, waren vergeleken op <strong>waarde</strong> in plaats van op <strong>positie</strong>.
+Dezelfde postcode komt in zo'n briefhoofd meerdere keren voor; de bewaarde
+voorkomens stonden wel degelijk achter een postbus.</p>
+<p>Wat er wél moest gebeuren is geen machinerie maar borging: de stabiliteit hing
+aan één teken dat nergens vastlag. Er staat nu een test op die verankering, met
+de redenering erbij — losmaken is voortaan een bewuste daad en geen bijvangst.
+Nagemeten dat die test bijt: haal de <code>$</code> weg en drie van de vier vallen om.</p>
+<h2 id="wat-deze-meting-over-zichzelf-leert">Wat deze meting over zichzelf leert</h2>
+<p>Drie keer op één dag gaf een meting een vals antwoord omdat ze op de verkéérde
+tekst keek:</p>
+<ol>
+<li>"56 postbus-postcodes blijven terecht staan" — gemeten met
+   <code>find_deterministic()</code>, het enige pad dat de uitzondering toepast, terwijl de
+   pijplijn hem nergens toepaste.</li>
+<li>"35 postcodes moeten alsnog weg" — gemeten op de uitvoer, waar het woord
+   <code>Postbus</code> inmiddels zelf gepseudonimiseerd was tot <code>[LOCATION:…]</code>. Het waren
+   gewone postbus-regels.</li>
+<li>De overlever-controle zelf, die de woordgrenzen ná de vervanging beoordeelde
+   terwijl de vervanging ze ervóór beoordeelde.</li>
+</ol>
+<p>Dat is geen toeval meer maar een eigenschap van dit systeem: <strong>de enige tekst
+waarop je de anonimisering kunt beoordelen is de tekst zoals de anonimisering
+hem zág, niet zoals hij eruitkwam.</strong> Elke controle die de uitvoer opnieuw door
+een detector haalt, meet iets anders dan wat er gebeurd is.</p>
 <h2 id="wat-deze-meting-niet-zegt">Wat deze meting NIET zegt</h2>
 <p>Ze meet de pijplijn, niet de kwaliteit. <strong>Hoeveel PII er gemist is, weet ik
 niet</strong> — daarvoor is een gelabeld corpus nodig en dat is er niet. Wat hier staat

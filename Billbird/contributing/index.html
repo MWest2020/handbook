@@ -727,6 +727,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#de-documentatie-beweegt-mee-met-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De documentatie beweegt mee met de code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11681,6 +11692,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#de-documentatie-beweegt-mee-met-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De documentatie beweegt mee met de code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11788,6 +11810,19 @@ migrate create -ext sql -dir migrations -seq description_of_change
 <li><strong>UTC everywhere</strong>: Never store local time without offset.</li>
 <li><strong>Boring and auditable</strong>: Prefer well-understood approaches over clever ones.</li>
 </ul>
+<h2 id="de-documentatie-beweegt-mee-met-de-code">De documentatie beweegt mee met de code</h2>
+<p>Twee gates, omdat er twee manieren zijn om code binnen te krijgen:</p>
+<ul>
+<li><strong>Elke PR</strong> loopt langs <code>docs-gates</code> (<code>.github/workflows/docs-gates.yml</code>), die
+  de checker uit de hub (MWest2020/handbook) aanroept, op commit-SHA gepind.</li>
+<li><strong>Elke push naar main</strong> loopt langs de pre-push-guard. Installeren:
+  <code>bash scripts/install_hooks.sh</code>. In deze repo gaat lang niet alles via een PR,
+  en wat rechtstreeks naar main gaat komt nooit langs die workflow — precies daar
+  loopt documentatie stilletjes achter.</li>
+</ul>
+<p>Raakt een wijziging <code>cmd/</code>, <code>internal/</code> of <code>migrations/</code> zonder dat er iets onder
+<code>docs/</code> meebeweegt, dan is hij rood. Kan het echt niet: <code>DOCS_DRIFT_OK=1 git push</code>
+lokaal, of het label <code>docs-drift-ok</code> op de PR. Allebei zichtbaar.</p>
 
 
 

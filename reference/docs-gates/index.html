@@ -11587,9 +11587,20 @@ jobs:
     with:
       # code-paden die een docs-wijziging vereisen (map/ = prefix)
       code_paths: &quot;dispatch/,worker/,cage/,report/,orchestrator/&quot;
+      # waar de documentatie van DEZE repo woont; default docs/
+      docs_paths: &quot;docs/&quot;
       drift_mode: &quot;fail&quot;   # of &quot;warn&quot; tijdens inregelen
 </code></pre>
 <p>Kies <code>code_paths</code> per repo: de mappen met productiegedrag, niet tests/CI/docs.</p>
+<p><strong><code>docs_paths</code> alleen zetten als je documentatie ergens anders staat.</strong> De
+default <code>docs/</code> is het contract en klopt voor bijna elke spoke. homelab is de
+uitzondering: die schrijft zijn runbooks in <code>docusaurus/docs/</code> en had daarnaast
+een <code>docs/</code> die sinds augustus stilstond. De drift-gate wees daarmee naar de dode
+boom — niet te halen door échte documentatie te schrijven, alleen door de
+verkeerde map aan te raken of het label te gebruiken.</p>
+<p>Dat is erger dan een gate die ontbreekt. Een gate die je niet eerlijk kunt halen,
+leert mensen hem te omzeilen, en daarna doet hij ook niets meer waar hij wél
+klopt.</p>
 <p><strong>Handhaving (solo-repo's).</strong> Deze repo's hebben één beheerder, dus de gates
 draaien als <em>signaal</em>, niet als harde blokkade: geen branch protection, en
 <code>drift_mode: fail</code> overal. Zonder branch protection blokkeert <code>fail</code> niets — het

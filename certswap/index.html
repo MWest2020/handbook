@@ -4906,6 +4906,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#de-documentatie-beweegt-mee-met-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De documentatie beweegt mee met de code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11493,6 +11504,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#de-documentatie-beweegt-mee-met-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De documentatie beweegt mee met de code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11527,6 +11549,13 @@ content review, so they are marked <code>status: draft</code>.</p>
 <li><a href="reference/cli/">Reference</a> — CLI commands, drivers, input formats, and exit
   codes.</li>
 </ul>
+<h2 id="de-documentatie-beweegt-mee-met-de-code">De documentatie beweegt mee met de code</h2>
+<p>Elke PR loopt langs <code>docs-gates</code> (<code>.github/workflows/docs-gates.yml</code>): raakt de
+PR <code>src/</code> of <code>tests/</code> zonder dat er iets onder <code>docs/</code> verandert, dan is hij
+rood. De checker leeft in de hub (MWest2020/handbook), op commit-SHA gepind,
+zodat er geen kopie per repo veroudert.</p>
+<p>Kan het echt niet, dan zet het label <code>docs-drift-ok</code> op de PR hem groen — wel
+zichtbaar, en iets waar je je voor verantwoordt.</p>
 
 
 
