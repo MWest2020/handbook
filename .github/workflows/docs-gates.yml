@@ -10,6 +10,11 @@ on:
         description: "Komma-/newline-gescheiden globs/prefixes die docs vereisen"
         required: true
         type: string
+      docs_paths:
+        description: "Waar de documentatie van deze spoke woont (default docs/)"
+        required: false
+        default: "docs/"
+        type: string
       drift_mode:
         description: "fail (default) of warn"
         required: false
@@ -46,6 +51,7 @@ jobs:
           BASE: ${{ github.event.pull_request.base.sha }}
           HEAD: ${{ github.event.pull_request.head.sha }}
           CODE_PATHS: ${{ inputs.code_paths }}
+          DOCS_PATHS: ${{ inputs.docs_paths }}
           DRIFT_MODE: ${{ inputs.drift_mode }}
           HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'docs-drift-ok') }}
         run: |
@@ -53,4 +59,4 @@ jobs:
           [ "$HAS_LABEL" = "true" ] && override="--override"
           git diff --name-only "$BASE" "$HEAD" \
             | python3 .handbook-gates/scripts/check_drift.py \
-                --code-paths "$CODE_PATHS" --mode "$DRIFT_MODE" $override
+                --code-paths "$CODE_PATHS" --docs-paths "$DOCS_PATHS" --mode "$DRIFT_MODE" $override
