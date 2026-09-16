@@ -32,11 +32,13 @@ def matches(path: str, patterns: list[str]) -> bool:
 
 def main() -> None:
     args = sys.argv[1:]
-    code_paths, mode, override = "", "fail", False
+    code_paths, docs_paths, mode, override = "", "", "fail", False
     i = 0
     while i < len(args):
         if args[i] == "--code-paths":
             code_paths = args[i + 1]; i += 2
+        elif args[i] == "--docs-paths":
+            docs_paths = args[i + 1]; i += 2
         elif args[i] == "--mode":
             mode = args[i + 1]; i += 2
         elif args[i] == "--override":
@@ -46,19 +48,27 @@ def main() -> None:
     patterns = parse_paths(code_paths)
     if not patterns:
         sys.exit("--code-paths is verplicht")
+    # Waar de documentatie van deze spoke woont. Standaard `docs/`, want dat is
+    # het contract — maar niet elke spoke heeft hem daar. homelab schrijft zijn
+    # runbooks in `docusaurus/docs/` en had daarnaast een `docs/` die sinds
+    # augustus stilstond. De gate wees dus naar de dode boom: niet te halen door
+    # echte documentatie te schrijven, alleen door de verkeerde map aan te raken
+    # of het label te gebruiken. Een gate die je niet eerlijk kunt halen, leert
+    # mensen hem te omzeilen.
+    docs_patterns = parse_paths(docs_paths or "docs/")
 
     changed = [ln.strip() for ln in sys.stdin if ln.strip()]
     code_hits = [f for f in changed if matches(f, patterns)]
-    docs_touched = any(f == "docs" or f.startswith("docs/") for f in changed)
+    docs_touched = any(matches(f, docs_patterns) for f in changed)
 
     if not code_hits:
         print("drift-gate: geen geconfigureerde code-paden geraakt — n.v.t.")
         return
     if docs_touched:
-        print("drift-gate: code én docs/ bewegen mee — OK")
+        print(f"drift-gate: code én {docs_paths or 'docs/'} bewegen mee — OK")
         return
 
-    print("drift-gate: code-paden gewijzigd zónder docs/-wijziging:")
+    print(f"drift-gate: code-paden gewijzigd zónder wijziging in {docs_paths or 'docs/'}:")
     for f in code_hits:
         print(f"  - {f}")
     print("Afspraak: wie code wijzigt, werkt docs/ in dezelfde PR bij "
