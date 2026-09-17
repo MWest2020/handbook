@@ -9645,6 +9645,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-combinaties-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 02 — combinaties in het echte corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9723,10 +9758,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_3" id="__nav_18_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
             
   
   
@@ -9744,8 +9779,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10043,6 +10078,41 @@
     
   
     Runbook — optional API-key authentication
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reading the console
   
 
     
@@ -10422,6 +10492,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-measure-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-measure-combinations
+      
+    </span>
+  </a>
   
 </li>
       
@@ -11585,6 +11666,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-measure-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-measure-combinations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11711,6 +11803,25 @@ subset, not full YAML). <code>install-cli.sh --url</code> writes it for you.</p>
   if any file failed.</li>
 <li>The pipeline is <strong>PDF-only</strong>; non-PDF files come back as <code>error</code>.</li>
 </ul>
+<h2 id="wordsworth-measure-combinations"><code>wordsworth-measure-combinations</code></h2>
+<p>Counts, per declared combination, in how many documents <strong>every</strong> type occurs.
+Measure before claiming: without this number, any statement about quasi-
+identifiers in a corpus is a guess.</p>
+<pre><code class="language-bash">wordsworth-measure-combinations profiles/example-wi.json
+</code></pre>
+<p>It accepts a profile (it reads the <code>combinations</code> block) or a bare JSON list of
+<code>{types, reason}</code> declarations. Output is one line per combination:</p>
+<pre><code>    12  BSN + POSTCODE
+     0  DATE + GENDER + POSTCODE  [unobservable: DATE, GENDER]
+</code></pre>
+<p>Two things to read carefully.</p>
+<p>The count comes from the pseudonyms the pipeline <strong>minted</strong> per document
+(<code>document_pseudonyms</code>), not from re-running the detectors over the source text.
+That makes it a statement about what the pipeline did, on the text it saw.</p>
+<p><code>unobservable</code> names types the corpus carries nowhere, because the pipeline has
+no detector for them. "Does not occur" and "cannot be seen" are different
+answers, and a bare zero gives the reassuring one.</p>
+<p>Exit code 2 if the file declares no combinations.</p>
 <h2 id="examples">Examples</h2>
 <pre><code class="language-bash"># one-off, explicit URL
 wordsworth --url http://100.100.181.23:8000 health
@@ -11721,6 +11832,9 @@ wordsworth --url http://100.100.181.23:8000 ingest /data/corpus --batch 5
 # search and inspect
 wordsworth search &quot;vergunning&quot; --size 5
 wordsworth state 66c86e91-830f-4ed7-99cf-ac4407d262fb
+
+# how often does a declared combination actually occur?
+wordsworth-measure-combinations profiles/example-wi.json
 </code></pre>
 <p>See also the live, interactive API docs at <code>/docs</code> (Swagger) and <code>/redoc</code> on a
 running instance.</p>

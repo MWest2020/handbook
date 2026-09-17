@@ -9645,6 +9645,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-combinaties-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 02 — combinaties in het echte corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9723,10 +9758,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_3" id="__nav_18_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
             
   
   
@@ -9744,8 +9779,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10043,6 +10078,41 @@
     
   
     Runbook — optional API-key authentication
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reading the console
   
 
     
@@ -10459,6 +10529,17 @@
     <span class="md-ellipsis">
       
         PII-detection evaluation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-a-corpus-whose-answer-we-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating a corpus whose answer we know
       
     </span>
   </a>
@@ -11595,6 +11676,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#generating-a-corpus-whose-answer-we-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating a corpus whose answer we know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-real-corpus-and-what-it-can-and-cannot-settle" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11680,6 +11772,66 @@ against a gold corpus.</p>
   service failure is a hard error, never an empty result. Read-only: nothing is
   ingested, indexed or audited.</li>
 </ul>
+<h2 id="generating-a-corpus-whose-answer-we-know">Generating a corpus whose answer we know</h2>
+<p>Measurement 01 ran on 31 documents: enough to find a bug, too little to carry a
+percentage. <code>scripts/eval/generate_ground_truth.py</code> writes ~500 documents and,
+from the same run, everything needed to score them:</p>
+<pre><code class="language-bash">python scripts/eval/generate_ground_truth.py /tmp/gt --count 500
+python -m wordsworth.eval.pii_run /tmp/gt/gold.jsonl --layers deterministic
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>read by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>documents/*.txt</code></td>
+<td>ingestion</td>
+</tr>
+<tr>
+<td><code>gold.jsonl</code></td>
+<td><code>wordsworth.eval.pii_run</code></td>
+</tr>
+<tr>
+<td><code>queries.tsv</code> + <code>qrels.txt</code></td>
+<td><code>wordsworth.eval.run</code></td>
+</tr>
+<tr>
+<td><code>manifest.json</code></td>
+<td>what was seeded, and the caveat</td>
+</tr>
+</tbody>
+</table>
+<p>One generation, two evaluations, the same documents — two corpora give two
+numbers that cannot be held next to each other.</p>
+<p>The offsets are recorded by the step that writes the text, not by an annotation
+pass over it afterwards. Two sources of truth about the same 500 documents
+disagree quietly, and in the direction that flatters the score.</p>
+<p><strong>Seeded on purpose</strong>, from what measurement 01 actually met: postcodes behind
+<code>Postbus</code> (in the text, <em>not</em> in the answers — an organisation's contact address
+is not personal data), text arriving with a token-shaped string in it, and the
+full <code>GENDER + DATE + POSTCODE</code> quasi-identifier in part of the corpus.</p>
+<p><code>GENDER</code> and a bare year of birth are carried but are deliberately <strong>not gold</strong>:
+no detector emits them, and scoring a detector on what it never claimed to find
+measures us rather than it.</p>
+<p>Measured on 2026-09-17 over 500 generated documents, deterministic layer only:</p>
+<pre><code>documents=500  gold_entities=1700  leaks=500
+overall/span: P=1.000 R=0.706 F1=0.828
+  BSN P=1.000 R=1.000 | EMAIL P=1.000 R=1.000
+  IBAN P=1.000 R=1.000 | POSTCODE P=1.000 R=1.000
+  PERSON P=0.000 R=0.000  (fn=500)
+</code></pre>
+<p>The 500 leaks are all PERSON: the deterministic layer has no name detector, so
+this is a finding about the <em>absence</em> of the GLiNER layer in that run, not about
+its quality. The 123 seeded <code>Postbus</code> postcodes produced <strong>zero</strong> false
+positives — the exception previously demonstrated on two lines of text holds at
+corpus scale.</p>
+<p>And the limit, which also travels inside <code>manifest.json</code>: this text was written
+by us and is more regular than administrative reality. A score here is a lower
+bound for the machinery, not a prediction for production.</p>
 <h2 id="a-real-corpus-and-what-it-can-and-cannot-settle">A real corpus, and what it can and cannot settle</h2>
 <p>The synthetic collections above settle the <em>machinery</em>: the state machine, the
 metrics, the id matching. They cannot settle whether the straat survives a

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/how-to/dataset-pseudonymisation/">
       
       
-        <link rel="prev" href="../api-auth/">
+        <link rel="prev" href="../console/">
       
       
         <link rel="next" href="../detection-lists/">
@@ -9645,6 +9645,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-combinaties-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 02 — combinaties in het echte corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9723,10 +9758,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_3" id="__nav_18_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
             
   
   
@@ -9744,8 +9779,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10069,6 +10104,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reading the console
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -10172,6 +10242,17 @@
     <span class="md-ellipsis">
       
         Audit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#declaring-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaring combinations
       
     </span>
   </a>
@@ -11562,6 +11643,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#declaring-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaring combinations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#re-identification" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11648,6 +11740,29 @@ dataset artefact (registered once per content+profile hash, <code>object_key</co
 pseudonyms, <code>rows_without_record_key</code>, warned columns — never a cell value.
 Dataset artefacts stay in state <code>registered</code> (they are never profiled or
 extracted), so <code>wordsworth_documents_total{state="registered"}</code> includes them.</p>
+<h2 id="declaring-combinations">Declaring combinations</h2>
+<p>Some types identify nobody alone and a person together. <em>Woman, born 1978,
+postcode 6541 EX</em> contains no direct identifier and still often points at one
+person — the classic quasi-identifier, and the reason "we removed the names" has
+not been a valid claim for thirty years.</p>
+<p>A profile can name such a set, with a reason:</p>
+<pre><code class="language-json">&quot;combinations&quot;: [
+  {&quot;types&quot;: [&quot;GENDER&quot;, &quot;DATE&quot;, &quot;POSTCODE&quot;],
+   &quot;reason&quot;: &quot;gender + year of birth + postcode narrows a Dutch municipality to a handful of people&quot;}
+]
+</code></pre>
+<p>The reason is required. A bare list of types is a rule nobody can review: in a
+year, the only way to judge whether it still holds is to know what it was for.</p>
+<p>A run reports, in <code>combinations</code>, every declared set of which it pseudonymises
+<strong>no</strong> member — breaking one is enough, because the combination identifies only
+while all its parts line up. It is a finding, not a refusal: whether a set
+identifies depends on the population and the context, and that is the
+controller's call. A tool that refuses on its own judgement teaches people to
+route around it.</p>
+<p>What the report does <strong>not</strong> say is whether those types occur in your data. A
+profile knows the columns it handles, not what stands in the others. For the
+corpus side of that question see <code>wordsworth-measure-combinations</code> in
+<a href="../../reference/cli/">the CLI reference</a>.</p>
 <h2 id="re-identification">Re-identification</h2>
 <p>Dataset tokens live in the same mapping store as document tokens. A grant in the
 same domain reveals them through any document text that contains them; a
@@ -11661,6 +11776,9 @@ which appear in no document) is a follow-up change.</p>
 <li>Empty selected cells stay empty (no pseudonym is invented for a missing value).</li>
 <li><code>validate_pii</code> covers only the deterministic detectors (BSN/IBAN/email); an
   unselected name or address column is not warned about.</li>
+<li>Adding <code>combinations</code> to a profile changes its <code>profile_sha256</code>, because the
+  field is part of the hashed profile. Audit records from before the change keep
+  their old hash.</li>
 </ul>
 
 

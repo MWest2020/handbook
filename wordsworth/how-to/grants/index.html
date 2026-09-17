@@ -9645,6 +9645,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-combinaties-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 02 — combinaties in het echte corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9723,10 +9758,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_3" id="__nav_18_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
             
   
   
@@ -9744,8 +9779,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10072,6 +10107,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reading the console
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../dataset-pseudonymisation/" class="md-nav__link">
         
   
@@ -10286,6 +10356,34 @@
     <span class="md-ellipsis">
       
         Use a grant to reveal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use a grant to reveal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-caller-must-be-the-recipient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The caller must be the recipient
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-token-only-resolves-for-its-own-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A token only resolves for its own document
       
     </span>
   </a>
@@ -11636,6 +11734,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Use a grant to reveal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-caller-must-be-the-recipient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The caller must be the recipient
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-token-only-resolves-for-its-own-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A token only resolves for its own document
+      
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -11818,6 +11944,48 @@ implicitly by any level.</p>
 <p>Only the granted types are revealed; every other type stays pseudonymised. The
 access is audited (actor = grant recipient, plus the <code>grant_id</code>), never logging
 clear values.</p>
+<h3 id="the-caller-must-be-the-recipient">The caller must be the recipient</h3>
+<p>With caller authentication enabled (<code>WORDSWORTH_API_KEYS</code> set), the endpoint
+refuses a caller who is not the grant's recipient — same 403, no text revealed.</p>
+<p>This matters more than it looks. Until 2026-09-17 the recipient was recorded but
+never checked, which made a <code>grant_id</code> a bearer token: one leak from a log line,
+a ticket or a screenshot handed clear PII to whoever found it.</p>
+<p>The comparison is <strong>exact</strong>. <code>Console</code> is not <code>console</code>, <code>console-2</code> is not
+<code>console</code>. A recipient is a label from the same vocabulary as the caller, and a
+reveal is the wrong place to be generous. Only surrounding whitespace is ignored.</p>
+<p>Without caller authentication there is no caller to decide on and nothing
+changes — the documented tailnet-internal mode.</p>
+<blockquote>
+<p><strong>Deploy-stap.</strong> Turning auth on (or upgrading with it already on) means an
+existing grant whose recipient is not the caller's label now gets 403. Check
+the active grants before this goes live:
+<code>curl $API/grants/&lt;id&gt;</code> and compare <code>recipient</code> with the label behind the key
+that uses it.</p>
+</blockquote>
+<h2 id="a-token-only-resolves-for-its-own-document">A token only resolves for its own document</h2>
+<p>Since 2026-09-17 a reveal resolves only pseudonyms registered for the document
+being revealed. Anything else is left in place, silently.</p>
+<p>The mapping store is global on purpose — one value, one token, across documents,
+which is what makes pseudonymised text searchable. The cost was that a reveal
+resolved any token it met, whoever minted it. <code>neutralise_foreign_tokens</code> closes
+the entrance an attacker can walk; this closes the exit, and an exit is cheaper
+to guard: there is one reveal path and an unbounded number of ways text enters a
+system.</p>
+<p>Refusals are silent by design. Reporting which tokens were refused would answer
+"does this value exist elsewhere in the corpus", and that answer is itself an
+oracle.</p>
+<blockquote>
+<p><strong>Deploy-stap, vóór dit live gaat.</strong> A document with no registry rows reveals
+nothing. Documents anonymised before this change have none, so run the backfill
+as part of the rollout:</p>
+<p><code>sh
+wordsworth-backfill-pseudonyms --dry-run   # telt eerst
+wordsworth-backfill-pseudonyms</code></p>
+<p>Backfilled rows are marked <code>backfilled</code>, not <code>minted</code>: reading stored text
+cannot tell whether a token was minted there or arrived before the guard
+existed. That difference should be visible to whoever investigates an incident,
+not assumed away.</p>
+</blockquote>
 <h2 id="notes">Notes</h2>
 <ul>
 <li>Grant routes mount only when the deployment runs in reversible mode (a grant
