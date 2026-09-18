@@ -10000,6 +10000,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0007-one-token-per-type/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0007: Eén token per type, ook waar een combinatie identificeert
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -10492,6 +10527,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-backfill-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-dossier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-backfill-filenames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-filenames
+      
+    </span>
+  </a>
   
 </li>
       
@@ -11666,6 +11723,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-backfill-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-dossier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-backfill-filenames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-filenames
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-measure-combinations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11803,6 +11882,40 @@ subset, not full YAML). <code>install-cli.sh --url</code> writes it for you.</p>
   if any file failed.</li>
 <li>The pipeline is <strong>PDF-only</strong>; non-PDF files come back as <code>error</code>.</li>
 </ul>
+<h2 id="wordsworth-backfill-dossier"><code>wordsworth-backfill-dossier</code></h2>
+<p>Places documents that predate dossiers into one named dossier, so a scoped search
+can still reach them.</p>
+<pre><code class="language-bash">wordsworth-backfill-dossier &quot;corpus-2026-09&quot; --dry-run
+wordsworth-backfill-dossier &quot;corpus-2026-09&quot;
+</code></pre>
+<p>A scoped search answers only from the dossiers in scope, so documents belonging
+to none are invisible — and every document ingested before dossiers existed
+belongs to none. A scope that makes the existing corpus unfindable is not a
+migration but a loss.</p>
+<p>Name them for where they came from rather than pretending they were a case. They
+arrived as one corpus, in one go.</p>
+<p>It also <strong>updates the index</strong>, because the index holds the dossiers per document:
+a membership the index does not know about is a document a scoped search still
+cannot reach, and then the command would not have done the one thing it exists
+for. <code>--no-index</code> skips that and says plainly that a reindex stays due.</p>
+<p>Run it <strong>after</strong> deploying the new code, not before: in between, the existing
+documents are in no dossier while the new code already requires a scope.</p>
+<h2 id="wordsworth-backfill-filenames"><code>wordsworth-backfill-filenames</code></h2>
+<p>Gives existing documents back the name their file arrived under, by content hash.</p>
+<pre><code class="language-bash">wordsworth-backfill-filenames /data/corpus --dry-run
+wordsworth-backfill-filenames /data/corpus
+</code></pre>
+<p>Ingestion has always been content-addressed (<code>documents/&lt;sha256&gt;</code>) — the right
+identity, and unreadable. Documents ingested before the <code>filename</code> column existed
+have no name in the database, but the bytes on disk still do, and the hash is the
+bridge.</p>
+<p>It does not guess. A document whose bytes are not in the directory keeps no name,
+and the console then says <code>naamloos (&lt;first 8 of the hash&gt;)</code> rather than printing
+a hash where a name belongs. A name already recorded is kept — that one came from
+the caller at ingest time, which beats a file that happens to sit in a directory
+today; <code>--overwrite</code> says otherwise.</p>
+<p>Reports four numbers: named, kept, documents without a file, files without a
+document.</p>
 <h2 id="wordsworth-measure-combinations"><code>wordsworth-measure-combinations</code></h2>
 <p>Counts, per declared combination, in how many documents <strong>every</strong> type occurs.
 Measure before claiming: without this number, any statement about quasi-
@@ -11830,7 +11943,7 @@ wordsworth --url http://100.100.181.23:8000 health
 wordsworth --url http://100.100.181.23:8000 ingest /data/corpus --batch 5
 
 # search and inspect
-wordsworth search &quot;vergunning&quot; --size 5
+wordsworth search &quot;vergunning&quot; --dossier zaak-a --size 5
 wordsworth state 66c86e91-830f-4ed7-99cf-ac4407d262fb
 
 # how often does a declared combination actually occur?

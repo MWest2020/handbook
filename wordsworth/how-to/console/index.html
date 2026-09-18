@@ -10000,6 +10000,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0007-one-token-per-type/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0007: Eén token per type, ook waar een combinatie identificeert
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -10196,6 +10231,39 @@
     <span class="md-ellipsis">
       
         What the pages show
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#look-and-feel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Look and feel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Searching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revealing
       
     </span>
   </a>
@@ -11610,6 +11678,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#look-and-feel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Look and feel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Searching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revealing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-deliberately-cannot-do" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11662,8 +11763,16 @@ on an open port, and no screen beats a screen without a lock.</p>
 <pre><code class="language-bash">export WORDSWORTH_API_KEYS=&quot;mark:&lt;key&gt;&quot;
 uvicorn wordsworth.serve:app
 </code></pre>
-<p>Then open <code>/console/login</code> and enter the key. It is stored in an HttpOnly,
-SameSite=strict cookie for eight hours.</p>
+<p>Then open the hostname. Anything you type lands somewhere useful: <code>/</code> goes to
+the console, an unknown path goes to the console, and any page you are not
+logged in for goes to <code>/console/login</code>. Enter the key there; it is stored in an
+HttpOnly, SameSite=strict cookie for eight hours. <code>/console/logout</code> clears it.</p>
+<p>A wrong key is refused at the form, not stored — otherwise a typo hands you a
+cookie that leads back to the same refusal, with the added confusion of having
+apparently logged in.</p>
+<p>Only a request that asks for HTML is redirected. An API client keeps getting the
+unchanged 401 with its JSON body: a program handed a 303 to an HTML form will
+try to parse the form.</p>
 <p>The cookie is a second <strong>transport</strong> for the key, not a second check: the same
 middleware, the same key set, the same caller label. A browser cannot set
 <code>X-API-Key</code> on a plain navigation, and putting the key in a query string would
@@ -11672,8 +11781,11 @@ leak it into logs, history and referrers.</p>
 page that asks for one — and stays subject to rate limiting, because that is the
 one route where guessing pays.</p>
 <h2 id="what-the-pages-show">What the pages show</h2>
-<p><strong><code>/console</code></strong> lists documents with their state and the PII types found, most
-recently touched first. The types come from the pseudonyms the pipeline <em>minted</em>
+<p><strong><code>/console</code></strong> lists documents by the name they arrived under, with their state
+and the PII types found, most recently touched first. A document ingested before
+names were recorded shows as <code>naamloos (&lt;first 8 of the hash&gt;)</code> —
+<code>wordsworth-backfill-filenames</code> can give those their names back where the files
+are still on disk. The full content hash is never shown as if it were a name. The types come from the pseudonyms the pipeline <em>minted</em>
 per document, not from re-running the detectors over the source text: that would
 answer "what would the detectors say today", which is a different question from
 "what did the pipeline do".</p>
@@ -11689,12 +11801,61 @@ is established by nobody.</p>
 <p>A type no detector emits is marked <strong>"niet te zien"</strong> rather than counted as
 zero. That zero would read as "does not occur" when the answer is "cannot be
 established here".</p>
+<h2 id="look-and-feel">Look and feel</h2>
+<p>The console carries the same design as the public demo
+(<code>MWest2020/wordsworth-demo</code>): the same palette in light and dark, the same
+families, the same token chips. Two different looks for one story is a missed
+opportunity, and it makes the working thing look less finished than the
+illustration of it.</p>
+<p>The fonts are served from <code>/console/static</code>, not from a CDN. This is the screen
+where wordsworth's claim to sovereignty is demonstrated and also the screen
+people inspect; a page fetching its letters from Google refutes that claim in the
+network inspector, whatever the surrounding text says. Nine Latin faces, 224 KB.</p>
+<p>That subtree is reachable without a key — the login page is too, and a login
+screen rendered without its letters is a broken door. The exemption covers that
+subtree only.</p>
+<h2 id="searching">Searching</h2>
+<p><code>/console/search</code> runs over the same index the API serves, <strong>within a dossier</strong>.
+Picking one is compulsory; "alle dossiers" is possible but has to be said. A
+forgotten scope must never mean the widest possible answer — that is the whole
+point of scoping.</p>
+<p>It shows per hit its score and a fragment <strong>of the stored pseudonymised text</strong>. A fragment taken from
+a source document would look identical and prove the opposite of what this page
+is for.</p>
+<p>The offered terms are examples, not a promise: whether one matches depends on the
+corpus that happens to be loaded. A term with no hits says so; an index that is
+down says <em>that</em>, rather than returning an empty list that reads as "nothing
+matched".</p>
+<h2 id="revealing">Revealing</h2>
+<p>The document page lists the <strong>active</strong> grants that apply to it — including grants
+issued to someone else. That is deliberate: the screen offers it, the door refuses it, and
+watching the refusal is the demonstration that the keys are role-bound.</p>
+<p>Revoked grants are counted, not listed. One authorises nothing, and a row per
+piece of history buries the grant that can actually be used — six dead ones from
+a test in August did exactly that. The count stays, because "revocable" is half
+the claim and a screen showing no trace of it quietly drops that half.</p>
+<p>Per grant there is a switch per PII type. These are not decoration: the reveal
+request carries the checked types and <code>authorize()</code> intersects them with the
+grant.</p>
+<p>The page has no way out of its own. Revealing calls the existing
+<code>POST /documents/{id}/reveal</code> with the cookie you already hold — the same
+<code>authorize()</code>, the same recipient binding, the same audit record as for any
+other caller. There is no authorisation code, no key handling and no separate
+trail in the console. The rule that matters is not "the console must not reveal"
+but "the console must not have a second door".</p>
+<p>The document's reveal history sits under the button. An audit trail nobody looks
+at is a promise, not a control; putting it on the same page is what makes it one.
+It separates <strong>resolved</strong> from <strong>requested</strong>: a token minted under a key this
+deployment no longer holds resolves to nothing, and one list would make that look
+identical to a reveal nobody asked anything of.</p>
 <h2 id="what-it-deliberately-cannot-do">What it deliberately cannot do</h2>
 <p>It never reveals. Re-identification has exactly one door: the grant-gated,
 audited <code>reveal</code> endpoint (see <a href="../grants/">grants</a>). An inspection screen that
 may also reveal is a second door with a friendlier name, and it is the one
 nobody audits.</p>
-<p>It does not edit documents. Reading, and recording a combination.</p>
+<p>It does not edit documents, and it cannot issue grants — that right belongs to
+the issuer labels. When a document has no grant, the page says so and says how to
+make one.</p>
 <h2 id="a-caveat-worth-seeing-on-screen">A caveat worth seeing on screen</h2>
 <p>If the deployment runs without the GLiNER/OpenAnonymiser layer, names stay in
 the clear in the stored text — and the console shows them, because it shows what
