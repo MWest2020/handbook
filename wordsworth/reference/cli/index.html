@@ -10105,6 +10105,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/access-identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging in as a person instead of a keyring
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/api-auth/" class="md-nav__link">
         
   
@@ -10280,6 +10315,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/index-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/reversible-backfill/" class="md-nav__link">
         
   
@@ -10298,6 +10368,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onderwerpen van een dossier
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -10527,6 +10632,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-dossier-uit-herkomst and wordsworth-dossier-hernoem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-access-preflight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-access-preflight
+      
+    </span>
+  </a>
   
 </li>
       
@@ -11723,6 +11850,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-dossier-uit-herkomst and wordsworth-dossier-hernoem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-access-preflight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-access-preflight
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-dossier" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11882,6 +12031,41 @@ subset, not full YAML). <code>install-cli.sh --url</code> writes it for you.</p>
   if any file failed.</li>
 <li>The pipeline is <strong>PDF-only</strong>; non-PDF files come back as <code>error</code>.</li>
 </ul>
+<h2 id="wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem"><code>wordsworth-dossier-uit-herkomst</code> and <code>wordsworth-dossier-hernoem</code></h2>
+<p>Correcting a classification, without guessing.</p>
+<pre><code class="language-bash">wordsworth-dossier-uit-herkomst herkomst.jsonl --weg-uit &quot;corpus-2026-09&quot; --dry-run
+wordsworth-dossier-hernoem &quot;corpus-2026-09&quot; &quot;Gooise Meren Woo-publicatie 2022&quot;
+</code></pre>
+<p><code>uit-herkomst</code> puts each document into the dossier its <strong>recorded provenance</strong>
+names — <code>scripts/eval/fetch_woo_corpus.py</code> writes one line per document with the
+source URL and the decision it belongs to. A document with no provenance entry is
+<strong>not assigned</strong> and is counted. A classification derived from a date or a text
+pattern is one nobody can retell afterwards, and that is worse than none.</p>
+<p>Both commands <strong>update the search index</strong>, because the dossiers live there per
+document: a membership the index does not know about is a document a scoped
+search cannot reach. They update <em>only</em> that field — writing the whole document
+back drops the embedding of any caller who forgets <code>vector=</code>, which is exactly
+what cost 770 documents their vectors on 2026-09-18.</p>
+<p>A document that is not in the index at all is <strong>reported, not created</strong>. It never
+got through the straat, and indexing it here would bury that under this.</p>
+<p><code>--weg-uit</code> removes them from a dossier they were wrongly placed in, once they
+are somewhere else. If that leaves documents belonging nowhere at all, the count
+is reported — such a document is invisible to every scoped search, and the moment
+it happens is the moment someone can still act on it.</p>
+<p><code>hernoem</code> moves no document: the identity is the dossier, not the word used for
+it.</p>
+<p>The provenance file may contain duplicate lines — the fetcher opens it with
+<code>append</code>, so running it twice duplicates every entry. Both commands key on the
+filename, so that is harmless; it is only a reason not to count lines.</p>
+<h2 id="wordsworth-access-preflight"><code>wordsworth-access-preflight</code></h2>
+<p>Reports the grants that go inert once callers are identities instead of key
+labels, and changes nothing.</p>
+<pre><code class="language-bash">wordsworth-access-preflight
+</code></pre>
+<p>A grant names who may reveal and the caller must be that recipient. A recipient
+that is a key label stops matching anybody the moment callers are people. Run
+this <strong>before</strong> switching, not after — see
+<a href="../../how-to/access-identity/">access identity</a>.</p>
 <h2 id="wordsworth-backfill-dossier"><code>wordsworth-backfill-dossier</code></h2>
 <p>Places documents that predate dossiers into one named dossier, so a scoped search
 can still reach them.</p>
@@ -11898,6 +12082,9 @@ arrived as one corpus, in one go.</p>
 a membership the index does not know about is a document a scoped search still
 cannot reach, and then the command would not have done the one thing it exists
 for. <code>--no-index</code> skips that and says plainly that a reindex stays due.</p>
+<p><code>--dry-run</code> does <strong>not</strong> touch the index. The database can be rolled back; the
+index cannot. The first dry run against production wrote 770 documents before
+this was fixed, which made "dry" a lie.</p>
 <p>Run it <strong>after</strong> deploying the new code, not before: in between, the existing
 documents are in no dossier while the new code already requires a scope.</p>
 <h2 id="wordsworth-backfill-filenames"><code>wordsworth-backfill-filenames</code></h2>

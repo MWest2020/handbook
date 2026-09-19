@@ -10107,6 +10107,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../access-identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging in as a person instead of a keyring
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-auth/" class="md-nav__link">
         
   
@@ -10271,6 +10306,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#marking-which-value-was-revealed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marking which value was revealed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-browser-is-allowed-to-do-with-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the browser is allowed to do with it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-deliveries-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two deliveries at once
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-deliberately-cannot-do" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10413,6 +10481,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../index-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reversible-backfill/" class="md-nav__link">
         
   
@@ -10431,6 +10534,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onderwerpen van een dossier
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -11711,6 +11849,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#marking-which-value-was-revealed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marking which value was revealed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-browser-is-allowed-to-do-with-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the browser is allowed to do with it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-deliveries-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two deliveries at once
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-deliberately-cannot-do" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11770,11 +11941,19 @@ HttpOnly, SameSite=strict cookie for eight hours. <code>/console/logout</code> c
 <p>A wrong key is refused at the form, not stored — otherwise a typo hands you a
 cookie that leads back to the same refusal, with the added confusion of having
 apparently logged in.</p>
+<p>Only a path that matches <strong>no route</strong> is redirected. A 404 that a route itself
+answers — an unknown document, an unknown grant — stays a 404, also for a
+browser: it is an answer about what you asked for, and hiding it behind a
+redirect makes "does not exist" invisible and lets a monitoring check read the
+303 as healthy.</p>
 <p>Only a request that asks for HTML is redirected. An API client keeps getting the
 unchanged 401 with its JSON body: a program handed a 303 to an HTML form will
 try to parse the form.</p>
 <p>The cookie is a second <strong>transport</strong> for the key, not a second check: the same
-middleware, the same key set, the same caller label. A browser cannot set
+middleware, the same key set, the same caller label. With an identity provider in
+front (see <a href="../access-identity/">access identity</a>), a presented key still wins —
+logging in here is how you choose the key route, and <code>/console/logout</code> hands the
+identity back. A browser cannot set
 <code>X-API-Key</code> on a plain navigation, and putting the key in a query string would
 leak it into logs, history and referrers.</p>
 <p><code>/console/login</code> is exempt from authentication — you cannot bring a key to the
@@ -11848,8 +12027,47 @@ at is a promise, not a control; putting it on the same page is what makes it one
 It separates <strong>resolved</strong> from <strong>requested</strong>: a token minted under a key this
 deployment no longer holds resolves to nothing, and one list would make that look
 identical to a reveal nobody asked anything of.</p>
+<h2 id="marking-which-value-was-revealed">Marking which value was revealed</h2>
+<p>After a reveal the page marks which value replaced which token. It works that
+out by anchoring on the literal text around them, which does not change.</p>
+<p>If there is <strong>more than one way</strong> to read the text, it marks nothing and shows
+the revealed text plain. That case is real: when a revealed value happens to
+contain the same literal that follows it, the old code took the first match and
+labelled <code>Piet over 123456782</code> as a BSN. The reader is there to judge whether the
+pseudonymisation is right, so a wrong label is worse than none.</p>
+<h2 id="what-the-browser-is-allowed-to-do-with-it">What the browser is allowed to do with it</h2>
+<p>The console sends <code>Content-Security-Policy</code> with <code>frame-ancestors 'none'</code>, plus
+<code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code> and
+<code>Referrer-Policy: no-referrer</code>. Only on <code>/console</code> — the API has no browser and
+would get nothing from a CSP but surprises.</p>
+<p>Framing is the one that matters. Without it, someone can put
+<code>/console/documents/&lt;id&gt;</code> in an invisible iframe and slide the reveal button
+under a cursor. They cannot read the answer — CORS is closed — but <strong>the reveal
+happens, and the audit trail names the victim</strong>. An append-only trail with a
+false name in it cannot be repaired.</p>
+<p>A cross-site <code>POST</code> to <code>/console</code> is refused on its <code>Origin</code>. Logging in is what
+sets the caller label, so a page elsewhere could otherwise switch a visitor's
+label to a key the attacker knows: not a privilege gain — it is someone else's
+key — but false attribution, and <code>Path=/</code> makes it apply to the whole API.</p>
+<p>A request with no <code>Origin</code> at all is allowed. curl, the CLI and the tests send
+none, and locking them out would cost more than the hole. That is also the limit
+of this defence: it stops a browser, not a script — and a browser is exactly what
+the hole needed.</p>
+<h2 id="two-deliveries-at-once">Two deliveries at once</h2>
+<p>Ingesting into a dossier that does not exist yet creates it. Two requests doing
+that at the same moment used to make one of them wait on the unique index for as
+long as the other took — and in <code>/ingest</code> that transaction spans the whole
+straat for a document — and then fail with a 500.</p>
+<p>The insert now sits in a savepoint: if it collides, only that savepoint rolls
+back and the loser reads what the winner just wrote. The savepoint is not there
+to survive the collision but to save the rest of the session, which is carrying
+half a document's work.</p>
 <h2 id="what-it-deliberately-cannot-do">What it deliberately cannot do</h2>
-<p>It never reveals. Re-identification has exactly one door: the grant-gated,
+<p>It reads the corpus through the same gate as <code>/documents/{id}/anonymized</code> and
+<code>/export</code>: a caller that <code>WORDSWORTH_CORPUS_READ_LABELS</code> refuses there is refused
+here. Until 2026-09-18 it was not, which made the console precisely the second
+door its own docstring forbids.</p>
+<p>It never reveals on its own authority. Re-identification has exactly one door: the grant-gated,
 audited <code>reveal</code> endpoint (see <a href="../grants/">grants</a>). An inspection screen that
 may also reveal is a second door with a friendlier name, and it is the one
 nobody audits.</p>

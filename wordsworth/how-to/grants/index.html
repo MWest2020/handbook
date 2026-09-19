@@ -14,7 +14,7 @@
         <link rel="prev" href="../detection-lists/">
       
       
-        <link rel="next" href="../reversible-backfill/">
+        <link rel="next" href="../index-mapping/">
       
       
         
@@ -10107,6 +10107,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../access-identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging in as a person instead of a keyring
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-auth/" class="md-nav__link">
         
   
@@ -10399,6 +10434,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#three-type-lists-and-why-they-differ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three type lists, and why they differ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-caller-must-be-the-recipient" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10452,6 +10498,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../index-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reversible-backfill/" class="md-nav__link">
         
   
@@ -10470,6 +10551,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onderwerpen van een dossier
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -11773,6 +11889,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#three-type-lists-and-why-they-differ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three type lists, and why they differ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-caller-must-be-the-recipient" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11979,6 +12106,36 @@ implicitly by any level.</p>
 <p>Only the granted types are revealed; every other type stays pseudonymised. The
 access is audited (actor = grant recipient, plus the <code>grant_id</code>), never logging
 clear values.</p>
+<h3 id="three-type-lists-and-why-they-differ">Three type lists, and why they differ</h3>
+<table>
+<thead>
+<tr>
+<th>veld</th>
+<th>betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>authorized_types</code></td>
+<td>wat de grant toestond voor dit verzoek</td>
+</tr>
+<tr>
+<td><code>resolved_types</code></td>
+<td>wat er werkelijk uit de mappingstore kwam</td>
+</tr>
+<tr>
+<td><code>withheld_types</code></td>
+<td>gevraagde types die de grant niet toestond</td>
+</tr>
+</tbody>
+</table>
+<p><code>resolved_types</code> is kleiner dan <code>authorized_types</code> wanneer een toegestaan type
+niet in dit document voorkomt, of wanneer een token gemunt is onder een sleutel
+die deze installatie niet meer heeft. Het veld wordt overgenomen uit de
+auditregel die de onthulling schreef (<code>types</code>), zodat antwoord en spoor niet
+uiteen kunnen lopen; <code>requested_types</code> daar is <code>authorized_types</code> hier.</p>
+<p><code>revealed_types</code> is <code>authorized_types</code> onder zijn oude naam. Het blijft staan
+omdat clients het lezen — wie nieuw leest neemt een van de twee precieze namen.</p>
 <h3 id="the-caller-must-be-the-recipient">The caller must be the recipient</h3>
 <p>With caller authentication enabled (<code>WORDSWORTH_API_KEYS</code> set), the endpoint
 refuses a caller who is not the grant's recipient — same 403, no text revealed.</p>
