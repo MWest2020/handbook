@@ -1867,6 +1867,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../Wanderer/explanation/accountability-boundaries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accountability: the passive ceiling
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../Wanderer/explanation/agent/" class="md-nav__link">
         
   
@@ -1980,10 +2015,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_5" >
         
           
-          <label class="md-nav__link" for="__nav_5_3_4" id="__nav_5_3_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_3_5" id="__nav_5_3_5_label" tabindex="0">
             
   
   
@@ -2001,8 +2036,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_3_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10347,6 +10382,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="What it deliberately cannot do">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#een-vraag-stellen-niet-een-trefwoord-typen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Een vraag stellen, niet een trefwoord typen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#die-lijst-gaat-over-namen-en-namen-veranderen-met-de-deur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Die lijst gaat over namen, en namen veranderen met de deur
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -10534,6 +10597,76 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rollen: wie ziet welke PII
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samenvattingen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Samenvattingen per document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -11890,6 +12023,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="What it deliberately cannot do">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#een-vraag-stellen-niet-een-trefwoord-typen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Een vraag stellen, niet een trefwoord typen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#die-lijst-gaat-over-namen-en-namen-veranderen-met-de-deur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Die lijst gaat over namen, en namen veranderen met de deur
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -12067,6 +12228,47 @@ half a document's work.</p>
 <code>/export</code>: a caller that <code>WORDSWORTH_CORPUS_READ_LABELS</code> refuses there is refused
 here. Until 2026-09-18 it was not, which made the console precisely the second
 door its own docstring forbids.</p>
+<h3 id="een-vraag-stellen-niet-een-trefwoord-typen">Een vraag stellen, niet een trefwoord typen</h3>
+<p>De zoekpagina embedt de <strong>vraag zelf</strong> en legt hem naast de lexicale treffers
+(<code>hybrid_search</code>: RRF voor de kandidaten, cosinus voor de volgorde). Dat is wat
+"stel een vraag" van "typ een trefwoord" onderscheidt — een vraag bevat zelden
+de woorden die in het antwoord staan. <em>"Redenen tot afkeuring?"</em> vindt een stuk
+waarin "afgewezen" staat; BM25 vindt daar niets.</p>
+<p>Draait een instantie zonder embedder, dan blijft het BM25 <strong>en zegt het scherm
+dat</strong>. Stil terugvallen op iets zwakkers is erger dan het niet hebben: dan wijt
+een lezer de magere uitslag aan het corpus in plaats van aan de opstelling.</p>
+<p>De dossiergrens en het onderwerp-filter gelden onverkort: een vraag stellen is
+geen andere zoekopdracht, alleen een andere manier om er een te formuleren.</p>
+<h3 id="die-lijst-gaat-over-namen-en-namen-veranderen-met-de-deur">Die lijst gaat over namen, en namen veranderen met de deur</h3>
+<p><code>WORDSWORTH_CORPUS_READ_LABELS</code> bevat <strong>callerlabels</strong>, en wat een callerlabel
+ís hangt af van hoe er ingelogd wordt:</p>
+<table>
+<thead>
+<tr>
+<th>aanmelding</th>
+<th>callerlabel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WORDSWORTH_API_KEYS</code></td>
+<td>het label vóór de dubbele punt (<code>mark:sk_live_…</code> → <code>mark</code>)</td>
+</tr>
+<tr>
+<td>Cloudflare Access</td>
+<td>het <strong>geverifieerde e-mailadres</strong> uit het JWT</td>
+</tr>
+</tbody>
+</table>
+<p>Zet je de ene aanmelding om naar de andere, dan <strong>verandert elk label</strong> en
+weigert de lijst iedereen. Dat gebeurde op 2026-09-19: de lijst stond nog op
+<code>console</code> uit het sleuteltijdperk, terwijl de callers sinds de Access-uitrol
+e-mailadressen waren. Gevolg: de hele console gaf 403 aan iedereen, ook aan de
+beheerder.</p>
+<p>Een 403 op een browserpad toont daarom nu een pagina die zegt ónder welke naam
+je binnenkwam. Zonder dat weet niemand — de gebruiker niet en de beheerder niet
+— welke naam er dan wél op de lijst moet. Welke namen er al op staan, zegt de
+pagina bewust niet.</p>
 <p>It never reveals on its own authority. Re-identification has exactly one door: the grant-gated,
 audited <code>reveal</code> endpoint (see <a href="../grants/">grants</a>). An inspection screen that
 may also reveal is a second door with a friendlier name, and it is the one
