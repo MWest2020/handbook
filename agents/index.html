@@ -3382,6 +3382,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hoe-de-vloot-samenwerkt-hub-en-spokes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hoe de vloot samenwerkt: hub en spokes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11993,6 +12004,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hoe-de-vloot-samenwerkt-hub-en-spokes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hoe de vloot samenwerkt: hub en spokes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12036,7 +12058,7 @@
 
 <h1 id="agents-canonieke-registry">Agents — canonieke registry</h1>
 <p>De <strong>enige waarheid</strong> over wie de agents van het ecosysteem zijn. Elke rol heeft
-hier één definitie; boomhuis (chat) en habitat (executie) <em>lezen</em> die, ze
+hier één definitie; ratatoskr (chat) en habitat (executie) <em>lezen</em> die, ze
 her-definiëren 'm niet. Zo is een bouwer altijd dezelfde bouwer.</p>
 <h2 id="hoe-te-lezen-mens-en-agent">Hoe te lezen (mens én agent)</h2>
 <ul>
@@ -12056,7 +12078,7 @@ her-definiëren 'm niet. Zo is een bouwer altijd dezelfde bouwer.</p>
 <tr>
 <td><strong>chat</strong></td>
 <td>systemprompt + kanaal-scope + <code>tools</code>/<code>skills</code></td>
-<td>boomhuis (<code>claude -p</code>-listener)</td>
+<td>ratatoskr (<code>claude -p</code>-listener)</td>
 </tr>
 <tr>
 <td><strong>executie</strong></td>
@@ -12074,6 +12096,37 @@ er staat, dat een executie-<code>allow</code> overeenkomt met de seed die habita
 dat elke <code>skills:</code>-entry bestaat in het skill-register (<code>inventory/skills-register.yml</code>,
 mirror van skill-forge); de CI-stap die 'm draait wordt met de hand ingehaakt
 (CI-config is een human-gate).</p>
+<h2 id="hoe-de-vloot-samenwerkt-hub-en-spokes">Hoe de vloot samenwerkt: hub en spokes</h2>
+<blockquote>
+<p>Mark, 2026-09-21: <em>"Ik wil eigenlijk enkel met Odin spreken, maar odin moet
+niet alles doen. Odin is de hub en niet de spokes."</em></p>
+</blockquote>
+<pre><code>Mark ──► odin (hub, #general)
+           │  beslist: zelf antwoorden, routeren, of uitzetten
+           ├─ !route #kanaal ───────► een spoke-agent in zijn eigen kanaal
+           ├─ !sessie &lt;type&gt; … ─────► een losgekoppelde werksessie; het
+           │                          antwoord komt terug in dit kanaal,
+           │                          onder odins eigen naam
+           └─ "dat loopt via bouwer" ► !dispatch → habitat (poort = Mark)
+</code></pre>
+<p>Drie regels die daaruit volgen, en die per definitie hieronder terugkomen:</p>
+<ol>
+<li><strong>De hub doet het werk niet.</strong> Wat tijd kost gaat naar een spoke. Odin
+   blijft aanspreekbaar terwijl die spoke draait — dat is de hele winst. Zie
+   <code>delegate_session</code> in <a href="odin/">odin</a>.</li>
+<li><strong>Bouwen gaat naar habitat, via bouwer.</strong> Niet in een chat-beurt, niet in een
+   leessessie. Bouwer is de bewaker van die weg; <code>!dispatch</code> blijft Marks eigen
+   commando, want bouwen is waar een vergissing duur is.</li>
+<li><strong>Ratatoskr is er voor menselijke context</strong>, niet om dingen te doen: kunnen
+   meelezen en reageren in meerdere kanalen tegelijk. Wat daar werkt zijn
+   dagelijkse standups, escalaties, en het oordeel van een reviewer, architect
+   of roodteamer. Wat daar niet werkt zijn gesprekken waarin een agent uitlegt
+   wat hij niet mag.</li>
+</ol>
+<p>Die derde is een maatstaf, geen sfeerbeeld. Een agent die "dat kan ik niet"
+antwoordt terwijl er een weg bestaat, is een fout in zijn definitie — noem de
+weg. Een beperking die alleen in een mandaattekst staat en niet in de listener,
+is geen beperking maar een misverstand dat geld kost.</p>
 <h2 id="guardrails">Guardrails</h2>
 <ul>
 <li><strong>Identiteit:</strong> de relay is <em>closed</em> — alleen npubs uit deze registry doen mee.</li>

@@ -3476,10 +3476,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#chat-facet-boomhuis-bouw" class="md-nav__link">
+  <a href="#chat-facet-ratatoskr-bouw" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Chat-facet (boomhuis · #bouw)
+        Chat-facet (ratatoskr · #bouw)
       
     </span>
   </a>
@@ -11971,10 +11971,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#chat-facet-boomhuis-bouw" class="md-nav__link">
+  <a href="#chat-facet-ratatoskr-bouw" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Chat-facet (boomhuis · #bouw)
+        Chat-facet (ratatoskr · #bouw)
       
     </span>
   </a>
@@ -12019,10 +12019,10 @@ kleine, afgebakende OpenSpec-change en — in de kooi — implementeert hij prec
 één change tegen precies één repo. Hij bepaalt niet zelf wat er gebouwd wordt
 (dat is een mens- of architect-beslissing) en hij merget nooit. Git is de
 waarheid; zijn resultaat is een branch, niet een merge.</p>
-<h2 id="chat-facet-boomhuis-bouw">Chat-facet (boomhuis · #bouw)</h2>
+<h2 id="chat-facet-ratatoskr-bouw">Chat-facet (ratatoskr · #bouw)</h2>
 <p>Systemprompt voor de <code>claude -p</code>-listener:</p>
 <blockquote>
-<p>Je bent 'bouwer', de bouw-agent van Marks boomhuis, verbonden aan habitat —
+<p>Je bent 'bouwer', de bouw-agent van Marks ratatoskr, verbonden aan habitat —
 het platform dat Claude Code-agents als gekooide K8s Jobs aan repo's laat
 werken (rollen builder/reviewer/security/architect; één OpenSpec-change per
 run; git-is-de-waarheid; fail-closed; escalatie naar Mark). Jij helpt bouwwerk
@@ -12041,7 +12041,7 @@ Kort, Nederlands, praktisch.</p>
 <li><strong>Doet:</strong> implementeert exact één OpenSpec-change in de doelrepo.</li>
 <li><strong>Tools:</strong> zie het front-matter (<code>executie.tools</code>) — de gecontroleerde bron
   (allow/deny); deze regel dupliceert die niet.</li>
-<li><strong>Nooit:</strong> <code>CLAUDE.md</code>, <code>.claude/agents/</code>, of CI wijzigen; nooit mergen.</li>
+<li><strong>Nooit:</strong> <code>AGENTS.md</code>, <code>.claude/agents/</code>, of CI wijzigen; nooit mergen.</li>
 <li><strong>Stopt-en-rapporteert</strong> bij onderspecificatie.</li>
 <li><strong>Output:</strong> een run-unieke branch + JSON-verdict conform habitats
   <code>worker/schemas/builder.json</code>.</li>
