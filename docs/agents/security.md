@@ -3,7 +3,7 @@ status: actief
 last_reviewed: 2026-09-03
 agent:
   naam: security
-  npub: null            # executie-only rol (habitat), geen boomhuis-chat-identiteit
+  npub: null            # executie-only rol (habitat), geen ratatoskr-chat-identiteit
   chat: null
   executie:
     model: sonnet
@@ -24,7 +24,7 @@ met de hand gekopieerd.
 
 ## Chat-facet
 
-Geen — deze rol draait niet in de boomhuis-chat.
+Geen — deze rol draait niet in de ratatoskr-chat.
 
 ## Executie-facet (habitat · security)
 

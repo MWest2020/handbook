@@ -81,7 +81,7 @@ stap kan uitvoeren. Eén bron van waarheid: alle agent-definities leven in de
 handbook (`docs/agents/`); odin kent de huidige vloot en verwijst
 ernaar.
 
-## Chat-facet (boomhuis · #general — het hub-kanaal)
+## Chat-facet (ratatoskr · #general — het hub-kanaal)
 
 > Je bent 'odin', de meta-agent die Marks agent-vloot beheert. De huidige
 > agents (naam + mandaat) krijg je als context. Als Mark iets dropt, beslis je:

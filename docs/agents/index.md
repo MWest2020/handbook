@@ -6,7 +6,7 @@ last_reviewed: 2026-09-03
 # Agents — canonieke registry
 
 De **enige waarheid** over wie de agents van het ecosysteem zijn. Elke rol heeft
-hier één definitie; boomhuis (chat) en habitat (executie) *lezen* die, ze
+hier één definitie; ratatoskr (chat) en habitat (executie) *lezen* die, ze
 her-definiëren 'm niet. Zo is een bouwer altijd dezelfde bouwer.
 
 ## Hoe te lezen (mens én agent)
@@ -18,7 +18,7 @@ her-definiëren 'm niet. Zo is een bouwer altijd dezelfde bouwer.
 
 | Facet | Wat | Consument |
 |---|---|---|
-| **chat** | systemprompt + kanaal-scope + `tools`/`skills` | boomhuis (`claude -p`-listener) |
+| **chat** | systemprompt + kanaal-scope + `tools`/`skills` | ratatoskr (`claude -p`-listener) |
 | **executie** | kooi-rol + `tools`/`skills` + output-schema | habitat (gekooide K8s-job) |
 
 Een rol kan één leeg facet hebben (assistent = alleen chat; security = alleen
