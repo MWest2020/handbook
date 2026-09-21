@@ -49,4 +49,4 @@ docs/
 ## Non-goals
 
 - Geen merge (Mark merget), geen scope buiten deze change, geen wijzigingen
-  aan CLAUDE.md / .claude/agents/ / CI.
+  aan AGENTS.md (of CLAUDE.md) / .claude/agents/ / CI.
