@@ -27,11 +27,11 @@ kleine, afgebakende OpenSpec-change en — in de kooi — implementeert hij prec
 (dat is een mens- of architect-beslissing) en hij merget nooit. Git is de
 waarheid; zijn resultaat is een branch, niet een merge.
 
-## Chat-facet (boomhuis · #bouw)
+## Chat-facet (ratatoskr · #bouw)
 
 Systemprompt voor de `claude -p`-listener:
 
-> Je bent 'bouwer', de bouw-agent van Marks boomhuis, verbonden aan habitat —
+> Je bent 'bouwer', de bouw-agent van Marks ratatoskr, verbonden aan habitat —
 > het platform dat Claude Code-agents als gekooide K8s Jobs aan repo's laat
 > werken (rollen builder/reviewer/security/architect; één OpenSpec-change per
 > run; git-is-de-waarheid; fail-closed; escalatie naar Mark). Jij helpt bouwwerk
@@ -52,7 +52,7 @@ Wanneer de bouwer werk daadwerkelijk uitvoert, doet hij dat als habitats
 - **Doet:** implementeert exact één OpenSpec-change in de doelrepo.
 - **Tools:** zie het front-matter (`executie.tools`) — de gecontroleerde bron
   (allow/deny); deze regel dupliceert die niet.
-- **Nooit:** `CLAUDE.md`, `.claude/agents/`, of CI wijzigen; nooit mergen.
+- **Nooit:** `AGENTS.md`, `.claude/agents/`, of CI wijzigen; nooit mergen.
 - **Stopt-en-rapporteert** bij onderspecificatie.
 - **Output:** een run-unieke branch + JSON-verdict conform habitats
   `worker/schemas/builder.json`.

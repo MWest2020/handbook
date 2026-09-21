@@ -72,7 +72,7 @@ def main() -> None:
     for f in code_hits:
         print(f"  - {f}")
     print("Afspraak: wie code wijzigt, werkt docs/ in dezelfde PR bij "
-          "(zie de meebeweeg-conventie in README/CLAUDE.md).")
+          "(zie de meebeweeg-conventie in README/AGENTS.md).")
     if override:
         print("drift-gate: label docs-drift-ok aanwezig — bewuste uitzondering, groen.")
         return
