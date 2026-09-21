@@ -7296,6 +7296,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../homelab/how-to/32-node-cores-ophogen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodes van 1 naar 4 vCPU brengen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
         
   
@@ -9986,6 +10021,111 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-overdetectie-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 04 — hoeveel de allow-lijst terugwint
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-overdetectie-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 05 — wat de reprocess opleverde, en wat er niet uit te lezen valt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-restwaarden-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 03 — wat er van de pseudonimisering overblijft
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../wordsworth/explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -10064,10 +10204,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
             
   
   
@@ -10085,8 +10225,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12457,7 +12597,7 @@ counted lookup-error rows as configured mail exchangers).</p>
 <td><code>dns.caa</code></td>
 <td>observation</td>
 <td><code>operationeel</code></td>
-<td><code>flag</code>, <code>tag</code>, <code>value</code></td>
+<td><code>flag</code>, <code>tag</code>, <code>value</code>, <code>inherited_from</code> (only when the records came from an ancestor)</td>
 </tr>
 <tr>
 <td><code>dns.subdomain</code></td>
@@ -12484,10 +12624,26 @@ hits.</p>
 <code>dns.caa</code>, a lookup that fails produces a finding of severity <code>info</code>
 with <code>error: "&lt;string&gt;"</code> and <code>kind: "nxdomain" | "timeout" |
 "temporary" | "error"</code>.</p>
-<p><strong>CAA caveat.</strong> The Go standard library resolver does not expose CAA.
-The default adapter returns an empty result (recorded as "no CAA
-records"). Swap in a <code>miekg/dns</code>-based resolver if CAA visibility is
-load-bearing for your assessment.</p>
+<p><strong>CAA lookup.</strong> The Go standard library resolver does not expose CAA,
+so the default adapter sends a hand-rolled UDP query (type 257) to the
+system's configured nameserver — the same approach the SOA probe uses
+for its own stdlib gap (<code>internal/probe/soa/resolver.go</code>), kept as a
+separate copy per probe rather than a shared dependency. Finding
+nothing on the queried name, it climbs one DNS label at a time until it
+finds records or reaches the registrable domain (RFC 8659 §3; the
+registrable-domain heuristic is <code>internal/domainutil.Registrable</code>, the
+same one the scanner's NS-holder lookup uses). Records found above the
+queried name carry <code>inherited_from</code> naming the zone they came from, and
+<code>wand.operationeel.caa_restricts_issuance</code>'s verdict text repeats that
+origin. Only an empty result all the way up to the registrable domain
+is recorded as "no CAA records".</p>
+<p>Until 2026-09-21 this adapter unconditionally returned an empty result
+regardless of the domain, so <code>caa_restricts_issuance</code> scored every
+target as if it had no CAA policy — <code>voldoende</code> never fired, and
+<code>afhankelijk</code> fired even for zones with real, restrictive records
+(digid.nl, mijnoverheid.nl, ncsc.nl all had them). Every prior CAA
+verdict is worthless; the rule's <em>logic</em> was fine; it was scoring
+against data that was always empty by construction.</p>
 <h2 id="tls-probe-internalprobetls">TLS probe — <code>internal/probe/tls</code></h2>
 <table>
 <thead>

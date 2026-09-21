@@ -7136,6 +7136,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../homelab/how-to/32-node-cores-ophogen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodes van 1 naar 4 vCPU brengen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
         
   
@@ -9826,6 +9861,111 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-overdetectie-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 04 — hoeveel de allow-lijst terugwint
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-overdetectie-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 05 — wat de reprocess opleverde, en wat er niet uit te lezen valt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-restwaarden-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 03 — wat er van de pseudonimisering overblijft
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../wordsworth/explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9904,10 +10044,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
             
   
   
@@ -9925,8 +10065,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11940,11 +12080,14 @@ schedules:
       related: [customer.example.com]
     cron: &quot;30 4 * * 1&quot;     # 04:30 every Monday
     timeout: 10m
+    assess: false           # scan only, no judged report for this one
 </code></pre>
 <p>Cron syntax follows POSIX <code>cron(5)</code> — five fields, no seconds field.
 Cron expressions are validated at startup. An invalid expression
 fails the process; the operator sees which entry is bad before any
 schedule silently never fires.</p>
+<p><code>assess</code> is optional and defaults to <code>true</code>: a successful scan is
+judged with both rule packs unless the schedule sets <code>assess: false</code>.</p>
 <h2 id="lifecycle">Lifecycle</h2>
 <ul>
 <li><strong>Startup</strong>: Wanderer reads the schedules file, validates every
@@ -11962,13 +12105,17 @@ schedule silently never fires.</p>
 <h2 id="what-each-tick-does">What each tick does</h2>
 <p>Each cron tick runs <code>scanner.Scan</code> against the configured target
 using the same pipeline <code>wanderer scan</code> and the HTTP <code>POST /scans</code>
-endpoint use. After the scan finishes, the scheduler invokes the
+endpoint use. Once the scan succeeds, the scheduler judges it with
+both rule packs (wand and EUCSF) — the same assessor pipeline
+<code>wanderer assess --framework both</code> and <code>POST /scans/{id}/assessments</code>
+use — and persists the resulting Assessments, unless the schedule
+sets <code>assess: false</code>. After that, the scheduler invokes the
 <a href="../../reference/drift/">drift engine</a> which compares the new scan against the
 previous one for the same target and persists drift Findings to the
 store.</p>
-<p>That is the whole loop: scan, diff, persist. Drift Findings flow
-through the same exporters, MCP resources, and assessor pipeline as
-probe-produced Findings — they are not a parallel data path.</p>
+<p>That is the whole loop: scan, assess, diff, persist. Drift Findings
+flow through the same exporters, MCP resources, and assessor pipeline
+as probe-produced Findings — they are not a parallel data path.</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Job panics</strong>: the scheduler recovers, logs <code>scheduler.panic</code>,
@@ -11981,6 +12128,10 @@ probe-produced Findings — they are not a parallel data path.</p>
 <li><strong>Drift compute fails</strong>: the scan still persists; the drift
   Findings simply are not produced this round. The next tick
   computes drift against whatever scans exist at that point.</li>
+<li><strong>Assessing fails</strong>: the scan still persists; the scheduler logs
+  <code>scan.assess_failed</code> and moves on to drift compute and the next
+  schedule. The report page shows no judgement for that scan until a
+  later run (or a manual <code>wanderer assess</code>) succeeds.</li>
 </ul>
 <h2 id="operating-tips">Operating tips</h2>
 <ul>

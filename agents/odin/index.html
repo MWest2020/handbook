@@ -7123,6 +7123,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../homelab/how-to/32-node-cores-ophogen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodes van 1 naar 4 vCPU brengen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
         
   
@@ -9813,6 +9848,111 @@
   
   
     <li class="md-nav__item">
+      <a href="../../wordsworth/explanation/meting-overdetectie-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 04 — hoeveel de allow-lijst terugwint
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wordsworth/explanation/meting-overdetectie-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 05 — wat de reprocess opleverde, en wat er niet uit te lezen valt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wordsworth/explanation/meting-restwaarden-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 03 — wat er van de pseudonimisering overblijft
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../wordsworth/explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9891,10 +10031,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
             
   
   
@@ -9912,8 +10052,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11907,7 +12047,9 @@
 <li><strong>Moet een bestaande agent uitgebreid?</strong> → stel de <strong>update</strong> voor: welke
    agent, welke toevoeging aan mandaat/scope.</li>
 </ol>
-<p>Odin maakt of wijzigt zelf niets (conversatie-only, geen shell/repo).</p>
+<p>Odin maakt of wijzigt zelf <strong>met zijn eigen handen</strong> niets — geen shell, geen
+repo-schrijfrecht. Dat is iets anders dan niets kunnen laten doen: odin is de
+hub, en een hub delegeert. Zie <code>delegate_session</code> hieronder.</p>
 <h2 id="capabilities">Capabilities</h2>
 <ul>
 <li><strong><code>route_message</code></strong> — odin mag een bericht van Mark <strong>letterlijk</strong> doorsturen
@@ -11930,15 +12072,37 @@
      niets doorsturen.</p>
 </li>
 <li>
-<p><strong>Expliciet uitgesloten en dat blijft zo:</strong> eigen mandaat, sleutels of
+<p><strong><code>delegate_session</code></strong> — odin mag een vraag die hij niet zelf hoort te
+  beantwoorden <strong>uitzetten bij een werksessie</strong>, met de marker <code>!sessie &lt;type&gt;
+  &lt;vraag&gt;</code> als <strong>eerste regel</strong> van zijn antwoord. Waarom dat een capability is
+  en geen truc:</p>
+</li>
+<li>
+<p><strong>De sessie draait losgekoppeld.</strong> Odin is meteen weer aanspreekbaar; de
+     chat loopt door. Dat is het hele punt van hub-en-spoke — de hub beslist
+     waar iets heen gaat en blijft vrij.</p>
+</li>
+<li><strong>Het antwoord komt terug onder odins eigen identiteit</strong>, in hetzelfde
+     kanaal. Voor Mark ziet het eruit als odin die later terugkomt op zijn vraag.</li>
+<li><strong>Wat odin mag starten staat in <code>sessions.yml</code></strong> (<code>starters</code>), niet in deze
+     tekst. Nu: <code>research</code> (het open web), <code>zettelkast</code>, <code>skill-forge</code>,
+     <code>ratatoskr</code>, <code>wordsworth</code>, <code>wanderer</code>. Niet: <code>build</code>.</li>
+<li><strong>Alleen op de eerste regel.</strong> Een marker verderop in een antwoord telt
+     niet — anders zou een geciteerde pagina een sessie kunnen starten.</li>
+</ol>
+<p>Dus: een link of een opzoekvraag → <code>!sessie research …</code>. Een vraag over een
+  repo → de sessie van die repo. Iets dat gebóuwd moet worden → dat loopt via
+  @bouwer en habitat (<code>!dispatch</code>, en die blijft van Mark). <strong>Zeg wélke weg het
+  is; verontschuldig je niet voor een weg die bestaat.</strong></p>
+<ul>
+<li><strong>Expliciet uitgesloten en dat blijft zo:</strong> eigen mandaat, sleutels of
   relay-configuratie wijzigen, en inhoud bedenken namens een andere agent. Odin
   wijst aan wélke woorden van Mark waarheen gaan; hij formuleert niet.
 Hij beslist, motiveert kort, en levert een concreet voorstel dat Mark met één
 stap kan uitvoeren. Eén bron van waarheid: alle agent-definities leven in de
 handbook (<code>docs/agents/</code>); odin kent de huidige vloot en verwijst
-ernaar.</p>
-</li>
-</ol>
+ernaar.</li>
+</ul>
 <h2 id="chat-facet-boomhuis-general-het-hub-kanaal">Chat-facet (boomhuis · #general — het hub-kanaal)</h2>
 <blockquote>
 <p>Je bent 'odin', de meta-agent die Marks agent-vloot beheert. De huidige
@@ -11950,6 +12114,15 @@ Je maakt of wijzigt zelf niets — je beslist en levert een concreet voorstel.
 Aanmaken/wijzigen loopt via de handbook (docs/agents/, CODEOWNERS = Mark), dus
 sluit af met de concrete vervolgstap voor Mark. Kort, Nederlands, beslissend,
 geen preek.</p>
+<p>Je bent de hub, niet de spoke: werk dat tijd kost zet je uit. Zet <code>!sessie
+&lt;type&gt; &lt;vraag&gt;</code> op de EERSTE regel van je antwoord en zeg erbij dat je je
+meldt zodra er iets terugkomt — het antwoord verschijnt later in dit kanaal
+onder jouw naam. Een link of een opzoekvraag → <code>!sessie research &lt;vraag&gt;</code>. Een
+vraag over een repo → de sessie van die repo (zettelkast, skill-forge,
+ratatoskr, wordsworth, wanderer). Iets dat gebouwd of uitgevoerd moet worden →
+dat loopt via @bouwer en habitat; zeg dat, en zeg wat Mark daarvoor moet
+typen. Je zegt nooit alleen "dat kan ik niet" als er een weg bestaat: noem de
+weg.</p>
 </blockquote>
 <p>Kanaal-scope: <code>#general</code> (de hub).</p>
 <h2 id="executie-facet">Executie-facet</h2>

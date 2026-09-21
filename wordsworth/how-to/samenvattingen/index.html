@@ -7023,6 +7023,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../homelab/how-to/32-node-cores-ophogen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodes van 1 naar 4 vCPU brengen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../homelab/how-to/gpu-cuda-reset/" class="md-nav__link">
         
   
@@ -9715,6 +9750,111 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-overdetectie-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 04 — hoeveel de allow-lijst terugwint
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/meting-overdetectie-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 05 — wat de reprocess opleverde, en wat er niet uit te lezen valt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/meting-restwaarden-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 03 — wat er van de pseudonimisering overblijft
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -9793,10 +9933,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_4" id="__nav_18_2_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
             
   
   
@@ -9814,8 +9954,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10557,6 +10697,17 @@
     <span class="md-ellipsis">
       
         Maken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#als-commando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Als commando
       
     </span>
   </a>
@@ -11888,6 +12039,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#als-commando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Als commando
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tokens-gaan-eruit-en-waarom-dat-geen-detail-is" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11988,7 +12150,26 @@ fragment op de zoekpagina is een <strong>citaat</strong> — je kunt het letterl
 </table>
 <p>Bij bestuurlijke post staat juist in de eerste regels wat je wilt weten:
 afzender, kenmerk, datum, onderwerp. Dat is precies wat een model van 3b op
-OCR-ruis het slechtst navertelt. Vergelijk ze op je eigen corpus voor je kiest:</p>
+OCR-ruis het slechtst navertelt.</p>
+<p>Het extract doet drie dingen voordat het knipt, alle drie gemeten op het
+Woo-corpus:</p>
+<ol>
+<li><strong>beginnen bij de onderwerpregel</strong> (<code>Onderwerp:</code>, <code>Betreft:</code>, <code>Subject:</code>)
+   als die er is, en dan vanaf het onderwerp zelf — het label is geen zin. Waar
+   zo'n regel staat, is het extract meteen raak; begint het bij regel één, dan
+   lees je eerst een briefhoofd. Staat het label <strong>alleen</strong> op zijn regel (in
+   geëxporteerde e-mail is dat letterlijk <code>Subject:</code>), dan begint het extract op
+   de regel erna: het label zelf tonen is het enige antwoord dat nog slechter is
+   dan geen samenvatting, want het ziet eruit als inhoud;</li>
+<li><strong>e-mailkoppen overslaan</strong> (<code>To:</code>, <code>Cc:</code>, <code>From:</code>, <code>Sent:</code>, <code>Attachments:</code> …).
+   <code>Subject:</code>/<code>Onderwerp:</code> staat daar bewust niet bij: die is het doelwit;</li>
+<li><strong>scannerruis overslaan</strong> — een regel die voor de helft of meer uit
+   onleesbare brokken bestaat (<code>LkO1 GEDEELD PGC KfbjCNOqO+k1 ZAK V</code>).
+   Overslaan en niet stoppen: de regel eronder is vaak wél bruikbaar. Een woord
+   telt als leesbaar wanneer het letters heeft én een klinker — zonder die
+   klinkereis is "PGC" taal.</li>
+</ol>
+<p>Vergelijk ze op je eigen corpus voor je kiest:</p>
 <pre><code class="language-sh">python -m scripts.eval.vergelijk_samenvattingen --dossier &lt;uuid&gt; --aantal 5
 </code></pre>
 <p>Dat levert geen score op, en dat is opzettelijk: er is geen waarheid over "een
@@ -12053,6 +12234,31 @@ op 2026-09-18 een <code>ALTER TABLE</code> uit de init-job tegen en daarmee de h
 </tbody>
 </table>
 <p>Zonder die vijf leest "24 gemaakt" als een uitspraak over het hele dossier.</p>
+<h2 id="als-commando">Als commando</h2>
+<p>Naast het endpoint hierboven bestaat hetzelfde werk als commando, voor gebruik
+in een cluster-Job of lokaal:</p>
+<pre><code class="language-sh"># één of meer dossiers, --dossier is herhaalbaar
+python -m wordsworth.samenvatten --dossier &lt;dossier-uuid&gt;
+
+# alles wat nog geen samenvatting heeft, over alle dossiers heen
+python -m wordsworth.samenvatten --ontbrekend
+</code></pre>
+<p>Zonder argumenten legt het commando uit wat het verwacht en stopt met
+exitcode 2 — er is geen impliciete "alles" en geen stille no-op.</p>
+<p>Het gebruikt dezelfde <code>compute()</code> als het endpoint: dezelfde upsert, dezelfde
+commit per document, dezelfde idempotentie (<code>--dossier</code> twee keer draaien
+roept het model niet twee keer aan). Eén regel uitvoer aan het eind, met de
+vijf tellingen en de duur:</p>
+<pre><code>seen=30 made=24 skipped=3 failed=1 without_text=2 duur=812.4s
+</code></pre>
+<p>Exitcode 1 als er iets mislukte (<code>failed</code> of <code>without_text</code> groter dan nul),
+anders 0 — ook als er niets te doen was.</p>
+<p>Dit vervangt het script dat een cluster-Job tot 2026-09-20 meedroeg in zijn
+eigen <code>args</code>: met de hand aangemaakt, dertig regels, zichtbaar in geen enkele
+repo — een wijziging daaraan was onnavolgbaar en na een herinstallatie was hij
+weg. De homelab-repo krijgt een CronJob die dit commando aanroept
+(<code>python -m wordsworth.samenvatten --ontbrekend</code>) in plaats van dat script mee
+te dragen.</p>
 <h2 id="tokens-gaan-eruit-en-waarom-dat-geen-detail-is">Tokens gaan eruit — en waarom dat geen detail is</h2>
 <p>De samenvatting wordt gemaakt over de gepseudonimiseerde tekst, want een andere
 is er niet. <strong>De pseudonym-tokens worden er daarna deterministisch uitgehaald.</strong></p>
