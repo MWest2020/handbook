@@ -22,7 +22,7 @@ agent:
 ## Mandaat
 
 Twee-facetige rol. In de **kooi (habitat)** is reviewer de executie-rol die een
-change toetst tegen CLAUDE.md + de change zelf; de canonieke rol-inhoud staat in
+change toetst tegen AGENTS.md + de change zelf; de canonieke rol-inhoud staat in
 [`seeds/reviewer.md`](seeds/reviewer.md) en de per-spoke `.claude/agents/reviewer.md`
 wordt daaruit **afgeleid** (generator + drift-gate), niet met de hand gekopieerd.
 In de **boomhuis-chat** leest reviewer PR's en changes en geeft een kort, concreet

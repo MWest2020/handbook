@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: EUPL-1.2
 """Regenereer de GitHub-tabel in inventory/repos.md uit inventory/repos.json.
 
-repos.json is de enige waarheid (zie CLAUDE.md). Deze generator schrijft de
+repos.json is de enige waarheid (zie AGENTS.md). Deze generator schrijft de
 tabel tussen twee marker-comments; alle handgeschreven proza (intro, Codeberg,
 Vastgesteld, TBD, Ongedekt) blijft ongemoeid. Idempotent: draai zo vaak je wilt.
 

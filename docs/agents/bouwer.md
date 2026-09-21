@@ -52,7 +52,7 @@ Wanneer de bouwer werk daadwerkelijk uitvoert, doet hij dat als habitats
 - **Doet:** implementeert exact één OpenSpec-change in de doelrepo.
 - **Tools:** zie het front-matter (`executie.tools`) — de gecontroleerde bron
   (allow/deny); deze regel dupliceert die niet.
-- **Nooit:** `CLAUDE.md`, `.claude/agents/`, of CI wijzigen; nooit mergen.
+- **Nooit:** `AGENTS.md`, `.claude/agents/`, of CI wijzigen; nooit mergen.
 - **Stopt-en-rapporteert** bij onderspecificatie.
 - **Output:** een run-unieke branch + JSON-verdict conform habitats
   `worker/schemas/builder.json`.

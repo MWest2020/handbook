@@ -18,6 +18,6 @@ specs en de pipeline.
 - **Checks**: `scripts/check_contract.py` (docs-contract per import),
   `scripts/check_freshness.py` (>180 dagen = waarschuwing)
 - **Sessies**: Claude Code-sessies over het ecosysteem starten hier; zie
-  `CLAUDE.md` voor het mandaat
+  `AGENTS.md` voor het mandaat
 
 Licentie: [EUPL-1.2](LICENSE).
