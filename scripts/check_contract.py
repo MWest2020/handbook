@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Contract-check: valideert per geïmporteerd repo het docs-contract.
+"""Contract check: validates the docs contract per imported repo.
 
 Checks per repo (shallow clone):
-  1. docs/index.md bestaat
-  2. markdown uitsluitend in docs-root, how-to/, reference/, explanation/
-     (ADR's onder explanation/adr/); asset-mappen zonder .md zijn vrij
-  3. elke pagina heeft front matter met status + last_reviewed, geen owner
+  1. docs/index.md exists
+  2. markdown only in the docs root, how-to/, reference/, explanation/
+     (ADRs under explanation/adr/); asset directories without .md are free
+  3. every page has front matter with status + last_reviewed, and no owner
 
-Gebruik: check_contract.py [--all | --repo-dir PATH]
-  default        : alleen public-ok imports (anonieme clones, CI op elke PR)
-  --all          : ook private-only imports (vereist GH_TOKEN met read-scope)
-  --repo-dir PATH: check één lokale werkkopie (spoke-PR-gate, geen clone/inventaris)
-Exit 1 bij schending. Bare output (CI-script).
+Usage: check_contract.py [--all | --repo-dir PATH]
+  default        : public-ok imports only (anonymous clones, CI on every PR)
+  --all          : private-only imports too (requires GH_TOKEN with read scope)
+  --repo-dir PATH: check one local working copy (the spoke PR gate, no clone or
+                   inventory)
+Exit 1 on a violation. Bare output (a CI script).
 """
 import json
 import os
@@ -35,7 +36,7 @@ def clone(repo: str, dest: pathlib.Path, token: str | None) -> bool:
         capture_output=True, text=True,
     )
     if r.returncode != 0:
-        print(f"FOUT {repo}: clone mislukt")
+        print(f"ERROR {repo}: clone failed")
         return False
     return True
 
@@ -52,14 +53,14 @@ def check_repo(repo: str, docs: pathlib.Path) -> list[str]:
             continue
         fm_match = FM.match(page.read_text(encoding="utf-8", errors="replace"))
         if not fm_match:
-            errs.append(f"{rel}: geen front matter")
+            errs.append(f"{rel}: no front matter")
             continue
         fm = fm_match.group(1)
         for veld in ("status:", "last_reviewed:"):
             if veld not in fm:
-                errs.append(f"{rel}: front matter mist {veld[:-1]}")
+                errs.append(f"{rel}: front matter is missing {veld[:-1]}")
         if re.search(r"^owner\s*:", fm, re.MULTILINE):
-            errs.append(f"{rel}: owner-veld is niet toegestaan")
+            errs.append(f"{rel}: an owner field is not allowed")
     return errs
 
 
@@ -68,12 +69,12 @@ def check_local(repo_dir: str) -> None:
     root = pathlib.Path(repo_dir)
     name = root.name
     if not (root / "docs").is_dir():
-        print(f"OK {name}: geen docs/ (contract n.v.t.)")
+        print(f"OK {name}: no docs/ (contract not applicable)")
         return
     errs = check_repo(name, root / "docs")
     if errs:
         for e in errs:
-            print(f"SCHENDING {name}: {e}")
+            print(f"VIOLATION {name}: {e}")
         sys.exit(1)
     print(f"OK {name}: docs-contract voldaan")
 
@@ -82,7 +83,7 @@ def main() -> None:
     if "--repo-dir" in sys.argv:
         i = sys.argv.index("--repo-dir")
         if i + 1 >= len(sys.argv):
-            sys.exit("--repo-dir vereist een pad")
+            sys.exit("--repo-dir requires a path")
         check_local(sys.argv[i + 1])
         return
     include_private = "--all" in sys.argv
@@ -92,7 +93,7 @@ def main() -> None:
     if not include_private:
         rows = [r for r in rows if r["sensitivity"] == "public-ok"]
     elif not token:
-        sys.exit("--all vereist GH_TOKEN voor private clones")
+        sys.exit("--all requires GH_TOKEN for private clones")
 
     failures = 0
     with tempfile.TemporaryDirectory() as tmp:
@@ -107,12 +108,12 @@ def main() -> None:
             if errs:
                 failures += 1
                 for e in errs:
-                    print(f"SCHENDING {repo}: {e}")
+                    print(f"VIOLATION {repo}: {e}")
             else:
                 print(f"OK {repo}")
     if failures:
         sys.exit(1)
-    print("contract: alle geïmporteerde repos voldoen")
+    print("contract: every imported repo complies")
 
 
 if __name__ == "__main__":

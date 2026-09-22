@@ -1,55 +1,51 @@
 # handbook-portal Specification
 
 ## Purpose
-De publieke hub-build lekt geen private of financiële context: hub-eigen
-pagina's én niet-gerenderde repo-bestanden blijven vrij van
-financieringstrajecten, private repo-namen en homelab-details.
+The public hub build leaks no private or financial context: hub-owned pages
+*and* non-rendered repo files stay free of funding programmes, private repo
+names and homelab details.
 ## Requirements
-### Requirement: Hub-eigen pagina's lekken geen private of financiële context
+### Requirement: Hub-owned pages leak no private or financial context
 
-Hub-eigen pagina's in de publieke build (index, conventies, homelab-verwijzing) SHALL geen van de onderstaande drie categorieën bevatten.
+Hub-owned pages in the public build (index, conventions, the homelab pointer)
+SHALL contain none of the three categories below.
 
-1. subsidie- of financieringstrajecten — welk programma, fonds of
-   aanvraagtraject dan ook; niet als label bij een repo, niet als
-   lopende tekst;
-2. namen van `private-only` repos of een opsomming van wat de private
-   build aggregeert;
-3. homelab-/infradetails, inclusief meta-informatie over wat er
-   geredigeerd is en sinds wanneer.
+1. subsidy or funding programmes — whichever programme, fund or application
+   track; not as a label on a repo, and not in running text;
+2. names of `private-only` repos, or an enumeration of what the private build
+   aggregates;
+3. homelab or infrastructure details, including meta-information about what has
+   been redacted and since when.
 
-Vermelding van de private sectie SHALL beperkt blijven tot het kale
-bestaan ervan (één verwijzingszin), zonder inhoudsopgave. Beschrijvingen
-van publieke repos SHALL beperkt blijven tot wat het repo zelf al publiek
-documenteert. Dit is nodig omdat de repo-splitsing (fail closed) alleen
-imports dekt; hub-eigen pagina's delen hun bron tussen publieke en private
-build en vallen daar buiten.
+Mention of the private section SHALL be limited to the bare fact that it exists
+(one pointer sentence), without a table of contents. Descriptions of public
+repos SHALL be limited to what the repo already documents publicly itself. This
+is necessary because the repo split (fail closed) covers imports only;
+hub-owned pages share their source between the public and private build and
+fall outside it.
 
-#### Scenario: Subsidietraject op de publieke index
+#### Scenario: A funding programme on the public index
 
-- WHEN een hub-eigen pagina in de publieke build een repo aanduidt met
-  zijn subsidie- of financieringstraject
-- THEN wordt dat bij review geweigerd en verwijderd vóór deploy
+- WHEN a hub-owned page in the public build identifies a repo by its subsidy or
+  funding programme
+- THEN that is refused at review and removed before deploy
 
-#### Scenario: Private repos opgesomd op de publieke index
+#### Scenario: Private repos enumerated on the public index
 
-- WHEN een hub-eigen pagina in de publieke build `private-only` repos bij
-  naam noemt of de inhoud van de private sectie beschrijft
-- THEN wordt de passage teruggebracht tot maximaal één verwijzingszin
-  zonder repo-namen, of verplaatst naar een pagina die alleen in
-  `mkdocs.private.yml` genavigeerd wordt
+- WHEN a hub-owned page in the public build names `private-only` repos or
+  describes the content of the private section
+- THEN the passage is reduced to at most one pointer sentence without repo
+  names, or moved to a page navigated only in `mkdocs.private.yml`
 
-### Requirement: Repo-bestanden van de publieke hub lekken geen private of financiële context
+### Requirement: Repo files of the public hub leak no private or financial context
 
-Het verbod hierboven SHALL ook gelden voor niet-gerenderde bestanden in
-het publieke hub-repo (inventaris-notes, configs, seeds, gearchiveerde
-changes): het repo zelf is publiek, dus alles daarin is publicatie —
-niet alleen wat mkdocs rendert.
+The prohibition above SHALL apply equally to non-rendered files in the public
+hub repo (inventory notes, configs, seeds, archived changes): the repo itself
+is public, so everything in it is publication — not only what mkdocs renders.
 
-#### Scenario: Financieringstraject in inventaris-notes
+#### Scenario: A funding programme in the inventory notes
 
-- WHEN een `notes`-veld in `inventory/repos.json`/`repos.md` een repo
-  koppelt aan een subsidie- of financieringstraject
-- THEN verhuist die koppeling naar een private overlay (gitignored of
-  buiten dit repo) en blijft in de publieke inventaris alleen de
-  functionele informatie staan
-
+- WHEN a `notes` field in `inventory/repos.json` or `repos.md` ties a repo to a
+  subsidy or funding programme
+- THEN that link moves to a private overlay (gitignored, or outside this repo)
+  and only the functional information remains in the public inventory

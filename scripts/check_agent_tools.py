@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Contract-gate: elk niet-leeg facet van een agent-definitie declareert tools
-(allow/deny) en skills, en de executie-allowlist komt overeen met de seed.
+"""Contract gate: every non-empty facet of an agent definition declares tools
+(allow/deny) and skills, and the execution allowlist matches the seed.
 
-Stdlib-only (geen yaml-dep — conform de andere hub-scripts). Het front-matter-
-formaat is gecontroleerd: `tools: { allow: [...], deny: [...] }` en `skills: [...]`
-inline per facet. Checks per `docs/agents/<naam>.md` met een `agent:`-front-matter
-(index.md en de seeds/ vallen buiten):
-  1. elk niet-leeg facet (chat/executie) heeft `tools.allow`, `tools.deny` en
-     `skills` (lijsten; deny/skills mogen leeg zijn);
-  2. `allow` en `deny` overlappen niet;
-  3. voor een executie-facet met een seed (expliciet `seed:` of per conventie
-     `docs/agents/seeds/<habitat_rol>.md`) is `executie.tools.allow` gelijk aan de
-     `tools:`-regel van die seed — de allowlist die habitat uitvoert;
-  4. elke `skills:`-entry bestaat in het skill-register (`inventory/skills-register.yml`,
-     mirror van skill-forge) — onbekende skill of ontbrekend register bij niet-lege
-     skills → FAIL.
+Stdlib only (no yaml dependency — in line with the other hub scripts). The front
+matter format is controlled: `tools: { allow: [...], deny: [...] }` and
+`skills: [...]` inline per facet. Checked per `docs/agents/<name>.md` that has an
+`agent:` front matter (index.md and seeds/ are out of scope):
+  1. every non-empty facet (chat/executie) has `tools.allow`, `tools.deny` and
+     `skills` (lists; deny and skills may be empty);
+  2. `allow` and `deny` do not overlap;
+  3. for an execution facet with a seed (an explicit `seed:` or, by convention,
+     `docs/agents/seeds/<habitat_rol>.md`) `executie.tools.allow` equals that
+     seed's `tools:` line — the allowlist habitat actually runs;
+  4. every `skills:` entry exists in the skill register
+     (`inventory/skills-register.yml`, a mirror of skill-forge) — an unknown
+     skill, or a missing register with a non-empty skills list, is a FAIL.
 
-Gebruik: check_agent_tools.py        (exit 1 bij schending; bare output, CI-script)
+Note: the front-matter KEYS (`naam`, `chat`, `executie`) stay as they are. They
+are parsed here and by ratatoskr's agents/bootstrap.py; renaming one is a
+cross-repo change, not a translation.
+
+Usage: check_agent_tools.py      (exit 1 on a violation; bare output, a CI script)
 """
 import pathlib
 import re
@@ -39,7 +43,7 @@ def _list(inner: str) -> list[str]:
 
 
 def facet_block(fm: str, facet: str):
-    """(aanwezig, is_null, blok-tekst) voor een facet op 2-spatie-indent."""
+    """(present, is_null, block text) for a facet at two-space indent."""
     lines = fm.splitlines()
     hdr = next((i for i, ln in enumerate(lines) if re.match(rf"^  {facet}:", ln)), None)
     if hdr is None:
@@ -58,20 +62,20 @@ def facet_block(fm: str, facet: str):
 
 
 def seed_tools(seed_rel: str):
-    """De `tools:`-regel van een seed als lijst, of None als de regel ONTBREEKT.
-    (In Claude Code betekent een afwezige `tools:` "alle tools" — het tegendeel van
-    een lege lijst — dus die twee mogen niet samenvallen.)"""
+    """A seed's `tools:` line as a list, or None when the line is ABSENT.
+    (In Claude Code an absent `tools:` means "all tools" — the opposite of an empty
+    list — so those two must never be conflated.)"""
     m = re.search(r"^tools:\s*(.*)$", front_matter(ROOT / seed_rel), re.M)
     return _list(m.group(1)) if m else None
 
 
-SKIP_NO_AGENT = {"index.md"}  # docs/agents/*.md die géén agent-def zijn
+SKIP_NO_AGENT = {"index.md"}  # docs/agents/*.md that are NOT agent definitions
 REGISTER = ROOT / "inventory" / "skills-register.yml"  # mirror van skill-forge
 
 
 def register_slugs():
-    """De slugs uit het skill-register (mirror van skill-forge's `register.yml`),
-    of None als het manifest ontbreekt. Stdlib: elke skill staat als `- slug: <x>`.
+    """The slugs from the skill register (a mirror of skill-forge's `register.yml`),
+    or None when the manifest is missing. Stdlib: every skill appears as `- slug: <x>`.
     Zo blijft "welke skills bestaan" één bron (skill-forge), hier alleen gespiegeld."""
     if not REGISTER.exists():
         return None
@@ -79,47 +83,48 @@ def register_slugs():
 
 
 # Toegestane modellen. De def legt de INTENTIE vast (zoeken/denken/uitzondering),
-# niet een exacte model-id: die rouleert per release en zou elke def laten verlopen.
+# not an exact model id: that rotates per release and would expire every definition.
 # Regel (Mark, 2026-09-06): zoeken = haiku, denken = sonnet, uitzonderlijk = opus.
 MODELS = {"haiku", "sonnet", "opus"}
 
 
 def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg):
-    # Model: verplicht en uit de vaste set. Zonder dit veld draait een agent op wat
-    # de omgeving toevallig default is — precies wat we niet willen weten-noch-zien.
+    # Model: mandatory, and from the fixed set. Without this field an agent runs on
+    # whatever the environment happens to default to — exactly what we do not want.
     mm = re.search(r"^\s*model:\s*(\S+)\s*$", block, re.M)
     if not mm:
-        errs.append(f"{rel}/{facet}: mist `model` (een van {sorted(MODELS)})")
+        errs.append(f"{rel}/{facet}: missing `model` (one of {sorted(MODELS)})")
     elif mm.group(1) not in MODELS:
-        errs.append(f"{rel}/{facet}: onbekend model {mm.group(1)!r} "
-                    f"(toegestaan: {sorted(MODELS)})")
-    # Skills EERST, onafhankelijk van het tools-blok: anders zou een def die z'n
-    # tools-blok kwijt is (early return hieronder) een onbekende skill pas volgende
-    # run tonen. reg is None = register ontbreekt; lege set = register kapot/leeg
-    # (daarvoor faalt main al één keer, hier geen per-skill-ruis).
+        errs.append(f"{rel}/{facet}: unknown model {mm.group(1)!r} "
+                    f"(allowed: {sorted(MODELS)})")
+    # Skills FIRST, independent of the tools block: otherwise a definition that has
+    # lost its tools block (the early return below) would only surface an unknown
+    # skill on the next run. reg is None = the register is missing; an empty set =
+    # the register is broken or empty (main already fails once for that, so no
+    # per-skill noise here).
     ms = re.search(r"^\s*skills:\s*(.*)$", block, re.M)
     msl = re.search(r"^\s*\[([^\]]*)\]\s*$", ms.group(1)) if ms else None
     if not ms:
-        errs.append(f"{rel}/{facet}: mist `skills` (gebruik `[]` als er geen zijn)")
+        errs.append(f"{rel}/{facet}: missing `skills` (use `[]` when there are none)")
     elif not msl:
-        errs.append(f"{rel}/{facet}: `skills` moet een lijst zijn (`[...]`)")
+        errs.append(f"{rel}/{facet}: `skills` must be a list (`[...]`)")
     else:
         skills = _list(msl.group(1))
         if skills and reg is None:
-            errs.append(f"{rel}/{facet}: skills {skills} maar het register "
-                        f"({REGISTER.relative_to(ROOT)}) ontbreekt — kan niet valideren")
+            errs.append(f"{rel}/{facet}: skills {skills} but the register "
+                        f"({REGISTER.relative_to(ROOT)}) is missing — cannot validate")
         elif skills and reg:
             unknown = sorted(s for s in skills if s not in reg)
             if unknown:
-                errs.append(f"{rel}/{facet}: onbekende skill(s) {unknown} — niet in het "
-                            f"skill-register (alleen gepromoveerde skill-forge-skills)")
+                errs.append(f"{rel}/{facet}: unknown skill(s) {unknown} — not in the "
+                            f"skill register (promoted skill-forge skills only)")
 
     mt = re.search(r"^\s*tools:\s*(.*)$", block, re.M)
     ma = re.search(r"allow:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
     md = re.search(r"deny:\s*\[([^\]]*)\]", mt.group(1)) if mt else None
     if not (mt and ma and md):
-        errs.append(f"{rel}/{facet}: mist `tools.allow`/`tools.deny` als inline-lijsten")
-        return  # zonder geldig tools-blok geen overlap-/seed-check (dubbele fout vermeden)
+        errs.append(f"{rel}/{facet}: missing `tools.allow`/`tools.deny` as inline lists")
+        return  # without a valid tools block, no overlap or seed check (avoids a double error)
     allow, deny = _list(ma.group(1)), _list(md.group(1))
     overlap = sorted(set(allow) & set(deny))
     if overlap:
@@ -133,48 +138,48 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg
             cand = f"docs/agents/seeds/{mrol.group(1)}.md"
             seed = cand if (ROOT / cand).exists() else None
         if seed and not (ROOT / seed).exists():
-            errs.append(f"{rel}/executie: `seed:` wijst naar niet-bestaand pad {seed}")
+            errs.append(f"{rel}/executie: `seed:` points at a non-existent path {seed}")
         elif seed:
-            # Model kruisen: de worker leest straks het rolbestand in de doelrepo,
-            # dus seed en def moeten hetzelfde model noemen — anders draait een run
-            # op iets anders dan de registry belooft.
+            # Cross-check the model: the worker will read the role file in the target
+            # repo, so seed and definition must name the same model — otherwise a run
+            # uses something other than what the registry promises.
             sm = re.search(r"^model:\s*(\S+)\s*$", (ROOT / seed).read_text(), re.M)
             if not sm:
-                errs.append(f"{rel}/executie: seed {seed} heeft geen `model:`-regel")
+                errs.append(f"{rel}/executie: seed {seed} has no `model:` line")
             elif mm and sm.group(1) != mm.group(1):
-                errs.append(f"{rel}/executie: model {mm.group(1)!r} wijkt af van "
+                errs.append(f"{rel}/executie: model {mm.group(1)!r} differs from "
                             f"seed {seed} model {sm.group(1)!r}")
             st = seed_tools(seed)
             if st is None:
-                errs.append(f"{rel}/executie: seed {seed} heeft geen `tools:`-regel — "
-                            f"de allowlist is onbepaald (voeg 'm toe aan de seed)")
+                errs.append(f"{rel}/executie: seed {seed} has no `tools:` line — "
+                            f"the allowlist is undetermined (add it to the seed)")
             elif set(allow) != set(st):
-                errs.append(f"{rel}/executie: `tools.allow` {sorted(allow)} wijkt af van "
+                errs.append(f"{rel}/executie: `tools.allow` {sorted(allow)} differs from "
                             f"seed {seed} tools {sorted(st)}")
         else:
-            # Geen seed: allow niet te kruisen. Expliciet melden (design belooft
-            # "geen stille ok"), geen fout — een bekende, begrensde beperking.
-            notices.append(f"{rel}/executie: geen seed — `allow` niet gekruist (intentie).")
+            # No seed: `allow` cannot be cross-checked. Say so explicitly (the design
+            # promises "no silent ok"), but not as an error — a known, bounded limit.
+            notices.append(f"{rel}/executie: no seed — `allow` not cross-checked (intent).")
 
 
 def check_identity(rel: str, stem: str, fm: str, errs: list, notices: list) -> None:
-    """Front-matter-contract op identiteitsniveau (add-agent-registry 1.5): een
-    definitie noemt zichzelf en haar sleutel. Zonder deze check kon een def haar
-    `naam` of `npub` verliezen zonder dat er iets faalde — terwijl de listener op
-    precies die npub fail-closed vergelijkt en een verkeerde naam een agent naar
-    het verkeerde bestand laat wijzen."""
+    """The front-matter contract at identity level (add-agent-registry 1.5): a
+    definition names itself and its key. Without this check a definition could lose
+    its `naam` or `npub` without anything failing — while the listener compares
+    fail-closed on exactly that npub, and a wrong name points an agent at the wrong
+    file."""
     m = re.search(r"^  naam:\s*(\S.*)$", fm, re.M)
     if not m:
-        errs.append(f"{rel}: mist `naam:` in de front-matter")
+        errs.append(f"{rel}: missing `naam:` in the front matter")
     elif m.group(1).strip() != stem:
-        errs.append(f"{rel}: `naam: {m.group(1).strip()}` wijkt af van de bestandsnaam "
-                    f"{stem!r} — consumenten halen de def op via de bestandsnaam")
+        errs.append(f"{rel}: `naam: {m.group(1).strip()}` differs from the filename "
+                    f"{stem!r} — consumers fetch the definition by filename")
     if not re.search(r"^  npub:\s*\S", fm, re.M):
-        errs.append(f"{rel}: mist `npub:` — gebruik expliciet `npub: null` als de "
-                    f"identiteit nog niet bestaat")
+        errs.append(f"{rel}: missing `npub:` — use an explicit `npub: null` when the "
+                    f"identity does not exist yet")
     elif re.search(r"^  npub:\s*null\s*(#.*)?$", fm, re.M):
-        notices.append(f"{rel}: `npub: null` — identiteit bestaat nog niet "
-                       f"(een chat-facet kan hiermee niet draaien).")
+        notices.append(f"{rel}: `npub: null` — the identity does not exist yet "
+                       f"(a chat facet cannot run with this).")
 
 
 def main() -> int:
@@ -182,49 +187,54 @@ def main() -> int:
     notices: list[str] = []
     reg = register_slugs()
     if REGISTER.exists() and reg is not None and not reg:
-        # Bestand is er maar levert geen slugs op: afgekapte kopie, leeg bestand of
-        # een formaatwijziging in `forge register`. Eén duidelijke fout i.p.v. elke
-        # gedeclareerde skill als "onbekend" wegstrepen.
-        errs.append(f"{REGISTER.relative_to(ROOT)} bevat geen skill-slugs — "
-                    f"kapotte/afgekapte mirror? (verwacht `- slug:`-regels)")
+        # The file exists but yields no slugs: a truncated copy, an empty file, or a
+        # format change in `forge register`. One clear error instead of striking
+        # off every declared skill as "unknown".
+        errs.append(f"{REGISTER.relative_to(ROOT)} contains no skill slugs — "
+                    f"a broken or truncated mirror? (expected `- slug:` lines)")
     checked = 0
     for path in sorted(AGENTS.glob("*.md")):
         rel = str(path.relative_to(ROOT))
         fm = front_matter(path)
         if not re.search(r"^agent:", fm, re.M):
-            # Dekking afdwingen: een def die z'n front-matter kwijtraakt mag niet
-            # stil doorglippen. Alleen een expliciete allowlist (index.md) is oké.
+            # Enforce coverage: a definition that loses its front matter must not slip
+            # through silently. Only an explicit allowlist (index.md) is fine.
             if path.name not in SKIP_NO_AGENT:
-                errs.append(f"{rel}: geen `agent:`-front-matter — een agent-def hoort "
-                            f"'m te hebben (of zet 'm in {sorted(SKIP_NO_AGENT)}).")
+                errs.append(f"{rel}: no `agent:` front matter — an agent definition should "
+                            f"have one (or list it in {sorted(SKIP_NO_AGENT)}).")
             continue
         checked += 1
         check_identity(rel, path.stem, fm, errs, notices)
         for facet in ("chat", "executie"):
             present, is_null, block = facet_block(fm, facet)
             if not present:
-                # Een volledig ontbrekende facet-sleutel is dubbelzinnig: "geen
-                # facet" hoort expliciet `null` te zijn. Zo glipt een def die z'n
-                # tools verliest door de hele sleutel te droppen niet stil door.
-                errs.append(f"{rel}: mist de `{facet}:`-sleutel — gebruik een blok of "
-                            f"expliciet `{facet}: null`")
+                # A wholly missing facet key is ambiguous: "no facet" should be an
+                # explicit `null`. This way a definition that loses its tools by
+                # dropping the whole key does not slip through silently.
+                errs.append(f"{rel}: missing the `{facet}:` key — use a block or an "
+                            f"explicit `{facet}: null`")
             elif not is_null:
                 check_facet(rel, facet, block, errs, notices, reg)
     for n in notices:
         print("  · " + n)
     if errs:
-        print("FAIL — agent-tool/skill-contract geschonden:", file=sys.stderr)
+        print("FAIL — agent-tool/skill contract violated:", file=sys.stderr)
         for e in errs:
             print("  " + e, file=sys.stderr)
         return 1
-    print(f"agent-tool/skill-contract ok ({checked} definities)")
+    print(f"agent-tool/skill contract ok ({checked} definitions)")
     return 0
 
 
 def _selftest() -> int:
-    """Test de gate-logica zelf (northstar: gates die zelf getest zijn). Draait
-    op gemaakte facet-blokken, geen filesystem — pure logica-asserties.
-    Gebruik: check_agent_tools.py --selftest"""
+    """Test the gate logic itself (northstar: gates that are themselves tested).
+    Runs on constructed facet blocks, no filesystem — pure logic assertions.
+    Usage: check_agent_tools.py --selftest
+
+    Every block carries a `model:` line, because `model` is mandatory for a
+    non-empty facet. Without it two cases failed on the missing model rather
+    than on what they meant to test, and the selftest had been red for that
+    reason (found 2026-09-22; it runs in no CI step, which is why nobody saw)."""
     reg = {"thinking-red-team", "no-ai-slop"}
     cases = []
 
@@ -235,17 +245,19 @@ def _selftest() -> int:
         passed = (ok == want_ok) and (want_sub == "" or any(want_sub in e for e in errs))
         cases.append((name, passed, errs))
 
-    OKTOOLS = "tools: { allow: [Read, Bash], deny: [Write] }"
-    run("geldige skill", f"{OKTOOLS}\nskills: [thinking-red-team]", True)
-    run("onbekende skill", f"{OKTOOLS}\nskills: [does-not-exist]", False, "onbekende skill")
-    run("register ontbreekt + skills", f"{OKTOOLS}\nskills: [thinking-red-team]",
-        False, "ontbreekt", r=None)
-    run("lege skills slaagt", f"{OKTOOLS}\nskills: []", True)
-    run("mist skills-veld", OKTOOLS, False, "mist `skills`")
-    run("allow/deny overlap", "tools: { allow: [Read, Write], deny: [Write] }\nskills: []",
-        False, "overlappen")
-    run("skills gecheckt ondanks tools-blok weg", "skills: [does-not-exist]",
-        False, "onbekende skill")
+    MODEL = "model: sonnet"
+    OKTOOLS = f"{MODEL}\ntools: {{ allow: [Read, Bash], deny: [Write] }}"
+    run("valid skill", f"{OKTOOLS}\nskills: [thinking-red-team]", True)
+    run("unknown skill", f"{OKTOOLS}\nskills: [does-not-exist]", False, "unknown skill")
+    run("register missing + skills", f"{OKTOOLS}\nskills: [thinking-red-team]",
+        False, "is missing", r=None)
+    run("empty skills passes", f"{OKTOOLS}\nskills: []", True)
+    run("missing skills field", OKTOOLS, False, "missing `skills`")
+    run("allow/deny overlap",
+        f"{MODEL}\ntools: {{ allow: [Read, Write], deny: [Write] }}\nskills: []",
+        False, "overlap")
+    run("skills checked even with the tools block gone", f"{MODEL}\nskills: [does-not-exist]",
+        False, "unknown skill")
 
     fails = [(n, e) for n, ok, e in cases if not ok]
     for n, ok, _ in cases:
@@ -253,7 +265,7 @@ def _selftest() -> int:
     if fails:
         print(f"SELFTEST FAIL: {[n for n, _ in fails]}", file=sys.stderr)
         return 1
-    print(f"selftest ok ({len(cases)} gevallen)")
+    print(f"selftest ok ({len(cases)} cases)")
     return 0
 
 

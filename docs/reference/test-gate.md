@@ -1,24 +1,25 @@
 ---
 status: current
-last_reviewed: 2026-07-22
+last_reviewed: 2026-09-22
 ---
 
-# Test-gate (verify-check per spoke)
+# Test gate (verify check per spoke)
 
-De testhelft van "niet mergen zonder groene tests én up-to-date docs"
-(docs-helft: [docs-gates](docs-gates.md)). Elke import-spoke heeft een PR-check
-die **`verify`** heet; wát die draait hangt van het repo-type af. Er is bewust
-**geen centrale test-runner** — tests zijn niet uniform zoals het docs-contract
-(de een heeft service-containers nodig, de ander valideert infra). De hub levert
-templates en telt de dekking (`verify_gate` in `inventory/repos.json`); de spoke
-bezit zijn eigen workflow.
+The test half of "do not merge without green tests *and* up-to-date docs" (the
+docs half is [docs-gates](docs-gates.md)). Every imported spoke has a PR check
+called **`verify`**; what it runs depends on the kind of repo. There is
+deliberately **no central test runner** — tests are not uniform the way the
+docs contract is (one needs service containers, another validates infra). The
+hub provides templates and counts the coverage (`verify_gate` in
+`inventory/repos.json`); the spoke owns its own workflow.
 
-Handhaving is signaal, geen blokkade: rode X, geen branch protection op de
-solo-repo's (zie [docs-gates](docs-gates.md#aanhaken-caller-template)).
+Enforcement is a signal, not a block: a red X, no branch protection on the solo
+repos (see [docs-gates](docs-gates.md#wiring-it-up-caller-template)).
 
 ## Template — Python (uv + pytest)
 
-Voor spokes met een `pyproject.toml` en een `tests/`-map (bv. skill-forge, wordsworth):
+For spokes with a `pyproject.toml` and a `tests/` directory (skill-forge,
+wordsworth, and the like):
 
 ```yaml
 name: verify
@@ -35,14 +36,16 @@ jobs:
       - run: uv run pytest -q
 ```
 
-Draait je suite service-containers (Postgres/OpenSearch/…), gebruik dan `services:`
-zoals wordsworth in zijn bestaande `ci.yml` doet — dat telt al als de verify.
+If your suite needs service containers (Postgres, OpenSearch, …), use
+`services:` the way wordsworth already does in its `ci.yml` — that counts as
+the verify.
 
 ## Template — shell + manifests (habitat)
 
-Geen unit-suite; valideer wat er is. `--severity=warning` laat bewuste
-info-noise (bv. SC2016 bij envsubst-`$VAR`) door; envsubst-templates worden
-niet als statische YAML geparset (die valideren server-side na rendering):
+No unit suite; validate what is there. `--severity=warning` lets deliberate
+informational noise through (SC2016 on an envsubst `$VAR`, for example), and
+envsubst templates are not parsed as static YAML (they validate server-side
+after rendering):
 
 ```yaml
 name: verify
@@ -65,19 +68,19 @@ jobs:
           import glob, yaml, sys
           bad = 0
           for f in glob.glob('**/*.yml', recursive=True) + glob.glob('**/*.yaml', recursive=True):
-              if '/archive/' in f or 'job-template' in f:   # envsubst-template, geen statische YAML
+              if '/archive/' in f or 'job-template' in f:   # envsubst template, not static YAML
                   continue
               try:
                   list(yaml.safe_load_all(open(f)))
               except Exception as e:
-                  print(f'YAML-FOUT {f}: {e}'); bad = 1
+                  print(f'YAML ERROR {f}: {e}'); bad = 1
           sys.exit(bad)
           PY
 ```
 
 ## Template — infra (homelab)
 
-Cheap en zonder credentials/`init` (een signaal-gate, geen deploy):
+Cheap, and without credentials or `init` (a signal gate, not a deploy):
 
 ```yaml
 name: verify
@@ -101,15 +104,16 @@ jobs:
               try:
                   list(yaml.safe_load_all(open(f)))
               except Exception as e:
-                  print(f'YAML-FOUT {f}: {e}'); bad = 1
+                  print(f'YAML ERROR {f}: {e}'); bad = 1
           sys.exit(bad)
           PY
 ```
 
-## Dekking
+## Coverage
 
-`inventory/repos.json` draagt per import-spoke `verify_gate`:
+`inventory/repos.json` carries `verify_gate` per imported spoke:
 
-- `yes` — een `verify`-check draait op PR's;
-- `n/a` — geen zinvolle verify mogelijk (expliciet besloten; geen nep-suite);
-- `no` — nog te doen.
+- `yes` — a `verify` check runs on pull requests;
+- `n/a` — no meaningful verify is possible (an explicit decision; no fake
+  suite);
+- `no` — still to do.

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Sessietest voor handbook-mcp: echte server over stdio, alle tools plus
-de weiger-paden uit de spec-delta. Exit 1 bij elke afwijking. Bare output.
+"""Session test for handbook-mcp: a real server over stdio, every tool plus the
+refusal paths from the spec delta. Exit 1 on any deviation. Bare output.
 
-Gebruik: uv run python scripts/test_mcp.py
+Usage: uv run python scripts/test_mcp.py
 """
 import asyncio
 import sys
@@ -34,7 +34,7 @@ async def main() -> None:
             import json
 
             def items(result):
-                # FastMCP levert een lijst als één content-item per element
+                # FastMCP returns a list as one content item per element
                 out = []
                 for c in result.content:
                     try:
@@ -48,23 +48,23 @@ async def main() -> None:
                 die("list_repos faalde")
             repo_names = {x["repo"] for x in items(r)}
             if "Wanderer" not in repo_names or "handbook" not in repo_names:
-                die(f"importlijst klopt niet: {sorted(repo_names)}")
+                die(f"import list is wrong: {sorted(repo_names)}")
             print(f"list_repos: {len(repo_names)} repos (incl. hub)")
 
             r = await session.call_tool("read_doc", {"repo": "handbook", "path": "docs/index.md"})
             if r.isError or "status:" not in r.content[0].text:
-                die("read_doc(handbook, docs/index.md) leverde geen front matter (hub-exceptie)")
+                die("read_doc(handbook, docs/index.md) returned no front matter (hub exception)")
             print("read_doc(handbook): hub-docs leesbaar (ok)")
 
             r = await session.call_tool("list_docs", {"repo": "Wanderer"})
             docs = items(r)
             if r.isError or "docs/index.md" not in docs:
-                die("list_docs(Wanderer) mist docs/index.md")
+                die("list_docs(Wanderer) is missing docs/index.md")
             print(f"list_docs(Wanderer): {len(docs)} pagina's")
 
             r = await session.call_tool("read_doc", {"repo": "Wanderer", "path": "docs/index.md"})
             if r.isError or "status:" not in r.content[0].text:
-                die("read_doc(Wanderer, docs/index.md) leverde geen front matter")
+                die("read_doc(Wanderer, docs/index.md) returned no front matter")
             print("read_doc: front matter aanwezig")
 
             r = await session.call_tool("read_doc", {"repo": "Wanderer", "path": "docs/../.mcp.json"})
@@ -76,10 +76,10 @@ async def main() -> None:
 
             r = await session.call_tool("list_docs", {"repo": "grapher"})
             if not r.isError:
-                die("niet-geïmporteerd repo werd NIET geweigerd")
+                die("a non-imported repo was NOT refused")
             print("list_docs(grapher): geweigerd (ok)")
 
-    print("sessietest: alle checks geslaagd")
+    print("session test: all checks passed")
 
 
 if __name__ == "__main__":

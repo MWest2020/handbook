@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Genereer/valideer de mkdocs-importlijsten uit inventory/repos.json.
+"""Generate or validate the mkdocs import lists from inventory/repos.json.
 
-De inventaris is de enige waarheid over welke repos meedoen (northstar:
-site en agents lezen exact dezelfde lijst). Dit script schrijft de blokken
-tussen de BEGIN/END-markers in mkdocs.yml (publiek) en mkdocs.private.yml
-(privaat; niet getrackt, leeft alleen waar de private build draait) — of
-valideert met --check dat ze niet gedrift zijn (CI). Een afwezige
-mkdocs.private.yml wordt overgeslagen.
+The inventory is the single source of truth about which repos take part
+(northstar: site and agents read exactly the same list). This script writes the
+blocks between the BEGIN/END markers in mkdocs.yml (public) and
+mkdocs.private.yml (private; untracked, existing only where the private build
+runs) — or validates with --check that they have not drifted (CI). An absent
+mkdocs.private.yml is skipped.
 
 Criteria:
-  publiek : handbook_import=yes  sensitivity=public-ok    has_docs=yes
-  privaat : handbook_import=yes  sensitivity=private-only  has_docs=yes
+  public  : handbook_import=yes  sensitivity=public-ok    has_docs=yes
+  private : handbook_import=yes  sensitivity=private-only  has_docs=yes
 
 Gebruik: gen_imports.py [--check]
 """
@@ -40,7 +40,7 @@ def import_lines(rows: list[dict]) -> str:
 def replace_block(text: str, block: str, path: str) -> str:
     pattern = re.compile(re.escape(BEGIN) + r".*?" + re.escape(END), re.DOTALL)
     if not pattern.search(text):
-        sys.exit(f"{path}: markers ontbreken")
+        sys.exit(f"{path}: markers missing")
     return pattern.sub(block, text)
 
 
@@ -56,21 +56,21 @@ def main() -> None:
     for path, subset in (("mkdocs.yml", pub), ("mkdocs.private.yml", pub + priv)):
         f = ROOT / path
         if not f.exists():
-            # mkdocs.private.yml is niet getrackt (leeft op de beheer-host);
-            # in CI/verse clones ontbreekt hij en is er niets te valideren.
-            print(f"{path}: afwezig, overgeslagen")
+            # mkdocs.private.yml is untracked (it lives on the administration host);
+            # in CI and fresh clones it is absent and there is nothing to validate.
+            print(f"{path}: absent, skipped")
             continue
         old = f.read_text()
         new = replace_block(old, import_lines(subset), path)
         if old != new:
             drift = True
             if check:
-                print(f"DRIFT: {path} loopt niet synchroon met inventory/repos.json")
+                print(f"DRIFT: {path} is out of sync with inventory/repos.json")
             else:
                 f.write_text(new)
-                print(f"{path}: importblok bijgewerkt ({len(subset)} repos)")
+                print(f"{path}: import block updated ({len(subset)} repos)")
         else:
-            print(f"{path}: synchroon ({len(subset)} repos)")
+            print(f"{path}: in sync ({len(subset)} repos)")
     if check and drift:
         sys.exit(1)
 

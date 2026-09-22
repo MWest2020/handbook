@@ -1,23 +1,23 @@
 # handbook
 
-Hub van het persoonlijke repo-ecosysteem (voorheen "Westmarch"): één plek
-die de documentatie van alle persoonlijke repos at build time aggregeert,
-naar het hub-and-spoke-model. Docs leven in de project-repos zelf
-(`/docs`, Diátaxis-light contract); dit repo bevat alleen de kaart, de
-specs en de pipeline.
+Hub of the personal repo ecosystem (formerly "Westmarch"): one place that
+aggregates the documentation of every personal repo at build time, following
+the hub-and-spoke model. Docs live in the project repos themselves (`/docs`,
+Diátaxis-light contract); this repo holds only the map, the specs and the
+pipeline.
 
-- **Site**: publieke build → GitHub Pages
-  (https://mwest2020.github.io/handbook/); de private build draait alleen
-  waar zijn config staat (niet in dit repo):
+- **Site**: public build → GitHub Pages
+  (https://mwest2020.github.io/handbook/); the private build runs only where
+  its config lives (not in this repo):
   `GH_TOKEN=… uv run mkdocs build -f mkdocs.private.yml -d site-private`
-- **Importlijst**: `inventory/repos.json` → `scripts/gen_imports.py` →
-  `mkdocs.yml` (en de niet-getrackte private config waar aanwezig); CI
-  faalt bij drift
-- **Specs**: `openspec/` (northstar in `project.md`, changes met
-  propose→apply→archive)
-- **Checks**: `scripts/check_contract.py` (docs-contract per import),
-  `scripts/check_freshness.py` (>180 dagen = waarschuwing)
-- **Sessies**: Claude Code-sessies over het ecosysteem starten hier; zie
-  `AGENTS.md` voor het mandaat
+- **Import list**: `inventory/repos.json` → `scripts/gen_imports.py` →
+  `mkdocs.yml` (and the untracked private config where present); CI fails on
+  drift
+- **Specs**: `openspec/` (northstar in `project.md`, changes follow
+  propose → apply → archive)
+- **Checks**: `scripts/check_contract.py` (docs contract per import),
+  `scripts/check_freshness.py` (>180 days = warning)
+- **Sessions**: Claude Code sessions about the ecosystem start here; see
+  `AGENTS.md` for the mandate
 
-Licentie: [EUPL-1.2](LICENSE).
+License: [EUPL-1.2](LICENSE).

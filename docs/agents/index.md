@@ -3,82 +3,84 @@ status: draft
 last_reviewed: 2026-09-21
 ---
 
-# Agents — canonieke registry
+# Agents — canonical registry
 
-De **enige waarheid** over wie de agents van het ecosysteem zijn. Elke rol heeft
-hier één definitie; ratatoskr (chat) en habitat (executie) *lezen* die, ze
-her-definiëren 'm niet. Zo is een bouwer altijd dezelfde bouwer.
+The **single source of truth** about who the agents of the ecosystem are. Every
+role has exactly one definition here; ratatoskr (chat) and habitat (execution)
+*read* it, they do not redefine it. That is how a builder is always the same
+builder.
 
-## Hoe te lezen (mens én agent)
+## How to read this (human and agent alike)
 
-- Mens: deze pagina's op de site.
-- Agent: via `handbook_mcp` → `read_doc("handbook", "docs/agents/<naam>.md")`.
+- Human: these pages on the site.
+- Agent: through `handbook_mcp` → `read_doc("handbook", "docs/agents/<name>.md")`.
 
-## Twee facetten per definitie
+## Two facets per definition
 
-| Facet | Wat | Consument |
+| Facet | What | Consumer |
 |---|---|---|
-| **chat** | systemprompt + kanaal-scope + `tools`/`skills` | ratatoskr (`claude -p`-listener) |
-| **executie** | kooi-rol + `tools`/`skills` + output-schema | habitat (gekooide K8s-job) |
+| **chat** | system prompt + channel scope + `tools`/`skills` | ratatoskr (the `claude -p` listener) |
+| **execution** | cage role + `tools`/`skills` + output schema | habitat (a caged Kubernetes job) |
 
-Een rol kan één leeg facet hebben (assistent = alleen chat; security = alleen
-executie). Het `## Mandaat` is voor beide facetten én voor mensen de bron.
+A role may have one empty facet (assistent is chat only; security is execution
+only). The `## Mandate` section is the source for both facets and for humans.
 
-Elk niet-leeg facet declareert in het front-matter expliciet `tools.allow`,
-`tools.deny` (welke tools juist níet) en `skills` — leeg (`[]`) is een geldige,
-expliciete keuze. De gate `scripts/check_agent_tools.py` bewaakt dat het contract
-er staat, dat een executie-`allow` overeenkomt met de seed die habitat uitvoert, én
-dat elke `skills:`-entry bestaat in het skill-register (`inventory/skills-register.yml`,
-mirror van skill-forge); de CI-stap die 'm draait wordt met de hand ingehaakt
-(CI-config is een human-gate).
+Every non-empty facet explicitly declares `tools.allow`, `tools.deny` (which
+tools specifically *not*) and `skills` in its front matter — empty (`[]`) is a
+valid and explicit choice. The gate `scripts/check_agent_tools.py` guards that
+the contract is present, that an execution `allow` matches the seed habitat
+runs, and that every `skills:` entry exists in the skill register
+(`inventory/skills-register.yml`, a mirror of skill-forge); the CI step that
+runs it is wired in by hand (CI config is a human gate).
 
-## Hoe de vloot samenwerkt: hub en spokes
+## How the fleet works together: hub and spokes
 
 > Mark, 2026-09-21: *"Ik wil eigenlijk enkel met Odin spreken, maar odin moet
 > niet alles doen. Odin is de hub en niet de spokes."*
 
     Mark ──► odin (hub, #general)
-               │  beslist: zelf antwoorden, routeren, of uitzetten
-               ├─ !route #kanaal ───────► een spoke-agent in zijn eigen kanaal
-               ├─ !sessie <type> … ─────► een losgekoppelde werksessie; het
-               │                          antwoord komt terug in dit kanaal,
-               │                          onder odins eigen naam
-               └─ "dat loopt via bouwer" ► !dispatch → habitat (poort = Mark)
+               │  decides: answer, route, or delegate
+               ├─ !route #channel ──────► a spoke agent, in its own channel
+               ├─ !sessie <type> … ─────► a detached work session; the answer
+               │                          returns in this channel, under odin's
+               │                          own name
+               └─ "that goes via bouwer" ► !dispatch → habitat (gate = Mark)
 
-Drie regels die daaruit volgen, en die per definitie hieronder terugkomen:
+Three rules follow from that, and they come back in the definitions below:
 
-1. **De hub doet het werk niet.** Wat tijd kost gaat naar een spoke. Odin
-   blijft aanspreekbaar terwijl die spoke draait — dat is de hele winst. Zie
+1. **The hub does not do the work.** Anything that costs time goes to a spoke.
+   Odin stays reachable while that spoke runs — which is the entire gain. See
    `delegate_session` in [odin](odin.md).
-2. **Bouwen gaat naar habitat, via bouwer.** Niet in een chat-beurt, niet in een
-   leessessie. Bouwer is de bewaker van die weg; `!dispatch` blijft Marks eigen
-   commando, want bouwen is waar een vergissing duur is.
-3. **Ratatoskr is er voor menselijke context**, niet om dingen te doen: kunnen
-   meelezen en reageren in meerdere kanalen tegelijk. Wat daar werkt zijn
-   dagelijkse standups, escalaties, en het oordeel van een reviewer, architect
-   of roodteamer. Wat daar niet werkt zijn gesprekken waarin een agent uitlegt
-   wat hij niet mag.
+2. **Building goes to habitat, via bouwer.** Not in a chat turn, not in a read
+   session. Bouwer guards that road; `!dispatch` stays Mark's own command,
+   because building is where a mistake is expensive.
+3. **Ratatoskr exists for human context**, not to get things done: reading and
+   answering across several channels at once. What works there are daily
+   standups, escalations, and the judgement of a reviewer, architect or red
+   teamer. What does not work there are conversations in which an agent
+   explains what it may not do.
 
-Die derde is een maatstaf, geen sfeerbeeld. Een agent die "dat kan ik niet"
-antwoordt terwijl er een weg bestaat, is een fout in zijn definitie — noem de
-weg. Een beperking die alleen in een mandaattekst staat en niet in de listener,
-is geen beperking maar een misverstand dat geld kost.
+That third one is a measure, not a mood. An agent answering "I can't" while a
+road exists is a fault in its definition — name the road. A limitation that
+lives only in a mandate text and not in the listener is not a limitation but a
+misunderstanding that costs money.
 
 ## Guardrails
 
-- **Identiteit:** de relay is *closed* — alleen npubs uit deze registry doen mee.
-- **Definitie:** consumenten draaien een agent alleen conform deze bron; een
-  drift-gate vangt afwijking (CI), en deze map valt onder CODEOWNERS zodat "wie
-  de agents zijn" langs Mark loopt.
+- **Identity:** the relay is *closed* — only npubs from this registry take part.
+- **Definition:** consumers run an agent only as this source describes it; a
+  drift gate catches deviation (CI), and this directory falls under CODEOWNERS
+  so that "who the agents are" goes past Mark.
 
-## Rollen
+## Roles
 
-- [odin](odin.md) — **de hub**: de enige agent in #general. Mark praat met odin;
-  odin routeert naar de spokes (route / nieuwe agent / uitbreiding).
-  Was `coordinator`; hernoemd 2026-09-07 op besluit van Mark.
-- [bouwer](bouwer.md) — bouw-scoping (chat, #bouw) + habitat-`builder` (executie)
-- architect — architectuur-sparring (chat, #architectuur) + habitat-plan (executie) *(volgt)*
-- assistent — algemene chat-agent (spoke-kanalen), geen executie *(volgt)*
-- [reviewer](reviewer.md) / [security](security.md) — alleen executie (habitat)
-- [roodteam](roodteam.md) — security/red-team-agent (chat, #red-team, #review), geen executie
-- **seeds/** — canonieke executie-seeds; de per-spoke `.claude/agents/` worden hieruit afgeleid (generator + drift-gate)
+- [odin](odin.md) — **the hub**: the only agent in #general. Mark talks to odin;
+  odin routes to the spokes (route / new agent / extension).
+  Was `coordinator`; renamed 2026-09-07 on Mark's decision.
+- [bouwer](bouwer.md) — build scoping (chat, #bouw) + habitat `builder` (execution)
+- architect — architecture sparring (chat, #architectuur) + habitat plan (execution) *(to follow)*
+- assistent — general chat agent (spoke channels), no execution *(to follow)*
+- [reviewer](reviewer.md) / [security](security.md) — execution only (habitat)
+- [roodteam](roodteam.md) — security/red-team agent (chat, #red-team, #review), no execution
+- **seeds/** — canonical execution seeds; the per-spoke `.claude/agents/` are
+  derived from these (generator plus drift gate)

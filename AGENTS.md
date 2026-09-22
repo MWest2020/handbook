@@ -1,36 +1,41 @@
-# handbook — hub van het persoonlijke ecosysteem
+# handbook — hub of the personal ecosystem
 
-Dit repo is de coördinatie-hub: specs (`openspec/`), inventaris
-(`inventory/`), importlijst (mkdocs) en het startpunt voor Claude
-Code-sessies over het hele persoonlijke ecosysteem. Er is bewust géén
-apart hub-repo (verschil met de werkopzet): één eigenaar, één hub.
+This repo is the coordination hub: specs (`openspec/`), inventory
+(`inventory/`), the import list (mkdocs) and the starting point for Claude
+Code sessions across the whole personal ecosystem. There is deliberately **no**
+separate hub repo (unlike the work setup): one owner, one hub.
 
-## Rol van een sessie die hier start
+## What a session starting here is for
 
-- **Coördineren, niet bouwen.** Bouwwerk aan spokes loopt via habitat-Jobs
-  (`dispatch.sh <rol> <change> <repo>` vanaf een host met kubectl; zie
-  habitat `docs/reference/dispatch.md`). Reviewer/security altijd met
+- **Coordinate, do not build.** Construction on spokes runs through habitat Jobs
+  (`dispatch.sh <role> <change> <repo>` from a host with kubectl; see habitat
+  `docs/reference/dispatch.md`). Reviewer and security always with
   `HABITAT_BASE_BRANCH=habitat/builder/<change>`.
-  Dit geldt voor een *interactieve* sessie die hier start. Een **gedispatchte
-  habitat-rol** volgt zijn eigen rolbestand (`.claude/agents/<rol>.md`) en bouwt
-  hier wél — uitsluitend binnen de change waarvoor hij gedispatcht is, en zonder
-  `CLAUDE.md`, `.claude/agents/` of CI aan te raken. Mergen blijft mens.
-- **De inventaris is de enige waarheid.** `inventory/repos.json` bepaalt wat
-  meedoet (site én agents). Wijzigingen aan de importlijst gaan via
-  `scripts/gen_imports.py`, nooit met de hand. De tabel in `inventory/repos.md`
-  is afgeleid: regenereer met `scripts/gen_inventory_md.py` (bewerkt alleen het
-  gemarkeerde tabelblok; het proza eromheen blijft handwerk).
-- **Voorstel-eerst.** Nieuwe changes/repos/entiteiten ontstaan via een
-  openspec-proposal onder `openspec/changes/`, nooit impliciet.
-- **Escalatie.** Niet in een proposal of dit mandaat beschreven = eerst
-  vragen. Eén herstart per mislukte habitat-run zonder mens;
-  security-FAIL of gemeld geheim → altijd mens.
+  That applies to an *interactive* session started here. A **dispatched habitat
+  role** follows its own role file (`.claude/agents/<role>.md`) and does build
+  here — strictly within the change it was dispatched for, and without touching
+  `AGENTS.md`, `.claude/agents/` or CI. Merging stays human.
+- **The inventory is the single source of truth.** `inventory/repos.json`
+  decides what takes part (site and agents alike). Changes to the import list go
+  through `scripts/gen_imports.py`, never by hand. The table in
+  `inventory/repos.md` is derived: regenerate it with
+  `scripts/gen_inventory_md.py` (it edits only the marked table block; the prose
+  around it stays handwritten).
+- **Proposal first.** New changes, repos or entities come into being through an
+  openspec proposal under `openspec/changes/`, never implicitly.
+- **Escalation.** Anything not described in a proposal or in this mandate:
+  ask first. One restart per failed habitat run without a human;
+  a security FAIL or a reported secret always goes to a human.
 
-## Invarianten
+## Invariants
 
-- `openspec/private/` is gitignored en bevat homelab-identifiers — nooit
-  committen, nooit citeren in publieke output (repos, PR's, docs).
-- Geen secrets in dit repo, ook niet in voorbeelden; tokens via env.
-- Publiek/privaat is gescheiden op repo-niveau; de private mkdocs-build
-  gaat nooit naar Pages.
-- Python via `uv`, nooit pip. Bare CI-scripts (geen ANSI/banners).
+- `openspec/private/` is gitignored and holds homelab identifiers — never
+  commit them, never quote them in public output (repos, PRs, docs).
+- No secrets in this repo, not even in examples; tokens come from the
+  environment.
+- Public and private are separated at repo level; the private mkdocs build
+  never goes to Pages.
+- Python through `uv`, never pip. Bare CI scripts (no ANSI, no banners).
+- **English everywhere.** Code, comments, docs, commit messages, interface
+  text and the agent mandates in `docs/agents/`. Working in two languages is
+  how Dutch ends up in code (Mark, 2026-09-21).
