@@ -192,7 +192,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Fork t.b.v. certificaataanvraag-workflow upstream; geen eigen inhoud. fork",
+    "notes": "Fork for the upstream certificate-request workflow; no content of its own. fork",
     "contract_applied": "no"
   },
   {
@@ -290,7 +290,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). 13 docs-pagina's zonder front matter -> migratie. Geen LICENSE -> toevoegen. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, Mark's decision 2026-07-12). 13 docs pages without front matter -> migration. No LICENSE -> add one. Docs-contract PR merged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -374,7 +374,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). project.md noemt certswap als maintained-voorbeeld, maar er zijn commits <90 dagen -> beslistabel wint: active. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, Mark's decision 2026-07-12). project.md names certswap as a maintained example, but there are commits younger than 90 days -> the decision table wins: active. Docs-contract PR merged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -752,7 +752,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Geen activiteit sinds 2025-11; vermoedelijk vervangen door hosted alternatieven -> archiveren. Zo niet: maintained maken.",
+    "notes": "No activity since 2025-11; probably superseded by hosted alternatives -> archive. If not: make it maintained.",
     "contract_applied": "no"
   },
   {
@@ -780,7 +780,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Nice-to-have (wave 2, besluit Mark 2026-07-12). Geen LICENSE -> EUPL-1.2 toevoegen bij change 2-PR. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS).",
+    "notes": "Nice-to-have (wave 2, Mark's decision 2026-07-12). No LICENSE -> add EUPL-1.2 with the change 2 PR. Docs-contract PR merged 2026-07-13 (habitat wave 2, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -850,7 +850,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Agent-platform; bouwwerk changes 2/3 loopt hierdoor. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep schoon; overlay-netwerknaam gerewoord in README/project.md, naam blijft in history — laag risico, besluit Mark). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail). Verify-gate uitgerold 2026-07-22 (add-test-gate): shellcheck+yaml-syntax. Rol-architectuur gebouwd+gereviewd (add-role-architecture, PR #11 2x PASS, gemerged 14351b8): architect/reviewer/security naast builder, per-rol deny-by-default allowlists, schema-output, hooks. add-worker-image gearchiveerd 2026-08-10 (image blijft prive via ghcr-pull-secret; nieuwe specs worker-execution + worker-image-build). add-run-output gearchiveerd 2026-08-10 (agent-eind-uitvoer als .habitat/run-output-<id>.md op de branch). Rol-architectuur cluster-livetests groen 2026-08-10 (image 232583a): per-rol enforcement, idempotentie, e2e-keten, Stop-hook. add-role-architecture + fix-guard-role-definition (PR #13, guard stond .claude/agents niet toe) gearchiveerd. Geen open openspec-changes meer.",
+    "notes": "CORE SET (wave 1, Mark's decision 2026-07-12). Agent platform; construction on changes 2 and 3 runs through it. Made public 2026-07-14 after a scrub check (gitleaks + identifier sweep clean; the overlay network name was reworded in README/project.md, the name stays in history — low risk, Mark's decision). Seed apply-docs-contract + .mcp.json merged 2026-07-12. Docs-contract PR merged 2026-07-12 (habitat run, reviewer PASS). Docs gates rolled out 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths dispatch/,worker/,cage/,report/,orchestrator/ (fail). Verify gate rolled out 2026-07-22 (add-test-gate): shellcheck + yaml-syntax. Role architecture built and reviewed (add-role-architecture, PR #11 twice PASS, merged 14351b8): architect/reviewer/security alongside builder, per-role deny-by-default allowlists, schema output, hooks. add-worker-image archived 2026-08-10 (the image stays private through a ghcr pull secret; new specs worker-execution + worker-image-build). add-run-output archived 2026-08-10 (the agent's final output as .habitat/run-output-<id>.md on the branch). Role-architecture cluster live tests green 2026-08-10 (image 232583a): per-role enforcement, idempotency, end-to-end chain, Stop hook. add-role-architecture and fix-guard-role-definition (PR #13, the guard did not allow .claude/agents) archived. No open openspec changes left.",
     "contract_applied": "yes",
     "verify_gate": "yes"
   },
@@ -865,7 +865,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Testrepo bij habitat; experiment -> archiveren of laten, geen handbook-rol. Wordt gebruikt als doelrepo voor de add-role-architecture cluster-livetests.",
+    "notes": "Test repo belonging to habitat; an experiment -> archive or leave, no handbook role. Used as the target repo for the add-role-architecture cluster live tests.",
     "contract_applied": "no"
   },
   {
@@ -879,7 +879,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1). Besluit Mark 2026-07-12: repo blijft PUBLIC. Geen LICENSE. Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS). Besluit 2026-07-14: publieke import; geen private build meer nodig voor homelab. Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths infra-mappen (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): terraform fmt+yaml-syntax.",
+    "notes": "CORE SET (wave 1). Mark's decision 2026-07-12: the repo stays PUBLIC. No LICENSE. Seed apply-docs-contract + .mcp.json merged 2026-07-12. Docs-contract PR merged 2026-07-12 (habitat run, reviewer PASS). Decision 2026-07-14: public import; no private build needed for homelab any more. Docs gates rolled out 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths the infra directories (fail; warn -> fail 2026-07-21, signal model). Verify gate rolled out 2026-07-22 (add-test-gate): terraform fmt + yaml-syntax.",
     "contract_applied": "yes",
     "verify_gate": "yes"
   },
@@ -936,7 +936,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Habitat-doelrepo (toegevoegd 2026-08-22): CLI voor de Internet.nl batch-API + self-host-recept. MIT (bewuste afwijking van EUPL-standaard, besluit Mark 2026-08-22). Docs-contract en verify-gate (uv+pytest) vanaf de eerste commit. Route: self-hosted batch-instance + eigen API (wordsworth-stijl); hosted accounts bewust overgeslagen (bottleneck).",
+    "notes": "Habitat target repo (added 2026-08-22): a CLI for the Internet.nl batch API plus a self-hosting recipe. MIT (a deliberate deviation from the EUPL default, Mark's decision 2026-08-22). Docs contract and verify gate (uv + pytest) from the first commit. Route: a self-hosted batch instance plus an API of our own (wordsworth-style); hosted accounts deliberately skipped (bottleneck).",
     "contract_applied": "yes",
     "verify_gate": "yes"
   },
@@ -1035,7 +1035,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Vraag: repo oogt leeg (geen taal, geen docs) maar heeft agent-sporen en recente activiteit — wat is Loepie?",
+    "notes": "Question: the repo looks empty (no language, no docs) but has agent traces and recent activity — what is Loepie?",
     "contract_applied": "no"
   },
   {
@@ -1091,7 +1091,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Fork met agent-sporen en recente pushes. Vraag: is dit werkcontext (hoort niet in persoonlijk handbook) of persoonlijk experiment? fork",
+    "notes": "A fork with agent traces and recent pushes. Question: is this work context (which does not belong in a personal handbook) or a personal experiment? fork",
     "contract_applied": "no"
   },
   {
@@ -1231,7 +1231,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Geen beschrijving, geen docs, laatste echte activiteit onduidelijk -> archiveren tenzij in gebruik.",
+    "notes": "No description, no docs, last real activity unclear -> archive unless in use.",
     "contract_applied": "no"
   },
   {
@@ -2002,7 +2002,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). Rijke docs incl. 17 ADR's (decisions/) -> migreren naar explanation/adr/. Licentie NOASSERTION -> vaststellen (EUPL-1.2?). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "CORE SET (wave 1, Mark's decision 2026-07-12). Rich docs including 17 ADRs (decisions/) -> migrate to explanation/adr/. Licence NOASSERTION -> settle it (EUPL-1.2?). Seed apply-docs-contract + .mcp.json merged 2026-07-12. Docs-contract PR merged 2026-07-12 (habitat run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -2016,7 +2016,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "yes",
     "handbook_import": "no",
-    "notes": "Downstream packaging van Wanderer; docs horen bij het hoofdrepo, aparte import zou dubbel zijn. Licentie NOASSERTION.",
+    "notes": "Downstream packaging of Wanderer; its docs belong with the main repo, a separate import would duplicate them. Licence NOASSERTION.",
     "contract_applied": "no"
   },
   {
@@ -2044,7 +2044,7 @@
     "needs_mcp_json": "no",
     "needs_docs": "no",
     "handbook_import": "no",
-    "notes": "Persoonlijke website. Vraag: hoort een portfoliosite in de handbook-import, of volstaat een link vanaf de handbook-index?",
+    "notes": "Personal website. Question: does a portfolio site belong in the handbook import, or is a link from the handbook index enough?",
     "contract_applied": "no"
   },
   {
@@ -2058,7 +2058,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "no",
-    "notes": "Hub-repo (voorheen Westmarch, hernoemd 2026-07-12): specs, inventaris, mkdocs-pipeline, sessie-startpunt (AGENTS.md-mandaat). Site importeert zichzelf niet (handbook_import blijft no); docs/ wel leesbaar via handbook-mcp (hub-exceptie in code, mcp-hub-self-read, 2026-07-22). Agent-registry: docs/agents/ is de canonieke bron per agent-rol (chat-facet + executie-facet per definitie); consumenten (ratatoskr-listener, habitat-seeds) lezen daar en kopieren niet. Bewaakt door scripts/check_agent_tools.py (naam/npub/facetten/tools/model + seed-kruising).",
+    "notes": "Hub repo (formerly Westmarch, renamed 2026-07-12): specs, inventory, mkdocs pipeline, the starting point for sessions (the AGENTS.md mandate). The site does not import itself (handbook_import stays no); docs/ is readable through handbook-mcp (a hub exception in code, mcp-hub-self-read, 2026-07-22). Agent registry: docs/agents/ is the canonical source per agent role (a chat facet and an execution facet per definition); consumers (the ratatoskr listener, habitat seeds) read there and do not copy. Guarded by scripts/check_agent_tools.py (name, npub, facets, tools, model, and the seed cross-check).",
     "contract_applied": "no"
   },
   {
@@ -2157,7 +2157,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "KERNSET (wave 1, besluit Mark 2026-07-12). docs/ is een Hugo-site (afwijkende structuur) -> migreren naar contract. Publiek gezet 2026-07-14 na scrub-check (gitleaks + identifier-sweep over volledige history: schoon). Seed apply-docs-contract + .mcp.json gemerged 2026-07-12. Docs-contract-PR gemerged 2026-07-12 (habitat-run, reviewer PASS).",
+    "notes": "CORE SET (wave 1, Mark's decision 2026-07-12). docs/ is a Hugo site (a deviating structure) -> migrate to the contract. Made public 2026-07-14 after a scrub check (gitleaks + identifier sweep over the full history: clean). Seed apply-docs-contract + .mcp.json merged 2026-07-12. Docs-contract PR merged 2026-07-12 (habitat run, reviewer PASS).",
     "contract_applied": "yes"
   },
   {
@@ -2185,7 +2185,7 @@
     "needs_mcp_json": "yes",
     "needs_docs": "yes",
     "handbook_import": "yes",
-    "notes": "Privaat, actieve agent-ontwikkeling; inhoud onbekend gevoelig -> fail closed. Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). Docs-gates uitgerold 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn->fail 2026-07-21, signaal-model). Verify-gate uitgerold 2026-07-22 (add-test-gate): uv+pytest. Telefoon->vault-clipping werkt: phone-intake-v1 en url-intake-v1 afgerond+gearchiveerd (2026-08-10). Clippen bewezen via de telefoon-share-tekstroute (eerste inhoudelijke clip 2026-08-04, MCP-architectuur); dispatch-shortcut niet geinstalleerd maar de dispatch-keten zelf is groen bewezen. Geen open openspec-changes meer.",
+    "notes": "Private, active agent development; content of unknown sensitivity -> fail closed. Docs-contract PR merged 2026-07-13 (habitat wave 2, reviewer PASS). Docs gates rolled out 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn -> fail 2026-07-21, signal model). Verify gate rolled out 2026-07-22 (add-test-gate): uv + pytest. Phone-to-vault clipping works: phone-intake-v1 and url-intake-v1 finished and archived (2026-08-10). Clipping proven through the phone share-text route (first substantive clip 2026-08-04, MCP architecture); the dispatch shortcut is not installed but the dispatch chain itself is proven green. No open openspec changes left.",
     "contract_applied": "yes",
     "verify_gate": "yes"
   }

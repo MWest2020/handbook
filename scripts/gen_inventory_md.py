@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 JSON_PATH = ROOT / "inventory" / "repos.json"
 MD_PATH = ROOT / "inventory" / "repos.md"
 
-BEGIN = "<!-- BEGIN generated:github-table (uit inventory/repos.json; niet met de hand bewerken) -->"
+BEGIN = "<!-- BEGIN generated:github-table (from inventory/repos.json; do not edit by hand) -->"
 END = "<!-- END generated:github-table -->"
 
 COLUMNS = [
