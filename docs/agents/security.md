@@ -1,9 +1,9 @@
 ---
 status: actief
-last_reviewed: 2026-09-03
+last_reviewed: 2026-09-22
 agent:
   naam: security
-  npub: null            # executie-only rol (habitat), geen ratatoskr-chat-identiteit
+  npub: null            # execution-only role (habitat), no ratatoskr chat identity
   chat: null
   executie:
     model: sonnet
@@ -15,18 +15,18 @@ agent:
 
 # security
 
-## Mandaat
+## Mandate
 
-Executie-only rol in de kooi (habitat). De canonieke rol-inhoud staat in
-[`docs/agents/seeds/security.md`](seeds/security.md); de per-spoke
-`.claude/agents/security.md` wordt daaruit **afgeleid** (generator + drift-gate), niet
-met de hand gekopieerd.
+An execution-only role in the cage (habitat). The canonical role content lives
+in [`docs/agents/seeds/security.md`](seeds/security.md); each spoke's
+`.claude/agents/security.md` is **derived** from it (generator plus drift gate),
+not copied by hand.
 
-## Chat-facet
+## Chat facet
 
-Geen — deze rol draait niet in de ratatoskr-chat.
+None — this role does not run in the ratatoskr chat.
 
-## Executie-facet (habitat · security)
+## Execution facet (habitat · security)
 
-Bron: [`seeds/security.md`](seeds/security.md). Wijzig de rol dáár; de generator houdt alle
-spokes gelijk.
+Source: [`seeds/security.md`](seeds/security.md). Change the role *there*; the
+generator keeps every spoke identical.
