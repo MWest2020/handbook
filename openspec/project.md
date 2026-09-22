@@ -3,14 +3,14 @@
 ## Goal
 
 One handbook as the aggregation point for every personal repo (open-source
-projects and homelab alike), modelled on the Conduction techbook but scaled to a
-single owner. Documentation lives in the project repos themselves (`/docs`);
-the handbook aggregates at build time through one import list. No copies, no
-drift.
+projects and homelab alike), modelled on a corporate techbook of the same
+shape but scaled to a single owner. Documentation lives in the project repos
+themselves (`/docs`); the handbook aggregates at build time through one import
+list. No copies, no drift.
 
 ## Northstar
 
-This is the full Conduction model, not a slimmed-down version; the hub gains
+This is that model in full, not a slimmed-down version; the hub gains
 capabilities over time, so the gates weigh more heavily rather than less.
 
 1. **Proven sync before every push.** Working on a repo means: before every

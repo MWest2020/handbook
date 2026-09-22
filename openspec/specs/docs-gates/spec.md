@@ -1,45 +1,45 @@
 # docs-gates Specification
 
 ## Purpose
-Docs bij het gedrag houden per spoke-PR: een contract-check (vorm) en een
-drift-check (code↔docs), als signaal in de PR waar de fix nog goedkoop is.
+Keep docs in step with behaviour per spoke pull request: a contract check
+(shape) and a drift check (code ↔ docs), as a signal in the PR where the fix is
+still cheap.
 ## Requirements
-### Requirement: Contract-gate draait in de spoke-PR
+### Requirement: The contract gate runs in the spoke's pull request
 
-Elk repo op de importlijst (`handbook_import: yes`) SHALL het docs-contract
-valideren als check op zijn eigen pull requests, met dezelfde checker die de
-hub gebruikt (aangeroepen via de reusable workflow van de hub, niet als
-kopie). De hub-CI en de nightly rebuild blijven als vangnet bestaan.
+Every repo on the import list (`handbook_import: yes`) SHALL validate the docs
+contract as a check on its own pull requests, using the same checker the hub
+uses (called through the hub's reusable workflow, not as a copy). The hub CI
+and the nightly rebuild remain as a safety net.
 
-#### Scenario: Contractbreuk in een spoke-PR
+#### Scenario: A contract breach in a spoke pull request
 
-- WHEN een spoke-PR een docs-pagina toevoegt of wijzigt die het contract
-  schendt (geen front matter, markdown buiten de Diátaxis-mappen)
-- THEN faalt de contract-gate in díe PR, vóór merge
+- WHEN a spoke pull request adds or changes a docs page that breaks the
+  contract (no front matter, markdown outside the Diátaxis directories)
+- THEN the contract gate fails in *that* pull request, before merge
 
-#### Scenario: Checker wijzigt bij de hub
+#### Scenario: The checker changes at the hub
 
-- WHEN de hub de contract-checker aanscherpt
-- THEN geldt de aanscherping bij de eerstvolgende spoke-PR zonder dat een
-  spoke iets hoeft bij te werken
+- WHEN the hub tightens the contract checker
+- THEN the tightening applies on the next spoke pull request without any spoke
+  having to update anything
 
-### Requirement: Drift-gate koppelt code aan docs
+### Requirement: The drift gate ties code to docs
 
-Een spoke-PR die geconfigureerde code-paden raakt SHALL falen wanneer
-`docs/**` niet in dezelfde PR meebeweegt, tenzij de PR een expliciete,
-zichtbare override draagt (label `docs-drift-ok`). De gate SHALL
-padgebaseerd en deterministisch zijn (geen inhoudsanalyse). Spokes MAY de
-gate op `warn` zetten tijdens inregelen; de standaard is `fail`.
+A spoke pull request that touches configured code paths SHALL fail when
+`docs/**` does not move with it in the same pull request, unless the pull
+request carries an explicit, visible override (the label `docs-drift-ok`). The
+gate SHALL be path-based and deterministic (no content analysis). Spokes MAY
+set the gate to `warn` while settling in; the default is `fail`.
 
-#### Scenario: Code wijzigt, docs niet
+#### Scenario: Code changes, docs do not
 
-- WHEN een PR paden uit `code_paths` wijzigt en geen bestand onder `docs/`
-- THEN faalt de drift-gate met een melding die naar de meebeweeg-afspraak
-  verwijst
+- WHEN a pull request changes paths from `code_paths` and no file under `docs/`
+- THEN the drift gate fails with a message pointing at the agreement that the
+  two move together
 
-#### Scenario: Bewuste uitzondering
+#### Scenario: A deliberate exception
 
-- WHEN dezelfde PR het label `docs-drift-ok` draagt
-- THEN slaagt de drift-gate en blijft de uitzondering als label zichtbaar en
-  telbaar in de PR-historie
-
+- WHEN that same pull request carries the label `docs-drift-ok`
+- THEN the drift gate passes, and the exception stays visible and countable as
+  a label in the pull request history
