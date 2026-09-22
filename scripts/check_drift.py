@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Drift-gate: koppelt code-wijzigingen aan docs-wijzigingen in een spoke-PR.
+"""Drift gate: ties code changes to docs changes in a spoke pull request.
 
-Leest de gewijzigde bestanden (één pad per regel op stdin) en faalt wanneer de
-PR geconfigureerde code-paden raakt zonder dat er iets onder docs/ meebeweegt.
-Puur padgebaseerd en deterministisch — geen inhoudsanalyse.
+Reads the changed files (one path per line on stdin) and fails when the pull
+request touches configured code paths without anything under docs/ moving with
+it. Purely path-based and deterministic — no content analysis.
 
-Gebruik: git diff --name-only BASE HEAD | check_drift.py \\
+Usage: git diff --name-only BASE HEAD | check_drift.py \\
              --code-paths "dispatch/,worker/,cage/" [--mode warn|fail] [--override]
-  --code-paths : komma- of newline-gescheiden globs/prefixes (map/ = prefix)
-  --mode       : fail (default) of warn
-  --override   : PR draagt label docs-drift-ok → altijd groen, wél gemeld
-Exit 1 alleen bij drift én mode=fail én geen override. Bare output.
+  --code-paths : comma- or newline-separated globs/prefixes (dir/ = prefix)
+  --mode       : fail (default) or warn
+  --override   : the PR carries the label docs-drift-ok → always green, still reported
+Exit 1 only on drift AND mode=fail AND no override. Bare output.
 """
 import fnmatch
 import sys
@@ -47,14 +47,14 @@ def main() -> None:
             sys.exit(f"onbekend argument: {args[i]}")
     patterns = parse_paths(code_paths)
     if not patterns:
-        sys.exit("--code-paths is verplicht")
-    # Waar de documentatie van deze spoke woont. Standaard `docs/`, want dat is
-    # het contract — maar niet elke spoke heeft hem daar. homelab schrijft zijn
-    # runbooks in `docusaurus/docs/` en had daarnaast een `docs/` die sinds
-    # augustus stilstond. De gate wees dus naar de dode boom: niet te halen door
-    # echte documentatie te schrijven, alleen door de verkeerde map aan te raken
-    # of het label te gebruiken. Een gate die je niet eerlijk kunt halen, leert
-    # mensen hem te omzeilen.
+        sys.exit("--code-paths is required")
+    # Where this spoke's documentation lives. `docs/` by default, because that is
+    # the contract — but not every spoke keeps it there. homelab writes its
+    # runbooks in `docusaurus/docs/` and also had a `docs/` that had stood still
+    # since August. The gate therefore pointed at the dead tree: unsatisfiable by
+    # writing real documentation, only by touching the wrong directory or using
+    # the label. A gate you cannot pass honestly teaches people to route around
+    # it.
     docs_patterns = parse_paths(docs_paths or "docs/")
 
     changed = [ln.strip() for ln in sys.stdin if ln.strip()]
@@ -62,24 +62,24 @@ def main() -> None:
     docs_touched = any(matches(f, docs_patterns) for f in changed)
 
     if not code_hits:
-        print("drift-gate: geen geconfigureerde code-paden geraakt — n.v.t.")
+        print("drift gate: no configured code paths touched — not applicable")
         return
     if docs_touched:
-        print(f"drift-gate: code én {docs_paths or 'docs/'} bewegen mee — OK")
+        print(f"drift gate: code and {docs_paths or 'docs/'} move together — OK")
         return
 
-    print(f"drift-gate: code-paden gewijzigd zónder wijziging in {docs_paths or 'docs/'}:")
+    print(f"drift gate: code paths changed without a change in {docs_paths or 'docs/'}:")
     for f in code_hits:
         print(f"  - {f}")
     print("Afspraak: wie code wijzigt, werkt docs/ in dezelfde PR bij "
           "(zie de meebeweeg-conventie in README/AGENTS.md).")
     if override:
-        print("drift-gate: label docs-drift-ok aanwezig — bewuste uitzondering, groen.")
+        print("drift gate: label docs-drift-ok present — deliberate exception, green.")
         return
     if mode == "warn":
-        print("drift-gate: mode=warn — waarschuwing, geen gate.")
+        print("drift gate: mode=warn — a warning, not a gate.")
         return
-    print("Voeg docs-wijzigingen toe of zet het label docs-drift-ok op de PR.")
+    print("Add docs changes, or put the label docs-drift-ok on the pull request.")
     sys.exit(1)
 
 

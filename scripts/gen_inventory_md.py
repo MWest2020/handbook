@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Regenereer de GitHub-tabel in inventory/repos.md uit inventory/repos.json.
+"""Regenerate the GitHub table in inventory/repos.md from inventory/repos.json.
 
-repos.json is de enige waarheid (zie AGENTS.md). Deze generator schrijft de
-tabel tussen twee marker-comments; alle handgeschreven proza (intro, Codeberg,
-Vastgesteld, TBD, Ongedekt) blijft ongemoeid. Idempotent: draai zo vaak je wilt.
+repos.json is the single source of truth (see AGENTS.md). This generator writes
+the table between two marker comments; all handwritten prose (intro, Codeberg,
+Settled, TBD, Not covered) is left alone. Idempotent: run it as often as you like.
 
-Gebruik: uv run scripts/gen_inventory_md.py  (of: python3 scripts/gen_inventory_md.py)
+Usage: uv run scripts/gen_inventory_md.py  (or: python3 scripts/gen_inventory_md.py)
 """
 from __future__ import annotations
 
@@ -48,8 +48,8 @@ def build_table(records: list[dict]) -> str:
 
 
 def splice(md: str, block: str) -> str:
-    """Vervang het gemarkeerde blok, of — eerste run zonder markers — de
-    tabelregio tussen '## GitHub' en de volgende '## '-kop."""
+    """Replace the marked block, or — on a first run without markers — the table
+    region between '## GitHub' and the next '## ' heading."""
     marked = f"{BEGIN}\n{block}\n{END}"
 
     if BEGIN in md and END in md:
@@ -61,7 +61,7 @@ def splice(md: str, block: str) -> str:
     try:
         start = next(i for i, ln in enumerate(lines) if ln.strip().startswith("## GitHub"))
     except StopIteration:
-        sys.exit("kop '## GitHub' niet gevonden in repos.md")
+        sys.exit("heading '## GitHub' not found in repos.md")
     end = next(
         (i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")),
         len(lines),
@@ -79,7 +79,7 @@ def main() -> None:
         out += "\n"
     MD_PATH.write_text(out)
     n = sum(1 for r in records if r.get("forge") == "github")
-    print(f"repos.md bijgewerkt: {n} GitHub-repos in de gegenereerde tabel")
+    print(f"repos.md updated: {n} GitHub repos in the generated table")
 
 
 if __name__ == "__main__":

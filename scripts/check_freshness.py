@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: EUPL-1.2
-"""Freshness-check: waarschuw over pagina's met last_reviewed > 180 dagen.
+"""Freshness check: warn about pages whose last_reviewed is over 180 days old.
 
-Warning, geen hard fail (één eigenaar; een fail zou alleen jezelf blokkeren).
-`status: deprecated` is uitgesloten. Bare output, geen ANSI (CI-script).
+A warning, not a hard fail (one owner; a failure would only block yourself).
+`status: deprecated` is excluded. Bare output, no ANSI (a CI script).
 
-Gebruik: check_freshness.py [dir ...]   (default: docs)
-Exit: altijd 0; het aantal verouderde pagina's staat in de output.
+Usage: check_freshness.py [dir ...]   (default: docs)
+Exit: always 0; the number of stale pages is in the output.
 """
 import datetime
 import pathlib
@@ -42,12 +42,12 @@ def main() -> None:
             try:
                 reviewed = datetime.date.fromisoformat(raw)
             except ValueError:
-                print(f"WAARSCHUWING {page}: geen geldige last_reviewed ({raw!r})")
+                print(f"WARNING {page}: no valid last_reviewed ({raw!r})")
                 missing += 1
                 continue
             age = (today - reviewed).days
             if age > MAX_AGE_DAYS:
-                print(f"WAARSCHUWING {page}: {age} dagen niet gereviewd")
+                print(f"WARNING {page}: not reviewed for {age} days")
                 stale += 1
     print(f"freshness: {stale} verouderd, {missing} zonder geldige datum "
           f"(grens {MAX_AGE_DAYS} dagen)")
