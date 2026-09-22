@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Genereer/verifieer de per-spoke agent-seeds uit de canonieke bron.
 
-De executie-rollen leven canoniek in `docs/agents/seeds/<rol>.md`. Elke spoke
-die seeds heeft (`prep/seeds/<spoke>/.claude/agents/<rol>.md`) krijgt daarvan
-een exacte kopie. Zo is een builder overal dezelfde builder.
+The execution roles live canonically in `docs/agents/seeds/<role>.md`. Every
+spoke that has seeds (`prep/seeds/<spoke>/.claude/agents/<role>.md`) gets an
+exact copy of them. That is how a builder is the same builder everywhere.
 
-Gebruik:
-  uv run scripts/gen_agent_seeds.py            # (her)genereer de seeds
-  uv run scripts/gen_agent_seeds.py --check    # drift-gate: exit 1 bij afwijking
+Usage:
+  uv run scripts/gen_agent_seeds.py            # (re)generate the seeds
+  uv run scripts/gen_agent_seeds.py --check    # drift gate: exit 1 on deviation
 """
 import pathlib
 import sys
@@ -30,7 +30,7 @@ def main() -> int:
     check = "--check" in sys.argv[1:]
     src = canonical()
     if not src:
-        print("geen canonieke seeds in docs/agents/seeds/", file=sys.stderr)
+        print("no canonical seeds in docs/agents/seeds/", file=sys.stderr)
         return 1
     drift = []
     written = 0
@@ -45,14 +45,14 @@ def main() -> int:
                     written += 1
     if check:
         if drift:
-            print("DRIFT — deze seeds wijken af van de canonieke bron:", file=sys.stderr)
+            print("DRIFT — these seeds deviate from the canonical source:", file=sys.stderr)
             for d in drift:
                 print("  " + d, file=sys.stderr)
-            print("herstel met: uv run scripts/gen_agent_seeds.py", file=sys.stderr)
+            print("fix with: uv run scripts/gen_agent_seeds.py", file=sys.stderr)
             return 1
-        print("seeds komen overeen met de canonieke bron")
+        print("seeds match the canonical source")
         return 0
-    print(f"seeds gegenereerd/bijgewerkt: {written}")
+    print(f"seeds generated/updated: {written}")
     return 0
 
 

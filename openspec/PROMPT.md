@@ -1,51 +1,51 @@
-# PROMPT — start hier (Claude Code)
+# PROMPT — start here (Claude Code)
 
-Plak onderstaande prompt in Claude Code in een lege werkdirectory waar deze
-`openspec/`-map naast staat. Zorg dat `CODEBERG_TOKEN` (read-only scope:
-repository) en `gh auth status` werken vóór je start.
+Paste the prompt below into Claude Code in an empty working directory that has
+this `openspec/` directory beside it. Make sure `CODEBERG_TOKEN` (read-only
+scope: repository) and `gh auth status` work before you start.
 
-Tokens per change (minimale scope, apart token per doel):
+Tokens per change (minimal scope, a separate token per purpose):
 
-- **Change 1 (audit, read-only):** `CODEBERG_TOKEN` met alleen
-  `read:repository`; GitHub via `gh` met standaard leestoegang. Geen
-  write-scopes tijdens de audit.
-- **Change 2 (PR's naar eigen repos):** per forge een apart write-token —
-  Codeberg/Forgejo: `write:repository` (branch pushen + PR openen), geen
-  admin- of org-scopes; GitHub: `gh` met `repo`-scope of een fine-grained
-  token met `contents: write` + `pull requests: write`, beperkt tot de
-  betrokken repos. Pas aanmaken/gebruiken vanaf change 2.
-
----
-
-Je werkt aan mijn persoonlijke handbook-ecosysteem. Lees eerst volledig:
-
-1. `openspec/project.md` — context en uitgangspunten
-2. `openspec/changes/audit-repo-inventory/proposal.md` en `tasks.md`
-
-Voer daarna UITSLUITEND change `audit-repo-inventory` uit, taak voor taak, in
-volgorde. Harde regels:
-
-- Deze change is read-only: geen commits, geen PR's, geen wijzigingen aan
-  bestaande repos. Shallow clones of API-calls alleen om te inspecteren.
-- Inspecteer de repos zelf op Codeberg (Forgejo API) én GitHub (`gh`) — baseer
-  de classificatie op wat je aantreft, niet op aannames. Pagineer volledig;
-  een halve lijst is erger dan geen lijst.
-- Beslis niet bij twijfel: `tier: TBD` + concrete vraag in `notes`.
-  Sensitivity bij twijfel: `private-only`.
-- Output exact zoals taak 4 beschrijft: `inventory/repos.md` +
-  `inventory/repos.json`, identieke inhoud, veldnamen exact als de
-  proposal-tabel.
-- Stop na taak 4.3 en presenteer de tabel plus je TBD-vragen. Changes 2 en 3
-  starten pas na mijn expliciete goedkeuring van de classificatie — begin er
-  niet alvast aan, ook niet "ter voorbereiding".
-
-Stijl: boring and auditable. Bare scripts (geen ANSI, geen banners), elke
-classificatiebeslissing die niet triviaal uit de beslistabel volgt krijgt één
-regel motivatie in `notes`.
+- **Change 1 (audit, read-only):** `CODEBERG_TOKEN` with only
+  `read:repository`; GitHub through `gh` with standard read access. No write
+  scopes during the audit.
+- **Change 2 (PRs to your own repos):** a separate write token per forge —
+  Codeberg/Forgejo: `write:repository` (push a branch, open a PR), no admin or
+  org scopes; GitHub: `gh` with the `repo` scope or a fine-grained token with
+  `contents: write` + `pull requests: write`, limited to the repos involved.
+  Create and use these only from change 2 onwards.
 
 ---
 
-Na goedkeuring van de inventaris: zelfde patroon voor
-`openspec/changes/add-docs-contract/` (per repo één PR, stop per PR) en
-daarna `openspec/changes/add-handbook-portal/` (beantwoord eerst de drie
-open vragen in die proposal).
+You are working on my personal handbook ecosystem. Read these in full first:
+
+1. `openspec/project.md` — context and starting points
+2. `openspec/changes/audit-repo-inventory/proposal.md` and `tasks.md`
+
+Then carry out change `audit-repo-inventory` and NOTHING else, task by task, in
+order. Hard rules:
+
+- This change is read-only: no commits, no PRs, no changes to existing repos.
+  Shallow clones or API calls purely to inspect.
+- Inspect the repos themselves on Codeberg (Forgejo API) *and* GitHub (`gh`) —
+  base the classification on what you find, not on assumptions. Paginate fully;
+  half a list is worse than no list.
+- Do not decide when in doubt: `tier: TBD` plus a concrete question in `notes`.
+  Sensitivity when in doubt: `private-only`.
+- Output exactly as task 4 describes: `inventory/repos.md` plus
+  `inventory/repos.json`, identical content, field names exactly as in the
+  proposal's table.
+- Stop after task 4.3 and present the table plus your TBD questions. Changes 2
+  and 3 start only after my explicit approval of the classification — do not
+  start on them, not even "in preparation".
+
+Style: boring and auditable. Bare scripts (no ANSI, no banners), and every
+classification decision that does not follow trivially from the decision table
+gets one line of reasoning in `notes`.
+
+---
+
+After the inventory is approved: the same pattern for
+`openspec/changes/add-docs-contract/` (one PR per repo, stop per PR) and then
+`openspec/changes/add-handbook-portal/` (answer the three open questions in that
+proposal first).

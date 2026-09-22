@@ -1,156 +1,127 @@
 # agent-registry Specification
 
 ## Purpose
-TBD - created by archiving change add-seed-derivation. Update Purpose after archive.
+One canonical definition per agent role, in the handbook, with two facets (chat
+and execution) — so that ratatoskr and habitat consume the same source instead
+of each keeping a copy, and so that tools, model and skills are machine-checked
+rather than merely declared.
 ## Requirements
-### Requirement: Executie-seeds zijn afgeleid van de canonieke bron
+### Requirement: Execution seeds are derived from the canonical source
 
-De executie-rollen SHALL canoniek in `docs/agents/seeds/<rol>.md` staan en per
-spoke byte-identiek afgeleid worden (`scripts/gen_agent_seeds.py`, met `--check`
-als drift-gate). Een seed SHALL in zijn front-matter naast `tools:` ook `model:`
-en `skills:` declareren, zodat de worker die uit het rolbestand in de doelrepo
-kan lezen zonder de registry te hoeven ophalen.
+The execution roles SHALL live canonically in `docs/agents/seeds/<role>.md` and
+be derived byte-identically per spoke (`scripts/gen_agent_seeds.py`, with
+`--check` as the drift gate). Alongside `tools:`, a seed SHALL also declare
+`model:` and `skills:` in its front matter, so that the worker can read them
+from the role file in the target repo without having to fetch the registry.
 
-#### Scenario: Drift wordt gevangen
+#### Scenario: Drift is caught
 
-- **WHEN** een per-spoke `.claude/agents/<rol>.md` afwijkt van de canonieke seed
-- **THEN** faalt `gen_agent_seeds.py --check`
+- **WHEN** a per-spoke `.claude/agents/<role>.md` deviates from the canonical seed
+- **THEN** `gen_agent_seeds.py --check` fails
 
-#### Scenario: De worker kan model en skills lezen
+#### Scenario: The worker can read model and skills
 
-- **WHEN** een run start in een doelrepo
-- **THEN** staan model en skills in `.claude/agents/<rol>.md` van die repo, afgeleid van de canonieke seed
+- **WHEN** a run starts in a target repo
+- **THEN** model and skills are present in that repo's `.claude/agents/<role>.md`, derived from the canonical seed
 
-### Requirement: Facetten declareren tools (allow/deny) en skills expliciet
+### Requirement: Facets declare tools (allow/deny) and skills explicitly
 
-Elk niet-leeg facet van een agent-definitie SHALL in het front-matter expliciet
-`model`, `tools.allow`, `tools.deny` en `skills` declareren, waarbij `tools.deny`
-en `skills` leeg mogen zijn en `allow` en `deny` niet mogen overlappen. `model`
-SHALL één van `haiku`, `sonnet` of `opus` zijn — de *intentie* (zoeken, denken,
-uitzondering), niet een exacte model-id, zodat een modelrelease niet elke
-definitie laat verlopen. Voor een executie-facet met een seed SHALL
-`executie.tools.allow` gelijk zijn aan de `tools:`-regel van die seed, en
-`executie.model` aan de `model:`-regel van die seed. Een gate in de
-handbook-pipeline (`handbook.yml`) SHALL de PR laten falen bij een ontbrekend
-veld, een onbekend model, een allow/deny-overlap of een afwijking tussen def en
-seed.
+Every non-empty facet of an agent definition SHALL explicitly declare `model`,
+`tools.allow`, `tools.deny` and `skills` in its front matter, where
+`tools.deny` and `skills` may be empty and `allow` and `deny` may not overlap.
+`model` SHALL be one of `haiku`, `sonnet` or `opus` — the *intent* (search,
+think, exception), not an exact model id, so that a model release does not
+expire every definition. For an execution facet with a seed,
+`executie.tools.allow` SHALL equal that seed's `tools:` line, and
+`executie.model` its `model:` line. A gate in the handbook pipeline
+(`handbook.yml`) SHALL fail the pull request on a missing field, an unknown
+model, an allow/deny overlap, or a divergence between definition and seed.
 
-#### Scenario: Read-only rol is machine-checkbaar
+#### Scenario: A read-only role is machine-checkable
 
-- **WHEN** een reviewer- of security-definitie `tools.deny: [Write, Edit]` declareert en de seed enkel `Read, Bash, Grep, Glob` toestaat
-- **THEN** slaagt de gate, en zou een seed die `Write` toevoegt de gate laten falen op de allow/seed-mismatch
+- **WHEN** a reviewer or security definition declares `tools.deny: [Write, Edit]` and the seed allows only `Read, Bash, Grep, Glob`
+- **THEN** the gate passes, and a seed that added `Write` would fail it on the allow/seed mismatch
 
-#### Scenario: Ontbrekend veld wordt gevangen
+#### Scenario: A missing field is caught
 
-- **WHEN** een facet wél bestaat maar `model`, `tools` of `skills` niet declareert
-- **THEN** faalt de gate met een verwijzing naar het ontbrekende veld, zodat "vergeten" niet stil als "geen beperking", "geen skills" of "het standaardmodel" doorgaat
+- **WHEN** a facet exists but does not declare `model`, `tools` or `skills`
+- **THEN** the gate fails naming the missing field, so that "forgotten" does not quietly pass as "no restriction", "no skills" or "the default model"
 
-#### Scenario: Model en seed lopen niet uiteen
+#### Scenario: Model and seed do not diverge
 
-- **WHEN** een executie-facet `model: sonnet` declareert terwijl zijn seed `model: haiku` zegt
-- **THEN** faalt de gate, want de worker leest het rolbestand in de doelrepo en zou anders op een ander model draaien dan de registry belooft
+- **WHEN** an execution facet declares `model: sonnet` while its seed says `model: haiku`
+- **THEN** the gate fails, because the worker reads the role file in the target repo and would otherwise run on a different model than the registry promises
 
-#### Scenario: Leeg is een geldige, expliciete keuze
+#### Scenario: Empty is a valid, explicit choice
 
-- **WHEN** een chat-facet geen tools verleent (`allow: []`) en geen tools weigert en geen skills nodig heeft
-- **THEN** zijn `tools.allow: []`, `tools.deny: []` en `skills: []` geldig en slaagt de gate — leeg betekent expliciet "geen", niet "onbekend"
+- **WHEN** a chat facet grants no tools (`allow: []`), denies none and needs no skills
+- **THEN** `tools.allow: []`, `tools.deny: []` and `skills: []` are valid and the gate passes — empty means an explicit "none", not "unknown"
 
-### Requirement: Skills worden gevalideerd tegen het skill-register
+### Requirement: Skills are validated against the skill register
 
-Elke `skills:`-entry in een agent-facet SHALL bestaan als gepromoveerde skill in het skill-register (`inventory/skills-register.yml`, een mirror van skill-forge's `forge register`-uitvoer); de gate `check_agent_tools.py` SHALL falen (exit 1) bij een onbekende skill, en ook bij een niet-lege `skills:` terwijl het register ontbreekt (dan kan niet worden gevalideerd); de CI-stap die de gate draait wordt door Mark met de hand ingehaakt (CI-config is een human-gate). Een lege `skills: []` SHALL altijd slagen.
+Every `skills:` entry in an agent facet SHALL exist as a promoted skill in the
+skill register (`inventory/skills-register.yml`, a mirror of skill-forge's
+`forge register` output); the gate `check_agent_tools.py` SHALL fail (exit 1)
+on an unknown skill, and equally on a non-empty `skills:` while the register is
+absent (validation is then impossible); the CI step that runs the gate is wired
+in by Mark by hand (CI config is a human gate). An empty `skills: []` SHALL
+always pass.
 
-#### Scenario: Geldige skill
+#### Scenario: A valid skill
 
-- **WHEN** een agent-def `skills: [thinking-red-team]` declareert en die slug in het register staat
-- **THEN** slaagt de gate
+- **WHEN** an agent definition declares `skills: [thinking-red-team]` and that slug is in the register
+- **THEN** the gate passes
 
-#### Scenario: Onbekende skill
+#### Scenario: An unknown skill
 
-- **WHEN** een agent-def een skill declareert die niet in het register staat
-- **THEN** faalt de gate met de onbekende slug en de reden (niet gepromoveerd in skill-forge)
+- **WHEN** an agent definition declares a skill that is not in the register
+- **THEN** the gate fails with the unknown slug and the reason (not promoted in skill-forge)
 
-#### Scenario: Register ontbreekt
+#### Scenario: The register is absent
 
-- **WHEN** een def een niet-lege `skills:` heeft maar het register-bestand ontbreekt
-- **THEN** faalt de gate (kan niet valideren), terwijl een lege `skills: []` wel slaagt
+- **WHEN** a definition has a non-empty `skills:` but the register file is missing
+- **THEN** the gate fails (validation impossible), while an empty `skills: []` does pass
 
-### Requirement: Eén canonieke definitie per agent-rol
+### Requirement: One canonical definition per agent role
 
-Elke agent-rol SHALL precies één canonieke definitie hebben, in de handbook
-onder `docs/agents/<naam>.md`; geen enkele andere plek (spoke-seeds,
-boomhuis-config) SHALL een rol her-definiëren — die consumeren de canonieke
-bron.
+Every agent role SHALL have exactly one canonical definition, in the handbook
+under `docs/agents/<name>.md`; no other place (spoke seeds, ratatoskr config)
+SHALL redefine a role — those consume the canonical source.
 
-#### Scenario: Wijziging bereikt iedereen
+#### Scenario: A change reaches everyone
 
-- **WHEN** de definitie van een rol (bijv. `bouwer`) in de handbook wijzigt
-- **THEN** lezen alle consumenten (boomhuis-chat, habitat-executie) die
-  gewijzigde definitie, zonder dat er een kopie handmatig bijgewerkt hoeft
+- **WHEN** the definition of a role (`bouwer`, say) changes in the handbook
+- **THEN** every consumer (ratatoskr chat, habitat execution) reads that changed
+  definition, without a copy having to be updated by hand
 
-#### Scenario: Geen tweede waarheid
+#### Scenario: No second truth
 
-- **WHEN** iemand een rol op een andere plek dan `docs/agents/` probeert vast te
-  leggen als bron
-- **THEN** is dat volgens dit contract geen geldige bron; die plek hoort te
-  verwijzen naar of af te leiden van de canonieke definitie
+- **WHEN** someone tries to establish a role somewhere other than
+  `docs/agents/` as its source
+- **THEN** under this contract that is not a valid source; that place should
+  point at, or derive from, the canonical definition
 
-### Requirement: Twee facetten in één definitie
+### Requirement: Two facets in one definition
 
-Een definitie SHALL een machine-leesbaar front-matter bevatten met minstens
-`naam` en `npub`, plus een **chat-facet** (systemprompt + kanaal-scope) en een
-**executie-facet** (kooi-rol/tools/schema, of expliciet leeg). Een consument
-SHALL alleen zijn eigen facet gebruiken.
+A definition SHALL contain machine-readable front matter with at least `naam`
+and `npub`, plus a **chat facet** (system prompt + channel scope) and an
+**execution facet** (cage role, tools, schema — or explicitly empty). A
+consumer SHALL use only its own facet.
 
-#### Scenario: Boomhuis leest de chat-facet
+#### Scenario: Ratatoskr reads the chat facet
 
-- **WHEN** de boomhuis-listener een agent draait
-- **THEN** haalt hij systemprompt en kanaal-scope uit de chat-facet van de
-  canonieke definitie, niet uit een eigen kopie
+- **WHEN** the ratatoskr listener runs an agent
+- **THEN** it takes the system prompt and channel scope from the chat facet of
+  the canonical definition, not from a copy of its own
 
-#### Scenario: Chat-only of executie-only
+#### Scenario: Chat-only or execution-only
 
-- **WHEN** een rol alleen chat is (assistent) of alleen executie (security)
-- **THEN** is het andere facet expliciet leeg, en de definitie blijft geldig
+- **WHEN** a role is chat only (assistent) or execution only (security)
+- **THEN** the other facet is explicitly empty, and the definition stays valid
 
-### Requirement: MCP-leesbaar zonder nieuwe machinerie
+### Requirement: MCP-readable without new machinery
 
-De definities SHALL via de bestaande `handbook_mcp`-tool `read_doc` leesbaar
-zijn (pad `docs/agents/**/*.md`), zodat elke agent de canonieke bron kan
-opvragen; deze change SHALL geen nieuwe MCP-tool of guard-versoepeling vereisen.
-
-#### Scenario: Agent vraagt zijn definitie op
-
-- **WHEN** een agent `read_doc("handbook", "docs/agents/bouwer.md")` aanroept
-- **THEN** krijgt hij de canonieke definitie terug, binnen de bestaande
-  padbegrenzing en token-hygiëne van de MCP-laag
-
-### Requirement: Spawnen kan alleen uit de canonieke bron (guardrail)
-
-Een consument (boomhuis-listener, habitat-dispatch) SHALL een agent uitsluitend
-draaien op basis van een definitie die overeenkomt met de canonieke
-handbook-bron, en SHALL weigeren een agent te spawnen wiens npub/rol niet in de
-registry staat. Afwijking tussen de effectieve consument-config en de bron
-SHALL door een gate (CI drift-check) worden gevangen, niet aan een afspraak
-worden overgelaten. De closed relay (identiteit-lidmaatschap) blijft de
-achtervang: een agent zonder registry-identiteit komt sowieso de relay niet op.
-
-#### Scenario: Onbekende agent geweigerd
-
-- **WHEN** iets probeert een agent te draaien wiens npub niet in de registry
-  (`docs/agents/`) staat
-- **THEN** weigert de consument te spawnen, en zou de relay de identiteit
-  sowieso weigeren (closed mode)
-
-#### Scenario: Drift wordt gevangen, niet gehoopt
-
-- **WHEN** de effectieve config van een consument (boomhuis `agents.yml`,
-  habitat-seed) afwijkt van de canonieke definitie
-- **THEN** faalt de drift-gate in CI, zodat de afwijking niet stil doorleeft
-
-#### Scenario: Wie de agents zijn, vergt jouw review
-
-- **WHEN** iemand een agent-definitie onder `docs/agents/` wil wijzigen of
-  toevoegen
-- **THEN** loopt dat via CODEOWNERS/branch-protection langs Mark, zodat "wie de
-  agents zijn" niet buiten hem om verandert
-
+The definitions SHALL be readable through the existing `handbook_mcp` tool
+`read_doc` (path `docs/agents/**/*.md`), so that any agent can request the
+canonical source; this change SHALL require no new MCP tool and no loosening of
+a guard.

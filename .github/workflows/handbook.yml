@@ -1,5 +1,5 @@
-# Publieke handbook-pipeline: check op elke PR, build+deploy op main,
-# nightly rebuild (spokes wijzigen buiten de hub om; de cron vangt dat).
+# Public handbook pipeline: checks on every pull request, build and deploy on
+# main, nightly rebuild (spokes change outside the hub; the cron catches that).
 name: handbook
 
 on:
@@ -21,31 +21,38 @@ jobs:
 
       - uses: astral-sh/setup-uv@v5
 
-      - name: Sync omgeving (gelockte versies)
+      - name: Sync environment (locked versions)
         run: uv sync --frozen
 
-      - name: Importlijst synchroon met inventaris
+      - name: Import list in sync with the inventory
         run: uv run python scripts/gen_imports.py --check
 
-      - name: Agent-seeds synchroon met canonieke bron (drift-gate)
+      - name: Agent seeds in sync with the canonical source (drift gate)
         run: uv run python scripts/gen_agent_seeds.py --check
 
-      - name: Agent-tool/skill-contract (allow/deny + skills per facet)
+      # Before the gate it tests, deliberately. If the gate's own logic is
+      # broken, that is what you want to read first -- a green contract check
+      # from a broken checker says nothing. This selftest ran in no CI step
+      # until 2026-09-22 and had been red on main for exactly that reason.
+      - name: Gate selftest (the checker's own logic)
+        run: uv run python scripts/check_agent_tools.py --selftest
+
+      - name: Agent-tool/skill contract (allow/deny + skills per facet)
         run: uv run python scripts/check_agent_tools.py
 
-      - name: Publieke build (strict)
+      - name: Public build (strict)
         run: uv run mkdocs build --strict
 
-      - name: Docs-contract van geïmporteerde repos
+      - name: Docs contract of the imported repos
         run: uv run python scripts/check_contract.py
 
-      - name: Freshness (waarschuwing, geen gate)
+      - name: Freshness (a warning, not a gate)
         run: uv run python scripts/check_freshness.py docs
 
-      - name: MCP-sessietest (spec-delta handbook-mcp)
+      - name: MCP session test (handbook-mcp spec delta)
         run: uv run python scripts/test_mcp.py
 
-      - name: Deploy naar gh-pages
+      - name: Deploy to gh-pages
         if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v4
         with:
