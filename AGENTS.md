@@ -14,7 +14,13 @@ separate hub repo (unlike the work setup): one owner, one hub.
   That applies to an *interactive* session started here. A **dispatched habitat
   role** follows its own role file (`.claude/agents/<role>.md`) and does build
   here — strictly within the change it was dispatched for, and without touching
-  `AGENTS.md`, `.claude/agents/` or CI. Merging stays human.
+  `AGENTS.md`, `.claude/agents/` or CI. For a dispatched role, merging stays
+  human.
+- **Interactive sessions finish the job.** Work on `main`, no PRs to ask for
+  approval; merge, deploy, archive and fix follow-ups without asking, then
+  report. The exceptions — `docs/agents/` and `.claude/agents/` (CODEOWNERS)
+  and classifier-blocked commands — are in
+  [operating agreements](docs/reference/operating-agreements.md).
 - **The inventory is the single source of truth.** `inventory/repos.json`
   decides what takes part (site and agents alike). Changes to the import list go
   through `scripts/gen_imports.py`, never by hand. The table in
@@ -26,6 +32,16 @@ separate hub repo (unlike the work setup): one owner, one hub.
 - **Escalation.** Anything not described in a proposal or in this mandate:
   ask first. One restart per failed habitat run without a human;
   a security FAIL or a reported secret always goes to a human.
+
+## Where knowledge lives
+
+- **Working agreements** (how we work, test, write):
+  `docs/reference/operating-agreements.md`. Read it before starting work.
+- **Project knowledge** (runbooks, gotchas, decisions): the owning repo's
+  `docs/`, imported here.
+- **Agent memory** holds only identity, credential locations and personal
+  preferences, plus pointers to the two above. When memory and the handbook
+  disagree, the handbook wins (spec `agent-memory`).
 
 ## Invariants
 

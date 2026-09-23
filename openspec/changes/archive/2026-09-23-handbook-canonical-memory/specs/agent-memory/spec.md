@@ -1,10 +1,6 @@
-# agent-memory Specification
+# Spec delta: agent-memory (handbook-canonical-memory)
 
-## Purpose
-Keep the coordinating session's memory durable, version-controlled and
-leak-free: backed up privately, split by sensitivity, never to a public repo.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Agent memory is backed up privately and split by sensitivity
 
@@ -30,6 +26,8 @@ repo copies are the backup.
 
 - WHEN the canonical memory is unchanged relative to the backup
 - THEN the sync pushes nothing (idempotent)
+
+## ADDED Requirements
 
 ### Requirement: Memory routes to the handbook
 
