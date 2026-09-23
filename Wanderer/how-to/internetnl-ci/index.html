@@ -10154,6 +10154,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-webadressen-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 06 — webadressen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../wordsworth/explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -10232,10 +10267,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
             
   
   
@@ -10253,8 +10288,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12329,6 +12364,28 @@ internetnl results &lt;request-id&gt; --format findings \
 #    rest of a multi-domain batch still imports.
 wanderer import internetnl --db wanderer.db findings.json
 </code></pre>
+<p>Step 3 also works over HTTP, against a running <code>wanderer serve</code>
+instance, instead of the CLI's own SQLite file — useful when the
+server is the only process allowed to touch the database (the
+Wanderer Deployment is a single RWO volume; a CronJob opening the
+file directly would be a second writer). Set <code>WANDERER_IMPORT_TOKEN</code>
+on the server, then post the same file as the request body:</p>
+<pre><code class="language-sh">curl -sf -X POST https://wanderer.example/imports/internetnl \
+  -H &quot;Authorization: Bearer $WANDERER_IMPORT_TOKEN&quot; \
+  --data-binary @findings.json
+</code></pre>
+<p>The response reports the same three counts the CLI prints:
+<code>imported</code>, <code>skipped_unknown</code>, <code>skipped_already</code>. Idempotency works
+the same way across both doors — the route hashes the request body
+exactly as the CLI hashes the file, so posting the same bytes twice
+(by CLI, by HTTP, or one of each) imports once. Without
+<code>WANDERER_IMPORT_TOKEN</code> set, the route stays registered but refuses
+every request with 401 — the server logs
+<code>import.internetnl.inactive</code> once at startup so that is visible
+without waiting for a failed request. The REST API is otherwise
+reachable on the tailnet without authentication; this route is the
+exception because an import writes verdicts that appear in reports as
+evidence.</p>
 <p>Repeat step 1–3 per measurement type (<code>--type web</code>, <code>--type mail</code>) —
 they are two independent batches with two independent request IDs.
 Wanderer correlates a target's latest web and latest mail import

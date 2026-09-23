@@ -10065,6 +10065,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-webadressen-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 06 — webadressen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -10143,10 +10178,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
             
   
   
@@ -10164,8 +10199,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12475,6 +12510,10 @@ differently for a right and a wrong one. It is rate-limited harder than anything
 else (five attempts, then one per ten seconds): every request there is a guess.
 An earlier comment claimed it already was, and it was not — twelve attempts gave
 twelve 401s and no 429.</p>
+<p>Since 2026-09-23 that bucket lives in Postgres (<code>rate_limit_pg.py</code>), shared by
+every api replica. With per-process buckets two replicas would have allowed ten
+attempts instead of five, and the limit would have doubled again with every
+replica added.</p>
 <p>The cookie is marked <code>Secure</code>. Its value IS the API key and <code>Path=/</code> makes it
 valid for every endpoint, so it has no business travelling over plain http.</p>
 <h2 id="before-you-switch-what-goes-quiet">Before you switch: what goes quiet</h2>

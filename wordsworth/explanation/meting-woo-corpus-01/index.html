@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/explanation/meting-woo-corpus-01/">
       
       
-        <link rel="prev" href="../meting-restwaarden-03/">
+        <link rel="prev" href="../meting-webadressen-06/">
       
       
         <link rel="next" href="../nora-gap-analysis/">
@@ -10064,6 +10064,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../meting-webadressen-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 06 — webadressen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -10240,6 +10275,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#postscript-23-09-the-lock-was-never-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postscript 23-09: the lock was never needed
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -10370,10 +10416,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
             
   
   
@@ -10391,8 +10437,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12479,6 +12525,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#postscript-23-09-the-lock-was-never-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postscript 23-09: the lock was never needed
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -12815,6 +12872,26 @@ de reparatie eruit.</p>
 <p>De andere helft van dit verhaal staat niet in de code: een herstel-Job hoort
 zijn transactie niet open te houden terwijl hij op een trage embedding wacht.
 Dat is bij de volgende zo'n Job een ontwerpeis, geen detail.</p>
+<h3 id="postscript-23-09-the-lock-was-never-needed">Postscript 23-09: the lock was never needed</h3>
+<p>The key-audit-in-postgres rollout ran into the same wall: the URL backfill
+(<code>wordsworth-reprocess-urls</code>) held per-document transactions open for minutes,
+and the init-Job failed four times, twice on <code>LockNotAvailable</code> and twice on a
+deadlock, before a fifth attempt got through. Deadlocks were not retried at
+all; each one cost a whole pod.</p>
+<p>Both postscripts above treated the lock as a cost to budget for. It was not a
+cost that deploy had to pay. The only schema change was a new table, and
+<code>create_all</code> creates that without touching any other. Yet
+<code>ADD COLUMN IF NOT EXISTS</code> and <code>DROP TRIGGER</code> ask for ACCESS EXCLUSIVE <em>before</em>
+they find out there is nothing to do, so every deploy locked <code>documents</code>,
+<code>pii_mappings</code>, <code>grants</code> and <code>audit_records</code> regardless.</p>
+<p>Now <code>init_schema</code> asks the catalog first (<code>information_schema.columns</code>,
+<code>to_regclass</code>, <code>pg_trigger</code>, none of which lock a table) and issues DDL only
+for what is missing. A deploy that adds nothing to a table no longer touches
+it. The retry budget stays for the deploys that really do alter a busy table,
+and SQLSTATE <code>40P01</code> (deadlock victim) is now retried alongside <code>55P03</code>,
+because Postgres has already rolled that transaction back. Guarded by
+<code>test_a_deploy_with_nothing_to_add_takes_no_table_lock</code>, which holds a reader
+on every table and fails once the old always-ALTER behaviour is restored.</p>
 <h2 id="bevinding-7-de-controle-hield-acht-documenten-tegen-op-twee-eigen-fouten">Bevinding 7 — de controle hield acht documenten tegen op twee eigen fouten</h2>
 <p>De kenmerken uit bevinding 6 wezen het aan. Acht documenten, allemaal
 <code>waarde-overleefde-vervanging</code>, met per document: label, lengte, aantal

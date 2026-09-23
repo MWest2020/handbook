@@ -10067,6 +10067,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../meting-webadressen-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 06 — webadressen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../meting-woo-corpus-01/" class="md-nav__link">
         
   
@@ -10265,10 +10300,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_7" id="__nav_18_2_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
             
   
   
@@ -10286,8 +10321,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12601,9 +12636,9 @@ deck's "Swiss Cheese", just not named that).</p>
 <tr>
 <td>28</td>
 <td>Key-lifecycle stream WORM-exported</td>
-<td><code>export_key_lifecycle_worm()</code> ships the stream to Object Lock, incrementally, byte-exact</td>
-<td><strong>have</strong> · one layer of tamper-evidence, not two: the stream is append-only but <strong>not hash-chained</strong>, so a host compromised before an export could rewrite it first (follow-up <code>harden-key-audit-chain</code>)</td>
-<td><code>key_audit_export.py</code></td>
+<td><code>export_key_lifecycle_worm()</code> verifies the chain, ships the rows to Object Lock incrementally, and checks the stored bytes against the database</td>
+<td><strong>have</strong> · since key-audit-in-postgres (2026-09-23) the stream is a hash-chained, append-only table, so tamper-evidence has two layers like the document chain. <strong>No scheduled caller yet</strong></td>
+<td><code>key_audit_export.py</code>, <code>key_audit_pg.py</code></td>
 </tr>
 <tr>
 <td>29</td>
