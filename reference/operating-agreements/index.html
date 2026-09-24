@@ -9569,6 +9569,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#prefer-habitat-where-a-repo-is-set-up-for-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefer habitat where a repo is set up for it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#reads-need-no-permission" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12621,6 +12632,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#prefer-habitat-where-a-repo-is-set-up-for-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefer habitat where a repo is set up for it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#reads-need-no-permission" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12952,6 +12974,16 @@ it happened, with the measurement, instead of asking whether it may.</p>
 </ul>
 <p>Before every push: <code>git fetch</code> and rebase if origin moved; never force-push
 over someone else's work.</p>
+<h3 id="prefer-habitat-where-a-repo-is-set-up-for-it">Prefer habitat where a repo is set up for it</h3>
+<p>For wordsworth and internetnl-cli, build through the habitat chain
+(architect → builder → reviewer → security) when that is practical. It is a
+preference, not a gate (owner, 2026-09-24): when habitat cannot run the work
+(expired credentials, a blocked dependency, a fix too small to dispatch),
+build directly and follow the rest of these agreements.</p>
+<p>The same holds for curation in skill-forge: a curation decision preferably goes
+through a PR with a decision document under <code>docs/</code> that also records the
+rejections and why, so the owner can review it. Drafts are gitignored, so the
+document is the reviewable trail.</p>
 <h3 id="reads-need-no-permission">Reads need no permission</h3>
 <p>Run read-only inspection (<code>git log/status/diff/show</code>, <code>openspec list</code>, a
 project's <code>ls</code>-style commands) without asking and without announcing it; show
