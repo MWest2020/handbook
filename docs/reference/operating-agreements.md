@@ -1,6 +1,6 @@
 ---
 status: current
-last_reviewed: 2026-09-23
+last_reviewed: 2026-09-24
 ---
 
 # Operating agreements
@@ -77,6 +77,20 @@ Exceptions, deliberately small:
 Before every push: `git fetch` and rebase if origin moved; never force-push
 over someone else's work.
 
+### Reads need no permission
+
+Run read-only inspection (`git log/status/diff/show`, `openspec list`, a
+project's `ls`-style commands) without asking and without announcing it; show
+the result when it matters. Anything that writes — including commands that
+look like reads but record state, such as `forge judge` — still gets care.
+
+### Public actions on someone else's repo are the owner's call
+
+Opening an issue or PR on a third-party repository speaks for the owner in
+public. Prepare the text and let the owner confirm or post it. The auto-mode
+classifier enforces this for `gh issue create`; a comment on an existing issue
+passes, but the same judgement applies.
+
 ### No branch protection
 
 Do not propose branch protection, protected branches or rulesets — not as a
@@ -89,6 +103,8 @@ pre-push guard. If a change or review asks for it, strike it with the reason
 For work that takes more than a few minutes (a build, a migration, a research
 question), start a named tmux session in its own worktree, or a subagent;
 report that it started and stay available. Quick, decisive work stays inline.
+Waiting on something external (CI, a deploy, a cron result)? Use `/loop` or a
+monitor rather than polling by hand.
 
 Gotchas: interactive prompts do not survive a pipe; `pgrep -f` matches your
 own command line (it once killed the owner's tmux session — match an exact
@@ -203,6 +219,15 @@ difference then measures two periods, not your change. Look for the evidence
 in the data (a type absent from all old records is a code change you are
 measuring), prefer a number measured within one run, or run the new code with
 the old setting first: two runs, one difference.
+
+## OpenSpec
+
+Deltas live at `openspec/changes/<id>/specs/<capability>/spec.md`. A delta at
+the change root is not read as a delta (older CLI versions dropped it
+silently; 1.12 fails validation). After writing a change, run
+`openspec show <id> --json --deltas-only` and confirm every capability from
+the proposal appears. Some repos (skill-forge) deliberately use plain-prose
+specs; follow that repo's `openspec/AGENTS.md`.
 
 ## Design and code
 
