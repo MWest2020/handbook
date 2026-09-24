@@ -7824,7 +7824,7 @@
   <span class="md-ellipsis">
     
   
-    Self-hosting an Internet.nl batch instance: four traps
+    Self-hosting an Internet.nl batch instance: five traps
   
 
     
@@ -9569,6 +9569,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reads-need-no-permission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reads need no permission
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-actions-on-someone-elses-repo-are-the-owners-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public actions on someone else's repo are the owner's call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#no-branch-protection" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9708,6 +9730,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openspec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSpec
+      
+    </span>
+  </a>
   
 </li>
       
@@ -10084,6 +10117,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skill-forge/reference/operating-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating notes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -12553,6 +12621,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reads-need-no-permission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reads need no permission
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-actions-on-someone-elses-repo-are-the-owners-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public actions on someone else's repo are the owner's call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#no-branch-protection" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12692,6 +12782,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openspec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSpec
+      
+    </span>
+  </a>
   
 </li>
       
@@ -12851,6 +12952,16 @@ it happened, with the measurement, instead of asking whether it may.</p>
 </ul>
 <p>Before every push: <code>git fetch</code> and rebase if origin moved; never force-push
 over someone else's work.</p>
+<h3 id="reads-need-no-permission">Reads need no permission</h3>
+<p>Run read-only inspection (<code>git log/status/diff/show</code>, <code>openspec list</code>, a
+project's <code>ls</code>-style commands) without asking and without announcing it; show
+the result when it matters. Anything that writes — including commands that
+look like reads but record state, such as <code>forge judge</code> — still gets care.</p>
+<h3 id="public-actions-on-someone-elses-repo-are-the-owners-call">Public actions on someone else's repo are the owner's call</h3>
+<p>Opening an issue or PR on a third-party repository speaks for the owner in
+public. Prepare the text and let the owner confirm or post it. The auto-mode
+classifier enforces this for <code>gh issue create</code>; a comment on an existing issue
+passes, but the same judgement applies.</p>
 <h3 id="no-branch-protection">No branch protection</h3>
 <p>Do not propose branch protection, protected branches or rulesets — not as a
 suggestion, not as an open item. The gate is <code>verify.sh</code> in CI plus the local
@@ -12859,7 +12970,9 @@ pre-push guard. If a change or review asks for it, strike it with the reason
 <h3 id="dispatch-long-work-stay-reachable">Dispatch long work, stay reachable</h3>
 <p>For work that takes more than a few minutes (a build, a migration, a research
 question), start a named tmux session in its own worktree, or a subagent;
-report that it started and stay available. Quick, decisive work stays inline.</p>
+report that it started and stay available. Quick, decisive work stays inline.
+Waiting on something external (CI, a deploy, a cron result)? Use <code>/loop</code> or a
+monitor rather than polling by hand.</p>
 <p>Gotchas: interactive prompts do not survive a pipe; <code>pgrep -f</code> matches your
 own command line (it once killed the owner's tmux session — match an exact
 <code>/proc/*/cmdline</code> instead); piping <code>claude</code> through <code>tee</code> in tmux produces
@@ -12958,6 +13071,13 @@ difference then measures two periods, not your change. Look for the evidence
 in the data (a type absent from all old records is a code change you are
 measuring), prefer a number measured within one run, or run the new code with
 the old setting first: two runs, one difference.</p>
+<h2 id="openspec">OpenSpec</h2>
+<p>Deltas live at <code>openspec/changes/&lt;id&gt;/specs/&lt;capability&gt;/spec.md</code>. A delta at
+the change root is not read as a delta (older CLI versions dropped it
+silently; 1.12 fails validation). After writing a change, run
+<code>openspec show &lt;id&gt; --json --deltas-only</code> and confirm every capability from
+the proposal appears. Some repos (skill-forge) deliberately use plain-prose
+specs; follow that repo's <code>openspec/AGENTS.md</code>.</p>
 <h2 id="design-and-code">Design and code</h2>
 <h3 id="keep-it-simple">Keep it simple</h3>
 <p>CRAP-style judgement: complexity times missing coverage. A flat function with

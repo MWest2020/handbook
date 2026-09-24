@@ -25,7 +25,7 @@
     
     
       
-        <title>Self-hosting an Internet.nl batch instance: four traps - Handbook</title>
+        <title>Self-hosting an Internet.nl batch instance: five traps - Handbook</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#self-hosting-an-internetnl-batch-instance-four-traps" class="md-skip">
+        <a href="#self-hosting-an-internetnl-batch-instance-five-traps" class="md-skip">
           Ga naar inhoud
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Self-hosting an Internet.nl batch instance: four traps
+              Self-hosting an Internet.nl batch instance: five traps
             
           </span>
         </div>
@@ -7837,7 +7837,7 @@
   <span class="md-ellipsis">
     
   
-    Self-hosting an Internet.nl batch instance: four traps
+    Self-hosting an Internet.nl batch instance: five traps
   
 
     
@@ -7862,7 +7862,7 @@
   <span class="md-ellipsis">
     
   
-    Self-hosting an Internet.nl batch instance: four traps
+    Self-hosting an Internet.nl batch instance: five traps
   
 
     
@@ -7932,6 +7932,17 @@
     <span class="md-ellipsis">
       
         4. Recreating a Docker network strands the old containers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-docker-publishes-ports-straight-past-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Docker publishes ports straight past ufw
       
     </span>
   </a>
@@ -9875,6 +9886,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../skill-forge/reference/operating-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating notes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -12343,6 +12389,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#5-docker-publishes-ports-straight-past-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Docker publishes ports straight past ufw
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#before-you-start" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12373,7 +12430,7 @@
   
 
 
-<h1 id="self-hosting-an-internetnl-batch-instance-four-traps">Self-hosting an Internet.nl batch instance: four traps</h1>
+<h1 id="self-hosting-an-internetnl-batch-instance-five-traps">Self-hosting an Internet.nl batch instance: five traps</h1>
 <p>Everything here was hit on a real deployment of the upstream Docker batch
 stack (release 1.11.3) on a single Hetzner VPS, and cost days to find. None
 of it is a criticism of the upstream project — it is a good project, and the
@@ -12467,6 +12524,18 @@ docker/compose.sh ... up -d
 </code></pre>
 <p>Restarting a stranded container reattaches it to the same stale ID; removing
 and recreating it is what actually rejoins the new network.</p>
+<h2 id="5-docker-publishes-ports-straight-past-ufw">5. Docker publishes ports straight past <code>ufw</code></h2>
+<p><strong>Symptom.</strong> <code>ufw</code> default-denies inbound and <code>ufw status</code> shows no rule for
+443, yet the instance answers on 443 from the internet.</p>
+<p><strong>Cause.</strong> Docker writes its own iptables rules for published ports, ahead of
+the chains <code>ufw</code> manages. A default-deny <code>ufw</code> does not cover containers.</p>
+<p><strong>Fix.</strong> Filter container traffic in the <code>DOCKER-USER</code> chain, which Docker
+evaluates before its own rules, and make that rule survive reboots (on the
+reference deployment: a small systemd unit that inserts a drop for the public
+interface, e.g. <code>iptables -I DOCKER-USER -i eth0 -p tcp --dport 443 -j DROP</code>
+plus the exceptions you do want). Bind services that must never be public,
+such as the resolver on 53, to loopback in the compose file. Check from
+outside the host, not with <code>ufw status</code>.</p>
 <h2 id="before-you-start">Before you start</h2>
 <p>Self-hosting is a maintained service, not a script. It needs a machine with a
 <strong>fixed public IPv4 address and IPv6</strong> — not something behind NAT — and it

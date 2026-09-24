@@ -7824,7 +7824,7 @@
   <span class="md-ellipsis">
     
   
-    Self-hosting an Internet.nl batch instance: four traps
+    Self-hosting an Internet.nl batch instance: five traps
   
 
     
@@ -9762,6 +9762,41 @@
   
   
     <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../skill-forge/reference/operating-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating notes
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
   
 
   
@@ -12665,6 +12700,11 @@ false name in it cannot be repaired.</p>
 sets the caller label, so a page elsewhere could otherwise switch a visitor's
 label to a key the attacker knows: not a privilege gain — it is someone else's
 key — but false attribution, and <code>Path=/</code> makes it apply to the whole API.</p>
+<p>"Our own" means the <code>Origin</code>'s hostname and port equal the <code>Host</code> header's, with
+a <code>Host</code> without a port taken to be on the default port of the <code>Origin</code>'s
+scheme. Until 2026-09-24 it was a suffix match: a hostname that merely ended in
+ours passed, and an <code>Origin</code> with a port — local development on
+<code>localhost:8000</code> — was always refused.</p>
 <p>A request with no <code>Origin</code> at all is allowed. curl, the CLI and the tests send
 none, and locking them out would cost more than the hole. That is also the limit
 of this defence: it stops a browser, not a script — and a browser is exactly what
