@@ -77,6 +77,19 @@ Exceptions, deliberately small:
 Before every push: `git fetch` and rebase if origin moved; never force-push
 over someone else's work.
 
+### Prefer habitat where a repo is set up for it
+
+For wordsworth and internetnl-cli, build through the habitat chain
+(architect → builder → reviewer → security) when that is practical. It is a
+preference, not a gate (owner, 2026-09-24): when habitat cannot run the work
+(expired credentials, a blocked dependency, a fix too small to dispatch),
+build directly and follow the rest of these agreements.
+
+The same holds for curation in skill-forge: a curation decision preferably goes
+through a PR with a decision document under `docs/` that also records the
+rejections and why, so the owner can review it. Drafts are gitignored, so the
+document is the reviewable trail.
+
 ### Reads need no permission
 
 Run read-only inspection (`git log/status/diff/show`, `openspec list`, a
