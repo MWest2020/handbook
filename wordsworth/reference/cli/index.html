@@ -11264,6 +11264,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-dedupe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-dedupe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-filenames" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12478,6 +12489,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-dedupe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-dedupe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-filenames" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12568,6 +12590,10 @@ subset, not full YAML). <code>install-cli.sh --url</code> writes it for you.</p>
 </ol>
 <p><code>--batch</code> / <code>--timeout</code> resolve as: flag → config file → built-in default.</p>
 <h2 id="commands">Commands</h2>
+<p>Every console script in <code>pyproject.toml</code> is started in its own interpreter by
+<code>tests/test_entry_points_import.py</code>. That test exists because an import cycle
+kept <code>wordsworth-ingest</code> (the batch-ingest Job) from starting between
+2026-09-22 and 2026-09-24, invisible to a test suite that runs in one process.</p>
 <table>
 <thead>
 <tr>
@@ -12682,6 +12708,29 @@ index cannot. The first dry run against production wrote 770 documents before
 this was fixed, which made "dry" a lie.</p>
 <p>Run it <strong>after</strong> deploying the new code, not before: in between, the existing
 documents are in no dossier while the new code already requires a scope.</p>
+<h2 id="wordsworth-dedupe"><code>wordsworth-dedupe</code></h2>
+<p>Retires every document that is a copy of an object another document already is
+(one-document-per-object). The oldest registered copy of each object survives;
+the others become <code>superseded</code>, leave the search index and their dossiers
+(each removal recorded, actor <code>dedupe</code>), and pass on any dossier only they were
+in.</p>
+<pre><code class="language-bash">wordsworth-dedupe                                   # dry run: what it would do
+wordsworth-dedupe --apply --expect-copies 173 --expect-memberships 173 \
+                  --expect-index-entries 159
+</code></pre>
+<p><code>--apply</code> refuses to start without the numbers you expect, and stops before
+changing anything if the database says otherwise: a cleanup that finds more
+than it was sent for has found something nobody looked at. Index entries can
+only be counted by removing them, so that number is checked afterwards and a
+difference sets exit code 1. It commits one object at a time, so it never holds
+a long transaction on <code>documents</code>. A rerun finds nothing left to do.</p>
+<p>Since release 2 the database refuses a second live document for the same
+bytes (<code>uq_documents_live_object_key</code>), so on a current database a dry run
+finds nothing. On one that still holds copies, <code>wordsworth-init</code> fails when it
+tries to create that index: run this command first.</p>
+<p>A retired copy is not deleted: its audit trail requires the row. It still
+answers <code>GET /documents/{id}/state</code> with <code>superseded</code> and <code>superseded_by</code>, and
+reveal on it is refused with the survivor's id.</p>
 <h2 id="wordsworth-backfill-filenames"><code>wordsworth-backfill-filenames</code></h2>
 <p>Gives existing documents back the name their file arrived under, by content hash.</p>
 <pre><code class="language-bash">wordsworth-backfill-filenames /data/corpus --dry-run

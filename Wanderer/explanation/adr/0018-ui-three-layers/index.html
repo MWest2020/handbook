@@ -12382,10 +12382,16 @@ in the repo, marked superseded, for anyone tracing why an old PR
 referenced "Tourist = Overview".</p>
 <h2 id="rendered-surface">Rendered surface</h2>
 <ul>
-<li><strong>De vloot</strong> (<code>/ui/</code>, <code>/ui/orgs/{slug}</code>) renders the vlootscore
-  headline (<code>x/n</code>, onbeantwoord apart, aantal niet-soeverein), the
-  verdeling per stroom, and the top-3 duurste regels, ahead of the
-  per-domain list (slechtste eerst) and the scan-input form.</li>
+<li><strong>De vloot</strong> (<code>/ui/</code>, <code>/ui/orgs/{slug}</code>) opens with the scan-input
+  form as a compact bar under the header, then shows the fleet as
+  pictures (change <code>2026-09-24-vloot-in-beeld</code>, after Mark on
+  2026-09-24: "still too much Analysis"): the vlootscore as a ring with
+  a legend (soeverein, niet soeverein, onbeantwoord), one stacked bar
+  per stroom, the top-3 duurste regels as handelingen with a "x van n
+  domeinen" bar, and the domains as a grid of domein × stroom
+  (slechtste eerst). No rule rationale on this layer; it lives on the
+  rule page, one layer down. Every picture carries its facts as text
+  too.</li>
 <li><strong>Het domein</strong> (<code>/ui/scans/{id}/answer</code>) shows the <code>x/n</code> score next
   to the oordeelzin, and one handeling per niet-soeverein flow.</li>
 <li><strong>De techniek</strong> (<code>/ui/scans/{id}/assessment</code>) opens with the seven
