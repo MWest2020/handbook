@@ -73,6 +73,10 @@ Exceptions, deliberately small:
   hand it over as a ready-to-run command, not as a question.
 - A genuine fork — two defensible directions with different outcomes: one
   short question with a recommendation.
+- **wordsworth goes through pull requests.** Its docs-gates (a code change
+  must move `docs/` with it) only run on pull requests, so pushing straight to
+  `main` would skip them. Branch, open the PR, merge it yourself once every
+  check passes — still no asking. Decided by Mark, 2026-09-26.
 
 Before every push: `git fetch` and rebase if origin moved; never force-push
 over someone else's work.
