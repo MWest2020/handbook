@@ -12971,6 +12971,10 @@ it happened, with the measurement, instead of asking whether it may.</p>
   hand it over as a ready-to-run command, not as a question.</li>
 <li>A genuine fork — two defensible directions with different outcomes: one
   short question with a recommendation.</li>
+<li><strong>wordsworth goes through pull requests.</strong> Its docs-gates (a code change
+  must move <code>docs/</code> with it) only run on pull requests, so pushing straight to
+  <code>main</code> would skip them. Branch, open the PR, merge it yourself once every
+  check passes — still no asking. Decided by Mark, 2026-09-26.</li>
 </ul>
 <p>Before every push: <code>git fetch</code> and rebase if origin moved; never force-push
 over someone else's work.</p>

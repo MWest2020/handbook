@@ -12455,7 +12455,12 @@ is the engine. Reference case: Woo-request handling for a Dutch municipality.</p
   budget first — with two Ollama instances the retry usually reaches the other
   one — and is a hard error after it. That holds for a document's embedding at
   ingest and for a query's (<code>hybrid_search</code>: <code>/hybrid</code>, console search, <code>/ask</code>).
-  A bad embedding is never retried.</li>
+  A bad embedding is never retried. Every retry is a JSON log line
+  (<code>"event": "retry"</code>, and <code>"retry_exhausted"</code> when the budget runs out) naming
+  what was retried and the exception's class, never its message: a message can
+  quote the document. Every state transition is a JSON line too (<code>"event": "transition"</code>,
+  at INFO). The api prints both to stderr; until 2026-09-26 nothing attached a
+  handler, so transitions were written and never seen.</li>
 <li><strong>No cloud APIs in the critical path.</strong> Embeddings and any LLM run locally.</li>
 <li><strong>Driver/protocol pattern for every adapter</strong> (anonymization, key/mapping
   store, object storage, search, embeddings).</li>
