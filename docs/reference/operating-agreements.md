@@ -77,6 +77,13 @@ Exceptions, deliberately small:
 Before every push: `git fetch` and rebase if origin moved; never force-push
 over someone else's work.
 
+When the work goes through a pull request anyway — because a gate only runs on
+pull requests, like wordsworth's docs-gates — read its checks before merging.
+`gh pr merge` does not wait for them, and without branch protection nothing
+stops a red merge: on 2026-09-26 wordsworth #170 went in with its docs gate
+failing, fixed afterwards by #171. Merge in the same step that checks every
+result is `pass`, never in a command that merges regardless.
+
 ### Prefer habitat where a repo is set up for it
 
 For wordsworth and internetnl-cli, build through the habitat chain
