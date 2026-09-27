@@ -12718,8 +12718,8 @@ deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-s
 </tr>
 <tr>
 <td><code>CLAUDE_CREDS_FILE</code></td>
-<td><code>~/.claude/.credentials.json</code></td>
-<td>bron voor de <code>claude-credentials</code>-sync per dispatch (subscription-token verloopt ~8u); leeg = sync overslaan. Overbodig zodra het Secret <code>claude-oauth-token</code> bestaat — zie hieronder</td>
+<td>leeg</td>
+<td>alleen voor het oude pad 2 hieronder: bron voor de <code>claude-credentials</code>-sync per dispatch (subscription-token verloopt ~8u). Leeg = geen sync; de worker gebruikt dan <code>claude-oauth-token</code>. Het bestand gaat via stdin naar kubectl, dus het werkt ook met een remote <code>KUBECTL</code> (tot 2026-09-26 las kubectl het pad op de remote host en brak de dispatch af)</td>
 </tr>
 </tbody>
 </table>
@@ -12733,10 +12733,11 @@ deny-by-default via <code>--permission-mode dontAsk</code>) en een output-JSON-s
 </ol>
 <p><code>claude setup-token
    kubectl -n agents create secret generic claude-oauth-token --from-literal=token=&lt;token&gt;</code></p>
-<p>Daarna mag <code>CLAUDE_CREDS_FILE=</code> (leeg) en kan het Secret
-   <code>claude-credentials</code> weg; beide mounts zijn <code>optional</code>.
+<p>Dat is sinds 2026-09-26 de standaard: <code>CLAUDE_CREDS_FILE</code> staat leeg en het
+   Secret <code>claude-credentials</code> mag weg; beide mounts zijn <code>optional</code>.
 2. <strong>Gemounte sessie-credentials</strong> (<code>claude-credentials</code>) — het oude
-   sub-first-pad, alleen vers zolang <code>dispatch.sh</code> ze meesynchroniseert.
+   sub-first-pad, alleen vers als je <code>dispatch.sh</code> met
+   <code>CLAUDE_CREDS_FILE=~/.claude/.credentials.json</code> draait.
 3. <strong><code>ANTHROPIC_API_KEY</code></strong> — Console-key, verloopt niet, maar rekent per token
    af buiten het abonnement om.</p>
 <p>Workers refreshen nooit zelf: een refresh in een wegwerp-Job kan de
