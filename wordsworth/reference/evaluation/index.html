@@ -11292,6 +11292,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ranking-on-the-real-woo-corpus-derived-collection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ranking on the real Woo corpus (derived collection)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -12432,6 +12443,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ranking-on-the-real-woo-corpus-derived-collection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ranking on the real Woo corpus (derived collection)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -12593,9 +12615,9 @@ untraceable.</p>
 </ul>
 <p><strong>What it does not settle, and this distinction matters more than the corpus:</strong></p>
 <ul>
-<li><strong>Ranking quality.</strong> The IR metrics need qrels and queries. Those do not exist
-  for a Woo corpus and cannot be derived from it; somebody has to make them.
-  Until then the numbers above stay measured on the synthetic collection.</li>
+<li><strong>Ranking quality, judged.</strong> Graded relevance for real questions needs a
+  person. A <em>derived</em> collection does exist since 2026-10-03, see below; it
+  measures ranking without anyone judging, with a stated bias.</li>
 <li><strong>Detection precision and recall.</strong> <code>pii_run</code> needs a gold file with character
   offsets. A real corpus has no offsets, so it cannot produce precision, recall
   or a leak count. <code>pii_gold_synthetic.jsonl</code> remains the only labelled source.</li>
@@ -12610,6 +12632,66 @@ number and two e-mail addresses alongside the names of officials acting in
 function. Does our anonymisation find the personal data that the publishing
 authority left in? That question is checkable against the published document,
 needs no annotation, and is the reason this system exists.</p>
+<h2 id="ranking-on-the-real-woo-corpus-derived-collection">Ranking on the real Woo corpus (derived collection)</h2>
+<p><code>scripts/eval/woo_ranking_eval.py herkomst.jsonl OUT</code> builds a collection from
+what the publisher recorded and scores a ranker on it, read-only. The rules are
+in <code>wordsworth.eval.woo_collection</code> and tested:</p>
+<ul>
+<li><strong>known-item:</strong> each document's file name, stripped of ids, mail prefixes and
+  file types, is a query; the documents whose names give the same query are
+  its relevant set. Names with fewer than two subject words are skipped.</li>
+<li><strong>per decision:</strong> the Woo decision page in <code>herkomst.jsonl</code>, its URL slug as
+  the query, its documents as the relevant set.</li>
+</ul>
+<p>Bias, stated before any number: title words favour keyword matching. The
+collection is fair between two rankers fed the same queries; a win for a ranker
+that leans on BM25 is the weaker claim.</p>
+<p>Baseline, 2026-10-03, production index (194 of the 200 Woo documents linked;
+the 6 unlinked are the OCR-recovered ones, which never got a file name; 116
+known-item queries, 90 of them with a single document). Recall@8, the k <code>/ask</code>
+uses, by length third of the known item:</p>
+<table>
+<thead>
+<tr>
+<th>ranker</th>
+<th>short (133-1303 chars)</th>
+<th>middle (1319-3955)</th>
+<th>long (4069-86352)</th>
+<th>all</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hybrid, production (RRF recall + cosine)</td>
+<td>0.692</td>
+<td>0.103</td>
+<td><strong>0.000</strong></td>
+<td>0.219</td>
+</tr>
+<tr>
+<td>BM25 alone (reference)</td>
+<td>0.615</td>
+<td>0.793</td>
+<td>0.686</td>
+<td>0.684</td>
+</tr>
+</tbody>
+</table>
+<p>The production ranking does not find a long document by its own title, not once
+in 35. BM25 has no such slope. That is the short-document bias of change
+<code>long-documents-rank-fairly</code>, measured.</p>
+<p>The runner scores hybrid search in both final orders side by side, explicitly
+and not through the setting: <code>cosine</code> (production) and <code>rrf</code> (candidate 1, the
+fused rank the recall stage already computes), plus BM25 alone. Production
+switches with <code>WORDSWORTH_HYBRID_FINAL_RANK</code> (default <code>cosine</code>).</p>
+<p><code>scripts/eval/woo_passage_eval.py herkomst.jsonl CACHE.json</code> measures candidate
+2 (passage embeddings, <code>wordsworth.eval.passages</code>: 200-word windows every 150
+words, a document scored by its best passage). Passages exist only for the Woo
+documents, so it measures <strong>every</strong> configuration inside that one pool --
+BM25 filtered to the pool's ids, kNN exact in-process -- and its absolute
+numbers are not comparable with the full-index ones above; the comparison
+between configurations is. The passage vectors are cached, so a dropped run
+resumes.</p>
 
 
 
