@@ -12984,6 +12984,13 @@ pull requests, like wordsworth's docs-gates — read its checks before merging.
 stops a red merge: on 2026-09-26 wordsworth #170 went in with its docs gate
 failing, fixed afterwards by #171. Merge in the same step that checks every
 result is <code>pass</code>, never in a command that merges regardless.</p>
+<p>In a Claude Code shell, <code>grep</code> is a shell function that runs ugrep, and
+<code>grep -qv</code> does not behave like GNU grep: given a failing line it still exits 1,
+so a guard written as <code>if ... | grep -qv ": pass"</code> merges anyway. That guard
+merged wordsworth #181 with its image build red (2026-10-03). Test the result
+with awk, which behaves the same everywhere:
+<code>awk -F': ' 'NF &amp;&amp; $NF!="pass"{bad=1} END{exit bad}'</code> exits 0 only when every
+line ends in <code>pass</code>.</p>
 <h3 id="prefer-habitat-where-a-repo-is-set-up-for-it">Prefer habitat where a repo is set up for it</h3>
 <p>For wordsworth and internetnl-cli, build through the habitat chain
 (architect → builder → reviewer → security) when that is practical. It is a
