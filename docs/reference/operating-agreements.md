@@ -88,6 +88,14 @@ stops a red merge: on 2026-09-26 wordsworth #170 went in with its docs gate
 failing, fixed afterwards by #171. Merge in the same step that checks every
 result is `pass`, never in a command that merges regardless.
 
+In a Claude Code shell, `grep` is a shell function that runs ugrep, and
+`grep -qv` does not behave like GNU grep: given a failing line it still exits 1,
+so a guard written as `if ... | grep -qv ": pass"` merges anyway. That guard
+merged wordsworth #181 with its image build red (2026-10-03). Test the result
+with awk, which behaves the same everywhere:
+`awk -F': ' 'NF && $NF!="pass"{bad=1} END{exit bad}'` exits 0 only when every
+line ends in `pass`.
+
 ### Prefer habitat where a repo is set up for it
 
 For wordsworth and internetnl-cli, build through the habitat chain
