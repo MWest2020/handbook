@@ -11275,6 +11275,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-backfill-passages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-passages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-filenames" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12500,6 +12511,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-backfill-passages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-backfill-passages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-filenames" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12731,6 +12753,20 @@ tries to create that index: run this command first.</p>
 <p>A retired copy is not deleted: its audit trail requires the row. It still
 answers <code>GET /documents/{id}/state</code> with <code>superseded</code> and <code>superseded_by</code>, and
 reveal on it is refused with the survivor's id.</p>
+<h2 id="wordsworth-backfill-passages"><code>wordsworth-backfill-passages</code></h2>
+<p>Gives every indexed document a vector per passage (200-word windows every 150
+words, <code>wordsworth.passages</code>), so hybrid search can rank a document by its best
+passage instead of one vector for all of it (change
+<code>long-documents-rank-fairly</code>).</p>
+<pre><code class="language-bash">wordsworth-backfill-passages            # --workers 2 (one per Ollama instance)
+</code></pre>
+<p>New and reprocessed documents get passages when they are indexed; this fills in
+the ones indexed before. It only sets the <code>passages</code> field (a partial update),
+never the text or the document vector. It asks the index what is still missing,
+so a stopped run resumes. A document with no text, or whose embedding fails
+after the retry budget, is set aside and counted; exit code 1 if any failed.</p>
+<p>Switch search over only when it is done: <code>WORDSWORTH_HYBRID_KNN=passage</code>. A
+document without passages is invisible to the passage kNN half.</p>
 <h2 id="wordsworth-backfill-filenames"><code>wordsworth-backfill-filenames</code></h2>
 <p>Gives existing documents back the name their file arrived under, by content hash.</p>
 <pre><code class="language-bash">wordsworth-backfill-filenames /data/corpus --dry-run

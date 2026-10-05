@@ -9635,6 +9635,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#when-mark-is-offline-issues-are-the-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Mark is offline: issues are the trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#one-working-tree-per-session" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12698,6 +12709,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#when-mark-is-offline-issues-are-the-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Mark is offline: issues are the trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#one-working-tree-per-session" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13031,6 +13053,22 @@ nothing, because the TUI needs a terminal.</p>
 open PRs, handover batons and explicitly deferred follow-ups ("later") are
 open work. At the end of a task, check the backlog and take the next item.
 Something the owner rejected is not open work.</p>
+<h3 id="when-mark-is-offline-issues-are-the-trail">When Mark is offline: issues are the trail</h3>
+<p>Mark, 2026-10-04: "start working via issues on the github boards, and pick
+them up when need be. In this way I can see and read whenever I can. Update
+ratatoskr." So, in a repo he is not watching live:</p>
+<ul>
+<li><strong>One GitHub issue per piece of work.</strong> Label <code>agent-work</code> for what the agent
+  picks up; <code>needs-mark</code> for what only Mark can decide or do, with the exact
+  action written out (a command, a policy line, a choice). Progress goes in
+  comments as it happens, with the measurement, not only at the end.</li>
+<li><strong>PRs close their issue</strong> (<code>Fixes #n</code>), so the trail links work to outcome.</li>
+<li><strong>Milestones go to Ratatoskr</strong>, in English, from the session's own identity
+  (<code>ping.sh</code>, see ratatoskr <code>docs/how-to/ping-from-a-session.md</code>): what is done,
+  what is waiting on him, which issue numbers.</li>
+<li>Project boards need the <code>project</code> scope on the <code>gh</code> token, which only Mark's
+  browser can grant; until then labels do the job.</li>
+</ul>
 <h3 id="one-working-tree-per-session">One working tree per session</h3>
 <p>Git does not isolate two actors in one working tree. On a shared checkout,
 another session switched the branch mid-session: two commits landed on their
