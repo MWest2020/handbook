@@ -150,6 +150,23 @@ open PRs, handover batons and explicitly deferred follow-ups ("later") are
 open work. At the end of a task, check the backlog and take the next item.
 Something the owner rejected is not open work.
 
+### When Mark is offline: issues are the trail
+
+Mark, 2026-10-04: "start working via issues on the github boards, and pick
+them up when need be. In this way I can see and read whenever I can. Update
+ratatoskr." So, in a repo he is not watching live:
+
+- **One GitHub issue per piece of work.** Label `agent-work` for what the agent
+  picks up; `needs-mark` for what only Mark can decide or do, with the exact
+  action written out (a command, a policy line, a choice). Progress goes in
+  comments as it happens, with the measurement, not only at the end.
+- **PRs close their issue** (`Fixes #n`), so the trail links work to outcome.
+- **Milestones go to Ratatoskr**, in English, from the session's own identity
+  (`ping.sh`, see ratatoskr `docs/how-to/ping-from-a-session.md`): what is done,
+  what is waiting on him, which issue numbers.
+- Project boards need the `project` scope on the `gh` token, which only Mark's
+  browser can grant; until then labels do the job.
+
 ### One working tree per session
 
 Git does not isolate two actors in one working tree. On a shared checkout,
