@@ -3579,6 +3579,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#agent-skills-tools-the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent → skills → tools (the factory)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9804,6 +9815,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-forge/explanation/2026-10-22-curation-read-state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation decision 2026-10-22: read-state
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12387,6 +12433,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#agent-skills-tools-the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent → skills → tools (the factory)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12557,6 +12614,28 @@ silent and whom to name instead.</p>
 the contract reaches the model and not only the reader. The
 <code>role-contracts</code> change in ratatoskr does this. Other roles get a contract
 once the pilot has carried one real change through the chain.</p>
+<h2 id="agent-skills-tools-the-factory">Agent → skills → tools (the factory)</h2>
+<blockquote>
+<p>Mark, 2026-10-22: <em>"factory pattern should be agent -&gt; skills -&gt; tool usage.
+clearly defined."</em></p>
+</blockquote>
+<p>A chat agent's tools are not chosen per role. They follow from its skills:</p>
+<pre><code>role (this directory) ──declares──► skills  (inventory/skills-register.yml,
+                                      │       mirrored from skill-forge)
+                                      │ each skill's `allowed-tools`
+                                      ▼
+chat.tools.allow  ==  Read, Grep, Glob  ∪  the tools of its skills
+</code></pre>
+<ul>
+<li><strong>The equality is enforced.</strong> <code>scripts/check_agent_tools.py</code> refuses a chat
+  facet that holds a tool none of its skills needs, or that leaves out a tool
+  a declared skill needs.</li>
+<li><strong>A new capability that needs a tool is therefore a skill.</strong> Odin's read
+  shell is the skill <code>read-state</code>, whose only tool is
+  <code>Bash(python3 agents/readshell.py:*)</code>.</li>
+<li><strong>The execution facet stays as it was:</strong> it is checked against its habitat
+  seed, which is what the cage actually runs.</li>
+</ul>
 <h2 id="guardrails">Guardrails</h2>
 <ul>
 <li><strong>Identity:</strong> the relay is <em>closed</em> — only npubs from this registry take part.</li>
