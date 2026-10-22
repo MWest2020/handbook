@@ -1,6 +1,6 @@
 ---
 status: current
-last_reviewed: 2026-09-24
+last_reviewed: 2026-10-22
 ---
 
 # Operating agreements
@@ -68,9 +68,13 @@ Exceptions, deliberately small:
 
 - `docs/agents/` and `.claude/agents/` in the handbook (CODEOWNERS): the
   owner merges who the agents are.
-- A command the auto-mode classifier blocks for the agent (for example a
-  self-approving `gh pr merge`, or ratatoskr's `orchestrator/add-member.py`):
-  hand it over as a ready-to-run command, not as a question.
+- A command the auto-mode classifier blocks for the agent, such as
+  ratatoskr's `orchestrator/add-member.py`: hand it over as a ready-to-run
+  command, not as a question. Merging your own PR on a `MWest2020/*` repository
+  is **no longer** one of these. Since 2026-10-22 the owner's settings allow
+  `gh pr merge <n> --repo MWest2020/<repo>` ("allow gh pr merge for
+  MWest2020"), so merge it yourself once every check passes, and say that you
+  did.
 - A genuine fork — two defensible directions with different outcomes: one
   short question with a recommendation.
 - **wordsworth goes through pull requests.** Its docs-gates (a code change
