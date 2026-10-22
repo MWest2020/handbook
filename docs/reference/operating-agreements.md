@@ -67,7 +67,12 @@ it happened, with the measurement, instead of asking whether it may.
 Exceptions, deliberately small:
 
 - `docs/agents/` and `.claude/agents/` in the handbook (CODEOWNERS): the
-  owner merges who the agents are.
+  owner decides who the agents are. Since 2026-10-22 there is one exception,
+  the **factory**. A NEW role that odin creates with `!role` passes the
+  handbook gate and is merged by the factory once every check passes. Changing
+  an existing role, and closing a role or channel, stay the owner's (`!yes` in
+  the chat). Mark: *"odin can decide for new roles if need be, and new
+  channels. closing should be consulted with me."*
 - A command the auto-mode classifier blocks for the agent, such as
   ratatoskr's `orchestrator/add-member.py`: hand it over as a ready-to-run
   command, not as a question. Merging your own PR on a `MWest2020/*` repository
