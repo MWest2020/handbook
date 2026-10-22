@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-22
 agent:
   naam: odin
   npub: npub1kr3qkvyqega8my3gqr0tg0yskj8wp0glzmx4g6u8en48guae8m8q3mt0ak
@@ -9,7 +9,7 @@ agent:
     channels: [general]
     tools: { allow: [Read, Grep, Glob, "Bash(python3 agents/readshell.py:*)"], deny: [Write, Edit] }
     routes: [bouw]
-    skills: []
+    skills: [read-state]
   executie: null
 ---
 
