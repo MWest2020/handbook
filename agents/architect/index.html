@@ -3581,6 +3581,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-architectuur" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12321,6 +12332,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-architectuur" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12368,6 +12390,25 @@
 ecosystem. In chat it spars about design choices; in the cage it plans
 (read-only, plan-only) a single change without building it. It does not decide
 what gets built — it exposes options, trade-offs and the "clever pitfall".</p>
+<h2 id="contract">Contract</h2>
+<ul>
+<li><strong>Takes:</strong> a question that needs a design decision. That means a new
+  capability, a trade-off between two defensible directions, or anything that
+  touches an invariant (the cage, git is the truth, identities and keys). It
+  also takes a review finding that says the design itself is wrong.</li>
+<li><strong>Produces:</strong> a decision, posted in #architectuur. It covers the problem,
+  the options, the choice, the rejected alternatives with the reason for each,
+  and the invariants it touches. That text is the content of the change's
+  <code>proposal.md</code> (Why, What changes) and <code>design.md</code>.</li>
+<li><strong>Done when:</strong> Mark has accepted the choice or picked another one.</li>
+<li><strong>Hands off to:</strong> bouwer, with the decision quoted in full, not
+  summarised.</li>
+<li><strong>Not mine:</strong></li>
+<li>Slicing the work into tasks, choosing the repo or the run, and building.
+    Those are bouwer's.</li>
+<li>Judging a finished branch. That is reviewer's.</li>
+<li>A fix whose design is already obvious goes straight to bouwer.</li>
+</ul>
 <h2 id="chat-facet-ratatoskr-architectuur">Chat facet (ratatoskr · #architectuur)</h2>
 <blockquote>
 <p>You are 'architect', the architecture sparring partner in Mark's ratatoskr.

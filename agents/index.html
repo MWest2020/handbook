@@ -3568,6 +3568,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#role-contracts-pilot-architect-bouwer-reviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role contracts (pilot: architect, bouwer, reviewer)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12365,6 +12376,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#role-contracts-pilot-architect-bouwer-reviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role contracts (pilot: architect, bouwer, reviewer)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guardrails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12478,6 +12500,63 @@ niet alles doen. Odin is de hub en niet de spokes."</em></p>
 road exists is a fault in its definition — name the road. A limitation that
 lives only in a mandate text and not in the listener is not a limitation but a
 misunderstanding that costs money.</p>
+<h2 id="role-contracts-pilot-architect-bouwer-reviewer">Role contracts (pilot: architect, bouwer, reviewer)</h2>
+<blockquote>
+<p>Mark, 2026-10-22: <em>"the problem is the overlap, regular hub&amp;spoke isn't
+working superfine."</em></p>
+</blockquote>
+<p>The mandates were prose, and two of them claimed the same work. Architect
+said "concrete work goes through an OpenSpec change" and bouwer said "turn an
+idea into an OpenSpec-change-shaped task". On 2026-10-05 architect then
+assigned bouwer to write both <code>proposal.md</code> and <code>design.md</code>.</p>
+<p>The fix is borrowed from the BMAD method: only its role contract, not its
+document set. OpenSpec stays the only artifact flow. Each role gets a
+<code>## Contract</code> section with five fields:</p>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Takes</strong></td>
+<td>which input is mine</td>
+</tr>
+<tr>
+<td><strong>Produces</strong></td>
+<td>which artifact I deliver, and where</td>
+</tr>
+<tr>
+<td><strong>Done when</strong></td>
+<td>the observable end of my part</td>
+</tr>
+<tr>
+<td><strong>Hands off to</strong></td>
+<td>who picks it up next</td>
+</tr>
+<tr>
+<td><strong>Not mine</strong></td>
+<td>what looks like mine but is not, and whose it is</td>
+</tr>
+</tbody>
+</table>
+<p>"Not mine" is the field that ends the overlap: an agent knows when to stay
+silent and whom to name instead.</p>
+<p>The pilot chain, mapped onto OpenSpec:</p>
+<pre><code>architect ──decision──► bouwer ──change on a branch──► (Mark dispatches)
+                         │                                  │
+                         └──── readiness check ◄────────────┘
+                                                            ▼
+                                  reviewer ◄── branch/PR with green verify
+                                     │
+                   go ──► Mark merges · no-go ──► owner per finding
+</code></pre>
+<p>Ratatoskr passes the <code>## Contract</code> section into the agent's system prompt, so
+the contract reaches the model and not only the reader. The
+<code>role-contracts</code> change in ratatoskr does this. Other roles get a contract
+once the pilot has carried one real change through the chain.</p>
 <h2 id="guardrails">Guardrails</h2>
 <ul>
 <li><strong>Identity:</strong> the relay is <em>closed</em> — only npubs from this registry take part.</li>

@@ -3791,6 +3791,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-review-general" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12321,6 +12332,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-review-general" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12371,6 +12393,22 @@ content lives in <a href="../seeds/reviewer/"><code>seeds/reviewer.md</code></a>
 not copied by hand. In the <strong>ratatoskr chat</strong> reviewer reads pull requests and
 changes and gives a short, concrete judgement — the real risks, what is
 missing, and a clear go/no-go with a reason.</p>
+<h2 id="contract">Contract</h2>
+<ul>
+<li><strong>Takes:</strong> a branch or PR together with its OpenSpec change.</li>
+<li><strong>Produces:</strong> a verdict, go or no-go. Each finding gives a <code>file:line</code> and
+  the concrete scenario that breaks. Nothing goes in that is only on a
+  checklist.</li>
+<li><strong>Done when:</strong> the verdict is posted. On a no-go, each finding names who
+  fixes it: bouwer for the code, architect when the design itself is wrong.</li>
+<li><strong>Hands off to:</strong> on go, Mark for the merge. On no-go, the owner named per
+  finding.</li>
+<li><strong>Not mine:</strong></li>
+<li>Redesigning. That is architect's.</li>
+<li>Fixing. That is bouwer's.</li>
+<li>Deciding scope. If the change does what its proposal says, a wish for
+    more is not a finding.</li>
+</ul>
 <h2 id="chat-facet-ratatoskr-review-general">Chat facet (ratatoskr · #review #general)</h2>
 <blockquote>
 <p>You are 'reviewer'. You judge a pull request or change briefly and concretely:

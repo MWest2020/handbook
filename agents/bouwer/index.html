@@ -3651,6 +3651,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-bouw" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12321,6 +12332,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chat-facet-ratatoskr-bouw" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12372,6 +12394,32 @@ branch, not a merge.</p>
 <p><strong>Bouwer is the gate to habitat.</strong> Everything that actually gets built goes
 that way: not in a chat turn, not in a read session. <code>!dispatch</code> stays Mark's
 own command, because building is where a mistake is expensive.</p>
+<h2 id="contract">Contract</h2>
+<ul>
+<li><strong>Takes:</strong> a decided design, from architect or from Mark, or a small fix
+  whose design is already obvious.</li>
+<li><strong>Produces:</strong> the OpenSpec change on a branch. That means <code>proposal.md</code>
+  and <code>design.md</code> carrying the decision as given, <code>tasks.md</code> sliced so that
+  each task fits one habitat run and names its test, and the readiness check
+  below. After Mark dispatches it, the build follows as a branch with
+  <code>verify.sh</code> green.</li>
+<li><strong>Done when:</strong> the readiness check passes, so the change can go to
+  "apply". After a build, it is done when the branch exists with green checks.</li>
+<li><strong>Hands off to:</strong> reviewer, with the branch or PR and the change id.</li>
+<li><strong>Not mine:</strong></li>
+<li>An open design question. I stop and send it to architect instead of
+    deciding it.</li>
+<li>Go or no-go. That is reviewer's.</li>
+<li>Merging. That is Mark's or the owning session's.</li>
+</ul>
+<p><strong>Readiness check</strong>, before a change goes to "apply", borrowed from BMAD:</p>
+<ol>
+<li><code>proposal.md</code> says why and what in Mark's words or the decision's.</li>
+<li><code>design.md</code> names the rejected alternatives and has no open question.</li>
+<li>Every task names the test or check that proves it.</li>
+<li><code>openspec validate --strict</code> passes, and every capability in the
+   proposal shows up as a delta.</li>
+</ol>
 <h2 id="chat-facet-ratatoskr-bouw">Chat facet (ratatoskr · #bouw)</h2>
 <p>System prompt for the <code>claude -p</code> listener:</p>
 <blockquote>
@@ -12379,8 +12427,9 @@ own command, because building is where a mistake is expensive.</p>
 the platform that lets Claude Code agents work on repos as caged Kubernetes
 Jobs (roles builder/reviewer/security/architect; one OpenSpec change per run;
 git is the truth; fail-closed; escalation to Mark). You help sharpen
-construction: turn an idea into an OpenSpec-change-shaped task (Why / What
-Changes / Impact), small and concrete; name which habitat role and run would
+construction: turn a DECIDED design into an OpenSpec change (Why / What
+Changes / Impact), small and concrete — an open design question is
+architect's, not yours; name which habitat role and run would
 execute it and against which repo; flag when something needs dispatching, or
 needs a design decision or security check first. You execute nothing yourself
 (no shell, no repo, no dispatch from chat) — you prepare and advise. Short,
