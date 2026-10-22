@@ -74,12 +74,32 @@ REGISTER = ROOT / "inventory" / "skills-register.yml"  # mirror van skill-forge
 
 
 def register_slugs():
-    """The slugs from the skill register (a mirror of skill-forge's `register.yml`),
-    or None when the manifest is missing. Stdlib: every skill appears as `- slug: <x>`.
-    Zo blijft "welke skills bestaan" één bron (skill-forge), hier alleen gespiegeld."""
+    """{slug: [tools]} from the skill register (a mirror of skill-forge's
+    `register.yml`), or None when the manifest is missing. Stdlib: every skill is a
+    `- slug: <x>` block; its `tools:` is `[]` or a block list of `- <tool>` lines
+    (skill-forge change register-carries-tools). A dict, so `slug in reg` still
+    answers "does this skill exist"."""
     if not REGISTER.exists():
         return None
-    return set(re.findall(r"^\s*-\s*slug:\s*(\S+)", REGISTER.read_text(), re.M))
+    reg = {}
+    for blk in re.split(r"^(?=-\s*slug:)", REGISTER.read_text(), flags=re.M):
+        m = re.match(r"-\s*slug:\s*(\S+)", blk)
+        if not m:
+            continue
+        t = re.search(r"^\s+tools:[ \t]*(\[\])?[ \t]*\n((?:\s+-\s+.*\n?)*)", blk, re.M)
+        reg[m.group(1)] = ([] if not t or t.group(1) else
+                           [ln.strip()[2:].strip() for ln in t.group(2).splitlines() if ln.strip()])
+    return reg
+
+
+# What every chat agent has without a skill (agent -> skills -> tools; Mark,
+# 2026-10-22: "factory pattern should be agent -> skills -> tool usage. clearly
+# defined."). Anything beyond this must come from a declared skill.
+BASE_CHAT_TOOLS = {"Read", "Grep", "Glob"}
+
+
+def _tool(t: str) -> str:
+    return t.strip().strip('"').strip("'")
 
 
 # Toegestane modellen. De def legt de INTENTIE vast (zoeken/denken/uitzondering),
@@ -129,6 +149,16 @@ def check_facet(rel: str, facet: str, block: str, errs: list, notices: list, reg
     overlap = sorted(set(allow) & set(deny))
     if overlap:
         errs.append(f"{rel}/{facet}: allow en deny overlappen: {overlap}")
+
+    if facet == "chat" and isinstance(reg, dict) and msl:
+        skills = _list(msl.group(1))
+        if all(sk in reg for sk in skills):
+            want = BASE_CHAT_TOOLS | {_tool(t) for sk in skills for t in reg[sk]}
+            have = {_tool(t) for t in allow}
+            if have != want:
+                errs.append(f"{rel}/chat: `tools.allow` must be the base tools plus what "
+                            f"its skills need. Extra: {sorted(have - want)}; "
+                            f"missing: {sorted(want - have)}")
 
     if facet == "executie":
         mseed = re.search(r"^\s*seed:\s*(\S+)", block, re.M)
@@ -258,6 +288,19 @@ def _selftest() -> int:
         False, "overlap")
     run("skills checked even with the tools block gone", f"{MODEL}\nskills: [does-not-exist]",
         False, "unknown skill")
+
+    tools_reg = {"read-state": ["Bash(python3 agents/readshell.py:*)"], "no-ai-slop": []}
+    CHAT = f"{MODEL}\ntools: {{{{ allow: [Read, Grep, Glob{{}}], deny: [Write] }}}}\nskills: [{{}}]"
+    run("chat: base tools, no skills", CHAT.format("", ""), True, facet="chat", r=tools_reg)
+    run("chat: a skill brings its tool",
+        CHAT.format(', "Bash(python3 agents/readshell.py:*)"', "read-state"), True,
+        facet="chat", r=tools_reg)
+    run("chat: a tool no skill needs", CHAT.format(", Bash", "no-ai-slop"), False,
+        "Extra: ['Bash']", facet="chat", r=tools_reg)
+    run("chat: a skill's tool left out", CHAT.format("", "read-state"), False,
+        "missing: ['Bash(python3 agents/readshell.py:*)']", facet="chat", r=tools_reg)
+    run("execution facet is gated by its seed, not by skills",
+        f"{OKTOOLS}\nskills: [no-ai-slop]", True, r=tools_reg)
 
     fails = [(n, e) for n, ok, e in cases if not ok]
     for n, ok, _ in cases:

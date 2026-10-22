@@ -105,6 +105,28 @@ the contract reaches the model and not only the reader. The
 `role-contracts` change in ratatoskr does this. Other roles get a contract
 once the pilot has carried one real change through the chain.
 
+## Agent → skills → tools (the factory)
+
+> Mark, 2026-10-22: *"factory pattern should be agent -> skills -> tool usage.
+> clearly defined."*
+
+A chat agent's tools are not chosen per role. They follow from its skills:
+
+    role (this directory) ──declares──► skills  (inventory/skills-register.yml,
+                                          │       mirrored from skill-forge)
+                                          │ each skill's `allowed-tools`
+                                          ▼
+    chat.tools.allow  ==  Read, Grep, Glob  ∪  the tools of its skills
+
+- **The equality is enforced.** `scripts/check_agent_tools.py` refuses a chat
+  facet that holds a tool none of its skills needs, or that leaves out a tool
+  a declared skill needs.
+- **A new capability that needs a tool is therefore a skill.** Odin's read
+  shell is the skill `read-state`, whose only tool is
+  `Bash(python3 agents/readshell.py:*)`.
+- **The execution facet stays as it was:** it is checked against its habitat
+  seed, which is what the cage actually runs.
+
 ## Guardrails
 
 - **Identity:** the relay is *closed* — only npubs from this registry take part.
