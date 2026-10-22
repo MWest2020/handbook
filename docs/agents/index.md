@@ -1,6 +1,6 @@
 ---
 status: draft
-last_reviewed: 2026-09-21
+last_reviewed: 2026-10-22
 ---
 
 # Agents — canonical registry
@@ -64,6 +64,46 @@ That third one is a measure, not a mood. An agent answering "I can't" while a
 road exists is a fault in its definition — name the road. A limitation that
 lives only in a mandate text and not in the listener is not a limitation but a
 misunderstanding that costs money.
+
+## Role contracts (pilot: architect, bouwer, reviewer)
+
+> Mark, 2026-10-22: *"the problem is the overlap, regular hub&spoke isn't
+> working superfine."*
+
+The mandates were prose, and two of them claimed the same work. Architect
+said "concrete work goes through an OpenSpec change" and bouwer said "turn an
+idea into an OpenSpec-change-shaped task". On 2026-10-05 architect then
+assigned bouwer to write both `proposal.md` and `design.md`.
+
+The fix is borrowed from the BMAD method: only its role contract, not its
+document set. OpenSpec stays the only artifact flow. Each role gets a
+`## Contract` section with five fields:
+
+| field | answers |
+|---|---|
+| **Takes** | which input is mine |
+| **Produces** | which artifact I deliver, and where |
+| **Done when** | the observable end of my part |
+| **Hands off to** | who picks it up next |
+| **Not mine** | what looks like mine but is not, and whose it is |
+
+"Not mine" is the field that ends the overlap: an agent knows when to stay
+silent and whom to name instead.
+
+The pilot chain, mapped onto OpenSpec:
+
+    architect ──decision──► bouwer ──change on a branch──► (Mark dispatches)
+                             │                                  │
+                             └──── readiness check ◄────────────┘
+                                                                ▼
+                                      reviewer ◄── branch/PR with green verify
+                                         │
+                       go ──► Mark merges · no-go ──► owner per finding
+
+Ratatoskr passes the `## Contract` section into the agent's system prompt, so
+the contract reaches the model and not only the reader. The
+`role-contracts` change in ratatoskr does this. Other roles get a contract
+once the pilot has carried one real change through the chain.
 
 ## Guardrails
 
