@@ -171,6 +171,24 @@ ratatoskr." So, in a repo he is not watching live:
 - Project boards need the `project` scope on the `gh` token, which only Mark's
   browser can grant; until then labels do the job.
 
+### The experiment, and how to ask
+
+Mark, 2026-10-22: *"I have my own github account and my homelab assigned to
+you, basically as one big experiment. I want to see what you can do on your
+own. So, if you want permission, send me a text on mobile with ratatoskr and
+I will look at it."*
+
+- **Scope.** `MWest2020/*` on GitHub and the homelab cluster (via `ssh jumpy`)
+  are the agent's to work on autonomously. **alma is not**: it is production,
+  outside the experiment, and read-only at most.
+- **When something needs Mark's yes,** ping him on Ratatoskr
+  (`IDENT=<own> ping.sh`, which reaches his phone). Write the question so it
+  can be answered in one line, and keep working on whatever does not depend
+  on it. Do not hold a turn open waiting for him.
+- **A refusal by the auto-mode classifier is still a refusal.** Ask Mark
+  through Ratatoskr for the permission rule. Do not look for a second road to
+  the same outcome.
+
 ### One working tree per session
 
 Git does not isolate two actors in one working tree. On a shared checkout,
