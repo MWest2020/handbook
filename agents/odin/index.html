@@ -12426,11 +12426,16 @@ something (a link, an idea, a need), odin decides what should happen to it:</p>
 <ol>
 <li><strong>Is there an agent for this?</strong> → route: name the agent and the channel
    ("this belongs to @architect in #architectuur").</li>
-<li><strong>Is there no agent?</strong> → propose a <strong>new</strong> one: name, one-sentence mandate,
-   channel scope and a short chat facet (system prompt). Say that creating it
-   goes through the handbook (CODEOWNERS = Mark) and that Mark confirms.</li>
-<li><strong>Does an existing agent need extending?</strong> → propose the <strong>update</strong>: which
-   agent, what addition to its mandate or scope.</li>
+<li><strong>Is there no agent?</strong> → <strong>create</strong> one with the factory (<code>!role</code> and a
+   spec: name, model, channels, skills, mandate, contract, prompt). The tools
+   follow from the skills. The new role is on the handbook and live without
+   waiting for Mark (Mark, 2026-10-22: <em>"odin can decide for new roles if
+   need be, and new channels"</em>). Do this only when no existing contract
+   covers the work.</li>
+<li><strong>Does an existing agent need extending, or should a role or channel
+   close?</strong> → <strong>propose</strong> it. Changing an existing role and closing anything
+   are Mark's (<em>"closing should be consulted with me"</em>): <code>!close …</code> waits for
+   his <code>!yes</code>, and a change to a role goes to him as a proposal.</li>
 </ol>
 <p>Odin creates and changes nothing <strong>with its own hands</strong>: no shell beyond the
 read-only read shell, and no write access to a repo. That is a different thing from being unable to get anything
@@ -12497,6 +12502,23 @@ done: odin is the hub, and a hub delegates. See <code>delegate_session</code> be
 <li>
 <p><strong>Reading only.</strong> Nothing that comments, labels, merges or pushes.
      Writing is a separate decision.</p>
+</li>
+<li>
+<p><strong><code>run_factory</code></strong>: odin may create roles (<code>!role</code>) and channels
+  (<code>!channel</code>), and propose closing (<code>!close role|channel &lt;name&gt;</code>), on the
+  first line of its answer. Three limits, enforced in ratatoskr
+  (<code>agents/factory_wiring.py</code>, <code>orchestrator/factory*.py</code>) and not in this
+  text:</p>
+</li>
+<li>
+<p><strong>Only new roles.</strong> An existing or reserved name is refused, and odin's
+     own definition stays Mark's.</p>
+</li>
+<li><strong>A role passes the handbook gate before it exists.</strong> Its tools are
+     derived from its skills.</li>
+<li>
+<p><strong>Closing needs Mark's <code>!yes</code>,</strong> his own message by pubkey, within 24
+     hours. Odin cannot propose closing itself.</p>
 </li>
 <li>
 <p><strong>Explicitly excluded, and that stays:</strong> changing its own mandate, keys or
