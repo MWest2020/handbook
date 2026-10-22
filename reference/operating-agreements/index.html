@@ -12988,9 +12988,13 @@ it happened, with the measurement, instead of asking whether it may.</p>
 <ul>
 <li><code>docs/agents/</code> and <code>.claude/agents/</code> in the handbook (CODEOWNERS): the
   owner merges who the agents are.</li>
-<li>A command the auto-mode classifier blocks for the agent (for example a
-  self-approving <code>gh pr merge</code>, or ratatoskr's <code>orchestrator/add-member.py</code>):
-  hand it over as a ready-to-run command, not as a question.</li>
+<li>A command the auto-mode classifier blocks for the agent, such as
+  ratatoskr's <code>orchestrator/add-member.py</code>: hand it over as a ready-to-run
+  command, not as a question. Merging your own PR on a <code>MWest2020/*</code> repository
+  is <strong>no longer</strong> one of these. Since 2026-10-22 the owner's settings allow
+  <code>gh pr merge &lt;n&gt; --repo MWest2020/&lt;repo&gt;</code> ("allow gh pr merge for
+  MWest2020"), so merge it yourself once every check passes, and say that you
+  did.</li>
 <li>A genuine fork — two defensible directions with different outcomes: one
   short question with a recommendation.</li>
 <li><strong>wordsworth goes through pull requests.</strong> Its docs-gates (a code change
