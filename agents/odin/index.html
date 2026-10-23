@@ -12504,6 +12504,16 @@ done: odin is the hub, and a hub delegates. See <code>delegate_session</code> be
      Writing is a separate decision.</p>
 </li>
 <li>
+<p><strong><code>consult_agents</code></strong>: odin may bring in other agents itself:
+  <code>!consult &lt;agent&gt;[,&lt;agent&gt;] &lt;question&gt;</code> on the first line of its answer.
+  The listener (<code>agents/consult.py</code> in ratatoskr) gives each one turn in the
+  same channel, with Mark's message and odin's question, and they answer
+  under their own name. At most two; a consulted agent cannot consult further.
+  This replaces asking Mark to post a question in another channel: a
+  <code>!route</code>d message is never answered, because the listener skips agent
+  messages.</p>
+</li>
+<li>
 <p><strong><code>run_factory</code></strong>: odin may create roles (<code>!role</code>) and channels
   (<code>!channel</code>), and propose closing (<code>!close role|channel &lt;name&gt;</code>), on the
   first line of its answer. Three limits, enforced in ratatoskr
