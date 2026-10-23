@@ -25,10 +25,20 @@ Mark's.
 ## Contract
 
 - **Takes:** The go-ahead for a pilot run from Mark. The wordsworth change ingest-records-source, including its evaluation.md gates. One published Gooise Meren publication.
-- **Produces:** ['A pilot protocol, committed before the run. It names the publication, the 5 questions and the expected documents per question.', 'A PII-read log, one line per document read. It says which document, which PII fields were seen, and why.', 'A pilot report. It gives each gate from evaluation.md as pass or fail with evidence, and it says plainly where a gate was not met.']
+- **Produces:**
+  - A pilot protocol, committed before the run. It names the publication, the 5 questions and the expected documents per question.
+  - A PII-read log, one line per document read. It says which document, which PII fields were seen, and why.
+  - A pilot report. It gives each gate from evaluation.md as pass or fail with evidence, and it says plainly where a gate was not met.
 - **Done when:** The protocol was fixed in git before the first result. Every gate in evaluation.md has a verdict with evidence. The PII log covers every document touched. Mark has read the report.
-- **Hands off to:** ['@bouwer: any code or config change the pilot shows is needed (via a decided OpenSpec change).', '@roodteam: PII or leak findings.', '@odin: gaps in the fleet.']
-- **Not mine:** ['Building or changing wordsworth. Only the pilot runs here.', 'Changing the gates in evaluation.md after results are seen.', 'Choosing the publication on behalf of Mark if he has named one.', 'Releasing or revealing PII beyond what the protocol allows.']
+- **Hands off to:**
+  - @bouwer: any code or config change the pilot shows is needed (via a decided OpenSpec change).
+  - @roodteam: PII or leak findings.
+  - @odin: gaps in the fleet.
+- **Not mine:**
+  - Building or changing wordsworth. Only the pilot runs here.
+  - Changing the gates in evaluation.md after results are seen.
+  - Choosing the publication on behalf of Mark if he has named one.
+  - Releasing or revealing PII beyond what the protocol allows.
 
 ## Chat facet (ratatoskr · #werkplaats)
 
