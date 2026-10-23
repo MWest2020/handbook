@@ -14,7 +14,7 @@
         <link rel="prev" href="../cli/">
       
       
-        <link rel="next" href="../../../workstation-security/">
+        <link rel="next" href="../ingest/">
       
       
         
@@ -3704,6 +3704,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/pilotleider/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pilotleider
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--actief"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/reviewer/" class="md-nav__link">
         
   
@@ -3817,10 +3852,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
         
           
-          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
             
   
   
@@ -3838,8 +3873,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11338,10 +11373,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-published-dossier-pilot-ingest-records-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The published-dossier pilot (ingest-records-source)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    POST /ingest
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
     </li>
   
 
@@ -12489,6 +12570,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-published-dossier-pilot-ingest-records-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The published-dossier pilot (ingest-records-source)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -12726,6 +12818,59 @@ rank over BM25 and whole-document kNN is the default (Recall@8 by third
 0.731 / 0.355 / 0.400). Passage kNN narrowed the length gap (0.538 / 0.387 /
 0.514) but flipped the bias -- its top 8 for the windpark question were all
 long documents -- so it is not used for search.</p>
+<h2 id="the-published-dossier-pilot-ingest-records-source">The published-dossier pilot (ingest-records-source)</h2>
+<p>The MVP walking skeleton: <strong>one published municipal publication, ingested as
+one dossier</strong>, run end to end (ingest → anonymize → rank → a person checks
+both). Not a measurement of general quality — a scoped search in a dossier of
+10 to 30 documents returns the one relevant document whatever the ranker
+does, so the ranking step cannot fail on its own. The pilot proves the
+pipeline runs on a real publication, nothing more.</p>
+<p>Published documents only — see the non-goal below.</p>
+<table>
+<thead>
+<tr>
+<th>part</th>
+<th>what</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>corpus</td>
+<td>one municipal publication (e.g. Gooise Meren) as one dossier, 10 to 30 real documents, fetched by hand; the report records who checked <code>robots.txt</code> and the terms, and when</td>
+</tr>
+<tr>
+<td>ranking gate</td>
+<td>at least 5 questions, each with its expected document, written <strong>before</strong> any result is seen; pass when the expected document is in the top 8 for at least 4 of 5 — gates this pilot run only</td>
+</tr>
+<tr>
+<td>PII gate</td>
+<td>a person reads the full <code>/anonymized</code> text of every pilot document against the source; any residual direct identifier of a private person (BSN, IBAN, e-mail, phone, name, home address) fails the pilot, unless that document is excluded with the reason written down</td>
+</tr>
+<tr>
+<td>also reported, not gates</td>
+<td>residual count, placeholder count, the ORGANIZATION over-redaction rate; officials' names without a public role, as a separate finding</td>
+</tr>
+<tr>
+<td>a layer that did not run</td>
+<td>counts as failed, e.g. a NER backend that is down</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gold set.</strong> Offsets and hash only (<code>sha256, start, end, type</code>), no PII text
+in git — this works only because a published source can be rebuilt from the
+public PDF. Do not generalise the rule: unpublished documents need their own
+data-handling decision.</p>
+<p><strong>No recall claim from published material.</strong> Published Woo material has
+already been redacted by the municipality before wordsworth ever sees it. A
+pilot on it can show residual identifiers and over-redaction, but it cannot
+show what wordsworth would have missed had it been the one redacting from
+the unredacted original — there is no unredacted original in this pilot to
+miss anything against. <strong>The pilot report does not use the word "recall" for
+PII</strong>, and anonymisation of <em>unpublished</em> documents remains unproven by this
+pilot.</p>
+<p>Provenance for the pilot corpus is recorded at ingest via <code>source_url</code> and
+<code>fetched_at</code> (see <code>docs/reference/ingest.md</code>), not read back out of an eval
+script's <code>herkomst.jsonl</code> after the fact.</p>
 <p><code>scripts/eval/woo_passage_eval.py herkomst.jsonl CACHE.json</code> measures candidate
 2 (passage embeddings, <code>wordsworth.eval.passages</code>: 200-word windows every 150
 words, a document scored by its best passage). Passages exist only for the Woo
