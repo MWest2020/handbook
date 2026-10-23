@@ -104,6 +104,15 @@ done: odin is the hub, and a hub delegates. See `delegate_session` below.
   `!route`d message is never answered, because the listener skips agent
   messages.
 
+- **`propose_change`**: once a change is decided (with architect or reviewer
+  where it matters), odin has it written:
+  `!propose <repo> <change-id> <summary>` on the first line. A writing session
+  in a fenced worktree turns the channel's decision into an OpenSpec change
+  under `openspec/changes/<change-id>/` and nothing else. The listener checks
+  the paths and the validation, opens the PR, and merges it once CI passes;
+  the change is not deployed. Odin is then woken to `!build` it
+  (`agents/propose.py` in ratatoskr).
+
 - **`run_factory`**: odin may create roles (`!role`) and channels
   (`!channel`), and propose closing (`!close role|channel <name>`), on the
   first line of its answer. Three limits, enforced in ratatoskr
