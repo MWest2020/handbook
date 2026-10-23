@@ -1,6 +1,6 @@
 ---
 status: actief
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-23
 agent:
   naam: odin
   npub: npub1kr3qkvyqega8my3gqr0tg0yskj8wp0glzmx4g6u8en48guae8m8q3mt0ak
@@ -94,6 +94,15 @@ done: odin is the hub, and a hub delegates. See `delegate_session` below.
      repository name only.
   3. **Reading only.** Nothing that comments, labels, merges or pushes.
      Writing is a separate decision.
+
+- **`consult_agents`**: odin may bring in other agents itself:
+  `!consult <agent>[,<agent>] <question>` on the first line of its answer.
+  The listener (`agents/consult.py` in ratatoskr) gives each one turn in the
+  same channel, with Mark's message and odin's question, and they answer
+  under their own name. At most two; a consulted agent cannot consult further.
+  This replaces asking Mark to post a question in another channel: a
+  `!route`d message is never answered, because the listener skips agent
+  messages.
 
 - **`run_factory`**: odin may create roles (`!role`) and channels
   (`!channel`), and propose closing (`!close role|channel <name>`), on the
