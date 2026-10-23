@@ -12514,6 +12514,16 @@ done: odin is the hub, and a hub delegates. See <code>delegate_session</code> be
   messages.</p>
 </li>
 <li>
+<p><strong><code>propose_change</code></strong>: once a change is decided (with architect or reviewer
+  where it matters), odin has it written:
+  <code>!propose &lt;repo&gt; &lt;change-id&gt; &lt;summary&gt;</code> on the first line. A writing session
+  in a fenced worktree turns the channel's decision into an OpenSpec change
+  under <code>openspec/changes/&lt;change-id&gt;/</code> and nothing else. The listener checks
+  the paths and the validation, opens the PR, and merges it once CI passes;
+  the change is not deployed. Odin is then woken to <code>!build</code> it
+  (<code>agents/propose.py</code> in ratatoskr).</p>
+</li>
+<li>
 <p><strong><code>run_factory</code></strong>: odin may create roles (<code>!role</code>) and channels
   (<code>!channel</code>), and propose closing (<code>!close role|channel &lt;name&gt;</code>), on the
   first line of its answer. Three limits, enforced in ratatoskr
