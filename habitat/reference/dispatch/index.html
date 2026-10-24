@@ -6141,6 +6141,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#test-database-worker-test-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test database (worker-test-database)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadline-per-role-builder-deadline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deadline per role (builder-deadline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#branch-en-run-report-conventie" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9976,6 +9998,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../skill-forge/explanation/2026-10-24-curation-read-state-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation decision 2026-10-24: read-state v2
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12594,6 +12651,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#test-database-worker-test-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test database (worker-test-database)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadline-per-role-builder-deadline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deadline per role (builder-deadline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#branch-en-run-report-conventie" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12861,6 +12940,30 @@ sessie-token.</p>
   <code>backoffLimit: 0</code>, <code>restartPolicy: Never</code>, <code>ttlSecondsAfterFinished: 3600</code>,
   capabilities <code>drop: ["ALL"]</code>, <code>allowPrivilegeEscalation: false</code>.</li>
 </ul>
+<h2 id="test-database-worker-test-database">Test database (worker-test-database)</h2>
+<p>Every worker Job has a native sidecar <code>testdb</code>: <code>postgres:16-alpine</code> (pinned
+by digest, the image wordsworth's CI uses) on an <code>emptyDir</code>, listening on
+<code>127.0.0.1</code> only. Its <code>pg_isready</code> startup probe holds the worker until the
+database answers, and it stops with the worker. It runs as uid 70 with every
+capability dropped.</p>
+<p>The worker gets the URL twice, with the same value:</p>
+<ul>
+<li><code>HABITAT_TEST_DATABASE_URL</code>, the generic name;</li>
+<li><code>WORDSWORTH_TEST_DATABASE_URL</code>, the name wordsworth's <code>tests/conftest.py</code>
+  reads, so its DB tests run instead of skipping.</li>
+</ul>
+<p>Why: on 2026-10-24 the wordsworth change <code>pilot-ingest-manifest</code> went through
+the chain three times with every DB test skipped in the builder. One build
+failed only in CI, on a DB assertion no role could have run. The next was
+failed by its reviewer: "written but never run". Live proof on the cluster:
+a probe Job from this template queried <code>PostgreSQL 16.15</code> through the
+sidecar and completed.</p>
+<h2 id="deadline-per-role-builder-deadline">Deadline per role (builder-deadline)</h2>
+<p>Without an explicit <code>ACTIVE_DEADLINE_SECONDS</code>, a builder Job gets 3600 s and
+the other roles 1800 s; dispatch waits the deadline plus 600 s for an outcome.
+Since the worker has a test database the builder runs a repository's DB
+tests, and on 2026-10-24 a wordsworth builder hit 1800 s
+(<code>DeadlineExceeded</code>, wordsworth#221).</p>
 <h2 id="branch-en-run-report-conventie">Branch- en run-report-conventie</h2>
 <ul>
 <li>De worker pusht een <strong>run-unieke</strong> branch
