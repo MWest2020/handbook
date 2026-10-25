@@ -27,9 +27,6 @@ jobs:
       - name: Import list in sync with the inventory
         run: uv run python scripts/gen_imports.py --check
 
-      - name: Agent seeds in sync with the canonical source (drift gate)
-        run: uv run python scripts/gen_agent_seeds.py --check
-
       # Before the gate it tests, deliberately. If the gate's own logic is
       # broken, that is what you want to read first -- a green contract check
       # from a broken checker says nothing. This selftest ran in no CI step

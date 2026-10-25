@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-25 — feat: habitat reads the roles from the handbook
+
+Mark: *"the cleanest is all looks at the handbook ... consumed by habitat for
+whatever project"*. Habitat fetches `docs/agents/seeds/<role>.md` at a pinned
+handbook commit (`HABITAT_HANDBOOK_REF`, habitat #44) and fails closed without
+it, so the per-spoke copies are gone: `prep/seeds/` and
+`scripts/gen_agent_seeds.py` are removed. Added: an `architect` seed. The index
+says what Bash may do in the cage per role. OpenSpec change
+`roles-read-from-handbook`.
+
 ## 2026-09-07 — feat: de agent-registry is één bron per rol, met een gate erop
 
 `docs/agents/` is de canonieke definitie per agent-rol: één bestand per rol, met
