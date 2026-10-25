@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/how-to/reversible-backfill/">
       
       
-        <link rel="prev" href="../index-mapping/">
+        <link rel="prev" href="../pdf-redaction/">
       
       
         <link rel="next" href="../roles/">
@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10807,6 +10842,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../detection-lists/" class="md-nav__link">
         
   
@@ -10930,6 +11000,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -11069,6 +11174,28 @@
     <span class="md-ellipsis">
       
         Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#also-backfills-the-redacted-pdf-box-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Also backfills the redacted-PDF box map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-one-pdf-extraction-change-pdf-redaction-locate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the one-PDF-extraction change (pdf-redaction-locate)
       
     </span>
   </a>
@@ -12540,6 +12667,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#also-backfills-the-redacted-pdf-box-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Also backfills the redacted-PDF box map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-one-pdf-extraction-change-pdf-redaction-locate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the one-PDF-extraction change (pdf-redaction-locate)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#after-a-normalisation-profile-change" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12621,6 +12770,26 @@ failed}</code>.</p>
 <li>The pre-existing corpus's original bytes must still be in the object store
   (they are, unless orphan-cleaned); the backfill reads from there.</li>
 </ul>
+<h2 id="also-backfills-the-redacted-pdf-box-map">Also backfills the redacted-PDF box map</h2>
+<p>Since <code>pdf-redaction</code>, <code>reanonymize</code> computes the box map (page, rect, token —
+never a value) right after re-deriving the text, whenever a key provider and
+mapping store are passed through — which <code>wordsworth reprocess</code>/<code>POST
+/reprocess</code> now do automatically in reversible mode. Running this backfill
+over the 12 pilot documents and <code>gooise-meren-woo-2022</code> therefore also builds
+their box maps; a document the run could not locate a value for gets a
+<code>value-not-located</code> audit record instead of a box map, and is reported in
+<code>problems</code>, not hidden. See <a href="../pdf-redaction/">pdf-redaction</a>.</p>
+<h2 id="after-the-one-pdf-extraction-change-pdf-redaction-locate">After the one-PDF-extraction change (pdf-redaction-locate)</h2>
+<p><code>anonymize</code> and <code>reanonymize</code> now record <code>text_source</code> (<code>pdfium-v1</code> for a PDF
+run through <code>positioned_text</code>). <code>{"only_outdated": true}</code> picks up every
+document whose last de-identification record lacks <code>text_source</code> <code>pdfium-v1</code>
+— in addition to the existing lists-hash check — so a corpus last processed
+under the retired pypdf extraction is reprocessed without having to name it
+explicitly. <code>reanonymize</code> also reports, per run, the count of pseudonyms this
+document had registered before the run that its newly-derived text no longer
+carries ("orphaned" — the new extraction can split or join a value
+differently from the old one); counts only, by PII type, never a token or a
+value.</p>
 <h2 id="after-a-normalisation-profile-change">After a normalisation-profile change</h2>
 <p>Tokens are derived from <code>normalize(type, value)</code> (see <code>normalization.py</code>,
 <code>PROFILE_VERSION</code>). When the rule set changes, the version is bumped and every

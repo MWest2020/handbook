@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10933,6 +10968,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../detection-lists/" class="md-nav__link">
         
   
@@ -11056,6 +11126,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -12680,6 +12785,13 @@ valid signature.</p>
 <p><code>/console/login</code> stays reachable from behind the provider, and <code>/console/logout</code>
 clears the cookie and hands the identity back. That is the switch, in both
 directions.</p>
+<p><strong><code>/console/login</code> itself skips the form for someone already identified.</strong>
+That page is exempt from authentication, so it cannot rely on the middleware
+having decided anything — but it can run the same verification itself. A
+request carrying a verified assertion is sent straight on to <code>/console</code>
+instead of being shown a key form it has no reason to fill in; a missing or
+invalid assertion shows the form as before. <code>?key=1</code> is the way to ask for the
+form anyway — the way back to a key, kept reachable on this one page too.</p>
 <p>That form is the one path that is reachable without a key <strong>and</strong> answers
 differently for a right and a wrong one. It is rate-limited harder than anything
 else (five attempts, then one per ten seconds): every request there is a guess.

@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10805,6 +10840,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/detection-lists/" class="md-nav__link">
         
   
@@ -10928,6 +10998,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -12860,6 +12965,11 @@ both). Not a measurement of general quality — a scoped search in a dossier of
 10 to 30 documents returns the one relevant document whatever the ranker
 does, so the ranking step cannot fail on its own. The pilot proves the
 pipeline runs on a real publication, nothing more.</p>
+<p>The report for a pilot run is a copy of
+<a href="../../explanation/pilot-report-template/"><code>docs/explanation/pilot-report-template.md</code></a>
+with its fields filled in. The ranking-gate and PII-gate slots in that
+template are Mark's alone — nobody else fills them, and a slot left empty is
+reported as "not yet run", never as passed.</p>
 <p>Published documents only — see the non-goal below.</p>
 <table>
 <thead>
@@ -12906,6 +13016,23 @@ pilot.</p>
 <p>Provenance for the pilot corpus is recorded at ingest via <code>source_url</code> and
 <code>fetched_at</code> (see <code>docs/reference/ingest.md</code>), not read back out of an eval
 script's <code>herkomst.jsonl</code> after the fact.</p>
+<p><strong>Gate order: check, then manifest, then ingest.</strong> <code>wordsworth-ingest
+--manifest</code> (<code>docs/reference/ingest.md</code>) refuses a manifest unless
+<code>check.json</code> — a JSON object next to <code>manifest.jsonl</code>, with <code>checked_by</code>,
+<code>checked_at</code>, <code>robots_txt_url</code>, <code>robots_txt</code>, <code>paths_used</code>,
+<code>paths_disallowed_used</code>, <code>terms</code>, <code>anubis</code>, <code>user_agent</code>, <code>delay_seconds</code> and
+<code>decision</code> — passes: every field present, <code>paths_disallowed_used</code> empty, and
+<code>decision</code> <code>"proceed"</code>. The check is filled in by the person who ran the
+fetch, before the manifest is ever handed to ingest — "a template that can be
+filled in afterwards proves nothing." Only once that gate passes does the
+manifest's per-file sha256/unlisted-file checks run, and only then is
+anything ingested. A <code>stop</code> decision stops the pilot there; falling back to
+another source (e.g. Gelderland) is a separate decision, not something ingest
+does on its own.</p>
+<p>Within the run itself, the layer rule holds: a document that does not reach
+<code>indexed</code> because a layer did not run — OpenAnonymiser down included — is
+reported as failed, never as a success with a note, and the run exits
+non-zero.</p>
 <p><code>scripts/eval/woo_passage_eval.py herkomst.jsonl CACHE.json</code> measures candidate
 2 (passage embeddings, <code>wordsworth.eval.passages</code>: 200-word windows every 150
 words, a document scored by its best passage). Passages exist only for the Woo

@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10805,6 +10840,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/detection-lists/" class="md-nav__link">
         
   
@@ -10928,6 +10998,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -11336,6 +11441,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-ingest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-ingest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11373,6 +11489,17 @@
     <span class="md-ellipsis">
       
         wordsworth-dedupe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-delete
       
     </span>
   </a>
@@ -12607,6 +12734,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-ingest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-ingest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12644,6 +12782,17 @@
     <span class="md-ellipsis">
       
         wordsworth-dedupe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-delete
       
     </span>
   </a>
@@ -12814,6 +12963,17 @@ kept <code>wordsworth-ingest</code> (the batch-ingest Job) from starting between
   if any file failed.</li>
 <li>The pipeline is <strong>PDF-only</strong>; non-PDF files come back as <code>error</code>.</li>
 </ul>
+<h2 id="wordsworth-ingest"><code>wordsworth-ingest</code></h2>
+<p>The batch-ingest Job (<code>src/wordsworth/ingest_corpus.py</code>), not the HTTP API.</p>
+<pre><code class="language-bash">wordsworth-ingest --corpus-dir ./corpus --dossier &quot;zaak-a&quot;
+wordsworth-ingest --corpus-dir ./corpus --dossier &quot;zaak-a&quot; --manifest ./corpus/manifest.jsonl
+</code></pre>
+<p><code>--manifest</code> is the stricter, provenance-proving path (see
+<code>docs/reference/ingest.md</code>): an unlisted or sha256-mismatched file aborts the
+whole run before anything is ingested, each document's provenance is read
+back from the audit record after it is ingested, <code>check.json</code> next to the
+manifest must pass, and <code>WORDSWORTH_BACKEND_ENV=homelab</code> is required. Without
+<code>--manifest</code>, behaviour is unchanged.</p>
 <h2 id="wordsworth-dossier-uit-herkomst-and-wordsworth-dossier-hernoem"><code>wordsworth-dossier-uit-herkomst</code> and <code>wordsworth-dossier-hernoem</code></h2>
 <p>Correcting a classification, without guessing.</p>
 <pre><code class="language-bash">wordsworth-dossier-uit-herkomst herkomst.jsonl --weg-uit &quot;corpus-2026-09&quot; --dry-run
@@ -12892,7 +13052,27 @@ finds nothing. On one that still holds copies, <code>wordsworth-init</code> fail
 tries to create that index: run this command first.</p>
 <p>A retired copy is not deleted: its audit trail requires the row. It still
 answers <code>GET /documents/{id}/state</code> with <code>superseded</code> and <code>superseded_by</code>, and
-reveal on it is refused with the survivor's id.</p>
+reveal on it is refused with the survivor's id. Actually deleting a document —
+removing it, not retiring it — is <code>wordsworth-delete</code>, below.</p>
+<h2 id="wordsworth-delete"><code>wordsworth-delete</code></h2>
+<p>Removes a document's content: the stored object, its text, its pseudonyms,
+its mappings, its search-index entry and its grants. The <code>documents</code> row and
+its audit trail stay — the trail is append-only, the same reason a superseded
+copy keeps its row. There is <strong>no undo</strong>.</p>
+<pre><code class="language-bash">wordsworth-delete &lt;document-id&gt; [&lt;document-id&gt; ...] --actor &lt;who&gt; [--dry-run]
+</code></pre>
+<p><code>--actor</code> is required and is checked the same way the API checks a caller:
+only role <code>beheerder</code> (held via an active, unexpired grant naming it) or a
+label in <code>WORDSWORTH_GRANT_ISSUER_LABELS</code> may delete. Any other actor is
+refused and nothing is removed.</p>
+<p><code>--dry-run</code> reports the counts it would remove, using the exact same code
+path, and stops before the first removal — no store, index or database
+change, and no <code>deleted</code> record. Each named document commits on its own, so a
+failure partway through a multi-document run leaves only the untouched ones
+for a rerun to finish; removing what a previous run already removed is a
+no-op.</p>
+<p>See <a href="../../how-to/deleting-documents/">deleting documents</a> for what goes, what
+stays, and <code>DELETE /documents/{id}</code> over the API.</p>
 <h2 id="wordsworth-backfill-passages"><code>wordsworth-backfill-passages</code></h2>
 <p>Gives every indexed document a vector per passage (200-word windows every 150
 words, <code>wordsworth.passages</code>), so hybrid search can rank a document by its best

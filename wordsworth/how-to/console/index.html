@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10999,6 +11034,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../detection-lists/" class="md-nav__link">
         
   
@@ -11122,6 +11192,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -12750,6 +12855,12 @@ leak it into logs, history and referrers.</p>
 <p><code>/console/login</code> is exempt from authentication — you cannot bring a key to the
 page that asks for one — and stays subject to rate limiting, because that is the
 one route where guessing pays.</p>
+<p>Exempt from authentication, but not blind: it can still read the same verified
+assertion the middleware would use (see <a href="../access-identity/">access identity</a>).
+Someone the identity provider already knows is sent straight on to <code>/console</code>
+instead of seeing the key form; <code>?key=1</code> always shows the form anyway, so the
+key route stays reachable. With no identity provider configured, or no
+assertion on the request, the form shows as before.</p>
 <h2 id="what-the-pages-show">What the pages show</h2>
 <p><strong><code>/console</code></strong> lists documents by the name they arrived under, with their state
 and the PII types found, most recently touched first. A document ingested before

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/how-to/detection-lists/">
       
       
-        <link rel="prev" href="../dataset-pseudonymisation/">
+        <link rel="prev" href="../deleting-documents/">
       
       
         <link rel="next" href="../dossier-spoor/">
@@ -10309,6 +10309,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/pilot-report-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot report template
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10318,10 +10353,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_2_9" >
         
           
-          <label class="md-nav__link" for="__nav_18_2_8" id="__nav_18_2_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_18_2_9" id="__nav_18_2_9_label" tabindex="0">
             
   
   
@@ -10339,8 +10374,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_18_2_8">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_18_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_2_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10804,6 +10839,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../deleting-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: deleting a document
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -11028,6 +11098,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdf-redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: the redacted PDF
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -12635,6 +12740,12 @@ uur, op één core zonder GPU. Draai het als Job, niet als HTTP-verzoek, en niet
 in de pod die het verkeer bedient: een meting daar legde die pod om (OOM).</p>
 <p>Die run moest halverwege onderbroken worden. Zónder <code>only_outdated</code> had de
 vervolgrun de 200 afgeronde documenten overgedaan — dáárom bestaat de vlag.</p>
+<p><strong>De redacted PDF wordt stale.</strong> <code>reanonymize</code> herbouwt ook de box map
+(pdf-redaction); zolang dat niet is gebeurd, antwoordt
+<code>GET /documents/{id}/redacted.pdf</code> met 409 <code>stale</code> zodra de huidige lijsten
+afwijken van de lijsten waaronder die box map is gemaakt — ook als het
+document zelf nog niet opnieuw is verwerkt. Pas na deze run (of een losse
+<code>reanonymize</code> op dat document) levert het eindpunt weer een PDF.</p>
 <p>A reader who spots a false positive or a miss records it against the document:</p>
 <pre><code>curl -XPOST $API/documents/&lt;doc&gt;/feedback -H 'content-type: application/json' \
   -d '{&quot;kind&quot;:&quot;fp&quot;,&quot;type&quot;:&quot;PERSON&quot;,&quot;token&quot;:&quot;[PERSON:3fa9c2d1]&quot;}'
