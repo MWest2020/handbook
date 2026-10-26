@@ -3611,6 +3611,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#how-habitat-reads-a-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How habitat reads a role
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How habitat reads a role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bash-in-the-cage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bash in the cage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4016,6 +4044,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="seeds/architect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architect
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -12675,6 +12731,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#how-habitat-reads-a-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How habitat reads a role
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How habitat reads a role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bash-in-the-cage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bash in the cage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -12734,8 +12818,8 @@ tools specifically <em>not</em>) and <code>skills</code> in its front matter —
 valid and explicit choice. The gate <code>scripts/check_agent_tools.py</code> guards that
 the contract is present, that an execution <code>allow</code> matches the seed habitat
 runs, and that every <code>skills:</code> entry exists in the skill register
-(<code>inventory/skills-register.yml</code>, a mirror of skill-forge); the CI step that
-runs it is wired in by hand (CI config is a human gate).</p>
+(<code>inventory/skills-register.yml</code>, a mirror of skill-forge); CI runs it
+(<code>.github/workflows/handbook.yml</code>).</p>
 <h2 id="how-the-fleet-works-together-hub-and-spokes">How the fleet works together: hub and spokes</h2>
 <blockquote>
 <p>Mark, 2026-09-21: <em>"Ik wil eigenlijk enkel met Odin spreken, maar odin moet
@@ -12859,13 +12943,48 @@ chat.tools.allow  ==  Read, Grep, Glob  ∪  the tools of its skills
   odin routes to the spokes (route / new agent / extension).
   Was <code>coordinator</code>; renamed 2026-09-07 on Mark's decision.</li>
 <li><a href="bouwer/">bouwer</a> — build scoping (chat, #bouw) + habitat <code>builder</code> (execution)</li>
-<li>architect — architecture sparring (chat, #architectuur) + habitat plan (execution) <em>(to follow)</em></li>
+<li><a href="architect/">architect</a> — architecture sparring (chat, #architectuur) + habitat plan (execution)</li>
 <li>assistent — general chat agent (spoke channels), no execution <em>(to follow)</em></li>
 <li><a href="reviewer/">reviewer</a> / <a href="security/">security</a> — execution only (habitat)</li>
 <li><a href="roodteam/">roodteam</a> — security/red-team agent (chat, #red-team, #review), no execution</li>
-<li><strong>seeds/</strong> — canonical execution seeds; the per-spoke <code>.claude/agents/</code> are
-  derived from these (generator plus drift gate)</li>
+<li><strong>seeds/</strong> — canonical execution seeds, read by habitat directly (below)</li>
 </ul>
+<h2 id="how-habitat-reads-a-role">How habitat reads a role</h2>
+<p>Habitat fetches <code>docs/agents/seeds/&lt;role&gt;.md</code> from this repository at a pinned
+commit, <code>HABITAT_HANDBOOK_REF</code>, for every project it builds. A spoke needs no
+copy of its own. When the pinned commit has no seed for the role, the run
+stops; it never falls back silently. Changing a role is therefore: change the
+seed here, merge, move the pin. Until the pin is set, habitat still reads the
+spoke's own <code>.claude/agents/&lt;role&gt;.md</code> and logs a warning (migration only).</p>
+<h3 id="bash-in-the-cage">Bash in the cage</h3>
+<p>A seed's <code>tools:</code> line names tools; what a tool may do is enforced by
+habitat's per-role settings (<code>worker/settings/&lt;role&gt;.json</code>, <code>dontAsk</code> mode,
+plus a guard hook that refuses push, secrets and <code>.git/</code>). In practice:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Bash may run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>architect</td>
+<td><code>git diff</code>, <code>git log</code>, <code>git status</code>, <code>git show</code></td>
+</tr>
+<tr>
+<td>reviewer, security</td>
+<td>the same, plus <code>openspec validate</code></td>
+</tr>
+<tr>
+<td>builder</td>
+<td>git for staging and committing (never push), the project's build and test commands (<code>npm</code>, <code>node --test</code>, <code>uv</code>, <code>pytest</code>, <code>go</code>, <code>make</code>, <code>verify.sh</code>), <code>openspec validate</code></td>
+</tr>
+</tbody>
+</table>
+<p>Everything else is refused, including <code>cat</code>, <code>curl</code>, <code>env</code> and web access.
+The reviewer and architect use Bash to read the diff and the history, not to
+change anything.</p>
 
 
 
