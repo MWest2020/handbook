@@ -11504,6 +11504,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="wordsworth-delete">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --dossier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -12797,6 +12814,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="wordsworth-delete">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --dossier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13071,8 +13105,17 @@ change, and no <code>deleted</code> record. Each named document commits on its o
 failure partway through a multi-document run leaves only the untouched ones
 for a rerun to finish; removing what a previous run already removed is a
 no-op.</p>
+<h3 id="-dossier"><code>--dossier</code></h3>
+<pre><code class="language-bash">wordsworth-delete --dossier &lt;dossier-id&gt; --actor &lt;who&gt; [--dry-run]
+</code></pre>
+<p>Deletes a dossier instead of named documents — mutually exclusive with the
+positional document ids. Removes the dossier's memberships and the dossier
+row; a member document is deleted only if it belongs to no other dossier,
+otherwise only its membership of this one goes. <code>--actor</code> and <code>--dry-run</code> are
+checked and behave the same way as above; the dry run reports which documents
+would be deleted and which would only be released.</p>
 <p>See <a href="../../how-to/deleting-documents/">deleting documents</a> for what goes, what
-stays, and <code>DELETE /documents/{id}</code> over the API.</p>
+stays, and <code>DELETE /documents/{id}</code> / <code>DELETE /dossiers/{id}</code> over the API.</p>
 <h2 id="wordsworth-backfill-passages"><code>wordsworth-backfill-passages</code></h2>
 <p>Gives every indexed document a vector per passage (200-word windows every 150
 words, <code>wordsworth.passages</code>), so hybrid search can rank a document by its best

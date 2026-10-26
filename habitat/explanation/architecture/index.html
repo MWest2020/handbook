@@ -12724,8 +12724,10 @@ het cluster; de agents draaien als K8s Jobs op de nodes, binnen de kooi.</p>
   in <code>agents</code>, logs streamen, branches inspecteren, Mark aanroepen. Schrijft zelf
   nooit productiecode. (change <code>add-orchestrator</code>, af)</li>
 <li><strong>Workers</strong> — K8s Jobs, één image (<code>claude -p</code> + <code>uv</code> + <code>git</code>). Rollen
-  (builder/reviewer/security) zijn <code>.claude/agents/</code>-files in de <strong>doelrepo</strong>, niet
-  in Habitat. (change <code>add-worker-image</code>, af)</li>
+  (builder/reviewer/security) are defined once in the <strong>handbook</strong>
+  (<code>docs/agents/seeds/</code>) and fetched per run at a pinned commit
+  (<code>HABITAT_HANDBOOK_REF</code>); a target repo's <code>.claude/agents/</code> is only the
+  migration fallback. (changes <code>add-worker-image</code>, <code>roles-from-handbook</code>)</li>
 <li><strong>Kooi</strong> — namespace <code>agents</code>: default-deny egress + Cilium <code>toFQDNs</code>-allowlist,
   minimale RBAC, SOPS+age-secrets. (change <code>add-cage</code>, <strong>live toegepast + getest</strong>)</li>
 </ul>

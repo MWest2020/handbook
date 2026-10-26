@@ -12778,7 +12778,10 @@ mapping store are passed through — which <code>wordsworth reprocess</code>/<co
 over the 12 pilot documents and <code>gooise-meren-woo-2022</code> therefore also builds
 their box maps; a document the run could not locate a value for gets a
 <code>value-not-located</code> audit record instead of a box map, and is reported in
-<code>problems</code>, not hidden. See <a href="../pdf-redaction/">pdf-redaction</a>.</p>
+<code>problems</code>, not hidden — naming the document, the PII type and the counts,
+read <code>located of in-text</code> (e.g. <code>0 of 1 located</code> means the value occurs once
+in the text and none of its occurrences could be located), never the value.
+See <a href="../pdf-redaction/">pdf-redaction</a>.</p>
 <h2 id="after-the-one-pdf-extraction-change-pdf-redaction-locate">After the one-PDF-extraction change (pdf-redaction-locate)</h2>
 <p><code>anonymize</code> and <code>reanonymize</code> now record <code>text_source</code> (<code>pdfium-v1</code> for a PDF
 run through <code>positioned_text</code>). <code>{"only_outdated": true}</code> picks up every

@@ -12772,8 +12772,10 @@ dóelrepo worden NIET geladen. De agent draait zonder <code>GIT_PAT</code> in de
 (<code>env -u GIT_PAT</code>); clonen en pushen doet de entrypoint, zodat
 repo-gecontroleerde code (Makefile, npm-scripts) niet geauthenticeerd kan
 pushen. De output is verplicht JSON volgens <code>worker/schemas/&lt;rol&gt;.json</code>;
-roldefinities leven als <code>.claude/agents/&lt;rol&gt;.md</code> in de dóelrepo, skills als
-<code>.claude/skills/</code> (sjablonen: <code>templates/agents/</code>, <code>templates/skills/</code>).</p>
+role definitions come from the handbook (<code>docs/agents/seeds/&lt;role&gt;.md</code> at the
+pinned <code>HABITAT_HANDBOOK_REF</code>, see <a href="../dispatch/#roles-come-from-the-handbook-roles-from-handbook">dispatch</a>);
+the target repo's <code>.claude/agents/&lt;rol&gt;.md</code> is only a migration fallback when no
+ref is set. Skills: <code>.claude/skills/</code> (sjablonen: <code>templates/agents/</code>, <code>templates/skills/</code>).</p>
 <h2 id="overzicht">Overzicht</h2>
 <table>
 <thead>
@@ -12956,8 +12958,8 @@ was.</p>
 <p>De image draagt de skill-bodies uit skill-forge, gepind op een commit
 (<code>ARG SKILLS_REF</code> in de Containerfile) — nooit een branch, zodat een skill-update
 een zichtbare pin-bump is en draaiende runs niet verschuiven.</p>
-<p>Bij een run leest de entrypoint het rolbestand van de doelrepo
-(<code>.claude/agents/&lt;rol&gt;.md</code>) en kopieert <strong>alleen</strong> de skills uit zijn
+<p>Bij een run leest de entrypoint het rolbestand (the handbook seed at
+<code>HABITAT_HANDBOOK_REF</code>, or the repo's <code>.claude/agents/&lt;rol&gt;.md</code> as a fallback) en kopieert <strong>alleen</strong> de skills uit zijn
 <code>skills:</code>-regel naar <code>~/.claude/skills/</code>. Alle skills aanbieden zou ≈ 4.000 tokens
 per run kosten aan beschrijvingen (44 in het register, gemiddeld 91 per skill),
 terwijl een rol er nul of één noemt.</p>
