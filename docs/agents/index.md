@@ -30,8 +30,8 @@ tools specifically *not*) and `skills` in its front matter — empty (`[]`) is a
 valid and explicit choice. The gate `scripts/check_agent_tools.py` guards that
 the contract is present, that an execution `allow` matches the seed habitat
 runs, and that every `skills:` entry exists in the skill register
-(`inventory/skills-register.yml`, a mirror of skill-forge); the CI step that
-runs it is wired in by hand (CI config is a human gate).
+(`inventory/skills-register.yml`, a mirror of skill-forge); CI runs it
+(`.github/workflows/handbook.yml`).
 
 ## How the fleet works together: hub and spokes
 
@@ -140,9 +140,33 @@ A chat agent's tools are not chosen per role. They follow from its skills:
   odin routes to the spokes (route / new agent / extension).
   Was `coordinator`; renamed 2026-09-07 on Mark's decision.
 - [bouwer](bouwer.md) — build scoping (chat, #bouw) + habitat `builder` (execution)
-- architect — architecture sparring (chat, #architectuur) + habitat plan (execution) *(to follow)*
+- [architect](architect.md) — architecture sparring (chat, #architectuur) + habitat plan (execution)
 - assistent — general chat agent (spoke channels), no execution *(to follow)*
 - [reviewer](reviewer.md) / [security](security.md) — execution only (habitat)
 - [roodteam](roodteam.md) — security/red-team agent (chat, #red-team, #review), no execution
-- **seeds/** — canonical execution seeds; the per-spoke `.claude/agents/` are
-  derived from these (generator plus drift gate)
+- **seeds/** — canonical execution seeds, read by habitat directly (below)
+
+## How habitat reads a role
+
+Habitat fetches `docs/agents/seeds/<role>.md` from this repository at a pinned
+commit, `HABITAT_HANDBOOK_REF`, for every project it builds. A spoke needs no
+copy of its own. When the pinned commit has no seed for the role, the run
+stops; it never falls back silently. Changing a role is therefore: change the
+seed here, merge, move the pin. Until the pin is set, habitat still reads the
+spoke's own `.claude/agents/<role>.md` and logs a warning (migration only).
+
+### Bash in the cage
+
+A seed's `tools:` line names tools; what a tool may do is enforced by
+habitat's per-role settings (`worker/settings/<role>.json`, `dontAsk` mode,
+plus a guard hook that refuses push, secrets and `.git/`). In practice:
+
+| Role | Bash may run |
+|---|---|
+| architect | `git diff`, `git log`, `git status`, `git show` |
+| reviewer, security | the same, plus `openspec validate` |
+| builder | git for staging and committing (never push), the project's build and test commands (`npm`, `node --test`, `uv`, `pytest`, `go`, `make`, `verify.sh`), `openspec validate` |
+
+Everything else is refused, including `cat`, `curl`, `env` and web access.
+The reviewer and architect use Bash to read the diff and the history, not to
+change anything.

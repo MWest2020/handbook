@@ -12,6 +12,7 @@ agent:
   executie:
     model: opus
     habitat_rol: architect   # plan-only, read-only (habitat)
+    seed: docs/agents/seeds/architect.md
     tools: { allow: [Read, Bash, Grep, Glob], deny: [Write, Edit] }
     skills: []
 ---
