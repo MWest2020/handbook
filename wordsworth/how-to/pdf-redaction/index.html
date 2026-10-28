@@ -12824,13 +12824,18 @@ rebuilds the box map with real boxes. A redacted PDF that hides nothing is
 never served.</p>
 <h2 id="how-it-is-built">How it is built</h2>
 <p>Every page is rasterised at 300 dpi; the rectangles are painted into the
-raster, so the text underneath is genuinely gone, not covered. The PDF is
-then rebuilt from scratch with reportlab: vector <code>[PERSOON 1]</code>-style labels on
-the boxes (<code>legible.to_legible</code>'s numbering — the same as
-<code>?view=legible</code> on <code>/documents/{id}/anonymized</code>) plus an invisible text layer
-for everything that is <em>not</em> redacted, so search and copy keep working for
-the rest of the page. Nothing is copied from the source document: no
-metadata, no annotations, no outline.</p>
+raster, so the text underneath is genuinely gone, not covered. The painted
+raster is then JPEG-encoded (quality 80) before the PDF is rebuilt from
+scratch with reportlab — flate, reportlab's default, barely shrinks a 300 dpi
+page raster and one document came out at 151 MB under it; JPEG keeps a page
+under the 1 MB/page budget <code>tests/test_pdf_render.py::test_page_size_is_bounded</code>
+enforces. Encoding happens after the boxes are painted, so the codec never
+sees anything but the box colour under a redaction. The PDF then carries
+vector <code>[PERSOON 1]</code>-style labels on the boxes (<code>legible.to_legible</code>'s
+numbering — the same as <code>?view=legible</code> on <code>/documents/{id}/anonymized</code>) plus
+an invisible text layer for everything that is <em>not</em> redacted, so search and
+copy keep working for the rest of the page. Nothing is copied from the source
+document: no metadata, no annotations, no outline.</p>
 <p>Scanned documents use the existing OCR text layer
 (<code>object_key</code> repointed by the OCR recovery step) — there is no separate OCR
 path for redaction.</p>

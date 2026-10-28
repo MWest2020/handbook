@@ -12793,10 +12793,13 @@ each content kind is removed only once, so repeating is safe.</p>
 <pre><code class="language-bash">curl -XDELETE $API/dossiers/&lt;dossier-id&gt;
 wordsworth-delete --dossier &lt;dossier-id&gt; --actor &lt;who&gt; [--dry-run]
 </code></pre>
-<p>Removes the dossier's memberships and the dossier row. A member document is
-deleted, as above, only if it belongs to no other dossier; one that belongs to
-another dossier too keeps its content and loses only its membership of this
-one — deleting one case must not silently empty another.</p>
+<p>Removes the dossier's memberships, the dossier's topics and the dossier row.
+A member document is deleted, as above, only if it belongs to no other
+dossier; one that belongs to another dossier too keeps its content and loses
+only its membership of this one — deleting one case must not silently empty
+another. The topics (<code>onderwerpen</code>) are removed in the same transaction, so a
+dossier that has topics is deleted instead of failing on
+<code>topics_dossier_id_fkey</code>.</p>
 <p>One <code>dossier-deleted</code> audit record is written per document the deletion
 touched, whether it was deleted or only released: the document id, the
 dossier id, the actor and which of the two happened — never a name or a
@@ -12806,8 +12809,10 @@ value. A document that is also deleted gets its usual <code>deleted</code> recor
 issuer label, refused before anything is read or removed, no record on a
 refusal.</p>
 <p><code>--dry-run</code> walks the same code path and reports exactly what the real run
-would do: which documents would be deleted and which would only lose their
-membership. Nothing changes and no record is written.</p>
+would do: which documents would be deleted, which would only lose their
+membership, and how many topics would be removed (a count, not a list of
+names — topic names are derived from document terms and the report keeps
+names out). Nothing changes and no record is written.</p>
 <h2 id="what-is-not-here">What is not here</h2>
 <ul>
 <li><strong>Un-deleting.</strong> There is no restore path, by design.</li>
