@@ -4,13 +4,13 @@
 
 All tools SHALL read only; the server SHALL offer no tool that mutates a
 repository, a file or any external state. This includes the tools that read
-roles, skills, factory status and wordsworth dossiers.
+roles and skills.
 
 #### Scenario: Tool inventory
 
 - WHEN a client calls `tools/list`
 - THEN the result contains read tools only (list_repos, list_docs, read_doc and
-  the role, skill, factory status and dossier search tools)
+  the role and skill lookup tools)
 
 ## ADDED Requirements
 
@@ -18,7 +18,9 @@ roles, skills, factory status and wordsworth dossiers.
 
 The server SHALL offer read tools that return an agent role from
 `docs/agents/` and a skill from `inventory/skills-register.yml`, from the
-handbook's default branch.
+handbook's default branch. The skill lookup SHALL take a skill name, not a
+path, and SHALL NOT widen the path bound of `read_doc`: `read_doc` still
+refuses `inventory/`.
 
 #### Scenario: A known role
 
@@ -36,36 +38,7 @@ handbook's default branch.
 - WHEN the name matches no role file and no register entry
 - THEN the server refuses with an error that names no other file
 
-### Requirement: Factory status
+#### Scenario: The register is not reachable through read_doc
 
-The server SHALL offer a read tool that reports the factory's build queue,
-running chains, boards and the API ledger total, read from ratatoskr's state
-files. It SHALL NOT write to those files.
-
-#### Scenario: Status is read
-
-- WHEN the factory status tool is called and the state files are present
-- THEN the result contains the build queue, the running chains, the boards and
-  the API ledger total
-
-#### Scenario: State files are absent
-
-- WHEN the state files cannot be read
-- THEN the tool reports that they are unavailable and does not return empty
-  values as if they were current
-
-### Requirement: Wordsworth dossier search
-
-The server SHALL offer a read tool that searches wordsworth dossiers through
-wordsworth's API. Any credential SHALL come from the process environment and
-SHALL NOT appear in tool output, logging or error messages.
-
-#### Scenario: A search
-
-- WHEN the dossier search is called with a query
-- THEN the results of wordsworth's API for that query are returned
-
-#### Scenario: A failed call
-
-- WHEN the API call fails (no credential, or an invalid one)
-- THEN the error contains a status only, and no token or fragment of one
+- WHEN `read_doc("handbook", "inventory/skills-register.yml")` is requested
+- THEN the server refuses, as before this change
