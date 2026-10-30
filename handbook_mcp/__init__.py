@@ -14,6 +14,7 @@ import posixpath
 import urllib.error
 import urllib.request
 
+import yaml
 from mcp.server.fastmcp import FastMCP
 
 OWNER = "MWest2020"
@@ -93,6 +94,37 @@ def read_doc(repo: str, path: str) -> str:
     _guard_repo(repo)
     norm = _guard_path(path)
     return _fetch(f"{RAW}/{OWNER}/{repo}/main/{norm}").decode("utf-8", errors="replace")
+
+
+@mcp.tool()
+def read_role(name: str) -> str:
+    """Agent role definition from docs/agents/<name>.md on the handbook's
+    default branch (e.g. 'bouwer', 'architect'). Mostly overlaps
+    read_doc('handbook', 'docs/agents/<name>.md'); this tool adds name
+    resolution and refuses an unknown name. Not an identity or authorisation
+    source."""
+    norm = name.strip().removesuffix(".md")
+    if not norm or posixpath.basename(norm) != norm:
+        raise ValueError("unknown role")
+    try:
+        raw = _fetch(f"{RAW}/{OWNER}/{HANDBOOK}/main/docs/agents/{norm}.md")
+    except RuntimeError:
+        raise ValueError("unknown role") from None
+    return raw.decode("utf-8", errors="replace")
+
+
+@mcp.tool()
+def read_skill(name: str) -> dict:
+    """Skill entry from the skills register (inventory/skills-register.yml,
+    mirrored from skill-forge) on the handbook's default branch, looked up by
+    slug. Does not widen read_doc's path guard: the register stays
+    unreachable through read_doc. Not an identity or authorisation source."""
+    raw = _fetch(f"{RAW}/{OWNER}/{HANDBOOK}/main/inventory/skills-register.yml")
+    register = yaml.safe_load(raw)
+    for skill in register.get("skills", []):
+        if skill.get("slug") == name:
+            return skill
+    raise ValueError("unknown skill")
 
 
 def main() -> None:
