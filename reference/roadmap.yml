@@ -1,0 +1,18 @@
+# Roadmap, as data. Drafted 2026-10-30 by the odin coding session from this
+# repository's own docs and merged work, for the overview at westerweel.work/nu/.
+# Mark reviews and corrects it; until then it is a proposal. An item is "done"
+# only with evidence (a PR, issue or doc); everything else is "open".
+# Schema: project, goal, current (a phase id), phases [id, name, summary], and
+# done_means for the current phase [item, status done|open, evidence].
+project: handbook
+goal: "The hub of the personal repository ecosystem: one map of every repo's docs, the canonical agents and skills, and one MCP to read it all."
+current: registry
+phases:
+  - {id: hub, name: "Docs hub", summary: "every repo's docs aggregated at build time, under one docs contract"}
+  - {id: registry, name: "Agent and skill registry", summary: "one canonical definition per role and skill, read by every consumer"}
+  - {id: mcp, name: "Ecosystem MCP", summary: "one read-only MCP for docs, roles, skills, factory status and search"}
+done_means:
+  - {item: "One canonical seed per execution role, read by habitat", status: done, evidence: "https://github.com/MWest2020/handbook/pull/35"}
+  - {item: "A skill register mirrored from skill-forge", status: done, evidence: "https://github.com/MWest2020/handbook/blob/main/inventory/skills-register.yml"}
+  - {item: "A read-only MCP for roles, skills, factory status and wordsworth search", status: done, evidence: "https://github.com/MWest2020/handbook/pull/39"}
+  - {item: "The MCP connected to odin and the habitat roles", status: open, evidence: "https://github.com/MWest2020/handbook/tree/main/handbook_mcp"}
