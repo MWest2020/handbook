@@ -28,8 +28,10 @@ The full specification lives in
 
 `inventory/repos.json` is the single source of truth about which repos take
 part. `scripts/gen_imports.py` generates the mkdocs import blocks from it; CI
-fails on drift. Agents (MCP, planned) read the same list — there is no second
-truth.
+fails on drift. Agents read the same list through `handbook_mcp` → `list_repos`
+(and roles and skills through `read_role`/`read_skill`, see
+[use-the-ecosystem-mcp](how-to/use-the-ecosystem-mcp.md)) — there is no
+second truth.
 
 ## Licences and tooling
 

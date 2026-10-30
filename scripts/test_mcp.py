@@ -27,7 +27,7 @@ async def main() -> None:
 
             tools = await session.list_tools()
             names = sorted(t.name for t in tools.tools)
-            if names != ["list_docs", "list_repos", "read_doc"]:
+            if names != ["list_docs", "list_repos", "read_doc", "read_role", "read_skill"]:
                 die(f"onverwachte toolset: {names}")
             print(f"tools: {names}")
 
@@ -78,6 +78,37 @@ async def main() -> None:
             if not r.isError:
                 die("a non-imported repo was NOT refused")
             print("list_docs(grapher): geweigerd (ok)")
+
+            r = await session.call_tool("read_role", {"name": "bouwer"})
+            if r.isError or "## Mandate" not in r.content[0].text:
+                die("read_role(bouwer) returned no Mandate heading")
+            print("read_role(bouwer): Mandate heading present (ok)")
+
+            r = await session.call_tool("read_role", {"name": "does-not-exist"})
+            if not r.isError:
+                die("read_role of an unknown name was NOT refused")
+            if "docs/agents" in r.content[0].text:
+                die("read_role refusal names a file path")
+            print("read_role(unknown): refused (ok)")
+
+            r = await session.call_tool("read_skill", {"name": "mcp-builder"})
+            if r.isError or "mcp-builder" not in r.content[0].text:
+                die("read_skill(mcp-builder) is missing its own slug")
+            print("read_skill(mcp-builder): slug present (ok)")
+
+            r = await session.call_tool("read_skill", {"name": "does-not-exist"})
+            if not r.isError:
+                die("read_skill of an unknown name was NOT refused")
+            if "skills-register" in r.content[0].text:
+                die("read_skill refusal names a file path")
+            print("read_skill(unknown): refused (ok)")
+
+            r = await session.call_tool(
+                "read_doc", {"repo": "handbook", "path": "inventory/skills-register.yml"}
+            )
+            if not r.isError:
+                die("read_doc reached inventory/ -- the path guard was widened")
+            print("read_doc(inventory/skills-register.yml): still refused (ok)")
 
     print("session test: all checks passed")
 

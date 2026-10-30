@@ -13,7 +13,10 @@ builder.
 ## How to read this (human and agent alike)
 
 - Human: these pages on the site.
-- Agent: through `handbook_mcp` → `read_doc("handbook", "docs/agents/<name>.md")`.
+- Agent: through `handbook_mcp` → `read_role("<name>")` (or
+  `read_doc("handbook", "docs/agents/<name>.md")` directly — `read_role`
+  adds only name resolution and the unknown-name refusal). See
+  [use-the-ecosystem-mcp](../how-to/use-the-ecosystem-mcp.md).
 
 ## Two facets per definition
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-30 — feat: handbook_mcp gets role and skill lookup, read-only
+
+Mark agreed by mail: extend `handbook_mcp`, read-only first. `handbook_mcp`
+gains `read_role(name)` (resolves to `docs/agents/<name>.md`, the existing
+single source) and `read_skill(name)` (looks up a slug in
+`inventory/skills-register.yml`, which `read_doc`'s path guard keeps
+unreachable the other way — nothing widens that guard). Both refuse an
+unknown name without naming any other file. No write tool: the tool
+inventory is the five read tools, nothing else. Factory status and
+wordsworth dossier search stay out — no access path from `handbook_mcp` to
+ratatoskr's state files or wordsworth's API; they wait for follow-up
+changes. New how-to: `docs/how-to/use-the-ecosystem-mcp.md`. OpenSpec change
+`eco-mcp-readonly`.
+
 ## 2026-10-25 — feat: habitat reads the roles from the handbook
 
 Mark: *"the cleanest is all looks at the handbook ... consumed by habitat for
