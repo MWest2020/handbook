@@ -10852,6 +10852,76 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0008-envelope-encryption-of-originals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0008 — Envelope encryption of the original documents
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/adr/0009-separate-key-and-reveal-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0009 — A separate key-and-reveal service
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11334,6 +11404,41 @@
     
   
     Wie een document verplaatste, en waarheen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../film/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The explainer film: proof-gated, rebuilt daily
   
 
     
@@ -13092,6 +13197,15 @@ are still on disk. The full content hash is never shown as if it were a name. Th
 per document, not from re-running the detectors over the source text: that would
 answer "what would the detectors say today", which is a different question from
 "what did the pipeline do".</p>
+<p>A deletion keeps a document's row (see below), and a superseded copy is a
+retired row of the same object (<code>wordsworth-supersession</code>), so by default the
+list hides both: documents whose state is <code>deleted</code>, and superseded copies. A
+cleaned-up corpus would otherwise show mostly what was removed and bury what is
+worth reading. <code>?alles=1</code> is the explicit toggle that shows them too, with their
+state; the total in the badge follows the same rule as the rows underneath it.
+When something is hidden the page says so, with one total and a link to the
+toggle — a list that silently leaves rows out reads as the whole corpus. A list
+with nothing hidden shows no such notice.</p>
 <p><strong><code>/console/documents/{id}</code></strong> shows the stored pseudonymised text with each token
 marked and labelled, plus which declared combinations the document carries in
 full and which it leaves untouched.</p>
@@ -13129,6 +13243,10 @@ is for.</p>
 corpus that happens to be loaded. A term with no hits says so; an index that is
 down says <em>that</em>, rather than returning an empty list that reads as "nothing
 matched".</p>
+<p>A hit for a deleted or superseded document never shows, and the page offers no
+toggle for it: deleting or superseding a document already removes its index
+entry, so there is nothing a toggle could reveal. The rule here only guards
+against a stale index entry that should not exist.</p>
 <h2 id="revealing">Revealing</h2>
 <p>The document page lists the <strong>active</strong> grants that apply to it — including grants
 issued to someone else. That is deliberate: the screen offers it, the door refuses it, and

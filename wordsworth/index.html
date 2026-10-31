@@ -10917,6 +10917,76 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="explanation/adr/0008-envelope-encryption-of-originals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0008 — Envelope encryption of the original documents
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="explanation/adr/0009-separate-key-and-reveal-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR 0009 — A separate key-and-reveal service
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11205,6 +11275,41 @@
     
   
     Wie een document verplaatste, en waarheen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/film/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The explainer film: proof-gated, rebuilt daily
   
 
     
@@ -12811,6 +12916,12 @@ under <code>openspec/</code>.</p>
 <li><a href="explanation/adr/0007-one-token-per-type/">ADR-0007</a> — one token per type,
     also where a combination identifies: why a named quasi-identifier is
     reported and measured but never fused.</li>
+<li><a href="explanation/adr/0008-envelope-encryption-of-originals/">ADR-0008</a> —
+    originals encrypted under a key per document, wrapped by a KEK that can be
+    the organisation's own; crypto-shredding on delete.</li>
+<li><a href="explanation/adr/0009-separate-key-and-reveal-service/">ADR-0009</a> — one
+    service holds the keys, the encrypted values and the reveal decision; the
+    rest of wordsworth sees tokens only.</li>
 <li><a href="explanation/meting-combinaties-02/">meting 02</a> — 654 of 751 documents
     carry PERSON + DATE_TIME + LOCATION together, and what that number does and
     does not say.</li>
@@ -12826,6 +12937,8 @@ under <code>openspec/</code>.</p>
     column path: profiles, per-attribute/per-record, NEN 7524-style output.</li>
 <li><a href="how-to/pdf-redaction/">pdf-redaction</a> — the redacted/reveal PDF
     endpoints, the <code>stale</code>/<code>value-not-located</code> responses, how it is built.</li>
+<li><a href="how-to/film/">film</a> — the proof-gated explainer film: a claim is in it only
+    when its check passes today; numbers come from check output.</li>
 </ul>
 
 
