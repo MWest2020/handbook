@@ -11482,6 +11482,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/sealed-orphans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: sealed orphans
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/topics/" class="md-nav__link">
         
   
@@ -11851,6 +11886,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-release-deleted-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-release-deleted-keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-passages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11877,6 +11923,17 @@
     <span class="md-ellipsis">
       
         wordsworth-measure-combinations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-sealed-orphans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-sealed-orphans
       
     </span>
   </a>
@@ -13161,6 +13218,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wordsworth-release-deleted-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-release-deleted-keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wordsworth-backfill-passages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13187,6 +13255,17 @@
     <span class="md-ellipsis">
       
         wordsworth-measure-combinations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordsworth-sealed-orphans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wordsworth-sealed-orphans
       
     </span>
   </a>
@@ -13445,6 +13524,21 @@ number of topics (<code>topics</code>) that would be removed; the output of a re
 carries the same <code>topics</code> count.</p>
 <p>See <a href="../../how-to/deleting-documents/">deleting documents</a> for what goes, what
 stays, and <code>DELETE /documents/{id}</code> / <code>DELETE /dossiers/{id}</code> over the API.</p>
+<h2 id="wordsworth-release-deleted-keys"><code>wordsworth-release-deleted-keys</code></h2>
+<p>Releases the <code>object_key</code> of documents deleted before
+<code>deleted-document-releases-object-key</code>: a deletion now does this itself, in
+the same transaction as the <code>deleted</code> record, but a document deleted before
+that change still carries its real key. <strong>Run this once after deploying that
+change.</strong></p>
+<pre><code class="language-bash">wordsworth-release-deleted-keys            # dry run: what it would release
+wordsworth-release-deleted-keys --apply    # actually release them
+</code></pre>
+<p><code>--apply</code> releases exactly the documents the dry run listed, one <code>release-key</code>
+audit record per document. Idempotent — a released document is not found
+again — and it never touches a document that is not, right now, <code>deleted</code>.
+See <a href="../../how-to/deleting-documents/">deleting documents</a> for what releasing a
+key means and why re-ingesting the same bytes afterwards registers a new
+document.</p>
 <h2 id="wordsworth-backfill-passages"><code>wordsworth-backfill-passages</code></h2>
 <p>Gives every indexed document a vector per passage (200-word windows every 150
 words, <code>wordsworth.passages</code>), so hybrid search can rank a document by its best
@@ -13494,6 +13588,17 @@ That makes it a statement about what the pipeline did, on the text it saw.</p>
 no detector for them. "Does not occur" and "cannot be seen" are different
 answers, and a bare zero gives the reassuring one.</p>
 <p>Exit code 2 if the file declares no combinations.</p>
+<h2 id="wordsworth-sealed-orphans"><code>wordsworth-sealed-orphans</code></h2>
+<p>Lists sealed objects under <code>documents/</code> that open under no key row — there is
+no row for their key, or the row names another key id — and are older than
+one hour. See <a href="../../how-to/sealed-orphans/">the how-to</a> for why these appear
+and when it is safe to remove them.</p>
+<pre><code class="language-bash">wordsworth-sealed-orphans            # dry run: what it would remove
+wordsworth-sealed-orphans --apply    # actually remove them
+</code></pre>
+<p><code>--apply</code> removes exactly the objects the dry run listed. A sealed object with
+its own key row, a legacy plaintext object, and any object younger than one
+hour (a write still in flight) are never touched.</p>
 <h2 id="examples">Examples</h2>
 <pre><code class="language-bash"># one-off, explicit URL
 wordsworth --url http://100.100.181.23:8000 health

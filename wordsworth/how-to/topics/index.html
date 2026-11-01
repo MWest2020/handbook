@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://mwest2020.github.io/handbook/wordsworth/how-to/topics/">
       
       
-        <link rel="prev" href="../samenvattingen/">
+        <link rel="prev" href="../sealed-orphans/">
       
       
         <link rel="next" href="../zoeken-valt-weg/">
@@ -11481,6 +11481,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../sealed-orphans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: sealed orphans
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -11626,6 +11661,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Namen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alleen-zelfstandige-naamwoorden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alleen zelfstandige naamwoorden
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geen-twee-onderwerpen-met-dezelfde-naam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geen twee onderwerpen met dezelfde naam
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -13014,6 +13077,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Namen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alleen-zelfstandige-naamwoorden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alleen zelfstandige naamwoorden
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geen-twee-onderwerpen-met-dezelfde-naam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geen twee onderwerpen met dezelfde naam
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13130,6 +13221,9 @@ van de berekening zelf. Geen onderwerpen betekent: nog niet berekend.</p>
 </code></pre>
 <p><code>topic</code> versmalt binnen de <code>dossier</code>-scope. De documenten die overblijven staan
 onderling in dezelfde volgorde als zonder het onderwerp.</p>
+<p>Dit blijft werken na een <code>/reprocess</code>: die herindexeert de tekst en de vector,
+maar geeft het onderwerp-lidmaatschap terug aan de nieuwe <code>index()</code>-aanroep, dus
+een document valt er niet stilzwijgend uit.</p>
 <h2 id="hoeveel-groepen-en-waarom-niet-een-vast-getal">Hoeveel groepen, en waarom niet een vast getal</h2>
 <p>De eerste versie knipte op een vaste cosinusafstand van 0.45. Op het eerste
 echte corpus (Gooise Meren, 567 documenten) gaf dat <strong>één groep van 443</strong> — 78%
@@ -13215,6 +13309,43 @@ reveal-gate nooit kijkt. De tokens gaan eruit vóór het tokeniseren
 (<code>pseudonymizer.without_tokens</code>), niet erna: anders valt een token uiteen in
 "persoon" en "3fa9c2d1" en staat de helft er alsnog in. Bewaakt door
 <code>test_a_token_never_becomes_part_of_a_name</code>.</p>
+<h3 id="alleen-zelfstandige-naamwoorden">Alleen zelfstandige naamwoorden</h3>
+<p>TF-IDF kiest een term op frequentie, niet op woordsoort. Op het 415-documenten
+pilotdossier zag Mark namen als <code>iedereen · ruil · steunt</code>, <code>overeen · recente
+· volgen</code> en <code>besloot · harte · nabijheid</code> — een voornaamwoord, werkwoorden,
+een bijvoeglijk naamwoord en de naamwoordhelft van een vaste uitdrukking ("van
+harte"), geen van alle een onderwerp.</p>
+<p>Gemeten op die 33 woorden, 2026-10-31:</p>
+<ul>
+<li><strong>Een algemeen-Nederlandse frequentiedrempel (wordfreq Zipf) scheidt ze
+  niet.</strong> "harte" (4,42) is gangbaarder dan "duurzaamheid" (4,14), maar
+  "veiligheid" (4,96) is gangbaarder dan allebei.</li>
+<li><strong>Een los woord taggen is fout.</strong> spaCy <code>nl_core_news_sm</code> tagt
+  "vergadertijd" los als ADJ en "rondvraag" los als ADV.</li>
+<li><strong>Getagd in hun eigen zin, matchen zelfstandige naamwoorden die geen deel
+  zijn van een vaste uitdrukking elk oordeel dat Mark gaf.</strong></li>
+</ul>
+<p>Daarom benoemt een term alleen mee waar hij in zijn zin een zelfstandig
+naamwoord is (<code>NOUN</code> of <code>PROPN</code>) én niet de afhankelijkheid <code>fixed</code> heeft (de
+vaste-uitdrukking-relatie — "harte" in "van harte"). De tagging draait op de
+documenttekst met de pseudonym-tokens er al uit (<code>without_tokens</code>), tot
+hoogstens de eerste 20.000 tekens per document: een onderwerp komt uit wat een
+groep deelt, en een afkap per document verandert niet welke termen een groep
+gemeen heeft.</p>
+<p>Het model is de Nederlandse spaCy-pipeline <code>nl_core_news_sm</code>, gepind op versie
+3.8.0 en geïnstalleerd in het image — de cluster haalt er tijdens het draaien
+niets bij op. spaCy zelf is MIT; het model is CC BY-SA 4.0 (getraind op
+Universal Dependencies Dutch Alpino en LassySmall), ongewijzigd gebruikt en
+niet opnieuw verspreid. Attributie staat in <code>NOTICE</code>.</p>
+<h3 id="geen-twee-onderwerpen-met-dezelfde-naam">Geen twee onderwerpen met dezelfde naam</h3>
+<p>Twee groepen kunnen hetzelfde topdrietal scoren — <code>zaal · vergadertijd ·
+rondvraag</code> kwam in het pilotdossier voor twee verschillende onderwerpen voor.
+Na het berekenen van elke naam wijkt de latere in weergavevolgorde uit: de
+laatste term van zijn naam wordt vervangen door de volgende scorende term die
+nog niet in de naam zit, zodat de eerste twee termen blijven staan. Is er geen
+volgende term meer, dan komt er " (2)" achter — want twee groepen zonder enig
+verschil in hun termen zijn ook geen onderscheiden onderwerp, en dat mag niet
+onzichtbaar blijven.</p>
 <p>Hernoemen:</p>
 <pre><code class="language-sh">curl -XPATCH $API/topics/&lt;topic-uuid&gt; -H 'content-type: application/json' \
   -d '{&quot;name&quot;:&quot;Kapvergunningen 2022&quot;}'
@@ -13246,9 +13377,11 @@ verzint.</p>
 <li>Geen onderwerpen over dossiergrenzen heen.</li>
 <li>Geen taalmodel in de naamgeving.</li>
 <li>Geen invloed op de score.</li>
-<li>Geen automatische herberekening. Een document dat opnieuw door de straat gaat
-  valt uit zijn onderwerp — daarom staat bij elk onderwerp wannéér het berekend
-  is.</li>
+<li>Geen automatische herberekening. Een document dat opnieuw door de straat
+  gaat (<code>reanonymize</code>, dus ook <code>/reprocess</code>) houdt het onderwerp dat het had —
+  berekend over de tekst van vóór die stap. Daarom staat bij elk onderwerp
+  wannéér het berekend is: dat is het enige signaal dat een lid er sindsdien
+  doorheen is gegaan, tot een nieuwe berekening de indeling vervangt.</li>
 </ul>
 
 

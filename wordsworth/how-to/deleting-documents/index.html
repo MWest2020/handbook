@@ -11274,6 +11274,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#releasing-keys-of-documents-deleted-before-this-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Releasing keys of documents deleted before this change
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-not-here" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11598,6 +11609,41 @@
   
   
     <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sealed-orphans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: sealed orphans
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
   
 
   
@@ -12994,6 +13040,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#releasing-keys-of-documents-deleted-before-this-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Releasing keys of documents deleted before this change
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-not-here" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13055,6 +13112,14 @@ reachable from every state including <code>superseded</code>; nothing transition
 it.</p>
 <p>One <code>deleted</code> audit record is written, holding the document id, the actor and
 how many of each kind were removed — never a filename, a token or a value.</p>
+<p><strong>Deleting releases the object key.</strong> The row's <code>object_key</code> becomes the
+placeholder <code>deleted/&lt;document-id&gt;</code>, and the former key is recorded in the
+<code>deleted</code> record as <code>released_object_key</code>. A deleted document therefore no
+longer counts as <em>the</em> live document for its bytes: the same bytes can be
+ingested again afterwards, which registers a new document while the deleted
+one stays deleted with its trail unchanged. Documents deleted before this
+behaviour existed still carry their real key until <code>wordsworth-release-
+deleted-keys</code> (below) has run once.</p>
 <h2 id="who-may">Who may</h2>
 <p>Only a caller with role <code>beheerder</code>, or one carrying a label in
 <code>WORDSWORTH_GRANT_ISSUER_LABELS</code>, may delete. Anyone else is refused before
@@ -13112,6 +13177,16 @@ would do: which documents would be deleted, which would only lose their
 membership, and how many topics would be removed (a count, not a list of
 names — topic names are derived from document terms and the report keeps
 names out). Nothing changes and no record is written.</p>
+<h2 id="releasing-keys-of-documents-deleted-before-this-change">Releasing keys of documents deleted before this change</h2>
+<pre><code class="language-bash">wordsworth-release-deleted-keys            # lists what it would release
+wordsworth-release-deleted-keys --apply    # releases them
+</code></pre>
+<p>Run this once after deploying <code>deleted-document-releases-object-key</code>. It
+finds every document that is, right now, <code>deleted</code> and still carries a real
+object key, and with <code>--apply</code> releases each the same way a deletion does:
+one <code>release-key</code> audit record per document, holding <code>released_object_key</code>.
+Idempotent — a released document is not found again — and it never touches a
+document that is not deleted.</p>
 <h2 id="what-is-not-here">What is not here</h2>
 <ul>
 <li><strong>Un-deleting.</strong> There is no restore path, by design.</li>

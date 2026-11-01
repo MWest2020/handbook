@@ -11482,6 +11482,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/sealed-orphans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: sealed orphans
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/topics/" class="md-nav__link">
         
   
@@ -11709,6 +11744,17 @@
     <span class="md-ellipsis">
       
         Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
       
     </span>
   </a>
@@ -12950,6 +12996,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13062,6 +13119,46 @@ is the engine. Reference case: Woo-request handling for a Dutch municipality.</p
 <li>Local inference: Ollama (bge-m3) for embeddings; GLiNER/Presidio via
   OpenAnonymiser for PII detection.</li>
 </ul>
+<h2 id="storage">Storage</h2>
+<p>Original PDFs are sealed under their own data key before they reach the
+object store (<a href="../../explanation/adr/0008-envelope-encryption-of-originals/">ADR-0008</a>):</p>
+<ul>
+<li><strong>Format.</strong> A sealed object carries a versioned header (<code>WWENC</code>, a version
+  byte, the 12-character data-key id, a 12-byte nonce) followed by
+  AES-256-GCM ciphertext. The associated data binds the ciphertext to the
+  object key and the key id — never the document id, because one object can
+  belong to more than one document over its life (a superseded copy, a
+  re-ingest after deletion). <code>src/wordsworth/originals_envelope.py</code> holds
+  <code>seal</code>/<code>open</code> and the header; nothing else.</li>
+<li><strong><code>document_keys</code>.</strong> One row per sealed <em>object</em> (not per document — an
+  OCR-recovered document has a scan and an OCR'd PDF, each with its own key),
+  holding the data key wrapped by a KEK in OpenBao Transit. The KEK is named
+  per pseudonymisation domain (<code>src/wordsworth/document_keys.py</code>,
+  <code>DocumentKeys</code>), so a KEK-per-organisation is a configuration change, not a
+  rewrite. The unwrap cache is bounded in size and time (<code>key_cache_ttl</code>), so
+  a revoked or rotated KEK takes effect within that window.</li>
+<li><strong><code>OriginalsStore</code></strong> (<code>src/wordsworth/originals_store.py</code>) is the only way
+  an original is written or read: <code>put_original</code> never mints a second key for
+  an object and never overwrites bytes a document can still read (its result
+  is a <code>PutResult</code> — <code>WROTE</code>, <code>UNCHANGED</code> or <code>LEGACY</code> — with no boolean
+  value, so a caller cannot accidentally delete a legacy object after a
+  failed commit); <code>get_original</code> opens a sealed object or returns a legacy
+  plaintext object as it is.</li>
+<li><strong>The plain <code>ObjectStore.get</code> refuses a sealed object</strong>, raising
+  <code>SealedObjectError</code>, so ciphertext can never reach a caller expecting a PDF
+  by accident. The unguarded <code>get_raw</code> exists for the three callers that need
+  the sealed bytes or the header: <code>OriginalsStore</code>, <code>put_original</code>'s own
+  inspection, and the orphan sweep below.</li>
+<li><strong><code>wordsworth-sealed-orphans</code></strong> (<code>src/wordsworth/sealed_orphans.py</code>) removes
+  sealed objects older than one hour that open under no key row — the result
+  of a database transaction that rolled back after the object was already
+  written (S3 and Postgres cannot share one transaction). Dry-run by default;
+  see <a href="../../how-to/sealed-orphans/">the how-to</a>.</li>
+<li><strong>Nothing is sealed in production yet.</strong> This module builds the cipher and
+  the key store only; ingest and every read site (<code>pipeline.py</code>, <code>recovery.py</code>,
+  <code>api.py</code>) still read and write plain objects until <code>originals-encrypted-ingest</code>
+  and <code>originals-ocr-sealed</code> wire them in.</li>
+</ul>
 <h2 id="configuration">Configuration</h2>
 <ul>
 <li><strong>Secrets</strong> via SOPS+age or OpenBao only — never hardcoded, never client-side,
@@ -13070,6 +13167,14 @@ is the engine. Reference case: Woo-request handling for a Dutch municipality.</p
   AGPL is rejected where it would infect distribution.</li>
 <li><strong>Banned dependencies:</strong> <code>anonypy</code>; MinIO (open-source edition deprecated
   April 2026 — use Ceph RGW or SeaweedFS behind the S3 seam); CyberArk/Conjur.</li>
+<li><strong>Originals KEK</strong> (ADR-0008, next to <code>WORDSWORTH_TRANSIT_KEK</code> and
+  <code>WORDSWORTH_KEY_CACHE_TTL</code>): <code>WORDSWORTH_ORIGINALS_KEK</code> names the Transit
+  KEK that wraps original-document data keys (default: the same KEK as the
+  pseudonymisation keys); <code>WORDSWORTH_ORIGINALS_KEK_BY_DOMAIN</code> is an optional
+  JSON object (domain → KEK name) overriding it per pseudonymisation domain —
+  the lever that turns a KEK-per-organisation into a configuration change.
+  <code>WORDSWORTH_DOCUMENT_KEY_CACHE_SIZE</code> bounds the unwrap cache's entry count
+  (default 1024); its time bound is the existing <code>WORDSWORTH_KEY_CACHE_TTL</code>.</li>
 </ul>
 <h2 id="working-on-this">Working on this</h2>
 <p><code>uvx ruff check src/ tests/</code> before opening a PR. Deliberately narrow — <code>F</code> and
