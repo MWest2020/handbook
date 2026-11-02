@@ -13325,7 +13325,7 @@ If the <code>wordsworth</code> package <em>is</em> installed (<code>uv sync</cod
 <code>wordsworth</code> and <code>wordsworthctl</code> console scripts are provided too.</p>
 <h2 id="configuration">Configuration</h2>
 <p>Set the API URL once, persistently, so you don't repeat <code>--url</code>:</p>
-<pre><code class="language-bash">wordsworth config --url http://100.100.181.23:8000    # also --batch, --timeout
+<pre><code class="language-bash">wordsworth config --url https://wordsworth-api.tail8f7877.ts.net    # also --batch, --timeout
 wordsworth config --show                              # print current config
 </code></pre>
 <p>This writes <code>~/.config/wordsworth/config.yaml</code> (override the path with
@@ -13601,10 +13601,10 @@ its own key row, a legacy plaintext object, and any object younger than one
 hour (a write still in flight) are never touched.</p>
 <h2 id="examples">Examples</h2>
 <pre><code class="language-bash"># one-off, explicit URL
-wordsworth --url http://100.100.181.23:8000 health
+wordsworth --url https://wordsworth-api.tail8f7877.ts.net health
 
 # ingest a corpus directory in small batches
-wordsworth --url http://100.100.181.23:8000 ingest /data/corpus --batch 5
+wordsworth --url https://wordsworth-api.tail8f7877.ts.net ingest /data/corpus --batch 5
 
 # search and inspect
 wordsworth search &quot;vergunning&quot; --dossier zaak-a --size 5
