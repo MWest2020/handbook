@@ -13156,8 +13156,10 @@ object store (<a href="../../explanation/adr/0008-envelope-encryption-of-origina
   see <a href="../../how-to/sealed-orphans/">the how-to</a>.</li>
 <li><strong>Nothing is sealed in production yet.</strong> This module builds the cipher and
   the key store only; ingest and every read site (<code>pipeline.py</code>, <code>recovery.py</code>,
-  <code>api.py</code>) still read and write plain objects until <code>originals-encrypted-ingest</code>
-  and <code>originals-ocr-sealed</code> wire them in.</li>
+  <code>api.py</code>) still read and write plain objects. <code>originals-ingest-readers</code> and
+  <code>originals-ingest-write</code> move them onto the originals seam,
+  <code>originals-ingest-switch</code> turns it on in production, and <code>originals-ocr-sealed</code>
+  seals the OCR write.</li>
 </ul>
 <h2 id="configuration">Configuration</h2>
 <ul>
@@ -13177,7 +13179,7 @@ object store (<a href="../../explanation/adr/0008-envelope-encryption-of-origina
   (default 1024); its time bound is the existing <code>WORDSWORTH_KEY_CACHE_TTL</code>.</li>
 </ul>
 <h2 id="working-on-this">Working on this</h2>
-<p><code>uvx ruff check src/ tests/</code> before opening a PR. Deliberately narrow — <code>F</code> and
+<p><code>uv run ruff check src/ tests/</code> before opening a PR. Deliberately narrow — <code>F</code> and
 <code>E9</code>, real errors only, no style. A linter that argues about taste gets switched
 off, and then it never catches the things it is for: its first run found a
 protocol stub that had landed inside an implementation class and shadowed it,

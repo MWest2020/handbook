@@ -11243,6 +11243,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#de-particle-naamregel-en-zijn-gazetteer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De particle-naamregel en zijn gazetteer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#waar-de-lijsten-leven" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12930,6 +12941,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#de-particle-naamregel-en-zijn-gazetteer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De particle-naamregel en zijn gazetteer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#waar-de-lijsten-leven" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13038,6 +13060,39 @@ bij: "Verandering 3" is geen adres. Getoetst op <code>Artikel 5</code>, <code>bi
 als PII, dus op dát corpus telt deze regel als precisieverlies. Of een woonadres
 PII is, is een uitspraak over de zaak en niet iets wat uit een regex volgt — die
 vraag ligt bij de eigenaar van het corpus.</p>
+<h2 id="de-particle-naamregel-en-zijn-gazetteer">De particle-naamregel en zijn gazetteer</h2>
+<p>Een naam als <code>Hendrik ter Braak</code> is één persoon, niet een los woord "ter"
+tussen twee andere: <code>src/wordsworth/particle_names.py</code> herkent de vorm
+<code>&lt;voornaam&gt; &lt;partikel&gt; &lt;achternaam&gt;</code> (<code>van</code>, <code>van der</code>, <code>van den</code>, <code>de</code>,
+<code>ter</code>, <code>ten</code>) als ÉÉN <code>PERSON</code>-span met laag <code>dutch_particle_name</code>, vóórdat
+de allow/deny-lijsten worden toegepast. Alleen in de <strong>reversible</strong> driver
+(<code>ReversibleAnonymizer</code>); de irreversible <code>OpenAnonymiserAnonymizer</code> draait
+deze regel niet.</p>
+<p>De regel matcht alleen als het woord vóór het partikel in een eigen
+gazetteer staat: <code>src/wordsworth/data/voornamen.json</code>, een lijst van
+<code>{"naam", "reden"}</code>. Zonder die ankering zou <code>Raad van State</code> of <code>Kamer van
+Koophandel</code> ook als persoon worden gezien — en die namen horen leesbaar te
+blijven. De lader (<code>particle_names.load_gazetteer</code>) weigert een entry zonder
+(of met een lege) <code>reden</code>, en een ontbrekend of onleesbaar bestand is een
+harde fout, nooit een lege lijst.</p>
+<p><strong>Een gemiste naam van deze vorm fix je door de voornaam hier toe te voegen,
+niet via <code>deny.json</code></strong>: <code>deny.json</code> werkt op het hele patroon, en een
+voornaam die ontbreekt in de gazetteer is precies waarom <code>Raad van State</code>
+geen persoon wordt. Toevoegen is een reviewed git-wijziging van
+<code>voornamen.json</code>, met een <code>reden</code>.</p>
+<p>Een allow-regel op <code>PERSON</code> kan een particle-naam net als elke andere
+<code>PERSON</code>-detectie onderdrukken: de regel voegt zijn treffers toe aan de
+entiteitslaag vóórdat <code>DetectionLists.apply</code> draait, en loopt dus door
+dezelfde onderdrukking.</p>
+<p><code>Ton</code>, <code>Wil</code> en <code>Bart</code> staan <strong>met opzet niet</strong> in de gazetteer: het zijn ook
+gewone hoofdlettervolgorde-woorden aan het begin van een zin, en opnemen zou
+precisie kosten. Van de 14 voornamen in <code>eval/synthetic.py</code> blijven <code>Ton</code> en
+<code>Bart</code> daardoor gemist — een geaccepteerde, bewuste trade.</p>
+<p>De gazetteer telt <strong>niet mee in <code>lists_hash</code></strong>: die hash is alleen over
+<code>allow.json</code>/<code>deny.json</code>, en de gazetteer heeft zijn eigen versiebeheer
+(losstaand, zie <code>reanonymise-particle-name-documents</code>).</p>
+<p>Zie <code>tests/test_particle_names.py</code> voor het gedrag, de gazetteer-weigeringen
+en de grens tussen wat wel en niet matcht.</p>
 <h2 id="waar-de-lijsten-leven">Waar de lijsten leven</h2>
 <p>In de repo (<code>lists/</code>), mee in het image, <strong>niet</strong> in een ConfigMap. De
 content-hash staat in elk de-identificatie-auditrecord zodat een document terug

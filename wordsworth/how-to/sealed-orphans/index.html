@@ -13031,7 +13031,7 @@ already gone between the listing and the removal is not an error).</p>
 <li>It lists under the <code>documents/</code> prefix only, via the object store's
   <code>iter_objects</code>, so it scales with the corpus, not with a directory listing
   outside the store.</li>
-<li>Until <code>originals-encrypted-ingest</code> lands, nothing in production writes a
+<li>Until <code>originals-ingest-switch</code> lands, nothing in production writes a
   sealed object yet, so a dry run on a current deployment finds nothing. This
   command exists ahead of that change so it is in place and proven before
   anything depends on it.</li>
