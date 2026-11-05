@@ -11845,6 +11845,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-key-service-is-unreachable-the-batch-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The key service is unreachable: the batch stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-page-with-no-text-layer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13083,6 +13094,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-key-service-is-unreachable-the-batch-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The key service is unreachable: the batch stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-page-with-no-text-layer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13246,6 +13268,38 @@ written to:</p>
 </ul>
 <p><code>GET /documents/{id}</code> returns all three top-level (<code>source_url</code>, <code>fetched_at</code>,
 <code>source_sha256</code>), and the full <code>register</code> payload under <code>steps</code>.</p>
+<h2 id="the-key-service-is-unreachable-the-batch-stops">The key service is unreachable: the batch stops</h2>
+<p>Sealing an original needs the key service (OpenBao Transit): minting a data
+key for a new object, or unwrapping one to read an original back. A refusal
+there says something about the service, not about the file in hand, so the
+batch stops at the first one instead of reporting every later file as its own
+failure.</p>
+<p>The response is <code>503</code>:</p>
+<pre><code class="language-json">{&quot;detail&quot;: &quot;key service unavailable&quot;,
+ &quot;total&quot;: &lt;files in the request&gt;,
+ &quot;indexed&quot;: &lt;count of &quot;indexed&quot; among results&gt;,
+ &quot;results&quot;: [&lt;the IngestResult of every file completed before the failing one&gt;]}
+</code></pre>
+<p><code>detail</code> is always the fixed string above — existing clients that only read
+<code>detail</code> keep working. <code>results</code> has the same per-file shape as the <code>200</code>
+response, one entry per file that finished before the batch stopped.</p>
+<p>Which files are stored:</p>
+<ul>
+<li>every file reported in <code>results</code> is stored exactly as it would be in a
+  <code>200</code> response (sealed, indexed or otherwise terminal);</li>
+<li>the file that hit the key refusal, and every file after it in the same
+  request, are <strong>not</strong> stored — <em>unless</em> the refusal came from <code>process</code>'s
+  read-back of an original that this same request just wrote: that write
+  already committed, and it is not rolled back (there is no compensating
+  delete on the read path; <code>wordsworth-sealed-orphans</code> sweeps a sealed object
+  that ends up with no usable row).</li>
+</ul>
+<p>This is the one exception to "a failing file does not abort the batch": every
+other per-file error (parse, empty upload, unsupported format, a downstream
+outage) still continues the batch, exactly as before.</p>
+<p><code>wordsworth-ingest</code> and its <code>--manifest</code> form (below) fail the same way: they
+exit non-zero, print <code>key service unavailable</code> on stderr, and do not go on to
+the next file.</p>
 <h2 id="a-page-with-no-text-layer">A page with no text layer</h2>
 <p>A document whose text extraction and OCR recovery together yield no text ends
 in a visible error state (<code>unprocessable_ocr</code>, shown by the API and the
