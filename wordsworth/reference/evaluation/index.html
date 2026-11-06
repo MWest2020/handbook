@@ -10322,6 +10322,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-overdetectie-08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 08 — de particle-regel als laag in de overdetectie-basislijn
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--not-run"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-restwaarden-03/" class="md-nav__link">
         
   
@@ -10575,10 +10610,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_12" id="__nav_19_2_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
             
   
   
@@ -10596,8 +10631,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_12_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_12">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_13">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11836,6 +11871,34 @@
     <span class="md-ellipsis">
       
         PII-detection evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PII-detection evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-dutch_particle_name-layer-particle-names-measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The dutch_particle_name layer (particle-names-measured)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-audit-aggregate-counts-a-person" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the audit aggregate counts a person
       
     </span>
   </a>
@@ -13118,6 +13181,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="PII-detection evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-dutch_particle_name-layer-particle-names-measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The dutch_particle_name layer (particle-names-measured)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-audit-aggregate-counts-a-person" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the audit aggregate counts a person
+      
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13250,6 +13341,66 @@ against a gold corpus.</p>
   service failure is a hard error, never an empty result. Read-only: nothing is
   ingested, indexed or audited.</li>
 </ul>
+<h3 id="the-dutch_particle_name-layer-particle-names-measured">The <code>dutch_particle_name</code> layer (particle-names-measured)</h3>
+<p>Both <code>pii_run</code> and <code>overdetection_run</code> (above, and below for the latter) accept
+<code>dutch_particle_name</code> as an explicit, opt-in fourth layer
+(<code>src/wordsworth/particle_names.py</code>):
+<code>--layers deterministic,openanonymiser,dutch_particle_name</code>. Both CLIs'
+<code>--layers</code> default stays <code>deterministic,openanonymiser</code> — an existing
+invocation without the flag is unaffected.</p>
+<p><strong>Before/after on the generated corpus, and it is circular.</strong> Attempted
+2026-11-06 on 500 documents from <code>scripts/eval/generate_ground_truth.py</code>
+(<code>python scripts/eval/generate_ground_truth.py /tmp/gt --count 500</code>), whose
+<code>VOORNAMEN</code> (<code>eval/synthetic.py</code>) are the same source <code>data/voornamen.json</code>
+draws its gazetteer from — so this comparison is circular, not a claim about
+real names:</p>
+<ul>
+<li>before, <code>python -m wordsworth.eval.pii_run /tmp/gt/gold.jsonl --layers deterministic,openanonymiser</code>: <strong>not run</strong></li>
+<li>after, same command plus <code>,dutch_particle_name</code>: <strong>not run</strong></li>
+</ul>
+<p>Both need <code>WORDSWORTH_OPENANONYMISER_URL</code>; in this build the service was
+unreachable (<code>httpx.ConnectError: [Errno 111] Connection refused</code> from the
+<code>openanonymiser</code> layer's own call, not from a reachability probe — <code>pii_run</code>
+has none, by design: a service failure is the documented hard error, never a
+silent fallback). No PERSON number is recorded standing in for either side.</p>
+<p><strong>Full-pipeline recall on names outside the gazetteer's source.</strong> Ten
+documents, one <code>&lt;first name&gt; &lt;particle&gt; &lt;last name&gt;</code> PERSON span each, built
+so the first name is never one of the twelve entries in <code>data/voornamen.json</code>
+— checked against <code>particle_names.load_gazetteer()</code> before use:
+<code>Sanne</code>, <code>Daan</code>, <code>Noor</code>, <code>Milan</code>, <code>Eva</code>, <code>Sven</code>, <code>Iris</code>, <code>Thijs</code>, <code>Femke</code>,
+<code>Bram</code>, each as <code>"&lt;name&gt; &lt;particle&gt; &lt;surname&gt; nam deel aan het overleg."</code>
+(particles cycled through <code>van der</code>, <code>van den</code>, <code>van</code>, <code>de</code>, <code>ter</code>, <code>ten</code>).
+Measured 2026-11-06, <code>--layers deterministic,dutch_particle_name</code> (offline,
+the <code>openanonymiser</code> layer below could not run):</p>
+<pre><code>documents=10  gold_entities=10  leaks=10
+overall/span: P=0.000 R=0.000 F1=0.000
+  PERSON         P=0.000 R=0.000 F1=0.000  tp=0 fp=0 fn=10
+</code></pre>
+<p>The <code>per_layer</code> breakdown is empty: nothing was detected by any layer, so
+there is nothing to break down by layer. Zero recall is exactly what
+design.md predicted — the rule is anchored on the gazetteer and cannot match
+a first name outside it. The only layer on this seam that could find these
+names is <code>openanonymiser</code>, so the full-pipeline number (adding that layer) is
+<strong>not run</strong>, for the same unreachable-service reason as the before/after run
+above.</p>
+<p>Recall on real documents is unknown.</p>
+<p>The Gooise Meren miss is not closed by this change: document <code>1c87f856</code>
+(pilot report, wordsworth #284) keeps its readable name until
+<code>reanonymise-particle-name-documents</code> re-anonymises it.</p>
+<h2 id="how-the-audit-aggregate-counts-a-person">How the audit aggregate counts a person</h2>
+<p>Separate from the two evaluation CLIs above: how does the per-layer audit
+aggregate (<code>DetectionStats</code>, built by <code>stats.add</code> in <code>pseudonymizer.py</code>) count
+a <code>PERSON</code> detection? By value, never by offset — the same rule
+<code>_pseudonymize_entities</code> already applies to replacement. Normally each
+detection is one row. The exception is a bare first name detected next to the
+full name of the same person (GLiNER sometimes returns both spans): the
+full-name value's row is kept and the bare first name is dropped before the
+aggregate loop runs, via <code>wordsworth/person_spans.py</code>, so that one person is
+not counted twice. Two detections of the <em>same</em> value are still two separate
+rows, unchanged from before this helper existed. Replacement in the text is
+unaffected either way — <code>_pseudonymize_entities</code> keeps receiving every
+detection, bare name included, so the index is never missing a redaction. See
+<code>tests/test_person_spans.py</code>.</p>
 <h2 id="over-detection-baseline-redaction-overdetection">Over-detection baseline (redaction-overdetection)</h2>
 <p>Separate again: not "does detection find PII" but "does detection find things
 that are NOT PII" — ordinary Dutch words redacted as ORGANIZATION, LOCATION or
@@ -13263,7 +13414,11 @@ python -m wordsworth.eval.overdetection_run gold.jsonl --out meting-overdetectie
 <p>The first line measures with the current lists applied, the second without —
 same gold corpus, same detection pass, only the lists behind it differ (meting
 05's rule for isolating a list's effect). <code>gold.jsonl</code> is the same format as
-<code>pii_run</code> above; <code>tests/fixtures/pii_gold_synthetic.jsonl</code> works for both.</p>
+<code>pii_run</code> above; <code>tests/fixtures/pii_gold_synthetic.jsonl</code> works for both.
+<code>--layers</code> (default <code>deterministic,openanonymiser</code>, see above) selects the
+detection seam for both sides the same way as <code>pii_run</code>; adding
+<code>dutch_particle_name</code> and writing to a new <code>--out</code> is how
+<a href="../../explanation/meting-overdetectie-08/">meting 08</a> measured that layer.</p>
 <ul>
 <li><strong>Needs the service.</strong> The baseline always calls OpenAnonymiser — the
   deterministic layer alone cannot even find these words; it has no

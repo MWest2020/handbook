@@ -6257,6 +6257,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#push-met-retry-worker-push-retry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push met retry (worker-push-retry)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#branch-en-run-report-conventie" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -10632,6 +10643,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../wordsworth/explanation/meting-overdetectie-08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 08 — de particle-regel als laag in de overdetectie-basislijn
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--not-run"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../wordsworth/explanation/meting-restwaarden-03/" class="md-nav__link">
         
   
@@ -10885,10 +10931,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_12" id="__nav_19_2_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
             
   
   
@@ -10906,8 +10952,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_12_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_12">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_13">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -13342,6 +13388,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#push-met-retry-worker-push-retry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push met retry (worker-push-retry)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#branch-en-run-report-conventie" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13703,6 +13760,22 @@ before; its body is inlined into the role's prompt.</p>
   has none yet</strong>, so a chain with an architect needs that seed first.</li>
 </ul>
 <p>Tests: <code>bash worker/test-role-seed.sh</code> (CI step <code>role-seed-tests</code>).</p>
+<h2 id="push-met-retry-worker-push-retry">Push met retry (worker-push-retry)</h2>
+<p>Stap 7 van <code>worker/entrypoint.sh</code> pusht de rol-branch via <code>push_with_retry</code>
+(<code>worker/push-retry.sh</code>, sourced zoals <code>role-seed.sh</code>): tot 4 pogingen, met 5,
+15 en 45 seconden ertussen, elke mislukte poging gelogd met zijn exit-code.
+Alleen als alle pogingen mislukken faalt de push — en daarmee de Job — nog
+zoals voorheen. De branch is run-unieke (bevat <code>HABITAT_RUN_ID</code>), dus een
+herhaalde push is nooit een force push en overschrijft nooit een andere run.</p>
+<p>Op 2026-11-04 passeerde een wordsworth-reviewer architect, builder en reviewer
+(PASS, geen findings); de keten stopte toch, op een eenmalige GitHub-serverfout
+bij <code>git push</code> onder <code>set -e</code>. Dat kostte een rebuild van de hele keten voor een
+fout die niets met de rol-uitkomst te maken had.</p>
+<p><strong>Deploy:</strong> de worker draait vanaf een gepind image (<code>worker_image</code> in
+ratatoskr's <code>agents/factory.yml</code>). De fix werkt pas na een nieuwe
+<code>worker-image.yml</code>-build op de merge-commit en een bump van die pin.</p>
+<p>Tests: <code>bash worker/test-push-retry.sh</code> (CI draait elk <code>worker/test-*.sh</code>, zie
+hierboven).</p>
 <h2 id="branch-en-run-report-conventie">Branch- en run-report-conventie</h2>
 <ul>
 <li>De worker pusht een <strong>run-unieke</strong> branch

@@ -10322,6 +10322,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../explanation/meting-overdetectie-08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meting 08 — de particle-regel als laag in de overdetectie-basislijn
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--not-run"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../explanation/meting-restwaarden-03/" class="md-nav__link">
         
   
@@ -10575,10 +10610,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_12" id="__nav_19_2_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
             
   
   
@@ -10596,8 +10631,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_12_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_12">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_13">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -13163,6 +13198,22 @@ precisie kosten. Van de 14 voornamen in <code>eval/synthetic.py</code> blijven <
 (losstaand, zie <code>reanonymise-particle-name-documents</code>).</p>
 <p>Zie <code>tests/test_particle_names.py</code> voor het gedrag, de gazetteer-weigeringen
 en de grens tussen wat wel en niet matcht.</p>
+<p><strong>De rem op de gazetteer.</strong> <code>tests/test_particle_names_veiligheid.py</code> toetst
+elke gazetteer-entry tegen het evaluatiecorpus (zoals
+<code>test_allow_list_veiligheid.py</code> dat voor de allow-lijst doet): een entry die
+niet vóór een partikel en achternaam voorkomt telt niet mee als geslaagd en
+faalt met de naam van die entry, en alleen een geoefende entry wordt ook nog
+getoetst op valse <code>PERSON</code>-treffers. Hetzelfde bestand bewaakt dat elk
+partikel minstens één <code>PERSON</code>-zin heeft in de vaste zinnenlijst
+<code>tests/fixtures/gewone_zinnen_nl.txt</code> — kolommen <code>PERSON&lt;TAB&gt;zin&lt;TAB&gt;volledige
+naam</code> of <code>GEEN&lt;TAB&gt;zin</code>, met een <code>{naam}</code>-slot. <code>tests/test_particle_names_zinnen.py</code>
+loopt elke gazetteer-entry over elke zin: een <code>PERSON</code>-zin verwacht precies die
+volledige naam (en dat hij na anonimiseren niet meer leesbaar is), een
+<code>GEEN</code>-zin verwacht geen <code>PERSON</code>. Een treffer faalt de toets en noemt de
+entry; geen van beide bestanden schrijft naar <code>voornamen.json</code> — een gemiste
+naam herstel je zoals hierboven, met de hand. Dit bewijst dat de regel wordt
+geoefend en dat er geen <code>Ton</code>-achtige entry verscheept is, niet dat de
+gazetteer compleet is.</p>
 <h2 id="waar-de-lijsten-leven">Waar de lijsten leven</h2>
 <p>In de repo (<code>lists/</code>), mee in het image, <strong>niet</strong> in een ConfigMap. De
 content-hash staat in elk de-identificatie-auditrecord zodat een document terug
