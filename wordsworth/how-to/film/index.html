@@ -13159,7 +13159,8 @@ for every claim, with the reason.</p>
 drop.</p>
 <ul>
 <li><strong>pytest</strong> checks need the integration tests to <em>pass</em>. A skipped test counts as not
-  proven. So the test database has to be there (<code>WORDSWORTH_TEST_DATABASE_URL</code>), along
+  proven. A parametrized test can be named without its <code>[case]</code>: it then counts as
+  passed only when every case passed. So the test database has to be there (<code>WORDSWORTH_TEST_DATABASE_URL</code>), along
   with OpenSearch.</li>
 <li><strong>facts</strong> checks need the live probe. It is
   <a href="../../tools/film/live_facts.py"><code>tools/film/live_facts.py</code></a>, piped into the API pod
