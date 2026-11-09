@@ -11377,6 +11377,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/originals-encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbook: originals encryption
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/pdf-redaction/" class="md-nav__link">
         
   
@@ -13259,12 +13294,24 @@ object store (<a href="../../explanation/adr/0008-envelope-encryption-of-origina
   of a database transaction that rolled back after the object was already
   written (S3 and Postgres cannot share one transaction). Dry-run by default;
   see <a href="../../how-to/sealed-orphans/">the how-to</a>.</li>
-<li><strong>Nothing is sealed in production yet.</strong> This module builds the cipher and
-  the key store only; ingest and every read site (<code>pipeline.py</code>, <code>recovery.py</code>,
-  <code>api.py</code>) still read and write plain objects. <code>originals-ingest-readers</code> and
-  <code>originals-ingest-write</code> move them onto the originals seam,
-  <code>originals-ingest-switch</code> turns it on in production, and <code>originals-ocr-sealed</code>
-  seals the OCR write.</li>
+<li><strong>Ingest order and the running service.</strong> <code>write_original</code> is called from
+  inside <code>pipeline.ingest</code>, after the document is registered: the row exists
+  before the object is sealed, so a rollback after a failed write deletes only
+  the object this call wrote (<code>originals-ingest-write</code>). Every reader --
+  <code>pipeline.process</code>, <code>pipeline.reanonymize</code>, OCR recovery's input read, and
+  the redacted/reveal PDF routes -- opens an original through <code>read_original</code>,
+  never a plain <code>store.get</code> (<code>originals-ingest-readers</code>). <code>serve.build_app</code>
+  wires one process-lifetime <code>OriginalsStore</code> as <code>store</code> for the API, in both
+  pseudonymisation modes, and the CLIs (<code>ingest_corpus.py</code>, <code>ingest_manifest.py</code>)
+  get the same thing from <code>originals_io.originals_from_config</code>
+  (<code>originals-ingest-switch</code>) -- so every new original is sealed. This is the
+  code path only: a wordsworth image reaches the cluster through a digest bump
+  in homelab, and new originals are sealed in production only after that bump
+  (see <a href="../../how-to/originals-encryption/">the how-to</a> for the deploy
+  precondition). The OCR write (<code>recovery.recover</code>) is the one exception --
+  it still writes the OCR'd PDF as a plain object, read back through
+  <code>read_original</code>'s legacy-plaintext path -- until <code>originals-ocr-sealed</code>
+  seals it too.</li>
 </ul>
 <h2 id="configuration">Configuration</h2>
 <ul>
