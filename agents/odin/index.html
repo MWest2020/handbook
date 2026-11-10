@@ -4047,6 +4047,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../seeds/playtester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playtester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../seeds/reviewer/" class="md-nav__link">
         
   
@@ -13248,16 +13276,19 @@ done: odin is the hub, and a hub delegates. See <code>delegate_session</code> be
 </li>
 <li><strong>A role passes the handbook gate before it exists.</strong> Its tools are
      derived from its skills.</li>
-<li>
-<p><strong>Closing needs Mark's <code>!yes</code>,</strong> his own message by pubkey, within 24
-     hours. Odin cannot propose closing itself.</p>
-</li>
-<li>
-<p><strong>Explicitly excluded, and that stays:</strong> changing its own mandate, keys or
-  relay configuration, and inventing content on another agent's behalf. Odin
-  decides <em>which</em> of Mark's words go where; it does not phrase them.</p>
-</li>
+<li><strong>Closing needs Mark's <code>!yes</code>,</strong> his own message by pubkey, within 24
+     hours. Odin cannot propose closing itself.</li>
 </ol>
+<p>It may also create a repository (<code>!newrepo &lt;name&gt; &lt;description&gt;</code>, first
+  line): always private, at most two a day, never <code>alma</code> or a name with
+  <code>conduction</code>, never an existing repo. The listener bootstraps it (openspec,
+  docs, CI) and adds it to the build list; making it public stays Mark's
+  (ratatoskr <code>docs/how-to/new-repo-from-chat.md</code>, since 2026-11-07).</p>
+<ul>
+<li><strong>Explicitly excluded, and that stays:</strong> changing its own mandate, keys or
+  relay configuration, and inventing content on another agent's behalf. Odin
+  decides <em>which</em> of Mark's words go where; it does not phrase them.</li>
+</ul>
 <p>Odin decides, gives a short reason, and delivers a concrete proposal Mark can
 act on in one step. One source of truth: every agent definition lives in the
 handbook (<code>docs/agents/</code>); odin knows the current fleet and points at it.</p>

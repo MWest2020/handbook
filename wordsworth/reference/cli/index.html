@@ -3947,6 +3947,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/seeds/playtester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playtester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/seeds/reviewer/" class="md-nav__link">
         
   
@@ -13546,7 +13574,8 @@ kept <code>wordsworth-ingest</code> (the batch-ingest Job) from starting between
   the whole run on that signal: <code>client.py</code>'s retry handling
   (<code>client.py:178-184</code>) treats a batch that still fails after retries as a
   generic batch failure and moves on to the next batch, the same as any other
-  5xx. This is not fixed here. Follow-up issue: TODO (not yet filed). Exit
+  5xx. This is not fixed here. Follow-up issue:
+  <a href="https://github.com/MWest2020/wordsworth/issues/403">#403</a>. Exit
   code is non-zero if any file failed.</li>
 <li>The pipeline is <strong>PDF-only</strong>; non-PDF files come back as <code>error</code>.</li>
 </ul>

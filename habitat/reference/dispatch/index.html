@@ -3947,6 +3947,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/seeds/playtester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playtester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/seeds/reviewer/" class="md-nav__link">
         
   
@@ -6286,6 +6314,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Volle keten: chain.sh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#playtester-add-playtester-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playtester (add-playtester-role)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -13453,6 +13498,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Volle keten: chain.sh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#playtester-add-playtester-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playtester (add-playtester-role)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13852,6 +13914,25 @@ hierboven).</p>
 security en geeft de run-unieke builder-branch automatisch door aan reviewer en
 security (<code>HABITAT_BASE_BRANCH</code>). Zelfde env als <code>dispatch.sh</code> (<code>WORKER_IMAGE</code>
 verplicht).</p>
+<h3 id="playtester-add-playtester-role">Playtester (add-playtester-role)</h3>
+<p>Tussen reviewer en security draait de <code>playtester</code> als de doelrepo meedoet:</p>
+<pre><code class="language-yaml"># .factory/playtest.yml in de doelrepo
+paths: [web/**]          # alleen een change die hier iets raakt, wordt bespeeld
+serve_dir: web           # of serve_cmd: &quot;npm run preview -- --port {port}&quot;
+viewports: [390x844, 1280x800]
+checks: |                # vrije tekst voor de rol: wat moet je proberen
+  Open een spel en speel één ronde.
+</code></pre>
+<p><code>playtest_gate.py &lt;repo&gt; &lt;builder-branch&gt;</code> leest dat bestand en de diff via <code>gh</code>
+en beslist (exit 0 = draaien). In de kooi serveert <code>playtest-shoot</code> de app op
+127.0.0.1 en maakt screenshots; verzoeken naar andere hosts worden geblokkeerd
+en gemeld. De kooi heeft geen netwerk: een <code>serve_cmd</code> moet zonder downloads
+draaien (statische bestanden of al geïnstalleerde deps).</p>
+<p>Een FAIL stopt de keten zoals bij elke rol. Een reparatieronde (builder opnieuw
+met de bevindingen van de playtester) is de volgende stap; die bestaat nog niet.
+De rol komt uit de handbook-seed <code>docs/agents/seeds/playtester.md</code>; zolang
+<code>handbook_ref</code> daar niet naar wijst, faalt de rol dicht. Zet daarom pas een
+<code>.factory/playtest.yml</code> in een repo als ratatoskr's <code>handbook_ref</code> de seed bevat.</p>
 <h2 id="uitkomst">Uitkomst</h2>
 <p><code>dispatch.sh</code> wacht op een <strong>terminale</strong> <code>Job.status.conditions</code> (<code>Complete</code>
 of <code>Failed</code>) en vertaalt die naar een exit-code. De wachttimeout is

@@ -3947,6 +3947,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/seeds/playtester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playtester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/seeds/reviewer/" class="md-nav__link">
         
   
@@ -13314,8 +13342,19 @@ ref is set; since 2026-10-27 the MWest2020 repos carry no such copies any more
 <td>nee</td>
 <td><code>security-review</code></td>
 </tr>
+<tr>
+<td><code>playtester</code></td>
+<td>opent de app in headless Chromium, speelt wat de change zegt, leest de screenshots (add-playtester-role)</td>
+<td>nee</td>
+<td>—</td>
+</tr>
 </tbody>
 </table>
+<p>De playtester draait alleen in een repo met <code>.factory/playtest.yml</code> en alleen als
+de change een van de <code>paths</code> raakt (<code>dispatch/playtest_gate.py</code>). Allowlist: die
+van de reviewer plus <code>playtest-shoot</code>; schema: dat van de reviewer plus
+<code>screenshots</code>. Zijn work tree wordt na de run teruggezet; tot 12 screenshots gaan
+mee als <code>playtest-*.jpg</code> in de artefacten.</p>
 <h2 id="allowlist-en-deny-per-rol">Allowlist en deny per rol</h2>
 <p><strong>architect / reviewer / security</strong> (identieke settings):</p>
 <ul>
@@ -13428,7 +13467,7 @@ elk gevonden geheim.</p>
 <li><strong>Container + Cilium</strong> — de buitenste grens: non-root pod zonder
    capabilities, per rol een eigen ServiceAccount zonder token of
    RBAC-rechten (<code>role-architect</code>/<code>role-builder</code>/<code>role-reviewer</code>/
-   <code>role-security</code>, <code>automountServiceAccountToken: false</code>; <code>cage/rbac.yaml</code>),
+   <code>role-security</code>/<code>role-playtester</code>, <code>automountServiceAccountToken: false</code>; <code>cage/rbac.yaml</code>),
    plus de Cilium-egress-allowlist als netwerkgrens.</li>
 </ol>
 <h2 id="netwerk-begrensd-niet-geisoleerd">Netwerk: begrensd, niet geïsoleerd</h2>

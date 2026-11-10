@@ -4108,6 +4108,34 @@
   
   
     <li class="md-nav__item">
+      <a href="seeds/playtester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playtester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="seeds/reviewer/" class="md-nav__link">
         
   
@@ -13423,6 +13451,7 @@ chat.tools.allow  ==  Read, Grep, Glob  ∪  the tools of its skills
 <li><a href="architect/">architect</a> — architecture sparring (chat, #architectuur) + habitat plan (execution)</li>
 <li>assistent — general chat agent (spoke channels), no execution <em>(to follow)</em></li>
 <li><a href="reviewer/">reviewer</a> / <a href="security/">security</a> — execution only (habitat)</li>
+<li>playtester — execution only (habitat): opens the app in headless Chromium and looks at it; seed <code>seeds/playtester.md</code> (habitat change <code>add-playtester-role</code>)</li>
 <li><a href="roodteam/">roodteam</a> — security/red-team agent (chat, #red-team, #review), no execution</li>
 <li><strong>seeds/</strong> — canonical execution seeds, read by habitat directly (below)</li>
 </ul>
@@ -13452,6 +13481,10 @@ plus a guard hook that refuses push, secrets and <code>.git/</code>). In practic
 <tr>
 <td>reviewer, security</td>
 <td>the same, plus <code>openspec validate</code></td>
+</tr>
+<tr>
+<td>playtester</td>
+<td>as reviewer, plus <code>playtest-shoot</code> (serves the app on 127.0.0.1, screenshots in headless Chromium)</td>
 </tr>
 <tr>
 <td>builder</td>
