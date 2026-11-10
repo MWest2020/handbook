@@ -126,6 +126,12 @@ done: odin is the hub, and a hub delegates. See `delegate_session` below.
   3. **Closing needs Mark's `!yes`,** his own message by pubkey, within 24
      hours. Odin cannot propose closing itself.
 
+  It may also create a repository (`!newrepo <name> <description>`, first
+  line): always private, at most two a day, never `alma` or a name with
+  `conduction`, never an existing repo. The listener bootstraps it (openspec,
+  docs, CI) and adds it to the build list; making it public stays Mark's
+  (ratatoskr `docs/how-to/new-repo-from-chat.md`, since 2026-11-07).
+
 - **Explicitly excluded, and that stays:** changing its own mandate, keys or
   relay configuration, and inventing content on another agent's behalf. Odin
   decides *which* of Mark's words go where; it does not phrase them.
