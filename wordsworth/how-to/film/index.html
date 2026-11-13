@@ -13198,6 +13198,11 @@ into the file.</p>
 <ol>
 <li>It runs every check and writes the resolved claims: the shown claims with their
    filled sentences, and the dropped claims with the reason.</li>
+<li>If the live installation cannot be asked at all (ssh cannot connect, for example
+   because the jump host is down, or the probe hangs), it prints <code>unreachable</code> and
+   stops without changing anything: a claim that could not be checked today is not
+   disproved, so the last film stays. A probe that runs and breaks is different: its
+   claims drop, so the bug shows.</li>
 <li>It compares the result with <code>&lt;outdir&gt;/claims.json</code> from the last build. If the film
    would say the same thing, it prints <code>unchanged</code> and stops. A drop reason worded
    differently does not count as a change.</li>
@@ -13228,7 +13233,8 @@ drop.</p>
 <li><strong>facts</strong> checks need the live probe. It is
   <a href="../../tools/film/live_facts.py"><code>tools/film/live_facts.py</code></a>, piped into the API pod
   (<code>ssh jumpy kubectl … exec -i deploy/wordsworth-api -- python -</code>). It prints counts
-  and yes/no flags only. If the probe fails, every facts claim drops.</li>
+  and yes/no flags only. If the probe runs and fails, every facts claim drops; if ssh
+  cannot reach the installation, the build keeps the last film (step 2).</li>
 <li><strong>cmd</strong> checks run from the repo root:</li>
 <li><code>licence_check.py</code> compares GitHub's licence, <code>LICENSE</code> and the SPDX headers.</li>
 <li><code>pilot_facts.py</code> reads the numbers from the pilot report.</li>
