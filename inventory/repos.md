@@ -82,6 +82,7 @@ No personal repos. The `handbook` repo (change 3) will be the first.
 | Install_scripts | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | internetnl-cli | github | active | public | public-ok | yes | no | yes | yes | yes | Habitat target repo (added 2026-08-22): a CLI for the Internet.nl batch API plus a self-hosting recipe. MIT (a deliberate deviation from the EUPL default, Mark's decision 2026-08-22). Docs contract and verify gate (uv + pytest) from the first commit. Route: a self-hosted batch instance plus an API of our own (wordsworth-style); hosted accounts deliberately skipped (bottleneck). |
 | iso-audit | github | active | public | public-ok | yes | yes | yes | yes | yes | Nice-to-have (wave 2, besluit Mark 2026-07-12). Docs-contract-PR gemerged 2026-07-13 (habitat wave 2, reviewer PASS). |
+| jarvis | github | active | private | private-only | yes | yes | no | no | yes | Voice bridge phone → Claude Code (OpenSpec add-voice-bridge, approved 2026-11-14). docs/index.md is the entry point. |
 | javascript-basics-practice | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |
 | keysentry | github | archive | public | public-ok | no | no | no | no | no | oud studie-/experimenteerwerk, dood -> archiveren op de forge |
 | Langchain | github | archive | public | public-ok | n/a | n/a | no | no | no | gearchiveerd op forge |

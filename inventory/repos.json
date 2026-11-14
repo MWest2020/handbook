@@ -2192,7 +2192,7 @@
   {
     "repo": "jarvis",
     "forge": "github",
-    "tier": "TBD",
+    "tier": "active",
     "visibility": "private",
     "sensitivity": "private-only",
     "has_docs": "yes",
