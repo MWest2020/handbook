@@ -2188,5 +2188,19 @@
     "notes": "Private, active agent development; content of unknown sensitivity -> fail closed. Docs-contract PR merged 2026-07-13 (habitat wave 2, reviewer PASS). Docs gates rolled out 2026-07-20 (add-docs-gates): caller -> handbook@main, code_paths config/,scripts/,sources/ (fail; warn -> fail 2026-07-21, signal model). Verify gate rolled out 2026-07-22 (add-test-gate): uv + pytest. Phone-to-vault clipping works: phone-intake-v1 and url-intake-v1 finished and archived (2026-08-10). Clipping proven through the phone share-text route (first substantive clip 2026-08-04, MCP architecture); the dispatch shortcut is not installed but the dispatch chain itself is proven green. No open openspec changes left.",
     "contract_applied": "yes",
     "verify_gate": "yes"
+  },
+  {
+    "repo": "jarvis",
+    "forge": "github",
+    "tier": "active",
+    "visibility": "private",
+    "sensitivity": "private-only",
+    "has_docs": "yes",
+    "has_mcp_json": "yes",
+    "needs_mcp_json": "no",
+    "needs_docs": "no",
+    "handbook_import": "yes",
+    "notes": "Voice bridge phone → Claude Code (OpenSpec add-voice-bridge, approved 2026-11-14). docs/index.md is the entry point.",
+    "contract_applied": "yes"
   }
 ]
