@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11405,6 +11440,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/originals-encryption/" class="md-nav__link">
         
   
@@ -11947,6 +12017,17 @@
     <span class="md-ellipsis">
       
         The key service is unreachable: the batch stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ingest-racing-a-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingest racing a deletion
       
     </span>
   </a>
@@ -13203,6 +13284,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ingest-racing-a-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingest racing a deletion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-page-with-no-text-layer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13398,6 +13490,35 @@ outage) still continues the batch, exactly as before.</p>
 <p><code>wordsworth-ingest</code> and its <code>--manifest</code> form (below) fail the same way: they
 exit non-zero, print <code>key service unavailable</code> on stderr, and do not go on to
 the next file.</p>
+<h2 id="ingest-racing-a-deletion">Ingest racing a deletion</h2>
+<p>Content already ingested is the live document for its bytes. Before writing
+the original, ingest locks that document's row <code>FOR SHARE</code> and checks again
+that it is still live (#452). A deletion locks the same row before it removes
+anything, so it either commits first or waits for the ingest to commit. When the deletion won, the bytes are
+ingested as a new document, exactly as if they arrived after it (see
+document-deletion, "The same bytes can be ingested again"); the deleted
+document gets no write and no key row. OCR recovery retiring a scan locks
+the scan's row the same way, so an ingest of the scan's bytes waits for it and
+then becomes a new document too.</p>
+<p>Processing (<code>process</code>: profile, extract, anonymize, index) locks the row
+<code>FOR SHARE</code> too, before it reads the document's state (#462). A deletion that
+arrives while a document is processed waits until processing commits, and
+then removes what it wrote: the index entry and the stored text. A deletion
+already under way makes processing wait; it then reads <code>deleted</code> and does
+nothing. Re-anonymizing (<code>reanonymize</code>, the <code>reprocess</code> backfill) takes the
+same lock the same way (#463), so a deletion cannot be undone by a backfill
+that read the document just before it. A dossier deletion locks all its members' rows, and the rows of
+their superseded copies, before its first audit record, so it does not
+deadlock with either, nor with a deletion of such a copy.</p>
+<p>A deleted document that still holds its content key (deleted before deletions
+released it) is refused. <code>POST /ingest</code> reports that file with
+<code>"state": "error"</code> and the fixed <code>error</code> "no live document for these bytes
+could be locked; a deleted document still holding their object key is
+released by wordsworth-release-deleted-keys"; the rest of the batch goes on.
+<code>wordsworth-ingest</code> prints <code>&lt;file&gt;: refused: …</code> on stderr, goes on, and the
+run exits with status 1. The server log has one <code>ingest_refused</code> JSON line with
+the document id and the object key; run <code>wordsworth-release-deleted-keys
+--apply</code> and ingest again.</p>
 <h2 id="a-page-with-no-text-layer">A page with no text layer</h2>
 <p>A document whose text extraction and OCR recovery together yield no text ends
 in a visible error state (<code>unprocessable_ocr</code>, shown by the API and the

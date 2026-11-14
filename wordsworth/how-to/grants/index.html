@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11561,6 +11596,41 @@
     
   
     Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
   
 
     
@@ -13333,10 +13403,14 @@
 reveal stops working immediately). Every issue/revoke is recorded in the
 key-lifecycle audit stream.</p>
 <blockquote>
-<p><strong>Auth caveat.</strong> This is an operator/admin surface with <strong>no caller
-authentication yet</strong> — the API is tailnet-internal and the <code>grant_id</code> is a
-bearer capability (anyone holding it can reveal what it allows). A real auth
-model is a pending decision; treat <code>grant_id</code>s as secrets until then.</p>
+<p><strong>Auth.</strong> With API-key authentication on (<code>WORDSWORTH_API_KEYS</code>, see
+<a href="../api-auth/">api-auth</a>) every grant route needs a valid key, only the labels
+in <code>WORDSWORTH_GRANT_ISSUER_LABELS</code> may issue or revoke (see
+<a href="#who-may-issue-a-grant">who may issue a grant</a>), and a reveal is honoured
+only for the caller the grant names as recipient. Without auth, the
+tailnet-internal mode, none of that applies: anyone who reaches the API can
+issue and revoke, and a <code>grant_id</code> is a bearer capability (anyone holding it
+can reveal what it allows). In that mode, treat <code>grant_id</code>s as secrets.</p>
 </blockquote>
 <h2 id="issue">Issue</h2>
 <p>CLI:</p>
@@ -13468,7 +13542,11 @@ implicitly by any level.</p>
 <h2 id="revoke">Revoke</h2>
 <pre><code class="language-sh">wordsworth grant revoke &lt;grant_id&gt;        # POST /grants/{id}/revoke  (idempotent)
 </code></pre>
-<p>After revocation, <code>POST /documents/{id}/reveal</code> with that grant returns 403.</p>
+<p>After revocation, <code>POST /documents/{id}/reveal</code> with that grant returns 403.
+The <code>grant_revoked</code> record names who revoked it: the authenticated caller's
+label, or <code>onbekend</code> when auth is off, the same as <code>grant_issued</code> names who
+issued. Before #443 it always said <code>operator</code>, so a revoke recorded before
+that fix does not say who did it.</p>
 <h2 id="use-a-grant-to-reveal">Use a grant to reveal</h2>
 <pre><code class="language-sh">curl -XPOST $API/documents/&lt;doc&gt;/reveal -H 'content-type: application/json' \
   -d '{&quot;grant_id&quot;:&quot;&lt;grant_id&gt;&quot;,&quot;types&quot;:[&quot;PERSON&quot;]}'

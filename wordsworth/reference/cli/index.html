@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11405,6 +11440,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/originals-encryption/" class="md-nav__link">
         
   
@@ -11869,6 +11939,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -13272,6 +13359,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13508,6 +13612,44 @@ subset, not full YAML). <code>install-cli.sh --url</code> writes it for you.</p>
 <li>built-in default <code>http://localhost:8000</code></li>
 </ol>
 <p><code>--batch</code> / <code>--timeout</code> resolve as: flag → config file → built-in default.</p>
+<h3 id="api-key">API key</h3>
+<p>An installation with caller authentication on (see
+<a href="../../how-to/api-auth/">API-key authentication</a>) refuses every request except
+<code>health</code> without a key: <code>HTTP 401</code>. Give the client its key in one of two ways;
+it is then sent as the <code>X-API-Key</code> header on every request:</p>
+<ol>
+<li><code>$WORDSWORTH_API_KEY</code> — preferred. Set it for the session without the key
+   ever appearing in a command line, e.g. from your secret store (SOPS,
+   OpenBao) or typed at a hidden prompt:
+   <code>read -rs WORDSWORTH_API_KEY &amp;&amp; export WORDSWORTH_API_KEY</code>.</li>
+<li><code>api_key: &lt;key&gt;</code> in the config file. Add that line by hand and keep the file
+   private (<code>chmod 600 ~/.config/wordsworth/config.yaml</code>).
+   <code>wordsworth config --show</code> reports <code>api_key: (set, not shown)</code>, and
+   rewriting the file with <code>wordsworth config --url …</code> keeps the key.</li>
+</ol>
+<p>There is deliberately <strong>no <code>--api-key</code> flag</strong>: a key on the command line lands
+in shell history and is visible to every user on the machine in the process
+list. The environment variable wins over the config file.</p>
+<p>The key must be printable latin-1 with no whitespace inside (leading and
+trailing whitespace is trimmed). Anything else, typically a second line picked
+up from <code>$(cat keyfile)</code>, is refused before any request with exit code 2 and a
+message naming where the key came from, not the key itself.</p>
+<p>The client never prints the key. Errors name the URL and the status, and the
+hint line depends on whether a key was sent:</p>
+<ul>
+<li><code>HTTP 401</code> without a key: set <code>$WORDSWORTH_API_KEY</code>. With a key: the key was
+  not accepted (wrong or retired key for this installation).</li>
+<li><code>HTTP 403</code> with a key: the key was accepted, but its caller may not do this
+  (for instance a label outside <code>WORDSWORTH_GRANT_ISSUER_LABELS</code> revoking a
+  grant). Without a key: refused, and no key was sent.</li>
+</ul>
+<p><code>ingest</code> stops at the first 401 or 403 instead of marking every batch failed.</p>
+<p><strong>Use the https URL directly.</strong> The key is never re-sent when the API answers
+with a redirect, to any host, so it cannot be carried off by one. The flip side:
+an <code>http://</code> URL that redirects to <code>https://</code> ends in a 401, and the hint then
+names the URL it was redirected to. The client also warns on stderr when a key
+is about to go to a plain <code>http://</code> URL other than localhost, because the key
+would go out in clear.</p>
 <h2 id="commands">Commands</h2>
 <p>Every console script in <code>pyproject.toml</code> is started in its own interpreter by
 <code>tests/test_entry_points_import.py</code>. That test exists because an import cycle
@@ -13572,7 +13714,7 @@ kept <code>wordsworth-ingest</code> (the batch-ingest Job) from starting between
   stops that HTTP batch early and answers <code>503</code> with <code>detail</code> <code>key service
   unavailable</code> (see <code>docs/reference/ingest.md</code>). This CLI does not yet stop
   the whole run on that signal: <code>client.py</code>'s retry handling
-  (<code>client.py:178-184</code>) treats a batch that still fails after retries as a
+  (<code>_post_batch_with_retry</code>) treats a batch that still fails after retries as a
   generic batch failure and moves on to the next batch, the same as any other
   5xx. This is not fixed here. Follow-up issue:
   <a href="https://github.com/MWest2020/wordsworth/issues/403">#403</a>. Exit
@@ -13674,10 +13816,11 @@ answers <code>GET /documents/{id}/state</code> with <code>superseded</code> and 
 reveal on it is refused with the survivor's id. Actually deleting a document —
 removing it, not retiring it — is <code>wordsworth-delete</code>, below.</p>
 <h2 id="wordsworth-delete"><code>wordsworth-delete</code></h2>
-<p>Removes a document's content: the stored object, its text, its pseudonyms,
-its mappings, its search-index entry and its grants. The <code>documents</code> row and
-its audit trail stay — the trail is append-only, the same reason a superseded
-copy keeps its row. There is <strong>no undo</strong>.</p>
+<p>Removes a document's content: the stored object, its text, its cached
+redacted PDFs and box map (<code>renders_removed</code>, <code>box_maps_removed</code>), its
+summary (<code>summaries_removed</code>), its pseudonyms, its mappings, its search-index
+entry and its grants. The <code>documents</code> row and its audit trail stay — the trail
+is append-only, the same reason a superseded copy keeps its row. There is <strong>no undo</strong>.</p>
 <pre><code class="language-bash">wordsworth-delete &lt;document-id&gt; [&lt;document-id&gt; ...] --actor &lt;who&gt; [--dry-run]
 </code></pre>
 <p><code>--actor</code> is required and is checked the same way the API checks a caller:
@@ -13689,7 +13832,10 @@ path, and stops before the first removal — no store, index or database
 change, and no <code>deleted</code> record. Each named document commits on its own, so a
 failure partway through a multi-document run leaves only the untouched ones
 for a rerun to finish; removing what a previous run already removed is a
-no-op.</p>
+no-op. A rerun over an already-deleted document still removes a leftover
+render, box map or summary, and records that as one <code>remove-renders</code> audit
+record with <code>{actor, renders_removed, box_maps_removed, summaries_removed}</code>
+(<a href="../../how-to/deleting-documents/">deleting documents</a>).</p>
 <h3 id="-dossier"><code>--dossier</code></h3>
 <pre><code class="language-bash">wordsworth-delete --dossier &lt;dossier-id&gt; --actor &lt;who&gt; [--dry-run]
 </code></pre>

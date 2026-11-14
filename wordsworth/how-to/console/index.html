@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11242,6 +11277,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-result-matched" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a result matched
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -11572,6 +11624,41 @@
     
   
     Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
   
 
     
@@ -13233,6 +13320,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-result-matched" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a result matched
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13392,7 +13496,41 @@ instead of seeing the key form; <code>?key=1</code> always shows the form anyway
 key route stays reachable. With no identity provider configured, or no
 assertion on the request, the form shows as before.</p>
 <h2 id="what-the-pages-show">What the pages show</h2>
-<p><strong><code>/console</code></strong> lists documents by the name they arrived under, with their state
+<p><strong><code>/console</code></strong> starts on a dossier. It lists every dossier with its number of
+live documents (deleted and superseded ones are not counted) and its number of
+topics. An installation with exactly one dossier has nothing to choose, so
+<code>/console</code> answers <code>303</code> straight to that dossier's page. With none, the page
+says so and links the full list.</p>
+<p><strong><code>/console/dossier?dossier=&lt;name&gt;</code></strong> is the dossier page. The dossier is a
+query parameter, like on every other console page, and not a path segment:
+names are free text, and a name with a slash would match no route as a path, so
+the answer that lists the dossiers could never be reached for it. Encode the
+name (<code>a/b</code> is <code>?dossier=a%2Fb</code>, <code>a b</code> is <code>?dossier=a%20b</code>); the console's own
+links already do. The page shows:</p>
+<ul>
+<li>a question box that searches this dossier (<code>/console/search?dossier=…</code>);</li>
+<li>the dossier's topics, largest first, with their number of documents and a
+  link that searches within the topic (<code>&amp;topic=&lt;id&gt;</code>), plus one line saying how
+  many of the live documents fall in a topic at all (a topic list that covers
+  under half the dossier would otherwise read as the whole dossier). The count
+  per topic is from the last computation. When the topics count more documents
+  than the dossier now holds, documents were deleted since; the page says so
+  and links the topics page to compute them again, rather than showing a
+  fraction above one or clamping it;</li>
+<li>its live documents, most recently touched first, with the same 200-row cap,
+  hidden-documents notice and <code>&amp;alles=1</code> toggle as the full list below.</li>
+</ul>
+<p>An unknown name answers <code>404</code> with the list of dossiers that do exist, not an
+empty page: an empty page for a typo reads as "this dossier holds nothing". No
+name at all (<code>/console/dossier</code>, <code>?dossier=</code>) answers <code>303</code> to <code>/console</code>, where
+a dossier is chosen.</p>
+<p>A dossier name may contain a comma. A search scope (<code>/console/search?dossier=</code>
+and the API's <code>GET /search?dossier=</code>) is first tried as one whole name and only
+then read as a comma-separated list, so the dossier <code>a,b</code> searches itself and
+not <code>a</code> and <code>b</code>. With no dossier named <code>a,b</code>, <code>a,b</code> still means both.</p>
+<p><strong><code>/console/documents</code></strong> ("alle documenten") is the full list that used to be
+the home page, kept for operators: every document across all dossiers, by the
+name it arrived under, with their state
 and the PII types found, most recently touched first. A document ingested before
 names were recorded shows as <code>naamloos (&lt;first 8 of the hash&gt;)</code> —
 <code>wordsworth-backfill-filenames</code> can give those their names back where the files
@@ -13404,7 +13542,7 @@ answer "what would the detectors say today", which is a different question from
 retired row of the same object (<code>wordsworth-supersession</code>), so by default the
 list hides both: documents whose state is <code>deleted</code>, and superseded copies. A
 cleaned-up corpus would otherwise show mostly what was removed and bury what is
-worth reading. <code>?alles=1</code> is the explicit toggle that shows them too, with their
+worth reading. <code>?alles=1</code> (<code>/console/documents?alles=1</code>) is the explicit toggle that shows them too, with their
 state; the total in the badge follows the same rule as the rows underneath it.
 When something is hidden the page says so, with one total and a link to the
 toggle — a list that silently leaves rows out reads as the whole corpus. A list
@@ -13439,9 +13577,77 @@ subtree only.</p>
 Picking one is compulsory; "alle dossiers" is possible but has to be said. A
 forgotten scope must never mean the widest possible answer — that is the whole
 point of scoping.</p>
-<p>It shows per hit its score and a fragment <strong>of the stored pseudonymised text</strong>. A fragment taken from
-a source document would look identical and prove the opposite of what this page
-is for.</p>
+<p>It shows per hit a quotation <strong>of the stored pseudonymised text</strong>. A quotation
+taken from a source document would look identical and prove the opposite of what
+this page is for. The score is a tooltip on the document link (<code>title</code>), no
+longer a column: it is a fused rank value and invites comparisons it does not
+support.</p>
+<h3 id="why-a-result-matched">Why a result matched</h3>
+<p>For each of the <strong>first ten hits</strong> on the page, the console shows <strong>the passage
+of the document closest to the question</strong> (change search-matching-passage). It
+reads the stored passage vectors of those ten documents from the index
+(<code>SearchIndex.passages_of</code>, one <code>mget</code> on OpenSearch), embeds the question a
+second time with the same embedder, and takes the passage with the highest
+cosine. The passage is cut from the stored text by offset
+(<code>passages.split_spans</code>), so it is a substring of it, and trimmed for the row:
+a window around its first marked word, or its opening when nothing is marked,
+with "…" where it was cut. The order of the hits does not change, and nothing
+new is stored. See <a href="../../explanation/why-a-result-matched/">why a result matched</a>
+for what "closest" does and does not mean.</p>
+<p>The reason under the passage says what can be checked on the page:</p>
+<ul>
+<li><strong>"op woorden en betekenis"</strong>: the passage is the closest in meaning and
+  holds at least one query word; those words are marked;</li>
+<li><strong>"op betekenis"</strong>: the passage is the closest in meaning and holds no query
+  word; nothing is marked;</li>
+<li><strong>"op woorden"</strong>: the search ran without an embedder (keyword search), so
+  there is no question vector; the hit shows the fragment around the first
+  query word, as before.</li>
+</ul>
+<p><strong>Which words are marked.</strong> The words of the question (<code>\w+</code>), matched
+case-insensitively at a word start: "Vergunning" marks "vergunningen", while
+"gunning" never marks the inside of "vergunningen". The whole word is marked.
+Only words of <strong>four characters or more</strong> count, so "de" and "van" are neither
+marked nor turn every reason into "both". That is a rule of thumb, not a
+measurement. A pseudonym token (<code>[PERSOON:9f8e7d6c]</code>) is never marked or
+counted, so the question "persoon" does not light up every token, and the
+trimmed window never cuts a token in half. Marking is data, not markup: the template writes every piece of
+the stored text through autoescape, so a <code>&lt;script&gt;</code> in a document arrives as
+text.</p>
+<p><strong>When today's fragment is shown instead.</strong></p>
+<ul>
+<li>A hit after the tenth (<code>size</code> comes from the URL): the fragment, no reason.</li>
+<li>A document of more than <strong>200 passages</strong> (about 30,000 words): its vectors
+  are not read at all (<code>console_passage.MAX_PASSAGES</code>, counted from the stored
+  text before the read), so one huge document cannot make the page heavy. The
+  fragment, no reason.</li>
+<li>The number of stored passage vectors differs from the number of windows the
+  stored text splits into (indexed under another passage size, or the text
+  changed without a reindex), the document has no passage vectors, or its
+  vectors have another dimension than the question's (indexed by another
+  embedder; logged): the fragment, no reason.</li>
+<li>The index cannot be read for the passages, for whatever reason (unreachable,
+  a 429 or 503 from OpenSearch, any other error), or the second embedding of
+  the question fails after the same bounded retry <code>hybrid_search</code> uses: every
+  hit shows the fragment and the page says "De passages zijn nu niet
+  beschikbaar". The results themselves stay: the search succeeded. The log
+  says which exception class, nothing more.</li>
+<li>A malformed stored vector (a <code>None</code> in it): that hit shows the fragment, the
+  others keep their passage; one warning per page, with the count.</li>
+</ul>
+<p><strong>The log line.</strong> Every read logs one JSON line on the <code>wordsworth.search</code>
+logger: <code>{"event": "passages_read", "driver": …, "ids": …, "passages": …,
+"floats": …, "bytes": "unknown", "ms": …}</code>, with no id and no text. It is there
+to measure the payload. <code>bytes</code> is "unknown" because the OpenSearch client
+returns a parsed answer without its raw size; <code>floats</code> is the count of numbers
+that crossed the wire, at roughly 20 bytes each as JSON. The <strong>estimate</strong> until
+then: a passage vector is 1024 numbers (bge-m3), about 20 kB as JSON; a
+12,000-word document has about 80 passages (1.6 MB), so ten of them are about
+16 MB per page. The 200-passage cap bounds one document at about 4 MB. That is an estimate, not a measurement: the
+OpenSearch read has run in CI on a small index only, and the figure from the
+demo rehearsal on the real dossier replaces it here. If the read takes more
+than a second there, the server-side alternative (a nested kNN with inner
+hits) is reopened as a decision of its own.</p>
 <p>The offered terms are examples, not a promise: whether one matches depends on the
 corpus that happens to be loaded. A term with no hits says so; an index that is
 down says <em>that</em>, rather than returning an empty list that reads as "nothing
@@ -13483,7 +13689,7 @@ pseudonymisation is right, so a wrong label is worse than none.</p>
 <h2 id="what-the-browser-is-allowed-to-do-with-it">What the browser is allowed to do with it</h2>
 <p>The console sends <code>Content-Security-Policy</code> with <code>frame-ancestors 'none'</code>, plus
 <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code> and
-<code>Referrer-Policy: no-referrer</code>. Only on <code>/console</code> — the API has no browser and
+<code>Referrer-Policy: same-origin</code>. Only on <code>/console</code> — the API has no browser and
 would get nothing from a CSP but surprises.</p>
 <p>Framing is the one that matters. Without it, someone can put
 <code>/console/documents/&lt;id&gt;</code> in an invisible iframe and slide the reveal button
@@ -13503,6 +13709,20 @@ ours passed, and an <code>Origin</code> with a port — local development on
 none, and locking them out would cost more than the hole. That is also the limit
 of this defence: it stops a browser, not a script — and a browser is exactly what
 the hole needed.</p>
+<p>The referrer policy and the <code>Origin</code> check are one decision. Until 2026-11-13
+the console sent <code>Referrer-Policy: no-referrer</code>. Under that policy a browser
+writes the <code>Origin</code> of a form <code>POST</code> as <code>null</code>, and <code>null</code> was refused, so every
+console form, login included, answered 403 in a real browser while curl and the
+tests stayed green (#437). With <code>same-origin</code> our own posts carry our real
+<code>Origin</code>, and a request to another site still gets no <code>Referer</code>.</p>
+<p><code>Origin: null</code> is still refused, unless the browser also sends
+<code>Sec-Fetch-Site: same-origin</code>. The browser computes that header itself and no
+page can set it, so a browser or extension that forces no-referrer on our page
+keeps working. A page elsewhere, a sandboxed frame, a <code>data:</code> page and a post
+redirected through our host all get <code>cross-site</code> and stay refused; so does
+<code>same-site</code> (a sibling host is not us), and so does <code>null</code> with no
+<code>Sec-Fetch-Site</code> at all. A real foreign <code>Origin</code> is refused whatever
+<code>Sec-Fetch-Site</code> says.</p>
 <h2 id="two-deliveries-at-once">Two deliveries at once</h2>
 <p>Ingesting into a dossier that does not exist yet creates it. Two requests doing
 that at the same moment used to make one of them wait on the unique index for as

@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11315,6 +11350,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-redacted-pdf-of-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The redacted PDF of a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-summary-of-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The summary of a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-failed-removal-is-a-hard-error" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11522,6 +11579,41 @@
     
   
     Adding a field to the search index
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
   
 
     
@@ -13186,6 +13278,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-redacted-pdf-of-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The redacted PDF of a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-summary-of-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The summary of a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-failed-removal-is-a-hard-error" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13265,6 +13379,10 @@ document is merely wrong for a dossier, remove the membership instead
 <li>the stored object (unless another, not-yet-deleted document row still
   claims the same object key — a superseded copy keeps its former key)</li>
 <li>the stored (de-identified) text</li>
+<li>its cached redacted PDFs (every object under <code>redacted/&lt;document-id&gt;/</code>) and
+  its box map (the <code>box_maps</code> row they were drawn from)</li>
+<li>its summary (the <code>document_summaries</code> row: LLM text derived from the
+  document, see <a href="#the-summary-of-a-deleted-document">summaries</a>)</li>
 <li>its pseudonyms, and the shared encrypted mapping underneath each one
   <em>unless</em> another document's pseudonyms still reference it (the mapping
   store is global — see <a href="../grants/">grants</a>)</li>
@@ -13316,6 +13434,94 @@ this".</p>
 partway through a multi-document run leaves only the untouched ones for a
 rerun, and removing what a previous run already removed is a no-op (the state
 is already <code>deleted</code>, the content already gone).</p>
+<h2 id="the-redacted-pdf-of-a-deleted-document">The redacted PDF of a deleted document</h2>
+<p><code>GET /documents/{id}/redacted.pdf</code> caches each render in the object store
+under <code>redacted/&lt;document-id&gt;/&lt;render-version&gt;/&lt;boxmap-hash&gt;</code>. A deletion
+removes every object under that prefix and the <code>box_maps</code> row, and counts
+them as <code>renders_removed</code> and <code>box_maps_removed</code> — in the <code>deleted</code> record,
+the API answer and the CLI output (a dry run counts them and removes nothing).
+The renders are listed before anything irreversible happens: if listing
+fails (say the S3 identity lacks <code>ListObjectsV2</code>), the deletion fails with
+nothing removed and the document in its previous state.</p>
+<p>For a deleted document, <code>GET /documents/{id}/redacted.pdf</code> and
+<code>POST /documents/{id}/reveal.pdf</code> answer <strong>410 Gone</strong>, checked before the
+cache is looked at: a render left behind is never served. 410 rather than
+404 because the id is known and its absence is deliberate and permanent;
+404 stays "unknown id", 409 stays "not yet / stale, <code>reanonymize</code> fixes it".</p>
+<p><strong>Leftovers.</strong> Documents deleted before #451 kept both, and a request that was
+rendering while the deletion committed can still write one object afterwards.
+To find them (read-only):</p>
+<pre><code class="language-sql">-- box_maps rows whose document is deleted
+SELECT b.document_id
+FROM box_maps b
+JOIN LATERAL (
+  SELECT a.to_state FROM audit_records a
+  WHERE a.document_id = b.document_id
+  ORDER BY a.seq DESC LIMIT 1
+) latest ON true
+WHERE latest.to_state = 'deleted'
+ORDER BY b.document_id;
+
+-- every deleted document id, to feed the dry run below
+SELECT d.id
+FROM documents d
+JOIN LATERAL (
+  SELECT a.to_state FROM audit_records a
+  WHERE a.document_id = d.id
+  ORDER BY a.seq DESC LIMIT 1
+) latest ON true
+WHERE latest.to_state = 'deleted'
+ORDER BY d.id;
+</code></pre>
+<p>The <code>redacted/</code> objects live in the object store, not in a table, so a query
+cannot list them; the dry run does, by the same prefix the deletion uses. Run
+it over the deleted ids — it removes nothing and writes no record — and every
+result with <code>renders_removed</code> or <code>box_maps_removed</code> above 0 is a leftover:</p>
+<pre><code class="language-bash">wordsworth-delete &lt;deleted-id&gt; [...] --actor &lt;who&gt; --dry-run
+</code></pre>
+<p>To clean them, run the same command without <code>--dry-run</code> on those ids. A rerun
+over an already-deleted document removes the leftover objects and row and
+appends one audit record <code>deleted</code> → <code>deleted</code> with step <code>remove-renders</code> and
+the payload <code>{actor, renders_removed, box_maps_removed, summaries_removed}</code>
+(the summary below rides on the same record); with nothing left it appends
+nothing.</p>
+<p>After a partial failure, the record the rerun writes (<code>deleted</code>, or
+<code>remove-renders</code> on an already-deleted document) counts only what was still
+there: renders, an index entry or an object the failed attempt already removed
+from outside the database are not counted again, so the counts can be lower
+than what the document once had.</p>
+<h2 id="the-summary-of-a-deleted-document">The summary of a deleted document</h2>
+<p>A summary (<code>document_summaries</code>, written by <code>summaries.py</code>) is text a language
+model derived from the document's content, so it goes with that content. A
+deletion removes the row and counts it as <code>summaries_removed</code> (0 or 1) — in
+the <code>deleted</code> record, the API answer and the CLI output; a dry run counts it
+and removes nothing. The text itself never appears in a count or a record. A
+deleted document has no text left, so no summary is made for it afterwards:
+<code>samenvatten --ontbrekend</code> only picks documents that still have their text,
+and a summary is stored only while the text is still there (checked in the
+same statement), so one the model was still writing during the deletion does
+not land. A summary stored just before the deletion committed is removed by a
+rerun.</p>
+<p><strong>Leftovers.</strong> Documents deleted before #455 kept their summary. It was no
+longer served (the index entry was gone), but it still held derived content.
+To find them (read-only):</p>
+<pre><code class="language-sql">-- document_summaries rows whose document is deleted
+SELECT s.document_id
+FROM document_summaries s
+JOIN LATERAL (
+  SELECT a.to_state FROM audit_records a
+  WHERE a.document_id = s.document_id
+  ORDER BY a.seq DESC LIMIT 1
+) latest ON true
+WHERE latest.to_state = 'deleted'
+ORDER BY s.document_id;
+</code></pre>
+<p>Clean them the same way as the renders above: <code>wordsworth-delete &lt;id&gt; [...]
+--actor &lt;who&gt;</code> over those ids (<code>--dry-run</code> first shows <code>summaries_removed: 1</code>).
+The rerun appends the same <code>remove-renders</code> record, <code>deleted</code> → <code>deleted</code>,
+whose payload now carries all three counts:
+<code>{actor, renders_removed, box_maps_removed, summaries_removed}</code>. Records
+written before #455 lack <code>summaries_removed</code>.</p>
 <h2 id="a-failed-removal-is-a-hard-error">A failed removal is a hard error</h2>
 <p>If any part fails — the index unreachable, a database error — the call fails,
 no <code>deleted</code> record is written, and the document stays in its previous state.

@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11407,6 +11442,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../originals-encryption/" class="md-nav__link">
         
   
@@ -11779,6 +11849,56 @@
     <span class="md-ellipsis">
       
         Geen twee onderwerpen met dezelfde naam
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels-van-het-taalmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labels van het taalmodel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Labels van het taalmodel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#een-heel-dossier-het-commando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Een heel dossier: het commando
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#een-onderwerp-de-route-en-de-knop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eén onderwerp: de route en de knop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#als-het-model-of-de-index-weg-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Als het model of de index weg is
       
     </span>
   </a>
@@ -13276,6 +13396,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#labels-van-het-taalmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labels van het taalmodel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Labels van het taalmodel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#een-heel-dossier-het-commando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Een heel dossier: het commando
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#een-onderwerp-de-route-en-de-knop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eén onderwerp: de route en de knop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#als-het-model-of-de-index-weg-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Als het model of de index weg is
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#meten" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13519,6 +13689,115 @@ onzichtbaar blijven.</p>
   -d '{&quot;name&quot;:&quot;Kapvergunningen 2022&quot;}'
 </code></pre>
 <p>De berekende naam blijft staan. Een lege naam haalt de gegeven naam weer weg.</p>
+<h2 id="labels-van-het-taalmodel">Labels van het taalmodel</h2>
+<p>De berekende naam zegt welke woorden vaak zijn, niet waar een groep over gaat
+(<code>onderdeel · verder · krijgen</code>). Daarom kan een onderwerp daarnaast een
+<strong>label</strong> krijgen: hoogstens zes woorden en één zin uitleg, geschreven door het
+taalmodel in het cluster (Ollama, <code>WORDSWORTH_LLM_MODEL</code>). Change
+<code>topic-labels-llm</code>.</p>
+<p><strong>Wat het model ziet.</strong> Per onderwerp de opgeslagen samenvattingen van de
+hoogstens acht leden die het dichtst bij het zwaartepunt van de groep liggen
+(vectoren uit de zoekindex), plus de termen van de berekende naam. Alles
+gepseudonimiseerd; er gaat geen opgeslagen tekst en geen onthulde waarde heen.
+Heeft geen van die acht een samenvatting, dan wordt het model niet aangeroepen
+en telt het onderwerp als <code>no_summaries</code>: maak eerst de samenvattingen
+(<a href="../samenvattingen/">samenvattingen.md</a>).</p>
+<p><strong>Een label is een bewering van een model</strong>, net als een samenvatting. Het
+staat in <code>topics.llm_label</code> en <code>llm_description</code>, met <code>llm_model</code> en <code>llm_at</code>,
+en de console toont het met "geschreven door <code>&lt;model&gt;</code> op <code>&lt;datum&gt;</code>" en de
+termen eronder. Het vervangt de berekende naam niet; die blijft staan. Wat
+een mens ziet: de naam die een mens gaf (<code>PATCH /topics/{id}</code>), anders het
+label, anders de termen (<code>topics.display_name</code>). Overal waar die naam het
+label is, staat erachter "(taalmodel, geschreven door <code>&lt;model&gt;</code> op <code>&lt;datum&gt;</code>)":
+op de onderwerpenpagina, de dossierpagina en in het zoekfilter
+(<code>topic_claim.claim</code>). <code>GET /dossiers/{id}/topics</code> geeft <code>llm_label</code>,
+<code>llm_description</code>, <code>llm_model</code> en <code>llm_at</code> bij elk onderwerp.</p>
+<p><strong>Wat wordt afgewezen</strong> (<code>topic_label_check.py</code>). Een label van nul of meer
+dan zes woorden of meer dan 80 tekens; een beschrijving die leeg is, meer dan
+één regel heeft of langer is dan 200 tekens; en in allebei:</p>
+<ul>
+<li>tekst die verandert onder NFKC of door het weghalen van onzichtbare tekens
+  (Unicode-categorie Cf, zoals een zero-width space);</li>
+<li>een pseudonym-token in welke vorm ook: hoofd- of kleine letters, met of
+  zonder haken, type en id aan elkaar of met spaties in de id
+  (<code>[person:deadbeef]</code>, <code>PERSON3fa9c2d1</code>, <code>PERSON: 3fa9 c2d1</code>), en een kale id
+  van acht hex-tekens met een cijfer erin;</li>
+<li>een plaatshouder tussen <code>[]</code>, <code>&lt;&gt;</code> of <code>{}</code> (<code>[Persoon]</code>, <code>[PERSOON-1]</code>,
+  <code>&lt;naam&gt;</code>);</li>
+<li>alles wat een adres kan zijn: <code>@</code>, <code>://</code>, <code>mailto:</code> en elk <code>woord.tld</code>.</li>
+</ul>
+<p>Afwijzen is niet repareren: het onderwerp houdt wat het had en de telling zegt
+<code>rejected</code>. Strenger dan strikt nodig, met opzet: een afgewezen label kost
+alleen dat de termen blijven staan.</p>
+<p><strong>De kwaliteit is niet getest.</strong> Waar dit gebouwd is draait geen model; de
+tests bewijzen de leidingen en de controle. Of zes woorden van <code>llama3.2:3b</code>
+deugen, blijkt bij de generale repetitie (vraag M7). Een slecht label krijgt
+een naam van een mens, en die wint.</p>
+<h3 id="een-heel-dossier-het-commando">Een heel dossier: het commando</h3>
+<pre><code>python -m wordsworth.onderwerpen_labelen --dossier gooise-meren-woo-2022
+</code></pre>
+<p><code>--dossier</code> is de <strong>naam</strong>, zoals de console hem toont (niet de uuid die
+<code>samenvatten</code> vraagt). Alleen onderwerpen zonder label; <code>--opnieuw</code> doet ze
+allemaal. Eén regel uitvoer:</p>
+<pre><code>seen=17 labelled=15 rejected=1 no_summaries=1 skipped=0 failed=0 model=llama3.2:3b duur=2040.3s
+</code></pre>
+<p><code>skipped</code> had al een label, <code>failed</code> is een modelaanroep die faalde. De
+exitcode is niet nul bij een mislukte aanroep, een onbereikbare zoekindex of
+een onbekend dossier. Een afgewezen label of een onderwerp zonder
+samenvattingen is geen fout: dat staat in de regel.</p>
+<p><strong>Kosten:</strong> ongeveer twee minuten per onderwerp op de hardware van het
+cluster; de zeventien onderwerpen van Gooise Meren zijn ruim een half uur. Elk
+label wordt meteen opgeslagen, dus een afgebroken run verliest alleen het
+onderwerp waar hij mee bezig was, en de volgende run slaat de rest over.</p>
+<h3 id="een-onderwerp-de-route-en-de-knop">Eén onderwerp: de route en de knop</h3>
+<p><code>POST /topics/{topic_id}/label</code> labelt één onderwerp en geeft het label met
+model en datum terug, of <code>labelled: false</code> met <code>reason</code> (<code>rejected</code> of
+<code>no_summaries</code>). Achter de corpus-leespoort, dezelfde als de samenvattingen;
+404 voor een onbekend onderwerp; 409 <code>er loopt al een label-opdracht</code> als er
+al een label geschreven wordt; 409 <code>onderwerp is opnieuw berekend</code> als het
+onderwerp tijdens de aanroep verdween; 503 met <code>language model ...</code> of
+<code>search index ...</code> als het model of de index onbereikbaar is. De aanroep duurt
+ongeveer twee minuten, dus deze route is voor aanroepers in het cluster. Een
+route die een heel dossier labelt bestaat niet, met opzet.</p>
+<p><strong>De knop op de onderwerpenpagina wacht niet.</strong> Een browser bereikt de
+console via Cloudflare, dat een verzoek na 100 seconden afkapt, en
+oauth2-proxy, standaard na 30 seconden. Een knop die twee minuten wacht krijgt
+een foutpagina voor werk dat daarna wél lukt. Dus komt de pagina meteen terug
+met "bezig, ververs over ongeveer 2 minuten", en schrijft de server het label in
+een achtergrondtaak van dat verzoek. Er loopt er één tegelijk; een tweede klik
+zegt "er loopt al een label-opdracht" en start niets. De route en de knop delen
+dat ene slot. <strong>Het slot geldt per proces</strong>: twee pods of twee workers kunnen
+elk een label tegelijk schrijven. Het commando gebruikt het slot niet; het
+draait als een eigen proces. Geen wachtrij en geen
+worker: herstart de pod midden in een aanroep, dan is het label er niet en kan
+de knop opnieuw.</p>
+<p><strong>Waar de uitkomst van een klik staat:</strong> in het log van de API-pod (stderr),
+één JSON-regel op de pipeline-logger <code>wordsworth.pipeline</code>, dezelfde die de
+statusovergangen schrijft en die <code>serve.build_app</code> aanzet:</p>
+<pre><code>{"error": null, "event": "topic_label", "level": "info", "outcome": "labelled", "topic_id": "&lt;uuid&gt;"}
+</code></pre>
+<p><code>outcome</code> is <code>labelled</code>, <code>rejected</code>, <code>no_summaries</code> of <code>failed</code>; bij <code>failed</code>
+staat in <code>error</code> alleen de klasse van de fout (<code>GenerationError</code>,
+<code>SearchUnavailable</code>, <code>TopicRecomputed</code>, ...). Nooit de tekst van een label:
+wat afgewezen werd, kan een token bevatten, en een databasefout draagt het
+label als parameter mee.</p>
+<h3 id="als-het-model-of-de-index-weg-is">Als het model of de index weg is</h3>
+<ul>
+<li><strong>Model weg:</strong> geen onderwerp verliest zijn naam. Het commando telt
+  <code>failed</code> en eindigt niet-nul; de route geeft 503; de knop logt <code>failed</code>, en
+  na verversen zegt de pagina nog steeds "label ontbreekt".</li>
+<li><strong>Index weg:</strong> het lidmaatschap staat alleen in de index, dus er wordt niets
+  gelabeld en er verandert niets. Het commando zegt het en eindigt niet-nul; de
+  route geeft 503.</li>
+<li>Een <strong>berekening</strong> van onderwerpen roept het model nooit aan en faalt er
+  nooit op.</li>
+</ul>
+<p><strong>Herberekenen gooit de labels weg</strong>: het vervangt de onderwerpen, en een
+label hoort bij een groep die dan niet meer bestaat. Gebeurt dat terwijl het
+model schrijft, dan wordt het label niet opgeslagen: het commando telt
+<code>failed</code> en gaat door met het volgende onderwerp, de route geeft 409 en de knop
+logt <code>failed</code>. De pagina zegt daarna
+welke labels ontbreken en noemt het commando.</p>
 <h2 id="meten">Meten</h2>
 <pre><code class="language-sh">python -m wordsworth.eval.topics_run --dossier &lt;uuid&gt; \
   --gold eval/gold.jsonl --queries eval/queries.tsv --qrels eval/qrels.txt
@@ -13543,7 +13822,9 @@ verzint.</p>
 <h2 id="wat-dit-niet-doet">Wat dit niet doet</h2>
 <ul>
 <li>Geen onderwerpen over dossiergrenzen heen.</li>
-<li>Geen taalmodel in de naamgeving.</li>
+<li>Geen taalmodel in de berekende naam. Een label van het model staat ernaast,
+  met zijn herkomst (zie <em>Labels van het taalmodel</em>); een berekening roept het
+  model nooit aan.</li>
 <li>Geen invloed op de score.</li>
 <li>Geen automatische herberekening. Een document dat opnieuw door de straat
   gaat (<code>reanonymize</code>, dus ook <code>/reprocess</code>) houdt het onderwerp dat het had —

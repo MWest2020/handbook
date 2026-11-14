@@ -10629,6 +10629,41 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../explanation/why-a-result-matched/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why a result matched: the closest passage, not the ranking passage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -10638,10 +10673,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19_2_14" >
         
           
-          <label class="md-nav__link" for="__nav_19_2_13" id="__nav_19_2_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_19_2_14" id="__nav_19_2_14_label" tabindex="0">
             
   
   
@@ -10659,8 +10694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19_2_13">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_19_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19_2_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11407,6 +11442,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../local-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The local demo: the console on synthetic data
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../originals-encryption/" class="md-nav__link">
         
   
@@ -11604,10 +11674,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#not-decided-here" class="md-nav__link">
+  <a href="#in-the-console" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not decided here
+        In the console
       
     </span>
   </a>
@@ -13241,10 +13311,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#not-decided-here" class="md-nav__link">
+  <a href="#in-the-console" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not decided here
+        In the console
       
     </span>
   </a>
@@ -13314,12 +13384,20 @@ Responses:</p>
 <td>unknown document</td>
 </tr>
 <tr>
+<td>410 <code>"document deleted"</code></td>
+<td>the document is deleted — checked before the cache; the deletion removed its renders and box map (<a href="../deleting-documents/#the-redacted-pdf-of-a-deleted-document">deleting documents</a>)</td>
+</tr>
+<tr>
 <td>409 <code>"no box map yet..."</code></td>
 <td>not processed in reversible mode, or the last run hit <code>value-not-located</code></td>
 </tr>
 <tr>
 <td>409 <code>"stale"</code></td>
 <td>the current detection lists differ from the ones the box map was made under</td>
+</tr>
+<tr>
+<td>409 <code>"document is superseded by ..."</code></td>
+<td>a retired copy; fetch the survivor named in the message (same as <code>reveal.pdf</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -13333,7 +13411,7 @@ lists; the next call then serves a fresh PDF.</p>
   -d '{&quot;grant_id&quot;:&quot;&lt;grant_id&gt;&quot;,&quot;types&quot;:[&quot;PERSON&quot;]}' -o reveal.pdf
 </code></pre>
 <p>The same grant and the same gates as <a href="../grants/"><code>/reveal</code></a> — a document that
-has no box map yet also answers 409 here. The granted type is drawn in clear,
+has no box map yet also answers 409 here, a deleted one 410. The granted type is drawn in clear,
 straight from the original page (nothing is decrypted to render it: the box
 for that type is simply left unpainted, so the original pixels and the
 original invisible text pass through); every other type keeps its box and
@@ -13415,10 +13493,37 @@ document: no metadata, no annotations, no outline.</p>
 <p>Scanned documents use the existing OCR text layer
 (<code>object_key</code> repointed by the OCR recovery step) — there is no separate OCR
 path for redaction.</p>
-<h2 id="not-decided-here">Not decided here</h2>
-<p>Whether and how the console embeds these two views is a separate, undecided
-question (see the <code>pdf-redaction</code> proposal's open questions) — this runbook
-covers the two HTTP endpoints only.</p>
+<h2 id="in-the-console">In the console</h2>
+<p>The console document page (<code>/console/documents/{id}</code>) links both views
+(change <code>console-pdf-views</code>); it embeds no viewer, the browser opens the PDF.</p>
+<ul>
+<li><strong>Gelakte PDF</strong> links <code>GET /documents/{id}/redacted.pdf</code> when the document
+  has a box map made under the current detection lists. Otherwise the page
+  says why not: no box map yet, or a stale one. The page and the route make
+  that check in one function, <code>pdf_redaction.box_map_status</code>, so they cannot
+  disagree.</li>
+<li><strong>Onthul als PDF</strong>, on every active grant row, posts
+  <code>{"grant_id": ..., "types": [the checked types]}</code> to
+  <code>POST /documents/{id}/reveal.pdf</code> (<code>static/console_pdf.js</code>) and opens the
+  returned PDF from an in-memory blob. The browser may block that window after
+  the render; the "Open de onthulde PDF" link in the status line always works.
+  The button is disabled, with the reason next to it, when there is no box map
+  or the box map is stale (<code>reveal.pdf</code> itself does not yet refuse a stale box
+  map: #438).</li>
+<li><strong>Without an object store</strong> the two PDF routes are not mounted (<code>serve</code> can
+  run without one). The page then says "PDF's zijn op deze installatie niet
+  beschikbaar" and shows no reveal-PDF button.</li>
+</ul>
+<p>Some refusals only a render can find, so the link or button is there and the
+route refuses: a box map from before the char-box fix (409 <code>box map unusable</code>,
+see above) and an unreachable key service for the encrypted original
+(503 <code>key service unavailable</code>). The page shows the route's answer: "Geweigerd"
+for 401/403, "Niet gelukt" for anything else.</p>
+<p>Both requests go to the API routes above with the console cookie: the
+redacted PDF through the corpus-read check, the reveal PDF through the grant's
+<code>authorize()</code> and its audit record (<code>view=pdf</code>). The console adds no
+authorisation code. The reveal PDF is rendered fresh on every call, answered
+with <code>Cache-Control: no-store</code>, and never written to the object store.</p>
 
 
 
