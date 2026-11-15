@@ -11393,6 +11393,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Het bestaande corpus bijwerken">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#na-een-regel-of-gazetteerwijziging-de-ids-expliciet-meegeven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Na een regel- of gazetteerwijziging: de ids expliciet meegeven
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-telcontrole-lezen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De telcontrole lezen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -12104,6 +12132,41 @@
     
   
     The five readers of a sealed original
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
   
 
     
@@ -13231,6 +13294,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Het bestaande corpus bijwerken">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#na-een-regel-of-gazetteerwijziging-de-ids-expliciet-meegeven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Na een regel- of gazetteerwijziging: de ids expliciet meegeven
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-telcontrole-lezen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De telcontrole lezen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -13427,6 +13518,77 @@ The call appends a <code>detection_feedback</code> access event to the document'
 chain and changes nothing else. Turning feedback into a list entry is a
 reviewed git change; after changing the lists, run <code>POST /reprocess</code> if the
 already-indexed corpus should follow.</p>
+<h3 id="na-een-regel-of-gazetteerwijziging-de-ids-expliciet-meegeven">Na een regel- of gazetteerwijziging: de ids expliciet meegeven</h3>
+<p><code>only_outdated</code> kijkt alleen naar <code>lists_hash</code>, en die hash is alleen over
+<code>allow.json</code>/<code>deny.json</code>. Een nieuwe detectieregel (zoals de particle-naamregel)
+of een nieuwe entry in <code>voornamen.json</code> verandert <code>lists_hash</code> <strong>niet</strong> — met
+opzet, anders zou elke gazetteerwijziging het hele corpus achterstallig maken.
+Na zo'n wijziging selecteert <code>only_outdated</code> dus niets. Geef de documenten dan
+expliciet mee als <code>document_ids</code>.</p>
+<p>De ids van een dossier haal je uit de productiedatabase, <strong>alleen-lezen</strong>
+(<code>default_transaction_read_only=on</code>), via de jumpy/kubectl-route en de
+verbinding van de api-pod zelf. De query geeft meteen de komma-gescheiden
+lijst:</p>
+<pre><code class="language-sh">ssh jumpy kubectl -n wordsworth exec -i deploy/wordsworth-api -- python3 - &lt;&lt;'EOF'
+import os
+from sqlalchemy import create_engine, text
+# Alleen-lezen voor elke transactie op deze verbinding.
+e = create_engine(os.environ[&quot;WORDSWORTH_DATABASE_URL&quot;],
+                  connect_args={&quot;options&quot;: &quot;-c default_transaction_read_only=on&quot;})
+with e.connect() as c:
+    print(c.execute(text(
+        &quot;SELECT string_agg(dd.document_id::text, ',' ORDER BY dd.document_id) &quot;
+        &quot;FROM dossier_documents dd JOIN dossiers d ON d.id = dd.dossier_id &quot;
+        &quot;WHERE d.name = :naam&quot;), {&quot;naam&quot;: &quot;&lt;dossiernaam&gt;&quot;}).scalar())
+EOF
+</code></pre>
+<p>Die lijst gaat in <code>WORDSWORTH_REPROCESS_IDS</code> van de Job
+(<code>deploy/k8s/45-reprocess-job.yaml</code>), of in <code>wordsworth reprocess --ids …</code>, of
+als body van het eindpunt:</p>
+<pre><code class="language-sh">curl -XPOST $API/reprocess -H 'content-type: application/json' \
+  -d '{&quot;document_ids&quot;: [&quot;&lt;id&gt;&quot;, &quot;&lt;id&gt;&quot;]}'
+</code></pre>
+<h3 id="de-telcontrole-lezen">De telcontrole lezen</h3>
+<p>Elk opnieuw geanonimiseerd document levert één regel op, per type het aantal
+<strong>verschillende</strong> pseudoniemen in de opgeslagen tekst ervóór en erná, en
+hoeveel er bijkwamen en verdwenen (<code>wordsworth/reprocess_counts.py</code>):</p>
+<pre><code class="language-json">{&quot;counts&quot;: {&quot;BSN&quot;: {&quot;added&quot;: 0, &quot;after&quot;: 1, &quot;before&quot;: 1, &quot;removed&quot;: 0},
+            &quot;PERSON&quot;: {&quot;added&quot;: 1, &quot;after&quot;: 1, &quot;before&quot;: 1, &quot;removed&quot;: 1}},
+ &quot;document_id&quot;: &quot;…&quot;, &quot;event&quot;: &quot;reprocess_counts&quot;, &quot;level&quot;: &quot;info&quot;}
+</code></pre>
+<ul>
+<li><strong>Verschillende pseudoniemen, geen vermeldingen.</strong> Eén persoon die vijf keer
+  genoemd wordt telt als één. <code>PERSON 12</code> is twaalf personen, niet twaalf
+  vermeldingen.</li>
+<li><strong>Lees <code>added</code> en <code>removed</code>, niet alleen de totalen.</strong> Het geval waarvoor
+  dit bestaat: de voornaam was een eigen token, na de regel is de hele naam met
+  partikel één token. Dan blijft het totaal gelijk (<code>before 1, after 1</code>) en
+  laat alleen <code>added 1, removed 1</code> zien dat er iets veranderde.</li>
+<li><strong>Geteld uit de opgeslagen tekst</strong>, niet uit het pseudoniemregister: dat
+  krimpt nooit, dus "erna" kon daar nooit lager zijn dan "ervoor".</li>
+<li><strong>Waar je hem leest.</strong> In het antwoord van <code>POST /reprocess</code>, veld
+  <code>entity_counts</code> (document-id → type → de vier getallen); de Job print dat
+  antwoord, dus de getallen staan in
+  <code>kubectl -n wordsworth logs job/wordsworth-reprocess</code>.
+  En als regel in de log van de service (logger <code>wordsworth.pipeline</code>). De
+  regel wordt pas geschreven nadat de commit van dat document gelukt is.</li>
+<li><strong>Een overgeslagen of mislukt document heeft geen telling.</strong> Het staat niet
+  in <code>entity_counts</code> en logt geen regel; zijn uitkomst (<code>skipped</code>,
+  <code>retryable</code>, <code>failed</code>, met <code>problems</code> en het <code>reprocess_failed</code>-record)
+  zegt wat er gebeurde.</li>
+<li><strong>Nooit een waarde.</strong> Geen naam, geen token, geen omringende tekst, geen
+  offset: alleen het id, typenamen en getallen.</li>
+</ul>
+<p><strong>Wat de telling niet bewijst.</strong> Dat er geen naam meer leesbaar is. Hij telt
+wat getokeniseerd werd; een naam die de regel niet herkent (een voornaam die
+niet in de gazetteer staat) telt ervoor en erna niet mee. Of een document echt
+schoon is, lees je in het document zelf.</p>
+<p><strong>Na een wijziging van de domeinsleutel of van het normalisatieprofiel</strong>
+(<code>PROFILE_VERSION</code>) is elk token een nieuw token: <code>added</code> en <code>removed</code> zijn
+dan allebei gelijk aan het hele aantal en zeggen niets over detectie.</p>
+<p><strong>In irreversibele modus</strong> zijn er geen pseudoniemtokens (alleen kale
+plaatshouders als <code>[BSN]</code>), dus vindt de telling niets. <code>/reprocess</code> wordt in
+die modus ook niet aangeboden.</p>
 
 
 

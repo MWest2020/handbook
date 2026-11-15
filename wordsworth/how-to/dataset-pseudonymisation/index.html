@@ -12135,6 +12135,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -13313,6 +13348,17 @@ wordsworth pseudonymize-dataset in.csv --profile ./my-profile.json &gt; out.csv
 <p>HTTP: <code>POST /datasets/pseudonymize</code> multipart <code>file</code> (CSV, header row) + exactly
 one of <code>profile</code> (inline JSON) / <code>profile_name</code>. Response: <code>csv</code>, <code>rows</code>,
 <code>columns</code>, <code>unique_pseudonyms</code>, <code>warnings</code>, <code>dataset_id</code>, <code>audit_seq</code>.</p>
+<p><strong>Who may run it: grant issuers only.</strong> With authentication on, the route takes
+a label on <code>WORDSWORTH_GRANT_ISSUER_LABELS</code>; every other caller, a corpus reader
+included, gets 403 before a cell is pseudonymised, and nothing is written: no
+dataset row, no <code>dataset_pseudonymize</code> record, no mapping. The reason is that a
+run is a lookup. It uses the corpus's own keys and mapping store, so the same
+value in the same domain gets the same token in a cell as in a document. Upload
+a column of guessed names, read back the tokens, compare them with the tokens
+on a document page: that resolves a token, which is what a grant is for. The
+callers who lose nothing by having the lookup are the ones who can issue
+themselves a grant. With authentication off there is no caller to decide about
+and the route stays open, as the grant routes do.</p>
 <h2 id="audit">Audit</h2>
 <p>Each run appends one <code>dataset_pseudonymize</code> record to the audit chain of the
 dataset artefact (registered once per content+profile hash, <code>object_key</code> =

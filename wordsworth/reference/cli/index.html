@@ -12285,6 +12285,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -13836,6 +13871,27 @@ no-op. A rerun over an already-deleted document still removes a leftover
 render, box map or summary, and records that as one <code>remove-renders</code> audit
 record with <code>{actor, renders_removed, box_maps_removed, summaries_removed}</code>
 (<a href="../../how-to/deleting-documents/">deleting documents</a>).</p>
+<p>Each result carries <code>keys_destroyed</code>: the number of data keys of sealed
+originals the deletion destroyed (crypto-shredding), or with <code>--dry-run</code>
+would destroy. It is 0 for a legacy plaintext original, 2 for a document
+recovered by OCR (the scan and the OCR'd PDF), and 0 when another document
+that is not deleted still claims the object (a superseded copy). The command
+needs no key service for it: the key rows are deleted with SQL.</p>
+<p>Each result also carries <code>original_scan</code>: the number of original scans
+removed (or, with <code>--dry-run</code>, that would be). A document recovered by OCR
+keeps its uploaded scan next to the OCR'd PDF; the deletion removes it too,
+unless another document that is not deleted still claims it. It is 0 for a
+document that was never recovered, and <code>object</code> keeps its 0/1 meaning for
+the document's own object. Run again on a document deleted before this
+existed, it removes a scan left behind and records <code>remove-original-scan</code>.</p>
+<pre><code class="language-json">{&quot;dry_run&quot;: true, &quot;results&quot;: [{&quot;document_id&quot;: &quot;…&quot;, &quot;object&quot;: 1, &quot;original_scan&quot;: 1, &quot;text&quot;: 1,
+  &quot;renders_removed&quot;: 1, &quot;box_maps_removed&quot;: 1, &quot;summaries_removed&quot;: 1,
+  &quot;pseudonyms&quot;: 3, &quot;mappings&quot;: 3,
+  &quot;index_entries&quot;: 1, &quot;grants&quot;: 0, &quot;keys_destroyed&quot;: 1}]}
+</code></pre>
+<p>Run again on a document that is already deleted, it destroys a key row left
+behind (documents deleted before crypto-shredding) and records <code>destroy-key</code>;
+see <a href="../../how-to/deleting-documents/">deleting documents</a>.</p>
 <h3 id="-dossier"><code>--dossier</code></h3>
 <pre><code class="language-bash">wordsworth-delete --dossier &lt;dossier-id&gt; --actor &lt;who&gt; [--dry-run]
 </code></pre>
@@ -13846,7 +13902,13 @@ dossier, otherwise only its membership of this one goes. <code>--actor</code> an
 <code>--dry-run</code> are checked and behave the same way as above; the dry run reports
 which documents would be deleted, which would only be released, and the
 number of topics (<code>topics</code>) that would be removed; the output of a real run
-carries the same <code>topics</code> count.</p>
+carries the same <code>topics</code> count. <code>keys_destroyed</code>, <code>original_scan</code>,
+<code>renders_removed</code>, <code>box_maps_removed</code> and <code>summaries_removed</code> are sums over the deleted members (what they would lose,
+with <code>--dry-run</code>); released members keep theirs.</p>
+<pre><code class="language-json">{&quot;dry_run&quot;: false, &quot;results&quot;: [{&quot;dossier_id&quot;: &quot;…&quot;, &quot;deleted&quot;: [&quot;…&quot;, &quot;…&quot;],
+  &quot;released&quot;: [&quot;…&quot;], &quot;topics&quot;: 4, &quot;keys_destroyed&quot;: 2, &quot;renders_removed&quot;: 3,
+  &quot;box_maps_removed&quot;: 2, &quot;summaries_removed&quot;: 2, &quot;original_scan&quot;: 1}]}
+</code></pre>
 <p>See <a href="../../how-to/deleting-documents/">deleting documents</a> for what goes, what
 stays, and <code>DELETE /documents/{id}</code> / <code>DELETE /dossiers/{id}</code> over the API.</p>
 <h2 id="wordsworth-release-deleted-keys"><code>wordsworth-release-deleted-keys</code></h2>

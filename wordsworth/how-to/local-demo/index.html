@@ -12124,6 +12124,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -13359,8 +13394,16 @@ nobody, the IBANs are on a test bank code, the names come from a fixed list.</p>
 <li>One grant: <code>mark</code> may reveal PERSON and BSN on <code>demo-007</code>.</li>
 </ul>
 <p>That is 31 document rows: 28 live, 2 deleted, 1 superseded.</p>
-<p>Callers: <code>mark</code> reads the corpus and issues grants; <code>gast</code> is logged in and is
-refused both, which shows the "geen toegang" page.</p>
+<p>Callers: <code>mark</code> reads the corpus and issues grants, and keeps every route;
+<code>gast</code> is logged in and is on neither list. In the browser that shows the "geen
+toegang" page. Through the API <code>gast</code> gets 403 on every corpus-read route: the
+searches (<code>/search</code>, <code>/hybrid</code>, <code>/ask</code>, <code>/export/*</code>), a document's metadata,
+state, text and redacted PDF, the topics, feedback, labels and summaries, and
+the console's combinations. The 403 comes before any lookup, so
+<code>GET /documents/&lt;unknown&gt;/state</code> is 403 too, not 404: <code>gast</code> cannot tell which
+documents exist. <code>gast</code> also gets 403 on <code>GET /grants/&lt;id&gt;</code> and on the issuer
+routes (roles, grants, deletes). What <code>gast</code> keeps: <code>/health</code>, <code>/metrics</code>, the
+login and logout pages, <code>/openapi.json</code> and <code>/docs</code>.</p>
 <h2 id="a-walk-with-curl">A walk with curl</h2>
 <pre><code class="language-sh">B=http://127.0.0.1:8765
 curl -s -c jar -o /dev/null -w '%{http_code}\n' --data-urlencode &quot;key=&lt;mark key&gt;&quot; $B/console/login   # 303

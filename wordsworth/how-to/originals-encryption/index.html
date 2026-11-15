@@ -11584,6 +11584,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sealing-the-existing-corpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sealing the existing corpus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploy-precondition" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12093,6 +12104,41 @@
     
   
     The five readers of a sealed original
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
   
 
     
@@ -13201,6 +13247,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sealing-the-existing-corpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sealing the existing corpus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploy-precondition" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13277,6 +13334,101 @@ content-addressed key, with a <code>document_keys</code> row for the recovered d
 The scan object it was read from keeps its own key and row unchanged. If the
 repoint of <code>object_key</code> or the state transition fails after a fresh write, the
 written object is deleted so a retry starts clean.</p>
+<h2 id="sealing-the-existing-corpus">Sealing the existing corpus</h2>
+<p><code>originals-ingest-switch</code> only covers new originals. The ~420 objects already
+on the homelab, ingested before that change, stay legacy plaintext until
+<code>wordsworth-seal-originals</code> (ADR-0008, <code>originals-encrypt-existing</code>) runs
+against them:</p>
+<pre><code class="language-bash">wordsworth-seal-originals --dry-run          # reports what would be sealed; changes nothing
+wordsworth-seal-originals                    # a real run: seals everything it finds
+wordsworth-seal-originals --ids &lt;uuid&gt; &lt;uuid&gt; # a real run, limited to named documents
+wordsworth-seal-originals --verify           # checks only: fails if a live document or its
+                                              # scan is still legacy plaintext, or a sealed
+                                              # object has no usable key row
+</code></pre>
+<p>A run without flags seals for real; <code>--dry-run</code> is the flag to pass first.
+The dry run reports counts (<code>objects</code>, <code>sealed</code>, <code>legacy</code>, <code>missing</code>,
+<code>unreadable</code>, <code>bytes</code>), the keys it would seal (<code>would_seal</code>) and the keys it
+could not read (<code>unreadable</code>), and changes nothing.</p>
+<p><strong>The dry run is cheap.</strong> Classifying an object -- the dry run, the <code>before</code>
+and <code>after</code> counts of a real run, and <code>--verify</code> -- costs one HEAD (the size)
+and one ranged GET of the first 30 bytes (the sealed header: magic, version,
+key id), never a download of the object. Only a real seal reads an object in
+full, once, and retries that read once on a transient error (a broken stream,
+a timeout) before reporting it failed. (Before this, a dry run downloaded
+every object several times: on production, ~420 objects, it took over ten
+minutes, and one broken 13 MB GET ended it with a traceback.)</p>
+<p><strong><code>missing</code> versus <code>unreadable</code>.</strong> <code>missing</code> means the store answered that the
+object does not exist. <code>unreadable</code> means the store did not answer usably --
+a 5xx, a timeout, a connection broken mid-read: the object may well exist,
+and may still be plaintext, so it is never counted as missing. No read error
+ends a dry run or a <code>--verify</code>; every one is reported as <code>unreadable</code>. In a
+real run an original that stays unreadable after the retry is reported
+<code>"failed"</code> with the error <code>"unreadable"</code> (a missing one: <code>"missing"</code>), its
+plaintext untouched, and the run goes on; a scan that cannot be read is
+<code>"gone"</code>, as the spec says. Rerun once the store is healthy. A real run seals
+every legacy original it finds for a live document, and the original scan
+(<code>old_object_key</code> in its recovering <code>ocr</code> audit record,
+<code>deletion_scans.scan_keys</code>) of every document that is not deleted --
+superseded copies included -- when that scan is itself still plaintext; these
+are counted separately in the report, under <code>scans</code>.</p>
+<p><strong>Never without a readable copy.</strong> Per object: the sealed bytes are written
+first under a temporary key (<code>sealing/&lt;sha256&gt;</code>) and verified to open to the
+object's recorded SHA-256 <em>before</em> the plaintext at <code>documents/&lt;sha256&gt;</code> is
+ever overwritten. A sealed copy that fails that check leaves the plaintext in
+place and the document reported <code>"failed"</code>, never <code>"sealed"</code>. After the
+overwrite the final key is verified again; if it does not open (a corrupted
+write, a read error), the verified temporary copy is put back at the final
+key and verified once more, and the temporary copy is deleted only once the
+final key verifies. If it still does not, the object is reported <code>"failed"</code>
+and <code>sealing/&lt;sha256&gt;</code> is kept: by then it is the readable copy. <code>put_original</code>
+is deliberately not used for this: it refuses to replace a legacy object,
+which is right for ingest and wrong for this migration.</p>
+<p><strong>One object never ends the run.</strong> Any exception while sealing one object
+(the key service unavailable, a store error) is reported as <code>"failed"</code> with
+the exception's class name only (e.g. <code>OriginalsKeyUnavailable</code>), never its
+message, and the run moves on to the next object.</p>
+<p><strong>Beside a deletion.</strong> The seal runs alongside the service, so a document can
+be deleted while the run is underway. Each object is sealed in two
+transactions (read and mint the key row; then write, verify and set
+<code>sealed_at</code>), each holding the document's row <code>FOR SHARE</code> and re-checking
+first that the document is not deleted and still claims the object. A
+deletion that starts during either waits for it to commit and then removes
+what it wrote, key row included; a deletion that committed before either is
+found by the re-check: the object is reported <code>"skipped_deleted"</code> (counted
+under <code>skipped_deleted</code>, not as failed), nothing is written at
+<code>documents/&lt;sha256&gt;</code>, and a temporary copy no other document claims is
+removed. A claim that moved without a deletion (OCR recovery repointed the
+document while the run was underway) is reported <code>"skipped_moved"</code> and left
+for the next run, which finds the object as the document's scan. The run
+never takes the audit chain's lock.</p>
+<p><strong>Idempotent and resumable.</strong> A document already sealed (<code>sealed_at</code> set) is
+reported <code>"already_sealed"</code> and its object is not touched (a leftover
+temporary copy is removed). The original scan of a live recovered document
+that the store no longer has (it does not exist, or reading it raises an
+object-store error) is reported with the status <code>"gone"</code> and counted under
+<code>gone</code>: neither sealed nor failed, and the exit status stays clean. A run interrupted between the overwrite and the <code>sealed_at</code> commit
+leaves a sealed object with no <code>sealed_at</code> yet; a rerun finds exactly that
+state, verifies it -- restoring it from <code>sealing/&lt;sha256&gt;</code> if it does not
+open -- and finishes the commit; it never re-reads a plaintext that is
+already gone. A run interrupted after the key row was minted and before
+anything was written reuses that row. Safe to run repeatedly, including on a
+schedule, until <code>--verify</code> reports <code>"verified": true</code>.</p>
+<p><strong>What <code>--verify</code> checks.</strong> It fails (exit 1) while a live document's
+original or a scan is still legacy plaintext, or while a sealed object can
+be opened by no one: it has no key row (<code>no_key_row</code>) or its header names
+another key id than its row (<code>key_id_mismatch</code>), or while a live document's
+original is missing from the store (<code>missing</code>: data loss, never a pass), or
+while a live document's original cannot be read (<code>unreadable</code>: it may still
+be plaintext, so that fails too -- the safe side). It also lists, without
+failing on them, pending objects -- sealed, <code>sealed_at</code> still NULL
+(<code>pending</code>), which a rerun finishes -- and scans it could not read
+(<code>unreadable</code>, <code>"kind": "scan"</code>). <strong>Run one seal at a time:</strong> two runs at
+once share the temporary <code>sealing/&lt;sha&gt;</code> copies. Object keys and ids only, never content; it needs no key service.</p>
+<p><strong>On a failed document.</strong> The report names the object key and an error, never
+document content. Investigate the object directly (is it reachable, does the
+key service answer) and rerun -- a prior failure does not block any other
+document, and rerunning retries only what is still legacy or still pending.</p>
 <h2 id="deploy-precondition">Deploy precondition</h2>
 <p>Merging <code>originals-ingest-switch</code> does not deploy it. Wordsworth images reach
 the cluster through a digest bump in homelab. Before that bump, both of these

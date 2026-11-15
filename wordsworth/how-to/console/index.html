@@ -12224,6 +12224,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -13733,10 +13768,20 @@ back and the loser reads what the winner just wrote. The savepoint is not there
 to survive the collision but to save the rest of the session, which is carrying
 half a document's work.</p>
 <h2 id="what-it-deliberately-cannot-do">What it deliberately cannot do</h2>
-<p>It reads the corpus through the same gate as <code>/documents/{id}/anonymized</code> and
-<code>/export</code>: a caller that <code>WORDSWORTH_CORPUS_READ_LABELS</code> refuses there is refused
-here. Until 2026-09-18 it was not, which made the console precisely the second
-door its own docstring forbids.</p>
+<p>It reads the corpus through the same gate as the API: a caller that
+<code>WORDSWORTH_CORPUS_READ_LABELS</code> refuses on <code>/search</code>, <code>/documents/{id}</code> or
+<code>/export</code> is refused on every console page that shows the corpus, and the other
+way round. Until 2026-09-18 the console did not check at all, which made it
+precisely the second door its own docstring forbids. Since
+<code>api-corpus-read-gate</code> (2026-11) the list covers the API's search, metadata,
+state, topic and feedback routes too, not only the full text, and
+<code>/console/combinations</code> (the list and the form) is behind it as well; see
+<a href="../api-auth/#effect">api-auth</a> for every route.</p>
+<p><strong>An empty list means the scope is off</strong>: every logged-in caller reads the whole
+corpus, in the console and through the API. That is the default for an
+installation inside a trusted boundary. With authentication and a grant store
+on, the API logs an <code>empty_corpus_read_scope</code> warning at startup, because there
+an empty list is more likely lost than chosen.</p>
 <h3 id="een-vraag-stellen-niet-een-trefwoord-typen">Een vraag stellen, niet een trefwoord typen</h3>
 <p>De zoekpagina embedt de <strong>vraag zelf</strong> en legt hem naast de lexicale treffers
 (<code>hybrid_search</code>: RRF voor de kandidaten, cosinus voor de volgorde). Dat is wat

@@ -11188,6 +11188,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#only-a-verified-address-is-a-caller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only a verified address is a caller
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -12121,6 +12132,41 @@
     
   
     The five readers of a sealed original
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
   
 
     
@@ -13218,6 +13264,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#only-a-verified-address-is-a-caller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only a verified address is a caller
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -13333,6 +13390,20 @@ homelab that proxy is oauth2-proxy, configured against the Keycloak realm at
 realm, oauth2-proxy's own manifest for the proxy itself). That rollout is
 out of scope here — this document only covers what wordsworth-api needs once
 a token arrives.</p>
+<h3 id="only-a-verified-address-is-a-caller">Only a verified address is a caller</h3>
+<p>An OIDC token names a caller only when its <code>email_verified</code> claim is the JSON
+boolean <code>true</code>. <code>false</code>, a missing claim, the string <code>"true"</code> and the number <code>1</code>
+are all refused, and a refused token yields no caller: 401 (or the login page
+for a browser), exactly like an expired or badly signed one. A valid
+<code>X-API-Key</code> on the same request still makes that key the caller.</p>
+<p>Why: the read list and the issuer list name callers by address. If the realm
+lets someone register, or edit their own address, an account could carry
+<code>mark@westerweel.work</code> without anybody having checked it, and be a reader and an
+issuer. So check in the realm that verify-email is on and that every address on
+the lists is marked verified; an address that is not is locked out of the
+console behind Keycloak (the <code>console</code> key remains the way in).</p>
+<p>Cloudflare Access is not affected: its assertion carries no such claim, and
+Access establishes the address itself.</p>
 <h2 id="turning-it-on-cloudflare-access">Turning it on — Cloudflare Access</h2>
 <pre><code class="language-bash">export WORDSWORTH_ACCESS_TEAM_DOMAIN=raspy-wood-e123.cloudflareaccess.com
 export WORDSWORTH_ACCESS_AUD=&lt;the application's AUD tag&gt;

@@ -11317,6 +11317,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#crypto-shredding-the-key-goes-with-the-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crypto-shredding: the key goes with the document
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crypto-shredding: the key goes with the document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#who-may" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11398,6 +11426,28 @@
     <span class="md-ellipsis">
       
         Releasing keys of documents deleted before this change
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#destroying-keys-of-documents-deleted-before-crypto-shredding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destroying keys of documents deleted before crypto-shredding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#original-scans-of-deleted-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Original scans of deleted documents
       
     </span>
   </a>
@@ -12159,6 +12209,41 @@
     
   
     The five readers of a sealed original
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/synthetic-long-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic long corpus
   
 
     
@@ -13245,6 +13330,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#crypto-shredding-the-key-goes-with-the-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crypto-shredding: the key goes with the document
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crypto-shredding: the key goes with the document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#who-may" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13333,6 +13446,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#destroying-keys-of-documents-deleted-before-crypto-shredding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destroying keys of documents deleted before crypto-shredding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#original-scans-of-deleted-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Original scans of deleted documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-not-here" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13378,6 +13513,10 @@ document is merely wrong for a dossier, remove the membership instead
 <ul>
 <li>the stored object (unless another, not-yet-deleted document row still
   claims the same object key — a superseded copy keeps its former key)</li>
+<li>the original scan of a document recovered by OCR (counted as
+  <code>original_scan</code>), unless another document that is not deleted still claims
+  it — by its own object key, or as its own scan (see "Crypto-shredding"
+  below)</li>
 <li>the stored (de-identified) text</li>
 <li>its cached redacted PDFs (every object under <code>redacted/&lt;document-id&gt;/</code>) and
   its box map (the <code>box_maps</code> row they were drawn from)</li>
@@ -13388,6 +13527,8 @@ document is merely wrong for a dossier, remove the membership instead
   store is global — see <a href="../grants/">grants</a>)</li>
 <li>its search-index entry</li>
 <li>its grants scoped to this document</li>
+<li>the data key of its sealed original (crypto-shredding, below), unless the
+  object stays because another document still claims it</li>
 </ul>
 <p>What stays: the <code>documents</code> row and every earlier audit record. The audit
 table's <code>document_id</code> is a non-null foreign key, and the trail never deletes a
@@ -13397,7 +13538,8 @@ copy keeps its row). The document's state becomes <code>deleted</code>, terminal
 reachable from every state including <code>superseded</code>; nothing transitions out of
 it.</p>
 <p>One <code>deleted</code> audit record is written, holding the document id, the actor and
-how many of each kind were removed — never a filename, a token or a value.</p>
+how many of each kind were removed (<code>keys_destroyed</code>, <code>original_scan</code> among
+them) — never a filename, a token, a value or key material.</p>
 <p><strong>Deleting releases the object key.</strong> The row's <code>object_key</code> becomes the
 placeholder <code>deleted/&lt;document-id&gt;</code>, and the former key is recorded in the
 <code>deleted</code> record as <code>released_object_key</code>. A deleted document therefore no
@@ -13406,6 +13548,80 @@ ingested again afterwards, which registers a new document while the deleted
 one stays deleted with its trail unchanged. Documents deleted before this
 behaviour existed still carry their real key until <code>wordsworth-release-
 deleted-keys</code> (below) has run once.</p>
+<h2 id="crypto-shredding-the-key-goes-with-the-document">Crypto-shredding: the key goes with the document</h2>
+<p>An original stored sealed (ADR-0008) opens only with its data key, which
+lives wrapped in the <code>document_keys</code> table. Deleting the document deletes
+that row, in the same transaction as the rest of the deletion, with plain SQL
+(<code>deletion_keys.py</code>). From then on every copy of the sealed object that
+survives somewhere — a backup of the object store, a replicated volume — is
+unreadable: there is no key left to open it with. The deletion does not need
+the key service for this, so <code>wordsworth-delete</code> shreds exactly like the API.</p>
+<p><strong>The key follows the object, and so does the scan.</strong> A key is destroyed, and
+a scan removed, exactly when no other document that is not deleted still
+<strong>claims</strong> that object key: its row points at it (as for the main object), or
+its recovering <code>ocr</code> audit record names it as its original scan. A superseded
+copy keeps the object key of its survivor, so:</p>
+<ul>
+<li>deleting the copy leaves the survivor's key (and object) alone;</li>
+<li>deleting the survivor while the copy is not deleted keeps the object and
+  its key (<code>object: 0</code>, <code>keys_destroyed: 0</code>), and deleting the copy afterwards
+  removes both (<code>object: 1</code>, <code>keys_destroyed: 1</code>).</li>
+</ul>
+<p>This is the one case where deleting a document does not destroy its key at
+once (decision #428, default: the key follows the object). The same now holds
+for a document recovered by OCR: a copy whose object key is the recovered
+document's scan, or a later ingest of the scan's bytes, keeps the scan (and
+its key) while the recovered document is not deleted — deleting that copy or
+re-ingest removes only its own content, <code>object: 0</code> and <code>keys_destroyed: 0</code>,
+even though its object key is the scan everyone else sees go. A document
+recovered by OCR has two sealed objects, the scan and the OCR'd PDF; deleting
+it removes both objects and loses both keys (<code>object: 1</code>, <code>original_scan: 1</code>,
+<code>keys_destroyed: 2</code>), unless a copy or re-ingest still claims the scan. A
+legacy plaintext original has no key: <code>keys_destroyed: 0</code>, and the deletion
+behaves as before; a legacy plaintext scan is removed the same way, just
+without a key to destroy.</p>
+<p>Rerunning <code>wordsworth-delete</code> on a document deleted before this change
+removes a scan object left behind, and destroys its key if that was left too;
+see <a href="#original-scans-of-deleted-documents">Original scans of deleted documents</a>
+below for the query that lists them.</p>
+<p>A copy and its survivor deleted at the same moment do not each keep the key
+"for the other": the deletion locks the document rows of that object key
+first, so the second waits for the first and then sees it as deleted.</p>
+<p><strong>On every replica at once.</strong> Each API process caches unwrapped keys (up to
+<code>WORDSWORTH_KEY_CACHE_TTL</code>, 300 s). The cache is not what makes the delete
+hold: every unwrap reads the key row from the database, also on a cache hit,
+and uses the cached key only while a row with the same key id exists. The
+other replica therefore cannot open the object the moment the deletion
+commits. This relies on PostgreSQL's default isolation level, READ COMMITTED
+(each statement sees what was committed before it started); <code>db.py</code> sets no
+other level, and a test pins it. Running the API under REPEATABLE READ would
+let a long transaction keep seeing a destroyed row.</p>
+<h3 id="limits">Limits</h3>
+<ul>
+<li><strong>Database backups hold wrapped keys</strong> (decision #429). A backup of the
+  database taken before the deletion still holds the deleted key row, wrapped
+  by the KEK. With that backup, the KEK and a copy of the object, the original
+  can be opened again until the backup expires. Crypto-shredding covers copies
+  of the object store; it does not reach back into database backups. On the
+  homelab cluster both database backups keep <strong>30 days</strong>: the daily
+  <code>wordsworth-keys-backup</code> dump of <code>document_keys</code> (homelab runbook "Key
+  backups") and the CNPG base backups plus WAL of <code>homelab-pg</code> (runbook "CNPG
+  backup", <code>retentionPolicy: "30d"</code>). CNPG keeps the base backup it needs to
+  restore any point in those 30 days, and that base backup can be up to a day
+  older than the window. A deleted original can therefore still be opened from
+  a database backup for up to about 31 days after the deletion, not only on
+  the day itself.</li>
+<li><strong>A request already holding the key</strong> when the deletion commits finishes
+  with it; the next unwrap fails.</li>
+<li><strong>The dry run can undercount when a copy and its survivor are deleted
+  together.</strong> Each document's dry run looks at the others as they are now,
+  not as the run would leave them. When a superseded copy and its survivor
+  are both deleted in one run (both members of the dossier being deleted, or
+  <code>wordsworth-delete A B --dry-run</code> with A and B a copy and its survivor), the
+  dry run reports <code>object: 0</code> and <code>keys_destroyed: 0</code> for both, while the real
+  run removes the object and destroys the key with the second of the two.
+  The real run's output and the <code>deleted</code> records carry the true counts.</li>
+</ul>
 <h2 id="who-may">Who may</h2>
 <p>Only a caller with role <code>beheerder</code>, or one carrying a label in
 <code>WORDSWORTH_GRANT_ISSUER_LABELS</code>, may delete. Anyone else is refused before
@@ -13427,7 +13643,9 @@ the CLI is where a human looks first.</p>
 wordsworth-delete &lt;document-id&gt; [&lt;document-id&gt; ...] --actor &lt;who&gt;
 </code></pre>
 <p><code>--dry-run</code> reports the counts it would remove, using the exact same code
-path as a real run, and stops before the first removal. <code>--actor</code> is required
+path as a real run, and stops before the first removal; <code>keys_destroyed</code> is
+the number of data keys a real run would destroy, and every key still exists
+afterwards. <code>--actor</code> is required
 and checked the same way as above; there is no implicit "whoever is running
 this".</p>
 <p>Each document commits on its own, like <code>wordsworth-dedupe</code> — a failure
@@ -13486,10 +13704,11 @@ the payload <code>{actor, renders_removed, box_maps_removed, summaries_removed}<
 (the summary below rides on the same record); with nothing left it appends
 nothing.</p>
 <p>After a partial failure, the record the rerun writes (<code>deleted</code>, or
-<code>remove-renders</code> on an already-deleted document) counts only what was still
-there: renders, an index entry or an object the failed attempt already removed
-from outside the database are not counted again, so the counts can be lower
-than what the document once had.</p>
+<code>remove-renders</code>, <code>remove-original-scan</code> or <code>destroy-key</code> on an
+already-deleted document) counts only what was still there: renders, a scan,
+an index entry or an object the failed attempt already removed from outside
+the database are not counted again, so the counts can be lower than what the
+document once had.</p>
 <h2 id="the-summary-of-a-deleted-document">The summary of a deleted document</h2>
 <p>A summary (<code>document_summaries</code>, written by <code>summaries.py</code>) is text a language
 model derived from the document's content, so it goes with that content. A
@@ -13550,7 +13769,10 @@ refusal.</p>
 would do: which documents would be deleted, which would only lose their
 membership, and how many topics would be removed (a count, not a list of
 names — topic names are derived from document terms and the report keeps
-names out). Nothing changes and no record is written.</p>
+names out). Nothing changes and no record is written. <code>keys_destroyed</code>,
+<code>renders_removed</code>, <code>box_maps_removed</code> and <code>summaries_removed</code> in the dossier
+report, dry run and real, are sums over the documents it deletes; a released
+member keeps its key, its renders, its box map and its summary.</p>
 <h2 id="releasing-keys-of-documents-deleted-before-this-change">Releasing keys of documents deleted before this change</h2>
 <pre><code class="language-bash">wordsworth-release-deleted-keys            # lists what it would release
 wordsworth-release-deleted-keys --apply    # releases them
@@ -13561,6 +13783,95 @@ object key, and with <code>--apply</code> releases each the same way a deletion 
 one <code>release-key</code> audit record per document, holding <code>released_object_key</code>.
 Idempotent — a released document is not found again — and it never touches a
 document that is not deleted.</p>
+<h2 id="destroying-keys-of-documents-deleted-before-crypto-shredding">Destroying keys of documents deleted before crypto-shredding</h2>
+<p>Documents deleted between the day sealing was switched on
+(<code>originals-ingest-switch</code>) and the deployment of <code>originals-crypto-shred</code>
+kept their key row. This query lists them — key rows whose document's latest
+audit record is <code>deleted</code>:</p>
+<pre><code class="language-sql">SELECT k.document_id, k.object_key
+FROM document_keys k
+JOIN LATERAL (
+  SELECT a.to_state FROM audit_records a
+  WHERE a.document_id = k.document_id
+  ORDER BY a.seq DESC LIMIT 1
+) latest ON true
+WHERE latest.to_state = 'deleted'
+ORDER BY k.document_id;
+</code></pre>
+<p>Run <code>wordsworth-delete</code> on those ids again (dry run first):</p>
+<pre><code class="language-bash">wordsworth-delete &lt;document-id&gt; [...] --actor &lt;who&gt; --dry-run
+wordsworth-delete &lt;document-id&gt; [...] --actor &lt;who&gt;
+</code></pre>
+<p>A rerun over an already-deleted document destroys any key it still has that
+no other not-deleted document claims, and appends one audit record <code>deleted</code>
+→ <code>deleted</code> with step <code>destroy-key</code> and the payload <code>{actor, keys_destroyed}</code>
+— a count, never a key. A rerun with nothing to destroy appends nothing. A
+rerun that also removes leftover renders writes that as its own
+<code>remove-renders</code> record (above), in the same transaction: two records, each
+with its own step and payload. A row
+the query lists but another live document still reads through (it re-ingested
+the same bytes) is left alone, and the output says <code>keys_destroyed: 0</code>. This
+is an operator step after the deployment, not part of the build.</p>
+<h2 id="original-scans-of-deleted-documents">Original scans of deleted documents</h2>
+<p>A document recovered by
+OCR points at its OCR'd PDF; its original scan (the uploaded bytes, personal
+data in the clear) is named only in its <code>ocr</code> audit record, as
+<code>old_object_key</code>. Documents deleted before <code>delete-removes-original-scan</code> existed left the scan object
+in the store (#454). On 2026-11-14 production held 6 such documents, all
+without a key row for the scan.</p>
+<p>This query lists them (read-only): deleted documents whose scan no document
+that is not deleted still claims, by its own object key or as the scan of its
+own <code>ocr</code> record. <code>key_row</code> says whether a key row for the scan still exists.</p>
+<pre><code class="language-sql">BEGIN TRANSACTION READ ONLY;
+WITH state AS (
+  SELECT d.id AS document_id, d.object_key, latest.to_state
+  FROM documents d
+  JOIN LATERAL (
+    SELECT a.to_state FROM audit_records a
+    WHERE a.document_id = d.id
+    ORDER BY a.seq DESC LIMIT 1
+  ) latest ON true
+),
+scans AS (
+  SELECT DISTINCT a.document_id, a.payload-&gt;&gt;'old_object_key' AS scan_key
+  FROM audit_records a
+  WHERE a.step = 'ocr' AND a.to_state = 'extractable'
+    AND a.payload ? 'old_object_key'
+),
+leftover AS (
+  SELECT s.document_id, s.scan_key, (k.object_key IS NOT NULL) AS key_row
+  FROM scans s
+  JOIN state st ON st.document_id = s.document_id AND st.to_state = 'deleted'
+  LEFT JOIN document_keys k ON k.object_key = s.scan_key
+  WHERE NOT EXISTS (
+          SELECT 1 FROM state o
+          WHERE o.object_key = s.scan_key AND o.to_state &lt;&gt; 'deleted')
+    AND NOT EXISTS (
+          SELECT 1 FROM scans s2
+          JOIN state o ON o.document_id = s2.document_id
+          WHERE s2.scan_key = s.scan_key
+            AND s2.document_id &lt;&gt; s.document_id
+            AND o.to_state &lt;&gt; 'deleted')
+)
+SELECT document_id, scan_key, key_row FROM leftover ORDER BY document_id;
+ROLLBACK;
+</code></pre>
+<p>The query cannot see the object store: whether the scan is still stored, and
+whether it is sealed or plaintext, is for the dry run. Run it over those ids,
+then the real run:</p>
+<pre><code class="language-bash">wordsworth-delete &lt;document-id&gt; [...] --actor &lt;who&gt; --dry-run   # original_scan: 1 if still stored
+wordsworth-delete &lt;document-id&gt; [...] --actor &lt;who&gt;
+</code></pre>
+<p>A rerun over an already-deleted document removes a scan object that is still
+stored and no longer claimed, and appends one audit record <code>deleted</code> →
+<code>deleted</code> with step <code>remove-original-scan</code> and the payload <code>{actor,
+original_scan}</code>. A key row it still finds is destroyed and recorded as
+<code>destroy-key</code>, leftover renders as <code>remove-renders</code>: each its own record, in
+the same transaction. A rerun with nothing to remove appends nothing.</p>
+<p>As with <code>remove-renders</code>, the object store is not in the transaction: if the
+scan is removed and the commit then fails, the removal is real but goes
+unrecorded, and the next rerun reports <code>original_scan: 0</code>.</p>
+<p>This is an operator step after the deployment, not part of the build.</p>
 <h2 id="what-is-not-here">What is not here</h2>
 <ul>
 <li><strong>Un-deleting.</strong> There is no restore path, by design.</li>
