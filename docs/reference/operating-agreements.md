@@ -152,6 +152,26 @@ own command line (it once killed the owner's tmux session — match an exact
 `/proc/*/cmdline` instead); piping `claude` through `tee` in tmux produces
 nothing, because the TUI needs a terminal.
 
+### Keep the agent host within its means
+
+The coding sessions and their subagents share one small agent host. On the
+night of 2026-11-16 about eight parallel agents (test databases, speech models
+loaded locally, Android builds) drove it to a load of 62 with the disk at 97%;
+the owner had to restart it, and every agent's uncommitted work and every
+session timer was lost with it.
+
+- At most three or four heavy agents at once (a test database, an ML model, a
+  build); queue the rest.
+- Agents commit and push after every coherent step, run only the tests they
+  touch, and load no models unless the task is about them.
+- Never measure inside a live pod with a second process that loads the same
+  models: it OOM-killed the Jarvis bridge the same night.
+- After a host restart, session timers are gone: recreate them from the
+  session's own earlier prompts.
+- A daily timer removes worktrees whose pull request is merged or closed (only
+  when clean and fully pushed), and a weekly one shrinks the rebuildable
+  caches (`dotfiles` `scripts/host-cleanup.sh`).
+
 ### Clear open work
 
 Standing order: do not wait until each item is named. Open openspec changes,
@@ -226,6 +246,27 @@ Specifics that bit:
   use absolute paths.
 - **A value has more than one source.** Env comes from `env:` *and*
   `envFrom:`; check the running process, not one of its inputs.
+
+### Jarvis acts as the coding session, with a spoken yes
+
+The owner decided on 2026-11-15 that Jarvis, the voice bridge from his phone,
+may do everything the coding session can ("jarvis may merge etc. everything
+you can do"). It is built as the OpenSpec change `jarvis-full-agent` in the
+jarvis repository, which carries the design and the full trust statement.
+
+- Every rule that binds the coding session binds Jarvis: it runs its turns on
+  the agent host under the same instructions, memory and hooks. It is a second
+  instance of the session, never a privileged bypass.
+- Merge, deploy, delete and anything that goes outside need a spoken yes to a
+  read-back built from fixed words, unless the owner switches that off.
+- Accepted trust (jarvis #25 and #42): whoever holds the Jarvis token, or can
+  read its cluster Secret, can act on the agent host as the owner can at its
+  keyboard. The bridge reaches the agent host directly over the home network;
+  the agent host accepts its key only with a forced command and only from the
+  address of the node the bridge runs on, so every pod on that node shares the
+  address and still needs the private key.
+- `full` mode stays off until the host checks of the change pass (the safety
+  check must keep running even when a project's settings try to switch it off).
 
 ## Testing and evidence
 
