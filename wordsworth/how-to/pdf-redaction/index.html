@@ -11671,6 +11671,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How it is built">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-label-on-a-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The label on a box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13343,6 +13360,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How it is built">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-label-on-a-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The label on a box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -13525,6 +13559,22 @@ numbering — the same as <code>?view=legible</code> on <code>/documents/{id}/an
 an invisible text layer for everything that is <em>not</em> redacted, so search and
 copy keep working for the rest of the page. Nothing is copied from the source
 document: no metadata, no annotations, no outline.</p>
+<h3 id="the-label-on-a-box">The label on a box</h3>
+<p>The label is white Helvetica on the black box (<code>pdf_labels.py</code>), sized to the
+box: 80% of the box height, at most 10 pt, and smaller when the label would
+otherwise be wider than the box (<code>[POSTCODE 1]</code> over <code>6601 AB</code>). It does not
+go under 4 pt; a label that still does not fit, as over a pair of initials, is
+clipped to its box, so no white text runs out over the page. The full label is
+in the text layer either way, so search and copy find it.</p>
+<p>Until render version 2 the labels were in the file but could not be seen
+(#448). The invisible text layer is drawn first, in PDF text render mode 3,
+and that mode is graphics state: it stayed on for the labels drawn after it.
+Search found <code>[PERSOON 1]</code>, the eye found a black box. The layer now ends by
+setting the mode back, and <code>tests/test_pdf_labels.py</code> looks at the pixels of
+each box at 96 dpi (a browser's 100%) rather than at the text layer, which is
+the check that would have caught it. <code>RENDER_VERSION</code> is part of the cache key
+of a redacted PDF, so renders cached under version 1 are not served again: the
+first request after the upgrade renders anew.</p>
 <p>Scanned documents use the existing OCR text layer
 (<code>object_key</code> repointed by the OCR recovery step) — there is no separate OCR
 path for redaction.</p>

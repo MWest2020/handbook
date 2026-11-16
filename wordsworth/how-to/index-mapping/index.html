@@ -13304,7 +13304,7 @@ nothing in production while <code>dossier=alle</code> returned nine.</p>
 <h2 id="what-the-code-does-now">What the code does now</h2>
 <p><code>ensure_ready()</code> also <strong>adds fields the mapping has gained</strong> since the index was
 created (<code>indices.put_mapping</code>) — additive and idempotent, the same shape as the
-column migrations in <code>db.py</code>.</p>
+column migrations <code>db.py</code> applies (the list itself is <code>db_migrations.py</code>).</p>
 <p>A field that already exists with the <strong>wrong type</strong> raises <code>MappingConflict</code>.
 Deliberately hard: a field cannot be retyped in place, and carrying on would
 leave a filter that silently matches nothing.</p>
