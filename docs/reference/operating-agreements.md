@@ -247,8 +247,6 @@ Specifics that bit:
 - **A value has more than one source.** Env comes from `env:` *and*
   `envFrom:`; check the running process, not one of its inputs.
 
-## Jarvis
-
 ### Jarvis acts as the coding session, with a spoken yes
 
 The owner decided on 2026-11-15 that Jarvis, the voice bridge from his phone,
