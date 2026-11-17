@@ -4,6 +4,8 @@
 # only with evidence (a PR, issue or doc); everything else is "open".
 # Schema: project, goal, current (a phase id), phases [id, name, summary], and
 # done_means for the current phase [item, status done|open, evidence].
+# Optional `nl:` (goal, phase, next): the Dutch text for westerweel.work/nu/,
+# written in the first person, without issue numbers, names or client names.
 project: handbook
 goal: "The hub of the personal repository ecosystem: one map of every repo's docs, the canonical agents and skills, and one MCP to read it all."
 current: registry
@@ -16,3 +18,8 @@ done_means:
   - {item: "A skill register mirrored from skill-forge", status: done, evidence: "https://github.com/MWest2020/handbook/blob/main/inventory/skills-register.yml"}
   - {item: "A read-only MCP for roles, skills, factory status and wordsworth search", status: done, evidence: "https://github.com/MWest2020/handbook/pull/39"}
   - {item: "The MCP connected to odin and the habitat roles", status: open, evidence: "https://github.com/MWest2020/handbook/tree/main/handbook_mcp"}
+nl:
+  goal: "De spil van mijn eigen ecosysteem van repositories: één kaart van de documentatie van elke repo, de vaste agents en skills, en één MCP om alles te lezen."
+  phase: "Register van agents en skills"
+  next:
+    - "De MCP gekoppeld aan odin en de rollen van habitat"
