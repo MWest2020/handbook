@@ -11205,6 +11205,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#groups-keycloak-groups-to-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups (keycloak-groups-to-roles)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-it-on-cloudflare-access" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13281,6 +13292,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#groups-keycloak-groups-to-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups (keycloak-groups-to-roles)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-it-on-cloudflare-access" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13404,6 +13426,27 @@ the lists is marked verified; an address that is not is locked out of the
 console behind Keycloak (the <code>console</code> key remains the way in).</p>
 <p>Cloudflare Access is not affected: its assertion carries no such claim, and
 Access establishes the address itself.</p>
+<h2 id="groups-keycloak-groups-to-roles">Groups (keycloak-groups-to-roles)</h2>
+<p>With Keycloak in front, configure a <strong>group membership mapper</strong> on the client
+(Keycloak admin console: Client scopes → the client's dedicated scope →
+Mappers → "Group Membership", token claim name <code>groups</code>, "Full group path"
+off so the claim carries plain names). Wordsworth reads that <code>groups</code> claim —
+and only that claim, off the same verified assertion <code>email_verified</code> is
+checked on — to resolve which roles a caller holds via a <code>group_roles</code>
+mapping (<code>docs/how-to/roles.md#groepen-keycloak-groups-to-roles</code>). A <code>groups</code>
+claim that is missing or not a list of strings yields no groups, not a
+refusal of the caller: only <code>email</code> and <code>email_verified</code> can refuse the whole
+assertion.</p>
+<p><strong>The header is never a source, here either.</strong> A <code>groups</code> HTTP header is never
+read; only the signed claim is. An assertion that fails any check — bad
+signature, wrong audience or issuer, expired, unverified email — yields
+neither a caller label nor groups, the same fail-closed rule as everywhere
+else in this document.</p>
+<p><strong>A valid <code>X-API-Key</code> or the console cookie carries no groups</strong>, even when a
+valid assertion with groups rides along on the same request: a sent
+credential beats one that rides along (see "Keeping the key route" below),
+and a key or a cookie names a label, and a label has no groups. So: no groups;
+use a personal grant or label.</p>
 <h2 id="turning-it-on-cloudflare-access">Turning it on — Cloudflare Access</h2>
 <pre><code class="language-bash">export WORDSWORTH_ACCESS_TEAM_DOMAIN=raspy-wood-e123.cloudflareaccess.com
 export WORDSWORTH_ACCESS_AUD=&lt;the application's AUD tag&gt;

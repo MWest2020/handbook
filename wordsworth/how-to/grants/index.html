@@ -11551,21 +11551,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-token-only-resolves-for-its-own-document" class="md-nav__link">
+  <a href="#a-refusal-says-nothing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A token only resolves for its own document
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
+        A refusal says nothing
       
     </span>
   </a>
@@ -13391,21 +13380,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-token-only-resolves-for-its-own-document" class="md-nav__link">
+  <a href="#a-refusal-says-nothing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A token only resolves for its own document
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
+        A refusal says nothing
       
     </span>
   </a>
@@ -13644,6 +13622,80 @@ existing grant whose recipient is not the caller's label now gets 403. Check
 the active grants before this goes live:
 <code>curl $API/grants/&lt;id&gt;</code> and compare <code>recipient</code> with the label behind the key
 that uses it.</p>
+</blockquote>
+<h2 id="a-refusal-says-nothing">A refusal says nothing</h2>
+<p>Both reveal routes decide the grant before they read anything about the
+document (<code>reveal_gate.decide</code>). A caller the grant does not cover gets one
+answer, whatever the reason:</p>
+<table>
+<thead>
+<tr>
+<th>caller the grant does not cover</th>
+<th>answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unknown grant, revoked, expired, wrong document or domain, wrong recipient</td>
+<td>403 <code>{"detail": "grant not applicable"}</code></td>
+</tr>
+<tr>
+<td>unknown document</td>
+<td>same 403 — a grant covers no document that does not exist</td>
+</tr>
+<tr>
+<td>superseded document</td>
+<td>same 403 — the survivor's id is not named</td>
+</tr>
+<tr>
+<td>deleted document</td>
+<td>same 403 — not 410</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>caller the grant covers</th>
+<th>answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>superseded document</td>
+<td>409 naming the surviving document</td>
+</tr>
+<tr>
+<td>deleted document</td>
+<td>410</td>
+</tr>
+<tr>
+<td>not yet de-identified</td>
+<td>409</td>
+</tr>
+</tbody>
+</table>
+<p>Why: #487, found by the security review of #485. Before this, <code>reveal</code> and
+<code>reveal.pdf</code> answered 404 for an unknown grant and for an unknown document,
+409 naming the survivor of a superseded one, and <code>reveal.pdf</code> 410 for a
+deleted one — for <em>any</em> grant id, including one that does not exist. Since</p>
+<h1 id="485-a-caller-who-is-no-reader-is-refused-on-every-corpus-read-route-before">485 a caller who is no reader is refused on every corpus-read route before</h1>
+<p>any lookup; the two reveal routes were the last way such a caller could learn
+whether a document exists, is deleted, or which copy survives it. That
+matters now that a grant id is something handed to a non-reader at all
+(<code>share-recipient-read</code>, <code>console-share</code>): a shared <code>grant_id</code> is close to a
+bearer token, and it should not double as a way to probe the corpus.</p>
+<p>An operator diagnosing <em>why</em> a reveal was refused does not read the reveal
+response or its logs — both say the same thing on purpose. Use a route with
+its own gate instead: <code>GET /grants/{id}</code> (reader or issuer) for the grant's
+status, recipient, scope and domain; <code>GET /documents/{id}/state</code> (reader) for
+whether the document exists, is superseded, or is deleted.</p>
+<blockquote>
+<p><strong>Deploy-stap.</strong> A client that branches on 404 <code>unknown grant</code> or 404
+<code>unknown document</code> from a reveal route now gets 403 <code>grant not applicable</code>
+instead. And: the former recipient of a grant scoped to a deleted document
+now gets 403, not 410 — the deletion removes exactly that grant
+(<code>PostgresGrantStore</code>), so there is nothing left that covers him.</p>
 </blockquote>
 <h2 id="a-token-only-resolves-for-its-own-document">A token only resolves for its own document</h2>
 <p>Since 2026-09-17 a reveal resolves only pseudonyms registered for the document

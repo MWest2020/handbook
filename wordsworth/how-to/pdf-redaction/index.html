@@ -13480,7 +13480,10 @@ lists; the next call then serves a fresh PDF.</p>
   -d '{&quot;grant_id&quot;:&quot;&lt;grant_id&gt;&quot;,&quot;types&quot;:[&quot;PERSON&quot;]}' -o reveal.pdf
 </code></pre>
 <p>The same grant and the same gates as <a href="../grants/"><code>/reveal</code></a> — a document that
-has no box map yet also answers 409 here, a deleted one 410. The granted type is drawn in clear,
+has no box map yet also answers 409 here; a deleted one answers 410, but only
+to a caller the grant covers (reveal-authorize-first, #487) — anyone else gets
+the uniform refusal (see <a href="../grants/#a-refusal-says-nothing">grants: a refusal says nothing</a>),
+never 410. The granted type is drawn in clear,
 straight from the original page (nothing is decrypted to render it: the box
 for that type is simply left unpainted, so the original pixels and the
 original invisible text pass through); every other type keeps its box and

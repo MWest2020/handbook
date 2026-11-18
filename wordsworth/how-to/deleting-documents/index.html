@@ -11317,6 +11317,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-each-api-route-answers-for-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What each API route answers for a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#crypto-shredding-the-key-goes-with-the-document" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13330,6 +13341,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-each-api-route-answers-for-a-deleted-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What each API route answers for a deleted document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#crypto-shredding-the-key-goes-with-the-document" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13540,6 +13562,58 @@ it.</p>
 <p>One <code>deleted</code> audit record is written, holding the document id, the actor and
 how many of each kind were removed (<code>keys_destroyed</code>, <code>original_scan</code> among
 them) — never a filename, a token, a value or key material.</p>
+<h2 id="what-each-api-route-answers-for-a-deleted-document">What each API route answers for a deleted document</h2>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /documents/{id}/anonymized</code></td>
+<td>410 <code>document deleted</code></td>
+</tr>
+<tr>
+<td><code>GET /documents/{id}/redacted.pdf</code></td>
+<td>410 <code>document deleted</code></td>
+</tr>
+<tr>
+<td><code>POST /documents/{id}/feedback</code></td>
+<td>410 <code>document deleted</code>, nothing appended</td>
+</tr>
+<tr>
+<td><code>GET /documents/{id}/state</code></td>
+<td>200, state <code>deleted</code></td>
+</tr>
+<tr>
+<td><code>GET /documents/{id}</code></td>
+<td>200, the trail with its <code>deleted</code> record</td>
+</tr>
+<tr>
+<td><code>DELETE /documents/{id}</code></td>
+<td>200, finishes leftover work (above)</td>
+</tr>
+<tr>
+<td><code>POST /documents/{id}/reveal</code>, <code>/reveal.pdf</code></td>
+<td>governed by <code>reveal-api</code> (<code>reveal-authorize-first</code>)</td>
+</tr>
+<tr>
+<td><code>GET /console/documents/{id}</code></td>
+<td>the page opens (<code>console</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>A route that returns or accepts the document's <strong>content</strong> answers 410: the
+content is gone for good. A route that reports the document's <strong>record</strong>
+keeps answering, because the record is what a deletion keeps: the row and the
+earlier audit records stay, so <code>GET /documents/{id}</code> and
+<code>GET /documents/{id}/state</code> are how a caller with corpus read asks "since
+when, by whom" after a deletion — the trail stays readable, never the
+content. Every 410 is the same body, <code>{"detail": "document deleted"}</code>, and
+comes after the route's own caller gate: a caller the gate refuses gets that
+gate's 403, deleted or not; an unknown id still answers 404.</p>
 <p><strong>Deleting releases the object key.</strong> The row's <code>object_key</code> becomes the
 placeholder <code>deleted/&lt;document-id&gt;</code>, and the former key is recorded in the
 <code>deleted</code> record as <code>released_object_key</code>. A deleted document therefore no
@@ -13627,9 +13701,14 @@ let a long transaction keep seeing a destroyed row.</p>
 <code>WORDSWORTH_GRANT_ISSUER_LABELS</code>, may delete. Anyone else is refused before
 anything is read or removed, and a refusal writes no <code>deleted</code> record.</p>
 <p>A caller <strong>holds</strong> <code>beheerder</code> by being the recipient of an active, unexpired
-grant that names the role — the same fact <a href="../grants/">grants</a> already uses to
-resolve a role-granted reveal, read here as yes/no instead of a type set.
-There is no separate identity-to-role table (see
+grant that names the role, or — since keycloak-groups-to-roles — by one of
+the caller's verified groups mapping to it
+(<code>docs/how-to/roles.md#groepen-keycloak-groups-to-roles</code>). Either way the role
+must also be active: a switched-off <code>beheerder</code> opens this gate for nobody,
+whether a grant or a group named it. An API key or the console cookie carries
+no groups, so a caller who only holds <code>beheerder</code> through a group and signs
+in with a key or the console cookie is refused here — "no groups; use a
+personal grant or label". There is no separate identity-to-role table (see
 <a href="../roles/#wat-hier-niet-woont">roles</a>): "who someone is" comes from sign-on,
 "what they may do" is decided here, at the one place every delete passes
 through.</p>
@@ -13661,11 +13740,16 @@ the API answer and the CLI output (a dry run counts them and removes nothing).
 The renders are listed before anything irreversible happens: if listing
 fails (say the S3 identity lacks <code>ListObjectsV2</code>), the deletion fails with
 nothing removed and the document in its previous state.</p>
-<p>For a deleted document, <code>GET /documents/{id}/redacted.pdf</code> and
-<code>POST /documents/{id}/reveal.pdf</code> answer <strong>410 Gone</strong>, checked before the
-cache is looked at: a render left behind is never served. 410 rather than
-404 because the id is known and its absence is deliberate and permanent;
-404 stays "unknown id", 409 stays "not yet / stale, <code>reanonymize</code> fixes it".</p>
+<p>For a deleted document, <code>GET /documents/{id}/redacted.pdf</code> answers <strong>410
+Gone</strong>, checked before the cache is looked at: a render left behind is never
+served. <code>POST /documents/{id}/reveal.pdf</code> answers 410 too, governed by the
+<code>reveal-api</code> capability (see the table above). 410 rather than 404 because
+the id is known and its absence is deliberate and permanent; 404 stays
+"unknown id", 409 stays "not yet / stale, <code>reanonymize</code> fixes it".
+<code>GET /documents/{id}/anonymized</code> and <code>POST /documents/{id}/feedback</code> answer
+410 the same way (the table above): "not yet de-identified" told a client to
+wait for something that would never come, and feedback on a deleted document
+would otherwise grow a chain that is already terminal.</p>
 <p><strong>Leftovers.</strong> Documents deleted before #451 kept both, and a request that was
 rendering while the deletion committed can still write one object afterwards.
 To find them (read-only):</p>

@@ -13300,7 +13300,10 @@ of them: what a caller may do depends on whether its label is on
   describe the routes, not the corpus;</li>
 <li><code>/console/logout</code>;</li>
 <li><code>POST /documents/{id}/reveal</code> and <code>/reveal.pdf</code>, which are then decided by the
-  grant presented (recipient, types, scope, expiry), not by the lists.</li>
+  grant presented (recipient, types, scope, expiry), not by the lists — the
+  grant is decided before anything about the document is read, and every
+  refusal to a caller it does not cover is the same 403 (see
+  <a href="../grants/#a-refusal-says-nothing">grants: a refusal says nothing</a>).</li>
 </ul>
 <p><strong>The read list</strong> (corpus read) guards every route that returns corpus content
 or corpus metadata, or changes what a reader sees:</p>
