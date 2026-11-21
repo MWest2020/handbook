@@ -4036,6 +4036,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../seeds/designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../seeds/playtester/" class="md-nav__link">
         
   
@@ -6102,6 +6130,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../habitat/explanation/designer-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A designer agent: what exists, what we use, and why
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -6156,6 +6219,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../habitat/reference/designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer-rol (add-designer-role)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -13258,7 +13356,13 @@ Short, English.</p>
 </blockquote>
 <p>Channel scope: #general, #architectuur.</p>
 <h2 id="execution-facet">Execution facet</h2>
-<p>None — ontwerper runs in chat only.</p>
+<p>In the cage ontwerper is the habitat role <code>designer</code> (habitat change
+<code>add-designer-role</code>): it turns a brand brief into 2-3 directions and one full,
+checked delivery under <code>design/brand/</code> (SVG logo set, store and adaptive icons,
+feature graphic, screenshot frames, tokens, rationale, licences), drawn in SVG
+code with no image models. Its gate, <code>design-check</code>, runs in the worker, not in
+the prompt. Canonical role text: <a href="../seeds/designer/"><code>seeds/designer.md</code></a>.
+Dispatch: habitat <code>dispatch/designer.sh &lt;repo&gt; &lt;brief&gt;</code>, which opens a draft PR.</p>
 
 
 

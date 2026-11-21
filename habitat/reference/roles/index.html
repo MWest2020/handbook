@@ -3947,6 +3947,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../agents/seeds/designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../agents/seeds/playtester/" class="md-nav__link">
         
   
@@ -6015,6 +6043,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/designer-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A designer agent: what exists, what we use, and why
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -6071,6 +6134,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer-rol (add-designer-role)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -13453,6 +13551,12 @@ ref is set; since 2026-10-27 the MWest2020 repos carry no such copies any more
 <td>nee</td>
 <td>—</td>
 </tr>
+<tr>
+<td><code>designer</code></td>
+<td>maakt uit een merkbrief 2-3 richtingen en één gecontroleerde levering onder <code>design/brand/</code> (add-designer-role)</td>
+<td>ja, alleen <code>design/brand/</code> (afgedwongen)</td>
+<td>— (<a href="../designer/">designer</a>)</td>
+</tr>
 </tbody>
 </table>
 <p>De playtester draait alleen in een repo met <code>.factory/playtest.yml</code> en alleen als
@@ -13572,7 +13676,7 @@ elk gevonden geheim.</p>
 <li><strong>Container + Cilium</strong> — de buitenste grens: non-root pod zonder
    capabilities, per rol een eigen ServiceAccount zonder token of
    RBAC-rechten (<code>role-architect</code>/<code>role-builder</code>/<code>role-reviewer</code>/
-   <code>role-security</code>/<code>role-playtester</code>, <code>automountServiceAccountToken: false</code>; <code>cage/rbac.yaml</code>),
+   <code>role-security</code>/<code>role-playtester</code>/<code>role-designer</code>, <code>automountServiceAccountToken: false</code>; <code>cage/rbac.yaml</code>),
    plus de Cilium-egress-allowlist als netwerkgrens.</li>
 </ol>
 <h2 id="netwerk-begrensd-niet-geisoleerd">Netwerk: begrensd, niet geïsoleerd</h2>
@@ -13620,11 +13724,10 @@ meegegeven. Ontbreekt het veld, dan draait de run zoals voorheen.</p>
 <code>go test</code>). Die voeren <strong>code uit de doelrepo</strong> uit — een <code>Makefile</code>-target, een
 <code>package.json</code>-script, een <code>conftest.py</code>. Dat is inherent aan bouwen en testen: je
 kunt geen tests draaien zonder repo-code te draaien.</p>
-<p>De allowlist is dus <strong>geen sandbox</strong>. Hij houdt tegen wat een agent per ongeluk of
-achteloos doet (<code>curl</code>, <code>kubectl</code>, <code>cat .env</code>), niet wat een vastberaden agent via
-zijn eigen testcode doet. De echte grenzen liggen een laag lager: de container, de
-egress-allowlist, geen <code>GIT_PAT</code> in het agentproces, en <code>git</code> die geen repo-hooks
-draait (<code>core.hooksPath=/dev/null</code>).</p>
+<p>De allowlist is dus <strong>geen sandbox</strong>: hij houdt tegen wat een agent achteloos doet
+(<code>curl</code>, <code>kubectl</code>, <code>cat .env</code>), niet wat hij via eigen testcode doet. De grenzen
+liggen lager: container, egress-allowlist, geen <code>GIT_PAT</code> in het agentproces, en
+git in de entrypoint zonder config die de agent kan schrijven (<code>worker/git-safe.sh</code>).</p>
 <p>Wat er bewust <strong>niet</strong> in staat: <code>uvx</code> en <code>npx</code>. Die halen een willekeurig pakket
 van internet en voeren het uit — een andere klasse dan "draai de tests van deze
 repo", en npm/PyPI staan in de egress-allowlist.</p>

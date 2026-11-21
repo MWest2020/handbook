@@ -4108,6 +4108,34 @@
   
   
     <li class="md-nav__item">
+      <a href="seeds/designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="seeds/playtester/" class="md-nav__link">
         
   
@@ -6174,6 +6202,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../habitat/explanation/designer-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A designer agent: what exists, what we use, and why
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -6228,6 +6291,41 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../habitat/reference/designer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designer-rol (add-designer-role)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -13557,6 +13655,7 @@ chat.tools.allow  ==  Read, Grep, Glob  ∪  the tools of its skills
 <li>assistent — general chat agent (spoke channels), no execution <em>(to follow)</em></li>
 <li><a href="reviewer/">reviewer</a> / <a href="security/">security</a> — execution only (habitat)</li>
 <li>playtester — execution only (habitat): opens the app in headless Chromium and looks at it; seed <code>seeds/playtester.md</code> (habitat change <code>add-playtester-role</code>)</li>
+<li><a href="ontwerper/">ontwerper</a> — frontend/UX sparring (chat) + habitat <code>designer</code> (execution): brand deliveries drawn in SVG code, gated by <code>design-check</code>; seed <code>seeds/designer.md</code> (habitat change <code>add-designer-role</code>)</li>
 <li><a href="roodteam/">roodteam</a> — security/red-team agent (chat, #red-team, #review), no execution</li>
 <li><strong>seeds/</strong> — canonical execution seeds, read by habitat directly (below)</li>
 </ul>
@@ -13590,6 +13689,10 @@ plus a guard hook that refuses push, secrets and <code>.git/</code>). In practic
 <tr>
 <td>playtester</td>
 <td>as reviewer, plus <code>playtest-shoot</code> (serves the app on 127.0.0.1, screenshots in headless Chromium)</td>
+</tr>
+<tr>
+<td>designer</td>
+<td>Edit/Write, git for staging and committing, <code>design-kit</code>, <code>design-check</code>, <code>logo-tool</code>, <code>playtest-shoot</code>; no package runners; only <code>design/brand/</code> may change</td>
 </tr>
 <tr>
 <td>builder</td>
