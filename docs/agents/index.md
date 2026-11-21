@@ -147,6 +147,7 @@ A chat agent's tools are not chosen per role. They follow from its skills:
 - assistent — general chat agent (spoke channels), no execution *(to follow)*
 - [reviewer](reviewer.md) / [security](security.md) — execution only (habitat)
 - playtester — execution only (habitat): opens the app in headless Chromium and looks at it; seed `seeds/playtester.md` (habitat change `add-playtester-role`)
+- [ontwerper](ontwerper.md) — frontend/UX sparring (chat) + habitat `designer` (execution): brand deliveries drawn in SVG code, gated by `design-check`; seed `seeds/designer.md` (habitat change `add-designer-role`)
 - [roodteam](roodteam.md) — security/red-team agent (chat, #red-team, #review), no execution
 - **seeds/** — canonical execution seeds, read by habitat directly (below)
 
@@ -170,6 +171,7 @@ plus a guard hook that refuses push, secrets and `.git/`). In practice:
 | architect | `git diff`, `git log`, `git status`, `git show` |
 | reviewer, security | the same, plus `openspec validate` |
 | playtester | as reviewer, plus `playtest-shoot` (serves the app on 127.0.0.1, screenshots in headless Chromium) |
+| designer | Edit/Write, git for staging and committing, `design-kit`, `design-check`, `logo-tool`, `playtest-shoot`; no package runners; only `design/brand/` may change |
 | builder | git for staging and committing (never push), the project's build and test commands (`npm`, `node --test`, `uv`, `pytest`, `go`, `make`, `verify.sh`), `openspec validate` |
 
 Everything else is refused, including `cat`, `curl`, `env` and web access.
