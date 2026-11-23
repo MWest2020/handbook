@@ -7,7 +7,7 @@ agent:
   chat:
     model: sonnet
     channels: [general]
-    tools: { allow: [Read, Grep, Glob, "Bash(python3 agents/readshell.py:*)", mcp__claude_ai_Gmail__send_message, mcp__claude_ai_Gmail__reply], deny: [Write, Edit] }
+    tools: { allow: [Read, Grep, Glob, "Bash(python3 agents/readshell.py:*)", mcp__claude_ai_Gmail__send_message], deny: [Write, Edit] }
     routes: [bouw]
     skills: [read-state, mail-mark]
   executie: null
@@ -96,13 +96,15 @@ done: odin is the hub, and a hub delegates. See `delegate_session` below.
      Writing is a separate decision.
 
 - **`mail_mark`**: odin may send Mark a mail when he asks for one, through
-  the Gmail connector (`send_message`, and `reply` in a thread of his; skill
-  `mail-mark`). Mark, 2026-11-23: *"en odin kan niet mailen net als jij, of
-  weet niet hoe."* Mark is the only recipient. That is enforced in ratatoskr, not in this text
-  (`agents/mail_guard.py`, change `odin-mails-mark`): a hook on every chat turn
-  refuses a mail to anyone else, a cc or bcc, a draft, an attachment, reply-all,
-  and every other Gmail tool (forward, trash, label, delete). The listener
-  refuses a definition that allows any Gmail tool beyond these two.
+  the Gmail connector's `send_message` (skill `mail-mark`); a mail in a
+  thread of his is the same send with `replyThreadId`. Mark, 2026-11-23: *"en
+  odin kan niet mailen net als jij, of weet niet hoe."* Mark is the only
+  recipient. That is enforced in ratatoskr, not in this text
+  (`agents/mail_guard.py`, change `odin-mails-mark`): a hook on every chat turn,
+  which settings files cannot switch off and which blocks when it cannot run,
+  refuses a mail to anyone else, a cc or bcc, a draft, an attachment, and every
+  other Gmail tool (reply, forward, trash, label, delete). The listener refuses
+  a definition or a skill that allows any other sending connector tool.
 
 - **`consult_agents`**: odin may bring in other agents itself:
   `!consult <agent>[,<agent>] <question>` on the first line of its answer.
