@@ -12194,6 +12194,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/lock-order/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lock order
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/originals-ingest-seam/" class="md-nav__link">
         
   
@@ -13505,6 +13540,22 @@ every legacy original it finds for a live document, and the original scan
 <code>deletion_scans.scan_keys</code>) of every document that is not deleted --
 superseded copies included -- when that scan is itself still plaintext; these
 are counted separately in the report, under <code>scans</code>.</p>
+<p><strong>A scan retired as a copy is a scan too (#486).</strong> When OCR recovery finds
+that the OCR'd PDF already is another live document's object, it writes
+nothing and supersedes the scan's document (<code>supersede(..., as_object=...)</code>).
+That document keeps its own object -- the scan -- which no survivor shares
+and no <code>ocr</code> record names. The run takes it as a candidate of kind <code>"scan"</code>:
+the object key of every document that is not deleted, is superseded, and has
+a <code>supersede</code> audit record carrying <code>as_object</code>. It is sealed under that
+document's own row lock and claim (not deleted, its row still points at the
+object), counted under <code>scans</code>, reported <code>"gone"</code> when the store no longer
+has it, and <code>--verify</code> fails while it is still plaintext. Deleting the
+retired document removes the sealed scan and its key row like any other
+original. An ordinary copy, which shares its survivor's key, adds nothing:
+the survivor's original covers it. Before this fix such a scan was no
+candidate at all, so it stayed plaintext and <code>--verify</code> passed over it;
+<strong>the object count of a dry run can therefore be higher than it was before
+the fix</strong> -- by exactly these scans.</p>
 <p><strong>Never without a readable copy.</strong> Per object: the sealed bytes are written
 first under a temporary key (<code>sealing/&lt;sha256&gt;</code>) and verified to open to the
 object's recorded SHA-256 <em>before</em> the plaintext at <code>documents/&lt;sha256&gt;</code> is
@@ -13537,7 +13588,17 @@ for the next run, which finds the object as the document's scan. The run
 never takes the audit chain's lock.</p>
 <p><strong>Idempotent and resumable.</strong> A document already sealed (<code>sealed_at</code> set) is
 reported <code>"already_sealed"</code> and its object is not touched (a leftover
-temporary copy is removed). The original scan of a live recovered document
+temporary copy is removed). <strong>A rerun does not download it (#491):</strong> when the
+key row has <code>sealed_at</code> and a ranged GET of the first 30 bytes shows the
+sealed header, that is the whole check -- under the same row lock as before,
+and the same two facts the run already went by after downloading the object.
+Everything else is still read in full: a plaintext object under a sealed row
+(reported <code>"failed"</code>, <code>key row is sealed but the object is plaintext</code>), a
+sealed object whose <code>sealed_at</code> never committed (verified, then finished),
+and an object whose header cannot be read (the full read then reports it
+<code>missing</code> or <code>unreadable</code>). A rerun does not open a sealed and committed
+object to check its body; it never did -- <code>--verify</code> and reading the
+document are the checks for that. The original scan of a live recovered document
 that the store no longer has (it does not exist, or reading it raises an
 object-store error) is reported with the status <code>"gone"</code> and counted under
 <code>gone</code>: neither sealed nor failed, and the exit status stays clean. A run interrupted between the overwrite and the <code>sealed_at</code> commit
@@ -13548,7 +13609,7 @@ already gone. A run interrupted after the key row was minted and before
 anything was written reuses that row. Safe to run repeatedly, including on a
 schedule, until <code>--verify</code> reports <code>"verified": true</code>.</p>
 <p><strong>What <code>--verify</code> checks.</strong> It fails (exit 1) while a live document's
-original or a scan is still legacy plaintext, or while a sealed object can
+original or a scan (a retired copy's scan included) is still legacy plaintext, or while a sealed object can
 be opened by no one: it has no key row (<code>no_key_row</code>) or its header names
 another key id than its row (<code>key_id_mismatch</code>), or while a live document's
 original is missing from the store (<code>missing</code>: data loss, never a pass), or

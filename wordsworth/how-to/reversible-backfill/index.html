@@ -12238,6 +12238,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/lock-order/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lock order
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--current"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/originals-ingest-seam/" class="md-nav__link">
         
   
@@ -13550,7 +13585,11 @@ curl -X POST &quot;$WORDSWORTH_API_URL/reprocess&quot; \
   -H 'content-type: application/json' -d '{&quot;document_ids&quot;:[&quot;&lt;uuid&gt;&quot;]}'
 </code></pre>
 <p>Response is a per-document tally: <code>{total, reanonymized, skipped, retryable,
-failed}</code>.</p>
+failed}</code>.
+A document deleted while the run was at it counts as <code>skipped</code>, not as
+<code>reanonymized</code> (#469). <code>problems</code> holds failures only, so it is not listed
+there; the server log has a <code>reprocess_skipped</code> line with the document id
+and the state found (<code>deleted</code>).</p>
 <h2 id="notes">Notes</h2>
 <ul>
 <li><strong>Long-running:</strong> one GLiNER pass per document on CPU — a full corpus takes a
