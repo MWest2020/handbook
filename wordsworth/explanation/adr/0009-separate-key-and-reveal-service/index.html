@@ -13753,7 +13753,9 @@ nothing from being separate services; they stay in the monolith.</p>
 <li>The service ships first without traffic, in three builds:
    <code>key-service-skeleton</code> (its own process, settings, database and schema,
    service authentication), <code>key-service-vault</code> (pseudonymise with the token
-   registry, seal/open/delete, its audit stream and rate limit) and
+   registry, seal/open/delete, its audit stream and rate limit; built as four
+   changes, <code>key-service-pseudonymise</code>, <code>key-service-originals</code>,
+   <code>key-service-open-limits</code> and <code>key-service-delete</code>) and
    <code>key-service-reveal</code> (the reveal contract and identity verification), all
    tested against a fake Transit.</li>
 <li>Cutover (<code>key-service-cutover</code>): the key vault, mappings, the token

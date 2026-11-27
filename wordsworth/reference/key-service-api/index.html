@@ -13522,7 +13522,8 @@ database from wordsworth's. See <a href="../../how-to/key-service/">the how-to</
 deployment, its database and failure modes.</p>
 <p>In this change (<code>key-service-skeleton</code>) the surface is deliberately minimal:
 the process boundary and its authentication, nothing else yet.
-<code>key-service-vault</code> and <code>key-service-reveal</code> add the endpoints below the
+<code>key-service-pseudonymise</code>, <code>key-service-originals</code>, <code>key-service-open-limits</code>,
+<code>key-service-delete</code> and <code>key-service-reveal</code> add the endpoints below the
 <code>/v1</code> prefix.</p>
 <h2 id="get-health"><code>GET /health</code></h2>
 <p>Liveness probe. No <code>Authorization</code> header needed.</p>
@@ -13552,7 +13553,8 @@ separately.</p>
 <h2 id="not-in-this-change">Not in this change</h2>
 <ul>
 <li>Every key, mapping, token-registry and reveal operation — see
-  <code>key-service-vault</code> and <code>key-service-reveal</code>.</li>
+  <code>key-service-pseudonymise</code>, <code>key-service-originals</code>,
+  <code>key-service-open-limits</code>, <code>key-service-delete</code> and <code>key-service-reveal</code>.</li>
 <li><code>POST /v1/export</code> — see <code>key-export-escrow</code>.</li>
 </ul>
 

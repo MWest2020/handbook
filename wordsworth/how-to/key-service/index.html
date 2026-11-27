@@ -13552,8 +13552,10 @@
 <p>ADR-0009: one service holds the keys, the encrypted values, the token
 registry and the reveal decision; the rest of wordsworth sees tokens only.
 This change (<code>key-service-skeleton</code>) ships the process boundary with <strong>no
-traffic</strong> — nothing in wordsworth calls it yet. <code>key-service-vault</code> and
-<code>key-service-reveal</code> fill it in.</p>
+traffic</strong> — nothing in wordsworth calls it yet. The four changes split
+from <code>key-service-vault</code> (<code>key-service-pseudonymise</code>, <code>key-service-originals</code>,
+<code>key-service-open-limits</code>, <code>key-service-delete</code>) and <code>key-service-reveal</code> fill
+it in.</p>
 <h2 id="deploying-it">Deploying it</h2>
 <p>Same image as wordsworth, a different command (the Dockerfile is otherwise
 unchanged):</p>
