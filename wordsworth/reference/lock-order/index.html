@@ -12279,6 +12279,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-key-services-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The key service's database
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#testing-a-lock-order" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13508,6 +13519,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-key-services-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The key service's database
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#testing-a-lock-order" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13677,6 +13699,74 @@ to settle on this page first, not an order to improvise.</p>
   a key-share lock on it (the foreign key) and then appends; a dossier
   deletion appends first and deletes the row last (#510).</li>
 </ul>
+<h2 id="the-key-services-database">The key service's database</h2>
+<p>A different database from wordsworth's (ADR-0009): its own lock order, on
+its own rows. Nothing above this section changes -- wordsworth's "never
+together with 4771" is about wordsworth's database, and does not apply here.
+The service's advisory keys (4781, 4782, 4783) are likewise its own; they
+coexist with wordsworth's 4771 and 4772 only in the sense that both
+databases use the <code>pg_advisory_xact_lock</code> mechanism, never in the same
+transaction (the two databases never share one).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lock</th>
+<th>Mode</th>
+<th>Taken by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>the registry advisory lock (key 4781)</td>
+<td><code>pg_advisory_xact_lock</code></td>
+<td><code>pseudonymise</code> (<code>key-service-pseudonymise</code>), <code>seal</code> (<code>key-service-originals</code>), <code>DELETE /v1/documents</code> (<code>key-service-delete</code>)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>the <code>known_documents</code> row</td>
+<td>plain read/insert under lock 1</td>
+<td>the same three writers</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>document_keys</code> rows, by <code>object_key</code></td>
+<td><code>FOR UPDATE</code></td>
+<td><code>seal</code>/<code>open</code> (<code>key-service-originals</code>), <code>DELETE /v1/originals</code> and <code>DELETE /v1/documents</code> (<code>key-service-delete</code>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>pii_mappings</code> rows, by <code>pseudonym</code></td>
+<td>inserted <code>ON CONFLICT DO NOTHING</code> by <code>pseudonymise</code>; <code>FOR UPDATE</code> by a deletion</td>
+<td><code>pseudonymise</code> (<code>key-service-pseudonymise</code>); <code>DELETE /v1/documents</code> (<code>key-service-delete</code>)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>the <code>key_lifecycle_events</code> chain lock (key 4783)</td>
+<td><code>pg_advisory_xact_lock</code></td>
+<td>a writer that records a key-lifecycle event (<code>key-service-delete</code>, first writer of that chain)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>the <code>access_audit</code> chain lock (key 4782)</td>
+<td><code>pg_advisory_xact_lock</code></td>
+<td><code>append_access</code>, last -- the audit is the terminal leaf, nothing is taken after it (<code>key-service-pseudonymise</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>key-service-pseudonymise</code> (this change) takes rows 1, 2, 4 and 6: it holds
+the registry lock for the whole batch (bounded by
+<code>KEYSERVICE_PSEUDONYMISE_MAX_ITEMS</code>), records or checks the
+<code>known_documents</code> row under it, inserts <code>pii_mappings</code> rows under it too
+(no separate buffering step is needed here, unlike wordsworth's chain lock:
+the registry lock is already held before any mapping row is written), and
+takes the audit lock last, after the registry lock is released by commit.</p>
+<p>Row 5's trigger-corrected key is 4783, not the skeleton's <code>AccessAudit</code>
+docstring value of 4772: that number belongs to wordsworth's own
+key-lifecycle stream (<code>key_audit_pg.py</code>), in wordsworth's database, and was
+a placeholder in the skeleton build. <code>key-service-delete</code>, the first writer
+of the service's own key-lifecycle chain, corrects the docstring.</p>
 <h2 id="testing-a-lock-order">Testing a lock order</h2>
 <p>The race tests hold one side at a known point with a <code>threading.Event</code>, start
 the other, and wait until PostgreSQL reports a session waiting on a lock

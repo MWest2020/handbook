@@ -11660,6 +11660,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-wire-between-wordsworth-and-the-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The wire between wordsworth and the service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#its-database-and-role" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -11686,6 +11697,17 @@
     <span class="md-ellipsis">
       
         The service token
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-open-rate-limit-and-its-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The open rate limit and its metrics
       
     </span>
   </a>
@@ -13474,6 +13496,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-wire-between-wordsworth-and-the-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The wire between wordsworth and the service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#its-database-and-role" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13500,6 +13533,17 @@
     <span class="md-ellipsis">
       
         The service token
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-open-rate-limit-and-its-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The open rate limit and its metrics
       
     </span>
   </a>
@@ -13555,20 +13599,59 @@ This change (<code>key-service-skeleton</code>) ships the process boundary with 
 traffic</strong> — nothing in wordsworth calls it yet. The four changes split
 from <code>key-service-vault</code> (<code>key-service-pseudonymise</code>, <code>key-service-originals</code>,
 <code>key-service-open-limits</code>, <code>key-service-delete</code>) and <code>key-service-reveal</code> fill
-it in.</p>
+it in. <code>key-service-open-limits</code> adds the rate limit on <code>open</code>, its 429
+audit and <code>GET /v1/metrics</code>.</p>
 <h2 id="deploying-it">Deploying it</h2>
 <p>Same image as wordsworth, a different command (the Dockerfile is otherwise
 unchanged):</p>
 <pre><code>wordsworth-keyservice-init   # once, before first start: creates the schema
 wordsworth-keyservice        # serves /health and the (still empty) /v1 surface
 </code></pre>
-<p>It needs its own two environment variables, set independently of wordsworth's:</p>
+<p>It needs its own environment variables, set independently of wordsworth's:</p>
 <ul>
 <li><code>KEYSERVICE_DATABASE_URL</code> — required, no default. The <code>postgresql+psycopg://</code>
   scheme is required, same as wordsworth's own database URL.</li>
 <li><code>KEYSERVICE_SERVICE_TOKENS</code> — <code>label:token</code> comma-separated pairs, one per
   calling service. A secret: inject via SOPS+age or OpenBao, never commit it.</li>
+<li><code>KEYSERVICE_OPENBAO_URL</code> — required, no default. The OpenBao base URL the
+  service wraps/unwraps mapping keys against.</li>
+<li><code>KEYSERVICE_OPENBAO_TOKEN</code> — required, no default. A scoped token, Transit
+  wrap/unwrap only, never root. A secret: inject via SOPS+age or OpenBao,
+  never commit it.</li>
+<li><code>KEYSERVICE_TRANSIT_KEK</code> — default <code>wordsworth</code>. The KEK that wraps the
+  service's own PII mapping keys; must be the KEK wordsworth's existing
+  <code>key_vault</code> rows are wrapped under, since those rows carry no KEK name of
+  their own — the default is wordsworth's own default, so the cutover's
+  copy unwraps unchanged.</li>
+<li><code>KEYSERVICE_KEY_CACHE_TTL</code> — default <code>300</code>. Seconds an unwrapped mapping
+  key stays in memory.</li>
+<li><code>KEYSERVICE_PSEUDONYMISE_MAX_ITEMS</code> — default <code>1000</code>. Max (type, value)
+  items per <code>POST /v1/pseudonymise</code> call; refused at startup above <code>5000</code>
+  (see "Refuses to start" below).</li>
+<li><code>KEYSERVICE_ORIGINALS_KEK</code> — default the value of <code>KEYSERVICE_TRANSIT_KEK</code>.
+  The KEK that wraps original-document data keys (<code>seal</code>/<code>open</code>).</li>
+<li><code>KEYSERVICE_ORIGINALS_KEK_BY_DOMAIN</code> — default empty. A JSON object
+  (<code>{"domain": "kek-name"}</code>) overriding the originals KEK per domain.</li>
+<li><code>KEYSERVICE_DOCUMENT_KEY_CACHE_SIZE</code> — default <code>1024</code>. Max entries in the
+  unwrap cache for original-document data keys.</li>
+<li><code>KEYSERVICE_OPEN_RATE_PER_MINUTE</code> — default <code>120</code>. Refill rate of the
+  per-calling-service token bucket on <code>open</code>.</li>
+<li><code>KEYSERVICE_OPEN_BURST</code> — default <code>30</code>. Capacity of that bucket; a burst
+  past it is refused with 429 and a <code>Retry-After</code> header (seconds until the
+  next token).</li>
+<li><code>KEYSERVICE_MAX_ORIGINAL_BYTES</code> — default <code>104857600</code> (100 MiB). <code>seal</code> and
+  <code>open</code> both hold the whole request body in memory up to this bound; a
+  larger body is refused with 413 — enforced only after FastAPI has already
+  buffered the whole body into memory, so an oversized request still costs
+  that memory before it is refused. Every caller is wordsworth behind a
+  service token, and the ingress body limit is the real bound.</li>
 </ul>
+<h2 id="the-wire-between-wordsworth-and-the-service">The wire between wordsworth and the service</h2>
+<p><code>open</code> returns the original in plaintext over HTTP on this link, and <code>seal</code>
+receives it the same way — encryption at rest does not cover it. The link's
+transport (mutual TLS or a service token) is a deployment choice; the token
+alone does not encrypt it. Deploy TLS on this link, or accept that whoever
+can read it reads originals in transit.</p>
 <h2 id="its-database-and-role">Its database and role</h2>
 <p>A <strong>separate PostgreSQL database and role</strong> from wordsworth's — the whole
 point of the split is that wordsworth's role cannot read it. Create a
@@ -13580,6 +13663,15 @@ disjoint from wordsworth's: no table it creates has a foreign key to a
 wordsworth table, and no migration path exists yet. Until the cutover
 (<code>key-service-cutover</code>) the database holds no data, so a schema change today
 is made by dropping and recreating it, not by migrating.</p>
+<p><code>service_state</code> is the one table for state that only the service has, that
+is not a copy of a wordsworth table and not derived from <code>access_audit</code>: the
+open-rate bucket, the coarse 429 audit's refusal window, and every
+Prometheus counter the service keeps outside the audit. A table, not
+process memory, because the service runs more than one replica
+(<code>2026-09-20-hoge-beschikbaarheid</code>) and a counter that restarts at zero on a
+crash hides exactly the burst an investigation looks for. Written only by
+<code>state.py</code>; <code>tests/keyservice/test_service_state_drift.py</code> fails and names
+any other table that grows a counter or rate-limit column.</p>
 <h2 id="refuses-to-start">Refuses to start</h2>
 <p>At startup, and in <code>wordsworth-keyservice-init</code>, before touching or creating
 anything:</p>
@@ -13592,6 +13684,13 @@ anything:</p>
    (tables that exist only in wordsworth's schema) — refuses. Catches the
    real thing: pointing the service at wordsworth's database however the
    rest of the environment is configured.</li>
+<li><strong>No <code>KEYSERVICE_OPENBAO_URL</code> or no <code>KEYSERVICE_OPENBAO_TOKEN</code></strong> (either
+   unset or empty) — refuses, naming which one. Not checked when the
+   process was wired with its own <code>transit_for</code> factory directly (tests
+   only); every real deployment goes through this rule.</li>
+<li><strong><code>KEYSERVICE_PSEUDONYMISE_MAX_ITEMS</code> above <code>5000</code></strong> — refuses, naming
+   the configured value. The registry advisory lock (4781) is held for the
+   whole batch; a cap this high would stall every other writer too long.</li>
 </ol>
 <p>Each refusal is an exception naming the rule, never a warning; the process
 exits non-zero. There is no override.</p>
@@ -13603,11 +13702,26 @@ optional, open-by-default API keys: <strong>an empty token set refuses every
 <code>/v1</code> call.</strong> There is no "auth off" mode for this service — an open key
 service is the one thing the process split exists to prevent.</p>
 <p><code>/health</code> needs no token. It says only that the process is up and its own
-database is reachable — it does not say anything about <code>/v1</code>, which (in this
-change) does nothing yet beyond refusing without a token.</p>
+database is reachable — it does not say anything about <code>/v1</code>.</p>
+<h2 id="the-open-rate-limit-and-its-metrics">The open rate limit and its metrics</h2>
+<p><code>open</code> is rate-limited per calling service (<code>KEYSERVICE_OPEN_RATE_PER_MINUTE</code>,
+<code>KEYSERVICE_OPEN_BURST</code>, above); a burst past it is a 429 with
+<code>Retry-After</code>. A refusal is audited coarsely, not once per refusal: the
+first refusal of each 60-second window writes one <code>open_refused</code> record
+(<code>reason = "rate"</code>), and — if a previous window existed — one
+<code>open_refused_summary</code> naming that window's count. A caller never refused
+again after a window leaves it without a summary; the count still shows up
+in <code>/v1/metrics</code> and in the counter itself.</p>
+<p><code>GET /v1/metrics</code> exposes opens and refusals in Prometheus text format,
+behind the same service token as every other <code>/v1</code> route, and is never
+rate-limited itself — there is no limiter middleware in this app to exempt
+it from. Its caller (the scraper) therefore needs its own service token in
+<code>KEYSERVICE_SERVICE_TOKENS</code>; wiring that into the homelab's scrape config is
+a homelab PR, not part of this change, and no alert on open or refusal
+volume is built in any key-service change yet (see ADR-0009's residuals).</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>Process does not start</strong>: one of the three refuse-to-start rules fired —
+<li><strong>Process does not start</strong>: one of the five refuse-to-start rules fired —
   check the exception message, it names which one.</li>
 <li><strong><code>/health</code> returns 503</strong>: the process is up but its database is not
   reachable (network, credentials, or the database is down). This is not a
@@ -13615,6 +13729,16 @@ change) does nothing yet beyond refusing without a token.</p>
 <li><strong>Every <code>/v1</code> call returns 401</strong>: either no token was sent, the token does
   not match any configured pair, or <code>KEYSERVICE_SERVICE_TOKENS</code> is empty
   (every call fails-closed in that case, by design).</li>
+<li><strong><code>POST /v1/pseudonymise</code> returns 503</strong>: OpenBao is unreachable or sealed
+  when a mapping key was needed. Nothing is committed — no mapping, no
+  registry row, no <code>known_documents</code> row, no audit record.</li>
+<li><strong><code>seal</code> returns 503</strong>: OpenBao is unreachable or sealed when a data key
+  was needed to mint or reuse. Nothing is committed.</li>
+<li><strong><code>open</code> returns 503</strong>: the key backend gave no answer about the wrapped
+  key (connect/timeout, or an HTTP 5xx) — no audit record is written, since
+  nothing was decided. A 409 instead means the backend answered and refused
+  it, or the sealed object itself does not authenticate; both are audited as
+  <code>open_failed</code>.</li>
 </ul>
 <h2 id="not-yet-enforced">Not yet enforced</h2>
 <p><strong>The NetworkPolicy that admits only wordsworth's pods does not exist yet</strong>

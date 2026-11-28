@@ -12233,6 +12233,50 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#post-v1pseudonymise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/pseudonymise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-v1originalsdocument_idseal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/originals/{document_id}/seal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-v1originalsdocument_idopen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/originals/{document_id}/open
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-v1metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /v1/metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#not-in-this-change" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13486,6 +13530,50 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#post-v1pseudonymise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/pseudonymise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-v1originalsdocument_idseal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/originals/{document_id}/seal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-v1originalsdocument_idopen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /v1/originals/{document_id}/open
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-v1metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /v1/metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#not-in-this-change" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13520,11 +13608,11 @@
 <p>This is the key service's own API (ADR-0009), a different process and
 database from wordsworth's. See <a href="../../how-to/key-service/">the how-to</a> for
 deployment, its database and failure modes.</p>
-<p>In this change (<code>key-service-skeleton</code>) the surface is deliberately minimal:
-the process boundary and its authentication, nothing else yet.
-<code>key-service-pseudonymise</code>, <code>key-service-originals</code>, <code>key-service-open-limits</code>,
-<code>key-service-delete</code> and <code>key-service-reveal</code> add the endpoints below the
-<code>/v1</code> prefix.</p>
+<p>The surface grows one change at a time: the process boundary and its
+authentication (<code>key-service-skeleton</code>), <code>POST /v1/pseudonymise</code>
+(<code>key-service-pseudonymise</code>), seal and open (<code>key-service-originals</code>), the
+rate limit, its 429 audit and <code>GET /v1/metrics</code> (<code>key-service-open-limits</code>,
+this one), then <code>key-service-delete</code> and <code>key-service-reveal</code>.</p>
 <h2 id="get-health"><code>GET /health</code></h2>
 <p>Liveness probe. No <code>Authorization</code> header needed.</p>
 <ul>
@@ -13550,11 +13638,241 @@ authenticated the same way, before routing:</p>
 <code>service_caller</code> for later audit records — it is never a person's identity.
 <code>key-service-reveal</code> adds how a person's identity travels and is verified
 separately.</p>
+<h2 id="post-v1pseudonymise"><code>POST /v1/pseudonymise</code></h2>
+<p>Per document, a batch of (type, value) pairs in; tokens out. The service
+derives each value's keyed <code>[TYPE:hash8]</code> token (wordsworth's own
+derivation, unchanged), stores the encrypted value, registers each
+returned token for the document (<code>source = minted</code>) and records the
+document's domain on first sight. No value, hash of a value, or key id is
+ever in the response.</p>
+<p>Request (JSON):</p>
+<pre><code class="language-json">{
+  &quot;document_id&quot;: &quot;3fa85f64-5717-4562-b3fc-2c963f66afa6&quot;,
+  &quot;domain&quot;: &quot;example&quot;,
+  &quot;items&quot;: [{&quot;type&quot;: &quot;PERSON&quot;, &quot;value&quot;: &quot;Jan Jansen&quot;}]
+}
+</code></pre>
+<p><code>items</code> may be empty — that registers the document and its domain without
+minting any token. At most <code>KEYSERVICE_PSEUDONYMISE_MAX_ITEMS</code> (default
+1000) items per call; a larger document sends several calls.</p>
+<p>A <code>type</code> is valid when it matches <code>[A-Za-z0-9_]+</code> (case-insensitive — the
+service upper-cases it). There is no closed list of known types: an
+unrecognised detector label is accepted, not refused. <code>domain</code> must be
+non-empty and contain no <code>/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Status</th>
+<th>Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no or unknown service token</td>
+<td>401</td>
+<td><code>{"detail": "invalid or missing service token"}</code></td>
+</tr>
+<tr>
+<td>malformed body, invalid type label or domain, too many items</td>
+<td>422</td>
+<td>validation detail, never echoing a value</td>
+</tr>
+<tr>
+<td>document already known in another domain</td>
+<td>409</td>
+<td><code>{"detail": "document is registered in another domain"}</code></td>
+</tr>
+<tr>
+<td>document tombstoned (deleted)</td>
+<td>410</td>
+<td><code>{"detail": "document deleted"}</code></td>
+</tr>
+<tr>
+<td>a mapping key is needed and Transit is unreachable or sealed</td>
+<td>503</td>
+<td><code>{"detail": "key service unavailable"}</code>, nothing committed</td>
+</tr>
+<tr>
+<td>otherwise</td>
+<td>200</td>
+<td><code>{"document_id": "...", "tokens": ["[PERSON:5c93c3df]", ...]}</code>, one token per item, same order as <code>items</code></td>
+</tr>
+</tbody>
+</table>
+<p>One <code>access_audit</code> record per call (<code>event = "pseudonymise"</code>): the document,
+the calling service, the number of items per type, and the number of new
+registry rows. No value or token is ever written to that record, or to any
+log line.</p>
+<h2 id="post-v1originalsdocument_idseal"><code>POST /v1/originals/{document_id}/seal</code></h2>
+<p>The original's bytes as <code>application/octet-stream</code>; query <code>domain</code> and
+<code>object_key</code>. Mints a data key wrapped under the KEK for <code>domain</code> on first
+seal of an object key, or reuses the existing one on a later seal of the
+same object key for the same document — never a second data key for one
+object key. Up to <code>KEYSERVICE_MAX_ORIGINAL_BYTES</code> (default 100 MiB); the
+413 is enforced after FastAPI has buffered the whole body into memory.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Status</th>
+<th>Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no or unknown service token</td>
+<td>401</td>
+<td><code>{"detail": "invalid or missing service token"}</code></td>
+</tr>
+<tr>
+<td>body over <code>KEYSERVICE_MAX_ORIGINAL_BYTES</code></td>
+<td>413</td>
+<td><code>{"detail": "original exceeds the configured size bound"}</code></td>
+</tr>
+<tr>
+<td><code>domain</code> or <code>object_key</code> missing, <code>domain</code> empty or containing <code>/</code></td>
+<td>422</td>
+<td>validation detail</td>
+</tr>
+<tr>
+<td>document registered in another domain</td>
+<td>409</td>
+<td><code>{"detail": "document is registered in another domain"}</code></td>
+</tr>
+<tr>
+<td>object key's row belongs to another document</td>
+<td>409</td>
+<td><code>{"detail": "object key belongs to another document"}</code></td>
+</tr>
+<tr>
+<td>document tombstoned</td>
+<td>410</td>
+<td><code>{"detail": "document deleted"}</code></td>
+</tr>
+<tr>
+<td>Transit unreachable or sealed</td>
+<td>503</td>
+<td><code>{"detail": "key service unavailable"}</code>, nothing committed</td>
+</tr>
+<tr>
+<td>otherwise</td>
+<td>200</td>
+<td>sealed bytes, <code>X-Key-Id</code> header</td>
+</tr>
+</tbody>
+</table>
+<p>One <code>access_audit</code> record per call (<code>event = "seal"</code>): the document,
+<code>object_key</code>, the key id, and whether the key was minted or reused.</p>
+<h2 id="post-v1originalsdocument_idopen"><code>POST /v1/originals/{document_id}/open</code></h2>
+<p>The sealed bytes as <code>application/octet-stream</code>; query <code>object_key</code> and
+<code>purpose</code>, one of <code>process</code>, <code>reanonymize</code>, <code>ocr_recovery</code>, <code>redacted_pdf</code>,
+<code>reveal_pdf</code>, <code>seal_verify</code>. Fails closed: a tampered wrapped key or a
+tampered sealed object never returns plaintext.</p>
+<p>Rate-limited per calling service: a token bucket,
+<code>KEYSERVICE_OPEN_RATE_PER_MINUTE</code> (default 120) refill,
+<code>KEYSERVICE_OPEN_BURST</code> (default 30) capacity, checked after <code>purpose</code> and
+<code>object_key</code> are validated — so the order is 401, then 422, then 429.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Status</th>
+<th>Body</th>
+<th>Audit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no or unknown service token</td>
+<td>401</td>
+<td><code>{"detail": "invalid or missing service token"}</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>purpose</code> missing or not in the list; malformed query</td>
+<td>422</td>
+<td>validation detail</td>
+<td>none</td>
+</tr>
+<tr>
+<td>body over <code>KEYSERVICE_MAX_ORIGINAL_BYTES</code></td>
+<td>413</td>
+<td><code>{"detail": "sealed object exceeds the configured size bound"}</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>over the calling service's rate limit</td>
+<td>429, <code>Retry-After</code> header</td>
+<td><code>{"detail": "rate limit exceeded"}</code></td>
+<td>counted always; the window's <em>first</em> refusal writes <code>open_refused</code> (<code>reason = "rate"</code>); that refusal also writes <code>open_refused_summary</code> (window start, count) for the <em>previous</em> window, if one existed — never one record per refusal</td>
+</tr>
+<tr>
+<td>no key row for <code>object_key</code> under this <code>document_id</code></td>
+<td>404</td>
+<td><code>{"detail": "no key for this object"}</code></td>
+<td><code>open_refused</code>, <code>reason = "no_key"</code></td>
+</tr>
+<tr>
+<td>the key backend gave no answer (connect/timeout, HTTP 5xx)</td>
+<td>503</td>
+<td><code>{"detail": "key service unavailable"}</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>the wrapped key or the sealed object does not authenticate</td>
+<td>409</td>
+<td><code>{"detail": "sealed object does not open"}</code></td>
+<td><code>open_failed</code>, <code>reason = "unwrap"</code> or <code>"envelope"</code></td>
+</tr>
+<tr>
+<td>otherwise</td>
+<td>200</td>
+<td>the plaintext</td>
+<td><code>open</code>, document, <code>object_key</code>, purpose</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-v1metrics"><code>GET /v1/metrics</code></h2>
+<p>Prometheus text format, behind the same service token as every other <code>/v1</code>
+route — no change to <code>ServiceTokenMiddleware</code>, since it already covers every
+path under <code>/v1/</code>. Never rate-limited: the app mounts no path-keyed limiter
+middleware, so there is no rule for this route to be exempt from.</p>
+<ul>
+<li><code>keyservice_opens_total{caller,purpose}</code> — counted from <code>access_audit</code>
+  <code>open</code> records at scrape time.</li>
+<li><code>keyservice_open_refusals_total{caller,reason}</code> — the service's own
+  refusal counters (<code>service_state</code>).</li>
+</ul>
+<p>No value, document id or object key appears in the output.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Status</th>
+<th>Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no or unknown service token</td>
+<td>401</td>
+<td><code>{"detail": "invalid or missing service token"}</code></td>
+</tr>
+<tr>
+<td>otherwise</td>
+<td>200</td>
+<td>Prometheus text</td>
+</tr>
+</tbody>
+</table>
 <h2 id="not-in-this-change">Not in this change</h2>
 <ul>
-<li>Every key, mapping, token-registry and reveal operation — see
-  <code>key-service-pseudonymise</code>, <code>key-service-originals</code>,
-  <code>key-service-open-limits</code>, <code>key-service-delete</code> and <code>key-service-reveal</code>.</li>
+<li><code>service_state</code>'s own schema and drift test — see the how-to.</li>
+<li>The alert on open volume (a homelab manifest) and the scraper's own
+  service token (a homelab PR) — see the how-to.</li>
+<li>The two deletions and the key-lifecycle chain — see <code>key-service-delete</code>.</li>
+<li>Reveal and identity verification — see <code>key-service-reveal</code>.</li>
 <li><code>POST /v1/export</code> — see <code>key-export-escrow</code>.</li>
 </ul>
 

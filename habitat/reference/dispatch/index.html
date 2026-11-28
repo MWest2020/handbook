@@ -14312,6 +14312,17 @@ image-pull, zodat een trage start niet als "onbekend" eindigt.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Tussencondities (Kubernetes ≥ 1.31).</strong> De Job-controller zet eerst
+<code>FailureTarget</code> of <code>SuccessCriteriaMet</code> en pas <code>Failed</code> of <code>Complete</code> als de
+pods weg zijn. Dispatch wacht daarop, hooguit <code>INTERIM_GRACE</code> seconden
+(default 300); daarna telt de tussenconditie als uitkomst, met dezelfde reden
+(<code>FailureTarget=DeadlineExceeded</code> → <code>TIME-OUT</code>, exit 1). De beslissing staat in
+<code>dispatch/job_conditions.py</code> (getest door <code>worker/test-dispatch-conditions.sh</code>).
+Tot 2026-11-28 nam dispatch elke conditie als einde en zocht het naar
+<code>Failed</code>, dat <code>FailureTarget</code> niet bevat: een builder die zijn deadline haalde
+eindigde als <code>GEEN uitkomst binnen 4200s</code> met exit 2, na een uur in plaats van
+4200 s (wordsworth #541 op 2026-11-27, synthetic-long-corpus op 2026-11-15,
+twee <code>BackoffLimitExceeded</code>-runs op 2026-11-17).</p>
 <p>De logs worden gestreamd (<code>kubectl logs -f</code> zodra de pod draait) en
 gearchiveerd naar <code>$HABITAT_LOGDIR/&lt;job-naam&gt;.log</code>.</p>
 <h3 id="run-artefacten-lokaal-niet-in-git">Run-artefacten: lokaal, niet in git</h3>

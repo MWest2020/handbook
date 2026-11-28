@@ -13709,7 +13709,11 @@ no reveal rules in code.</p>
   any original, not only the ones it is processing. The service makes that
   visible (every open audited with a purpose) and bounded (a rate limit per
   caller, 120 a minute by default: still about 170 000 a day), not
-  impossible. The opens are counted as metrics, but no alert on volume is
+  impossible. The opens are counted as metrics, and so are refusals, at
+  <code>GET /v1/metrics</code> behind its own service token; a burst of refusals is
+  audited once per caller per 60-second window, as <code>open_refused_summary</code>,
+  not once per refusal -- the coarser record is what an investigation finds,
+  not a flood of chained writes under the audit lock. No alert on volume is
   built in any of the key-service changes; until the homelab alert exists,
   nobody is told.</li>
 <li>A user's signed assertion passes through wordsworth on its way to the
@@ -13730,7 +13734,12 @@ no reveal rules in code.</p>
 <li><code>pseudonymise</code> turns any value into its token for whoever holds the service
   credential, so a compromised wordsworth can confirm whether a guessed value
   occurs in its own index. Every call is audited; ingest needs the operation,
-  so it is visible, not prevented.</li>
+  so it is visible, not prevented. A batch is capped
+  (<code>KEYSERVICE_PSEUDONYMISE_MAX_ITEMS</code>, 1 000 by default, refused at startup
+  above 5 000): the cap bounds how long the registry lock is held for one
+  call, not how many guesses a caller may confirm across many calls -- the
+  audit trail, not the cap, is what makes that volume visible
+  (<code>key-service-pseudonymise</code>).</li>
 <li>The registry is copied from wordsworth once, at the cutover. A registry
   wordsworth had already corrupted before that moment carries over; after it,
   only the service registers tokens. The copy keeps its provenance
@@ -13738,6 +13747,11 @@ no reveal rules in code.</p>
   text after the fact and were already less certain than minted ones. The
   copy aborts unless every token in every live document's current text is in
   the copied registry, so it cannot come out smaller than what reveal needs.</li>
+<li><code>open</code> returns, and <code>seal</code> receives, the original in <strong>plaintext over HTTP</strong>
+  on the link between wordsworth and the service: whoever can read that link
+  reads originals in transit, which encryption at rest does not cover. Not
+  prevented by <code>key-service-originals</code>; the deployment's TLS (mutual TLS or
+  the service token's transport) is the mitigation.</li>
 </ul>
 <p>Reading clear <em>PII values</em> out of tokens is impossible without a user entitled
 to them, and then only that user's documents and types.</p>

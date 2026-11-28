@@ -8365,6 +8365,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#stripe-payment-link-post-webhooksstripe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stripe Payment Link: POST /webhooks/stripe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-code-and-the-mail" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13734,6 +13745,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#stripe-payment-link-post-webhooksstripe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stripe Payment Link: POST /webhooks/stripe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-code-and-the-mail" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -14061,7 +14083,7 @@ payload:</p>
 <tbody>
 <tr>
 <td><code>donation.created</code></td>
-<td>A netnl credential at or above <code>NETNL_SUPPORTER_MIN_AMOUNT</code> (default 2), unchanged. With <code>NETNL_BAZIBO_FROM_DONATIONS=1</code> also one Bazibo code at or above <code>NETNL_BAZIBO_DONATION_MIN</code> (default 1): €1 gives a code only, €2 or more a code and a netnl key, two mails.</td>
+<td>Unchanged: a netnl credential at or above <code>NETNL_SUPPORTER_MIN_AMOUNT</code> (default 2). Never a Bazibo code.</td>
 </tr>
 <tr>
 <td><code>extra_purchase.created</code> whose <code>data.extras[]</code> holds the configured Extra</td>
@@ -14081,21 +14103,12 @@ payload:</p>
 </tr>
 </tbody>
 </table>
-<p>A donation's note or message never decides anything: only its amount
-does. Since 27 Nov 2026 the Bazibo web unlock is sold as a plain donation
-(Mark: "1 is goed als de flow maar duidelijk is"), because a real Extra
-purchase on this account produced no webhook at all; see design.md D12.</p>
-<p><strong>Codes from donations</strong> (<code>NETNL_BAZIBO_FROM_DONATIONS=1</code>). Each product
-has its own idempotency row, keyed on BMC's transaction id:
-<code>bazibo_issuance</code> for the code, <code>supporter_issuance</code> for the netnl key. A
-replay finds both delivered and sends nothing. If one of the two mails
-fails, the reply is 503 and BMC's retry re-sends only that one (the code
-is the same code again). An Extra purchase that BMC reported both ways
-would find the same <code>bazibo_issuance</code> row: never two codes. The mail opens
-with "Bedankt voor je donatie! Hier is je code voor de volledige versie
-van Bazibo in de browser." Log line: <code>event=bazibo-issued source=donation
-txn_id=… code_id=…</code>. To switch it off, set the variable to <code>0</code> (or remove
-it) and restart; donations then behave as before.</p>
+<p>A donation that says "for Bazibo" in its note is still a donation: it
+follows the donation rules and never mints a code. Only the structured
+fields <code>support_type</code> and <code>extras[]</code> decide. If that happens, issue a code
+by hand (below). Since 27 Nov 2026 the web unlock is sold through a Stripe
+Payment Link (next section), because BMC sent no webhook for real Extra
+purchases and its coffee price cannot be €1.</p>
 <p>Every signed <code>donation.created</code>/<code>extra_purchase.created</code> logs its shape,
 without personal data:</p>
 <pre><code class="language-text">event=bmc-shape type=donation.created support_type=Extra extras=list(1) extra_ids=603413
@@ -14110,6 +14123,43 @@ envelope <code>type</code>/<code>live_mode</code>/<code>attempt</code>/<code>dat
 <code>data.extras[] = {id, title, amount, quantity, ...}</code>. A real
 <code>extra_purchase.created</code> from this account has not been seen yet; check the
 first one with the steps under "Switching it on".</p>
+<h3 id="stripe-payment-link-post-webhooksstripe">Stripe Payment Link: <code>POST /webhooks/stripe</code></h3>
+<p>Mark, 27 Nov 2026: the Bazibo web unlock is a Stripe Payment Link at €1
+(design.md D12). The route exists while <code>NETNL_STRIPE_WEBHOOK_SECRET</code> and
+<code>NETNL_STRIPE_PAYMENT_LINK_ID</code> are both set (they live in the <code>netnl-bridge</code>
+Secret; one without the other refuses to start).</p>
+<ol>
+<li>The <code>Stripe-Signature</code> header is checked first (HMAC-SHA256 over
+   <code>"&lt;t&gt;." + body</code> with the endpoint secret, at most 300 s old). Anything
+   else: 401, nothing written.</li>
+<li><code>checkout.session.completed</code> (or <code>checkout.session.async_payment_succeeded</code>)
+   with <code>payment_status: "paid"</code> and <code>payment_link</code> equal to
+   <code>NETNL_STRIPE_PAYMENT_LINK_ID</code>: one code, mailed to
+   <code>customer_details.email</code>, keyed on the Checkout Session id (<code>cs_…</code>) in
+   <code>bazibo_issuance</code>. A replay sends nothing; a mail failure answers 503 and
+   Stripe retries (for up to three days) with the same code.</li>
+<li>Any other event, another payment link, an unpaid session: 200 <code>ignored</code>.
+   A test-mode session (<code>livemode: false</code>) is ignored unless
+   <code>NETNL_STRIPE_ALLOW_TEST_MODE=1</code>: a code from a test payment is a real
+   code.</li>
+</ol>
+<p>Setting it up (Mark gives a restricted key: Products, Prices, Payment Links,
+Webhook Endpoints, all "Write"; test mode first):</p>
+<pre><code class="language-sh">STRIPE_API_KEY=rk_test_… uv run netnl-stripe-setup
+# mode: test
+# created: product, price, payment link, webhook endpoint
+# payment link: https://buy.stripe.com/test_…
+# NETNL_STRIPE_PAYMENT_LINK_ID=plink_…
+# NETNL_STRIPE_WEBHOOK_SECRET=whsec_…
+</code></pre>
+<p>It finds what exists by metadata <code>bazibo=web-unlock</code> and creates only what
+is missing. Stripe shows a webhook secret only when the endpoint is
+created; <code>--new-webhook-secret</code> recreates the endpoint for a new one. Put
+both values in <code>netnl-bridge</code> (plus <code>NETNL_STRIPE_ALLOW_TEST_MODE: "1"</code> in
+the ConfigMap while testing), restart, pay once with a test card
+(4242 4242 4242 4242) and look for <code>event=bazibo-issued source=stripe</code>.
+For live, run the same with the live key, replace both values, remove the
+test-mode switch. The payment link URL goes into Bazibo's <code>PAY_URL</code>.</p>
 <h3 id="the-code-and-the-mail">The code and the mail</h3>
 <p>The code is <code>BZB1.&lt;payload&gt;.&lt;signature&gt;</code> (format v1, shared with the Bazibo
 verifier): 16 bytes of payload (version, product, issued day, 10 random
@@ -14344,11 +14394,6 @@ The revocation list is the <code>bazibo_revoked</code> table (<code>code_id</cod
 <td>Minimum payment for the Extra (independent of the netnl minimum).</td>
 </tr>
 <tr>
-<td><code>NETNL_BAZIBO_FROM_DONATIONS</code></td>
-<td><code>0</code></td>
-<td><code>1</code>: a plain donation also mints a code. Enables the subsystem on its own (no Extra needed). Refused together with <code>NETNL_BAZIBO_SOURCE=poll</code>.</td>
-</tr>
-<tr>
 <td><code>NETNL_BAZIBO_ALERT_TO</code></td>
 <td>unset</td>
 <td><code>bazibo watch</code>: one alert per undelivered transaction to this address. Off while unset.</td>
@@ -14359,9 +14404,19 @@ The revocation list is the <code>bazibo_revoked</code> table (<code>code_id</cod
 <td>How long a transaction may go without a delivered code before the alert.</td>
 </tr>
 <tr>
-<td><code>NETNL_BAZIBO_DONATION_MIN</code></td>
-<td><code>1</code></td>
-<td>Minimum donation for a code, in the account's currency (independent of the netnl minimum).</td>
+<td><code>NETNL_STRIPE_WEBHOOK_SECRET</code></td>
+<td>unset</td>
+<td>Secret. The Stripe endpoint's <code>whsec_…</code>; with the link id it switches <code>/webhooks/stripe</code> on.</td>
+</tr>
+<tr>
+<td><code>NETNL_STRIPE_PAYMENT_LINK_ID</code></td>
+<td>unset</td>
+<td>The Payment Link (<code>plink_…</code>) whose paid sessions mint a code.</td>
+</tr>
+<tr>
+<td><code>NETNL_STRIPE_ALLOW_TEST_MODE</code></td>
+<td><code>0</code></td>
+<td><code>1</code>: test-mode sessions mint codes too (only while testing).</td>
 </tr>
 <tr>
 <td><code>NETNL_BAZIBO_DEVICE_LIMIT</code></td>
@@ -14388,8 +14443,52 @@ The revocation list is the <code>bazibo_revoked</code> table (<code>code_id</cod
 <td><code>CF-Connecting-IP</code></td>
 <td>Header the rate limit keys on.</td>
 </tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_HOST</code></td>
+<td>unset</td>
+<td>Bazibo's own relay for the buyer's code mail. Unset: the bridge's <code>NETNL_SMTP_*</code> relay carries it.</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_PORT</code></td>
+<td><code>587</code> (<code>465</code> with <code>ssl</code>)</td>
+<td>Only with a host.</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_USERNAME</code> / <code>_PASSWORD</code></td>
+<td>unset</td>
+<td>Secret. Required with a host (this relay always logs in).</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_MODE</code></td>
+<td><code>starttls</code></td>
+<td><code>starttls</code> or <code>ssl</code> (no plaintext for this relay).</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_FROM</code></td>
+<td>address of <code>NETNL_SMTP_FROM</code></td>
+<td>Plain address of the code mail's From. Required with a host.</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_SMTP_FROM_NAME</code></td>
+<td><code>Bazibo</code></td>
+<td>Display name of that From.</td>
+</tr>
+<tr>
+<td><code>NETNL_BAZIBO_MAIL_REPLY_TO</code></td>
+<td>unset</td>
+<td><code>Reply-To</code> of the code mail.</td>
+</tr>
 </tbody>
 </table>
+<p>Only the buyer's code mail uses the Bazibo identity; the supporter-key
+mail, the operator notification and the watch alerts keep the bridge's
+<code>NETNL_SMTP_*</code> settings unchanged. With a relay of its own, startup refuses
+a half configuration (a port, username, password or mode without a host; a
+host without <code>NETNL_BAZIBO_SMTP_FROM</code>, a username or a password). A
+relay that only accepts its own domain (Soverin, for one) cannot send as
+<code>hallo@bazibo.nl</code>: leave the host unset there, set the From to the relay
+account's own address and put the Bazibo address in
+<code>NETNL_BAZIBO_MAIL_REPLY_TO</code>.</p>
 <p>Rotating the signing key invalidates every code already sold (the Bazibo
 verifier carries the public key): don't, unless it has leaked.</p>
 <h2 id="see-also">See also</h2>
